@@ -51,14 +51,20 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
   // Dragging states
   const [isPanning, setIsPanning] = useState(false);
-  const [panStart, setPanStart] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const panStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const [draggedNodeId, setDraggedNodeId] = useState<string | null>(null);
   const dragPointerStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const dragNodeStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const hasMovedSignificantlyRef = useRef<boolean>(false);
 
-  // Initialize/Recalculate Layout based on current viewMode (spider vs tree)
+  // Multi-touch Pinch to Zoom refs
+  const pinchStartDistRef = useRef<number | null>(null);
+  const pinchStartZoomRef = useRef<number>(1);
+  const pinchStartPanRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const pinchMidpointRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  // Initialize/Recalculate Layout based on current viewMode
   const initLayout = useCallback(() => {
     const { nodes: catNodes, rootId: rId } = getNodesForCategory(
       ALL_NODES,
@@ -141,7 +147,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     const mouseY = e.clientY - rect.top;
 
     const zoomFactor = e.deltaY < 0 ? 1.12 : 0.89;
-    const newZoom = Math.min(Math.max(zoom * zoomFactor, 0.2), 2.5);
+    const newZoom = Math.min(Math.max(zoom * zoomFactor, 0.18), 2.5);
 
     const newPanX = Math.round(mouseX - (mouseX - pan.x) * (newZoom / zoom));
     const newPanY = Math.round(mouseY - (mouseY - pan.y) * (newZoom / zoom));
@@ -150,16 +156,16 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     setPan({ x: newPanX, y: newPanY });
   };
 
-  // Canvas Panning
+  // Mouse / Pointer Canvas Panning
   const handleCanvasPointerDown = (e: React.PointerEvent) => {
     if (e.target !== containerRef.current && (e.target as HTMLElement).tagName !== "svg") {
       return;
     }
     setIsPanning(true);
-    setPanStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
+    panStartRef.current = { x: e.clientX - pan.x, y: e.clientY - pan.y };
   };
 
-  // Node Drag Start
+  // Node Drag Start (Mouse & Touch)
   const handleNodePointerDown = (e: React.PointerEvent, node: PositionedNode) => {
     e.stopPropagation();
     (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
@@ -174,14 +180,14 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   const handlePointerMove = (e: React.PointerEvent) => {
     if (isPanning) {
       setPan({
-        x: Math.round(e.clientX - panStart.x),
-        y: Math.round(e.clientY - panStart.y),
+        x: Math.round(e.clientX - panStartRef.current.x),
+        y: Math.round(e.clientY - panStartRef.current.y),
       });
     } else if (draggedNodeId) {
       const dx = (e.clientX - dragPointerStartRef.current.x) / zoom;
       const dy = (e.clientY - dragPointerStartRef.current.y) / zoom;
 
-      if (Math.hypot(dx, dy) > 4) {
+      if (Math.hypot(dx, dy) > 6) {
         hasMovedSignificantlyRef.current = true;
       }
 
@@ -200,10 +206,75 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     }
   };
 
-  // Global Pointer Up
   const handlePointerUp = () => {
     setIsPanning(false);
     setDraggedNodeId(null);
+  };
+
+  // ==========================================
+  // MOBILE MULTI-TOUCH GESTURES (Pinch-to-zoom & Touch Pan)
+  // ==========================================
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      // 2 fingers = start pinch-to-zoom
+      const t0 = e.touches[0];
+      const t1 = e.touches[1];
+      const dist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+      pinchStartDistRef.current = dist;
+      pinchStartZoomRef.current = zoom;
+      pinchStartPanRef.current = { ...pan };
+      pinchMidpointRef.current = {
+        x: (t0.clientX + t1.clientX) / 2,
+        y: (t0.clientY + t1.clientY) / 2,
+      };
+      setIsPanning(false);
+    } else if (e.touches.length === 1 && !draggedNodeId) {
+      // 1 finger on canvas = touch pan
+      const t = e.touches[0];
+      panStartRef.current = { x: t.clientX - pan.x, y: t.clientY - pan.y };
+      setIsPanning(true);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length === 2 && pinchStartDistRef.current !== null && containerRef.current) {
+      // Pinching with two fingers
+      const t0 = e.touches[0];
+      const t1 = e.touches[1];
+      const currentDist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+      const scaleFactor = currentDist / pinchStartDistRef.current;
+      const newZoom = Math.min(Math.max(pinchStartZoomRef.current * scaleFactor, 0.18), 2.5);
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const midX = pinchMidpointRef.current.x - rect.left;
+      const midY = pinchMidpointRef.current.y - rect.top;
+
+      const newPanX = Math.round(
+        midX - (midX - pinchStartPanRef.current.x) * (newZoom / pinchStartZoomRef.current)
+      );
+      const newPanY = Math.round(
+        midY - (midY - pinchStartPanRef.current.y) * (newZoom / pinchStartZoomRef.current)
+      );
+
+      setZoom(newZoom);
+      setPan({ x: newPanX, y: newPanY });
+    } else if (e.touches.length === 1 && isPanning && !draggedNodeId) {
+      // 1 finger panning
+      const t = e.touches[0];
+      setPan({
+        x: Math.round(t.clientX - panStartRef.current.x),
+        y: Math.round(t.clientY - panStartRef.current.y),
+      });
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (e.touches.length < 2) {
+      pinchStartDistRef.current = null;
+    }
+    if (e.touches.length === 0) {
+      setIsPanning(false);
+    }
   };
 
   // Click on Node -> Open Google Search
@@ -233,7 +304,11 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
       onPointerDown={handleCanvasPointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
-      className="spider-web-bg"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
+      className="spider-web-bg canvas-touch-container"
       style={{
         position: "relative",
         width: "100vw",
@@ -316,7 +391,6 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
               const isHighlighted =
                 matchedNodes.has(edge.source) || matchedNodes.has(edge.target);
 
-              // Stroke colors based on theme and category
               let strokeColor = isDark
                 ? "rgba(56, 189, 248, 0.45)"
                 : "rgba(2, 132, 199, 0.45)";
@@ -338,16 +412,13 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                 strokeColor = isDark ? "#f59e0b" : "#d97706";
               }
 
-              // Path computation based on viewMode
               let pathData = "";
               if (viewMode === "tree") {
-                // Top-to-bottom tree curve
                 const dy = targetNode.y - sourceNode.y;
                 const cy1 = Math.round(sourceNode.y + dy * 0.5);
                 const cy2 = Math.round(targetNode.y - dy * 0.5);
                 pathData = `M ${sourceNode.x} ${sourceNode.y} C ${sourceNode.x} ${cy1}, ${targetNode.x} ${cy2}, ${targetNode.x} ${targetNode.y}`;
               } else {
-                // Radial spider thread curve
                 const dx = targetNode.x - sourceNode.x;
                 const dy = targetNode.y - sourceNode.y;
                 const cx1 = Math.round(sourceNode.x + dx * 0.4);
@@ -367,7 +438,6 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                     strokeOpacity={isHighlighted ? 0.9 : 0.6}
                   />
 
-                  {/* Flow animation for major spokes */}
                   {edge.level <= 2 && (
                     <path
                       d={pathData}

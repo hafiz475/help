@@ -46,8 +46,10 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
-    // Sync theme with html data-theme attribute
     document.documentElement.setAttribute("data-theme", "light");
+    if (typeof window !== "undefined" && window.innerWidth <= 640) {
+      setZoom(0.52);
+    }
   }, []);
 
   const handleToggleTheme = () => {

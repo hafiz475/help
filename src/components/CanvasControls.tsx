@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ConceptCategory, CONCEPT_TABS } from "@/data/concepts";
 import { ViewMode } from "@/utils/spiderLayout";
 import {
@@ -58,265 +58,456 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
   showLevel3,
   onToggleLevel3,
 }) => {
-  const [showHelp, setShowHelp] = React.useState(false);
+  const [showHelp, setShowHelp] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const isDark = theme === "dark";
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 640);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <>
-      {/* Top Left Floating Minimal Bar: Search + Google Tip */}
-      <div
-        style={{
-          position: "fixed",
-          top: "16px",
-          left: "20px",
-          zIndex: 40,
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-        }}
-      >
+      {/* ========================================================= */}
+      {/* TOP HEADER CONTROLS (RESPONSIVE FOR MOBILE & DESKTOP)     */}
+      {/* ========================================================= */}
+      {isMobile ? (
+        /* MOBILE UNIFIED TOP BAR (iPhone 12 & Smartphones) */
         <div
-          className="glass-panel"
           style={{
+            position: "fixed",
+            top: "max(12px, env(safe-area-inset-top, 12px))",
+            left: "10px",
+            right: "10px",
+            zIndex: 40,
             display: "flex",
-            alignItems: "center",
-            padding: "4px 10px",
-            borderRadius: "10px",
-            gap: "8px",
-            width: "220px",
+            flexDirection: "column",
+            gap: "6px",
           }}
         >
-          <Search size={14} color="var(--text-dim)" />
-          <input
-            id="search-keywords-input"
-            type="text"
-            placeholder="Search keywords..."
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            style={{
-              width: "100%",
-              height: "26px",
-              background: "transparent",
-              border: "none",
-              color: "var(--text-main)",
-              fontSize: "12px",
-            }}
-          />
-          {searchQuery && (
-            <button
-              onClick={() => onSearchChange("")}
-              style={{
-                background: "transparent",
-                color: "var(--text-dim)",
-                padding: "2px",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <X size={13} />
-            </button>
-          )}
-        </div>
-
-        {searchQuery ? (
-          <span
-            style={{
-              fontSize: "11px",
-              fontWeight: 600,
-              color: matchCount > 0 ? (isDark ? "#38bdf8" : "#0284c7") : "#ef4444",
-            }}
-          >
-            {matchCount} match{matchCount === 1 ? "" : "es"}
-          </span>
-        ) : (
           <div
             className="glass-panel"
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "5px",
-              padding: "6px 10px",
-              borderRadius: "10px",
-              fontSize: "11px",
-              color: isDark ? "#38bdf8" : "#0284c7",
-              fontWeight: 600,
+              justifyContent: "space-between",
+              gap: "6px",
+              padding: "5px 8px",
+              borderRadius: "12px",
             }}
           >
-            <ExternalLink size={11} />
-            <span>Click any node = Google Search</span>
+            {/* Concept Dropdown */}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <select
+                id="category-select"
+                value={currentCategory}
+                onChange={(e) => onSelectCategory(e.target.value as ConceptCategory)}
+                style={{
+                  width: "100%",
+                  padding: "6px 8px",
+                  borderRadius: "8px",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  color: "var(--text-main)",
+                  background: "var(--select-bg)",
+                  border: "1px solid var(--border-subtle)",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                  cursor: "pointer",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                }}
+              >
+                {CONCEPT_TABS.map((tab) => (
+                  <option key={tab.id} value={tab.id}>
+                    {tab.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Spider / Tree View Toggle Button */}
+            <button
+              onClick={() => onToggleViewMode(viewMode === "spider" ? "tree" : "spider")}
+              title="Toggle Spider / Tree View"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+                padding: "6px 8px",
+                borderRadius: "8px",
+                fontSize: "11px",
+                fontWeight: 600,
+                background: "var(--toggle-bg)",
+                color: isDark ? "#38bdf8" : "#0284c7",
+                border: "1px solid var(--border-subtle)",
+                flexShrink: 0,
+              }}
+            >
+              {viewMode === "spider" ? <Share2 size={13} /> : <GitBranch size={13} />}
+              <span>{viewMode === "spider" ? "Spider" : "Tree"}</span>
+            </button>
+
+            {/* Dark / Light Theme Toggle Button */}
+            <button
+              onClick={onToggleTheme}
+              title={isDark ? "Switch to Light Mode" : "Switch to Dark Theme"}
+              style={{
+                width: "32px",
+                height: "32px",
+                borderRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "var(--toggle-bg)",
+                border: "1px solid var(--border-subtle)",
+                flexShrink: 0,
+              }}
+            >
+              {isDark ? <Sun size={14} color="#f59e0b" /> : <Moon size={14} color="#6366f1" />}
+            </button>
+
+            {/* Mobile Search Toggle Button */}
+            <button
+              onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)}
+              title="Search keywords"
+              style={{
+                width: "32px",
+                height: "32px",
+                borderRadius: "8px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: isMobileSearchOpen ? (isDark ? "rgba(56,189,248,0.2)" : "#e0f2fe") : "var(--toggle-bg)",
+                border: "1px solid var(--border-subtle)",
+                color: isMobileSearchOpen ? (isDark ? "#38bdf8" : "#0284c7") : "var(--text-main)",
+                flexShrink: 0,
+              }}
+            >
+              <Search size={14} />
+            </button>
           </div>
-        )}
-      </div>
 
-      {/* Top Right End: Concept Select + View Mode (Spider/Tree) + Theme (Light/Dark) */}
-      <div
-        className="glass-panel"
-        style={{
-          position: "fixed",
-          top: "16px",
-          right: "20px",
-          zIndex: 40,
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          padding: "5px 8px",
-          borderRadius: "12px",
-        }}
-      >
-        {/* 1. Concept Dropdown */}
-        <label
-          htmlFor="category-select"
-          style={{
-            fontSize: "11px",
-            fontWeight: 700,
-            textTransform: "uppercase",
-            letterSpacing: "0.05em",
-            color: "var(--text-dim)",
-            paddingLeft: "4px",
-          }}
-        >
-          CONCEPT:
-        </label>
-        <select
-          id="category-select"
-          value={currentCategory}
-          onChange={(e) => onSelectCategory(e.target.value as ConceptCategory)}
-          style={{
-            padding: "5px 10px",
-            borderRadius: "8px",
-            fontSize: "12.5px",
-            fontWeight: 600,
-            color: "var(--text-main)",
-            background: "var(--select-bg)",
-            border: "1px solid var(--border-subtle)",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-            cursor: "pointer",
-          }}
-        >
-          {CONCEPT_TABS.map((tab) => (
-            <option key={tab.id} value={tab.id}>
-              {tab.name}
-            </option>
-          ))}
-        </select>
-
-        <div
-          style={{
-            width: "1px",
-            height: "20px",
-            background: "var(--border-subtle)",
-            margin: "0 2px",
-          }}
-        />
-
-        {/* 2. Toggle Spider View vs Tree View */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            background: "var(--toggle-bg)",
-            borderRadius: "8px",
-            padding: "2px",
-          }}
-        >
-          <button
-            id="btn-view-spider"
-            onClick={() => onToggleViewMode("spider")}
-            title="Spider Radial View"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-              padding: "4px 8px",
-              borderRadius: "6px",
-              fontSize: "11.5px",
-              fontWeight: viewMode === "spider" ? 700 : 500,
-              background: viewMode === "spider" ? "var(--toggle-active-bg)" : "transparent",
-              color: viewMode === "spider" ? (isDark ? "#38bdf8" : "#0284c7") : "var(--text-muted)",
-              boxShadow: viewMode === "spider" ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
-            }}
-          >
-            <Share2 size={12} />
-            <span>Spider</span>
-          </button>
-
-          <button
-            id="btn-view-tree"
-            onClick={() => onToggleViewMode("tree")}
-            title="Hierarchical Tree View"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-              padding: "4px 8px",
-              borderRadius: "6px",
-              fontSize: "11.5px",
-              fontWeight: viewMode === "tree" ? 700 : 500,
-              background: viewMode === "tree" ? "var(--toggle-active-bg)" : "transparent",
-              color: viewMode === "tree" ? (isDark ? "#38bdf8" : "#0284c7") : "var(--text-muted)",
-              boxShadow: viewMode === "tree" ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
-            }}
-          >
-            <GitBranch size={12} />
-            <span>Tree</span>
-          </button>
+          {/* Expandable Mobile Search Bar */}
+          {isMobileSearchOpen && (
+            <div
+              className="glass-panel"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: "6px 10px",
+                borderRadius: "10px",
+                gap: "8px",
+              }}
+            >
+              <Search size={14} color="var(--text-dim)" />
+              <input
+                id="search-keywords-input-mobile"
+                type="text"
+                placeholder="Search keywords in web..."
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                autoFocus
+                style={{
+                  flex: 1,
+                  height: "26px",
+                  background: "transparent",
+                  border: "none",
+                  color: "var(--text-main)",
+                  fontSize: "12px",
+                }}
+              />
+              {searchQuery ? (
+                <button
+                  onClick={() => onSearchChange("")}
+                  style={{
+                    background: "transparent",
+                    color: "var(--text-dim)",
+                    padding: "2px",
+                  }}
+                >
+                  <X size={13} />
+                </button>
+              ) : null}
+              {searchQuery && (
+                <span
+                  style={{
+                    fontSize: "10.5px",
+                    fontWeight: 700,
+                    color: matchCount > 0 ? (isDark ? "#38bdf8" : "#0284c7") : "#ef4444",
+                  }}
+                >
+                  {matchCount}
+                </span>
+              )}
+            </div>
+          )}
         </div>
+      ) : (
+        /* DESKTOP TOP CONTROLS */
+        <>
+          {/* Top Left Search Input */}
+          <div
+            style={{
+              position: "fixed",
+              top: "16px",
+              left: "20px",
+              zIndex: 40,
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <div
+              className="glass-panel"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: "4px 10px",
+                borderRadius: "10px",
+                gap: "8px",
+                width: "220px",
+              }}
+            >
+              <Search size={14} color="var(--text-dim)" />
+              <input
+                id="search-keywords-input"
+                type="text"
+                placeholder="Search keywords..."
+                value={searchQuery}
+                onChange={(e) => onSearchChange(e.target.value)}
+                style={{
+                  width: "100%",
+                  height: "26px",
+                  background: "transparent",
+                  border: "none",
+                  color: "var(--text-main)",
+                  fontSize: "12px",
+                }}
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => onSearchChange("")}
+                  style={{
+                    background: "transparent",
+                    color: "var(--text-dim)",
+                    padding: "2px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <X size={13} />
+                </button>
+              )}
+            </div>
 
-        <div
-          style={{
-            width: "1px",
-            height: "20px",
-            background: "var(--border-subtle)",
-            margin: "0 2px",
-          }}
-        />
+            {searchQuery ? (
+              <span
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  color: matchCount > 0 ? (isDark ? "#38bdf8" : "#0284c7") : "#ef4444",
+                }}
+              >
+                {matchCount} match{matchCount === 1 ? "" : "es"}
+              </span>
+            ) : (
+              <div
+                className="glass-panel"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  padding: "6px 10px",
+                  borderRadius: "10px",
+                  fontSize: "11px",
+                  color: isDark ? "#38bdf8" : "#0284c7",
+                  fontWeight: 600,
+                }}
+              >
+                <ExternalLink size={11} />
+                <span>Click any node = Google Search</span>
+              </div>
+            )}
+          </div>
 
-        {/* 3. Toggle Dark / Light Theme */}
-        <button
-          id="btn-theme-toggle"
-          onClick={onToggleTheme}
-          title={isDark ? "Switch to Light Mode" : "Switch to Dark Theme"}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "5px",
-            padding: "5px 9px",
-            borderRadius: "8px",
-            fontSize: "12px",
-            fontWeight: 600,
-            background: "var(--toggle-bg)",
-            color: "var(--text-main)",
-            border: "1px solid var(--border-subtle)",
-          }}
-        >
-          {isDark ? <Sun size={13} color="#f59e0b" /> : <Moon size={13} color="#6366f1" />}
-          <span>{isDark ? "Light" : "Dark"}</span>
-        </button>
-      </div>
+          {/* Top Right End: Concept Select + View Toggle + Theme Toggle */}
+          <div
+            className="glass-panel"
+            style={{
+              position: "fixed",
+              top: "16px",
+              right: "20px",
+              zIndex: 40,
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "5px 8px",
+              borderRadius: "12px",
+            }}
+          >
+            <label
+              htmlFor="category-select-desktop"
+              style={{
+                fontSize: "11px",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                color: "var(--text-dim)",
+                paddingLeft: "4px",
+              }}
+            >
+              CONCEPT:
+            </label>
+            <select
+              id="category-select-desktop"
+              value={currentCategory}
+              onChange={(e) => onSelectCategory(e.target.value as ConceptCategory)}
+              style={{
+                padding: "5px 10px",
+                borderRadius: "8px",
+                fontSize: "12.5px",
+                fontWeight: 600,
+                color: "var(--text-main)",
+                background: "var(--select-bg)",
+                border: "1px solid var(--border-subtle)",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                cursor: "pointer",
+              }}
+            >
+              {CONCEPT_TABS.map((tab) => (
+                <option key={tab.id} value={tab.id}>
+                  {tab.name}
+                </option>
+              ))}
+            </select>
 
-      {/* Floating Bottom Navigation / Control Bar */}
+            <div
+              style={{
+                width: "1px",
+                height: "20px",
+                background: "var(--border-subtle)",
+                margin: "0 2px",
+              }}
+            />
+
+            {/* View Mode Toggle */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                background: "var(--toggle-bg)",
+                borderRadius: "8px",
+                padding: "2px",
+              }}
+            >
+              <button
+                id="btn-view-spider"
+                onClick={() => onToggleViewMode("spider")}
+                title="Spider Radial View"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  padding: "4px 8px",
+                  borderRadius: "6px",
+                  fontSize: "11.5px",
+                  fontWeight: viewMode === "spider" ? 700 : 500,
+                  background: viewMode === "spider" ? "var(--toggle-active-bg)" : "transparent",
+                  color: viewMode === "spider" ? (isDark ? "#38bdf8" : "#0284c7") : "var(--text-muted)",
+                  boxShadow: viewMode === "spider" ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
+                }}
+              >
+                <Share2 size={12} />
+                <span>Spider</span>
+              </button>
+
+              <button
+                id="btn-view-tree"
+                onClick={() => onToggleViewMode("tree")}
+                title="Hierarchical Tree View"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  padding: "4px 8px",
+                  borderRadius: "6px",
+                  fontSize: "11.5px",
+                  fontWeight: viewMode === "tree" ? 700 : 500,
+                  background: viewMode === "tree" ? "var(--toggle-active-bg)" : "transparent",
+                  color: viewMode === "tree" ? (isDark ? "#38bdf8" : "#0284c7") : "var(--text-muted)",
+                  boxShadow: viewMode === "tree" ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
+                }}
+              >
+                <GitBranch size={12} />
+                <span>Tree</span>
+              </button>
+            </div>
+
+            <div
+              style={{
+                width: "1px",
+                height: "20px",
+                background: "var(--border-subtle)",
+                margin: "0 2px",
+              }}
+            />
+
+            {/* Theme Toggle */}
+            <button
+              id="btn-theme-toggle"
+              onClick={onToggleTheme}
+              title={isDark ? "Switch to Light Mode" : "Switch to Dark Theme"}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+                padding: "5px 9px",
+                borderRadius: "8px",
+                fontSize: "12px",
+                fontWeight: 600,
+                background: "var(--toggle-bg)",
+                color: "var(--text-main)",
+                border: "1px solid var(--border-subtle)",
+              }}
+            >
+              {isDark ? <Sun size={13} color="#f59e0b" /> : <Moon size={13} color="#6366f1" />}
+              <span>{isDark ? "Light" : "Dark"}</span>
+            </button>
+          </div>
+        </>
+      )}
+
+      {/* ========================================================= */}
+      {/* FLOATING BOTTOM CONTROLS (ZOOM / RECENTER / RESET)        */}
+      {/* ========================================================= */}
       <div
         className="glass-panel"
         style={{
           position: "fixed",
-          bottom: "20px",
-          right: "20px",
+          bottom: "max(14px, env(safe-area-inset-bottom, 14px))",
+          right: "12px",
           display: "flex",
           alignItems: "center",
-          gap: "5px",
-          padding: "5px 7px",
+          gap: "4px",
+          padding: "5px 6px",
           borderRadius: "12px",
           zIndex: 40,
         }}
       >
-        {/* Zoom controls */}
         <button
           id="btn-zoom-out"
           onClick={onZoomOut}
           title="Zoom Out"
           style={{
-            width: "32px",
-            height: "32px",
+            width: "30px",
+            height: "30px",
             borderRadius: "6px",
             display: "flex",
             alignItems: "center",
@@ -333,8 +524,8 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           onClick={onResetZoom}
           title="Reset Zoom to 100%"
           style={{
-            padding: "0 6px",
-            height: "32px",
+            padding: "0 5px",
+            height: "30px",
             borderRadius: "6px",
             display: "flex",
             alignItems: "center",
@@ -342,7 +533,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             background: "transparent",
             color: "var(--text-main)",
             fontFamily: "var(--font-mono)",
-            fontSize: "11.5px",
+            fontSize: "11px",
             fontWeight: 600,
           }}
         >
@@ -354,8 +545,8 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           onClick={onZoomIn}
           title="Zoom In"
           style={{
-            width: "32px",
-            height: "32px",
+            width: "30px",
+            height: "30px",
             borderRadius: "6px",
             display: "flex",
             alignItems: "center",
@@ -370,20 +561,19 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
         <div
           style={{
             width: "1px",
-            height: "20px",
+            height: "18px",
             background: "var(--border-subtle)",
             margin: "0 2px",
           }}
         />
 
-        {/* Recenter button */}
         <button
           id="btn-recenter"
           onClick={onRecenter}
           title="Center Canvas"
           style={{
-            width: "32px",
-            height: "32px",
+            width: "30px",
+            height: "30px",
             borderRadius: "6px",
             display: "flex",
             alignItems: "center",
@@ -395,7 +585,6 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           <Crosshair size={15} />
         </button>
 
-        {/* Reset web layout */}
         <button
           id="btn-reset-layout"
           onClick={onResetLayout}
@@ -403,21 +592,20 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "5px",
-            padding: "0 8px",
-            height: "32px",
+            gap: "4px",
+            padding: "0 7px",
+            height: "30px",
             borderRadius: "6px",
             background: "transparent",
             color: "var(--text-muted)",
-            fontSize: "12px",
+            fontSize: "11px",
             fontWeight: 500,
           }}
         >
-          <RotateCcw size={13} />
-          <span>Reset {viewMode === "tree" ? "Tree" : "Spider"}</span>
+          <RotateCcw size={12} />
+          <span>Reset</span>
         </button>
 
-        {/* Toggle level 3 details */}
         <button
           id="btn-toggle-details"
           onClick={onToggleLevel3}
@@ -425,27 +613,26 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "4px",
-            padding: "0 8px",
-            height: "32px",
+            gap: "3px",
+            padding: "0 7px",
+            height: "30px",
             borderRadius: "6px",
             background: showLevel3 ? (isDark ? "rgba(56, 189, 248, 0.2)" : "#e0f2fe") : "transparent",
             color: showLevel3 ? (isDark ? "#38bdf8" : "#0284c7") : "var(--text-muted)",
-            fontSize: "12px",
+            fontSize: "11px",
             fontWeight: 600,
           }}
         >
-          <Layers size={13} />
-          <span>Details</span>
+          <Layers size={12} />
+          <span className="hide-on-mobile">Details</span>
         </button>
 
-        {/* Help button */}
         <button
           onClick={() => setShowHelp(!showHelp)}
           title="Help & Shortcuts"
           style={{
-            width: "32px",
-            height: "32px",
+            width: "30px",
+            height: "30px",
             borderRadius: "6px",
             display: "flex",
             alignItems: "center",
@@ -454,7 +641,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             color: "var(--text-dim)",
           }}
         >
-          <HelpCircle size={15} />
+          <HelpCircle size={14} />
         </button>
       </div>
 
@@ -465,8 +652,8 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           style={{
             position: "fixed",
             bottom: "74px",
-            right: "20px",
-            width: "310px",
+            right: "12px",
+            width: "min(320px, calc(100vw - 24px))",
             borderRadius: "12px",
             padding: "16px",
             zIndex: 60,
@@ -486,7 +673,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
               color: isDark ? "#38bdf8" : "#0284c7",
             }}
           >
-            <span>Navigation & Shortcuts</span>
+            <span>Touch & Navigation</span>
             <button
               onClick={() => setShowHelp(false)}
               style={{
@@ -500,27 +687,27 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           </div>
           <ul style={{ paddingLeft: "16px", display: "flex", flexDirection: "column", gap: "6px" }}>
             <li>
-              <strong>Click Keyword:</strong> Opens Google Search for that exact keyword so you learn immediately without reading long text walls.
+              <strong>Pinch with 2 fingers:</strong> Zoom in and out smoothly on mobile.
             </li>
             <li>
-              <strong>Spider / Tree Toggle:</strong> Switch between radial spider-web view and top-down hierarchical tree view.
+              <strong>Drag with 1 finger:</strong> Pan around the 2D canvas.
             </li>
             <li>
-              <strong>Dark / Light Toggle:</strong> Switch seamlessly between Dark Theme and Light Mode.
+              <strong>Tap any keyword:</strong> Opens Google Search for that exact term immediately.
             </li>
             <li>
-              <strong>Drag Keyword:</strong> Freely reposition any node in the open 2D canvas.
+              <strong>Drag any node:</strong> Move it anywhere in the 2D space.
             </li>
             <li>
-              <strong>Pan & Zoom:</strong> Drag empty canvas to pan, mouse wheel or <kbd>+</kbd>/<kbd>-</kbd> to zoom.
+              <strong>Spider / Tree:</strong> Switch between radial spider web and hierarchical tree.
             </li>
           </ul>
         </div>
       )}
 
-      {/* Floating Bottom Left Helper reminder */}
+      {/* Floating Bottom Left Helper reminder - hidden on mobile screens */}
       <div
-        className="glass-panel"
+        className="glass-panel hide-on-mobile"
         style={{
           position: "fixed",
           bottom: "20px",
