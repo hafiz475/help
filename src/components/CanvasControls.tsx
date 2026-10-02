@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ConceptCategory, CONCEPT_TABS } from "@/data/concepts";
+import { ViewMode } from "@/utils/spiderLayout";
 import {
   ZoomIn,
   ZoomOut,
@@ -12,11 +13,19 @@ import {
   ExternalLink,
   Search,
   X,
+  Sun,
+  Moon,
+  Share2,
+  GitBranch,
 } from "lucide-react";
 
 interface CanvasControlsProps {
   currentCategory: ConceptCategory;
   onSelectCategory: (category: ConceptCategory) => void;
+  viewMode: ViewMode;
+  onToggleViewMode: (mode: ViewMode) => void;
+  theme: "light" | "dark";
+  onToggleTheme: () => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
   matchCount: number;
@@ -33,6 +42,10 @@ interface CanvasControlsProps {
 export const CanvasControls: React.FC<CanvasControlsProps> = ({
   currentCategory,
   onSelectCategory,
+  viewMode,
+  onToggleViewMode,
+  theme,
+  onToggleTheme,
   searchQuery,
   onSearchChange,
   matchCount,
@@ -46,10 +59,11 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
   onToggleLevel3,
 }) => {
   const [showHelp, setShowHelp] = React.useState(false);
+  const isDark = theme === "dark";
 
   return (
     <>
-      {/* Top Floating Minimal Bar: Simple Search + Google Tip */}
+      {/* Top Left Floating Minimal Bar: Search + Google Tip */}
       <div
         style={{
           position: "fixed",
@@ -72,7 +86,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             width: "220px",
           }}
         >
-          <Search size={14} color="#64748b" />
+          <Search size={14} color="var(--text-dim)" />
           <input
             id="search-keywords-input"
             type="text"
@@ -84,7 +98,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
               height: "26px",
               background: "transparent",
               border: "none",
-              color: "#0f172a",
+              color: "var(--text-main)",
               fontSize: "12px",
             }}
           />
@@ -93,7 +107,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
               onClick={() => onSearchChange("")}
               style={{
                 background: "transparent",
-                color: "#64748b",
+                color: "var(--text-dim)",
                 padding: "2px",
                 display: "flex",
                 alignItems: "center",
@@ -109,7 +123,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             style={{
               fontSize: "11px",
               fontWeight: 600,
-              color: matchCount > 0 ? "#0284c7" : "#ef4444",
+              color: matchCount > 0 ? (isDark ? "#38bdf8" : "#0284c7") : "#ef4444",
             }}
           >
             {matchCount} match{matchCount === 1 ? "" : "es"}
@@ -124,7 +138,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
               padding: "6px 10px",
               borderRadius: "10px",
               fontSize: "11px",
-              color: "#0284c7",
+              color: isDark ? "#38bdf8" : "#0284c7",
               fontWeight: 600,
             }}
           >
@@ -134,7 +148,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
         )}
       </div>
 
-      {/* Top Right End: Simple Concept Dropdown Box */}
+      {/* Top Right End: Concept Select + View Mode (Spider/Tree) + Theme (Light/Dark) */}
       <div
         className="glass-panel"
         style={{
@@ -145,10 +159,11 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           display: "flex",
           alignItems: "center",
           gap: "8px",
-          padding: "6px 10px",
-          borderRadius: "10px",
+          padding: "5px 8px",
+          borderRadius: "12px",
         }}
       >
+        {/* 1. Concept Dropdown */}
         <label
           htmlFor="category-select"
           style={{
@@ -156,7 +171,8 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             fontWeight: 700,
             textTransform: "uppercase",
             letterSpacing: "0.05em",
-            color: "#64748b",
+            color: "var(--text-dim)",
+            paddingLeft: "4px",
           }}
         >
           CONCEPT:
@@ -166,13 +182,13 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           value={currentCategory}
           onChange={(e) => onSelectCategory(e.target.value as ConceptCategory)}
           style={{
-            padding: "6px 12px",
+            padding: "5px 10px",
             borderRadius: "8px",
-            fontSize: "13px",
+            fontSize: "12.5px",
             fontWeight: 600,
-            color: "#0f172a",
-            background: "#ffffff",
-            border: "1px solid #cbd5e1",
+            color: "var(--text-main)",
+            background: "var(--select-bg)",
+            border: "1px solid var(--border-subtle)",
             boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
             cursor: "pointer",
           }}
@@ -183,6 +199,99 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             </option>
           ))}
         </select>
+
+        <div
+          style={{
+            width: "1px",
+            height: "20px",
+            background: "var(--border-subtle)",
+            margin: "0 2px",
+          }}
+        />
+
+        {/* 2. Toggle Spider View vs Tree View */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            background: "var(--toggle-bg)",
+            borderRadius: "8px",
+            padding: "2px",
+          }}
+        >
+          <button
+            id="btn-view-spider"
+            onClick={() => onToggleViewMode("spider")}
+            title="Spider Radial View"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+              padding: "4px 8px",
+              borderRadius: "6px",
+              fontSize: "11.5px",
+              fontWeight: viewMode === "spider" ? 700 : 500,
+              background: viewMode === "spider" ? "var(--toggle-active-bg)" : "transparent",
+              color: viewMode === "spider" ? (isDark ? "#38bdf8" : "#0284c7") : "var(--text-muted)",
+              boxShadow: viewMode === "spider" ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
+            }}
+          >
+            <Share2 size={12} />
+            <span>Spider</span>
+          </button>
+
+          <button
+            id="btn-view-tree"
+            onClick={() => onToggleViewMode("tree")}
+            title="Hierarchical Tree View"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+              padding: "4px 8px",
+              borderRadius: "6px",
+              fontSize: "11.5px",
+              fontWeight: viewMode === "tree" ? 700 : 500,
+              background: viewMode === "tree" ? "var(--toggle-active-bg)" : "transparent",
+              color: viewMode === "tree" ? (isDark ? "#38bdf8" : "#0284c7") : "var(--text-muted)",
+              boxShadow: viewMode === "tree" ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
+            }}
+          >
+            <GitBranch size={12} />
+            <span>Tree</span>
+          </button>
+        </div>
+
+        <div
+          style={{
+            width: "1px",
+            height: "20px",
+            background: "var(--border-subtle)",
+            margin: "0 2px",
+          }}
+        />
+
+        {/* 3. Toggle Dark / Light Theme */}
+        <button
+          id="btn-theme-toggle"
+          onClick={onToggleTheme}
+          title={isDark ? "Switch to Light Mode" : "Switch to Dark Theme"}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "5px",
+            padding: "5px 9px",
+            borderRadius: "8px",
+            fontSize: "12px",
+            fontWeight: 600,
+            background: "var(--toggle-bg)",
+            color: "var(--text-main)",
+            border: "1px solid var(--border-subtle)",
+          }}
+        >
+          {isDark ? <Sun size={13} color="#f59e0b" /> : <Moon size={13} color="#6366f1" />}
+          <span>{isDark ? "Light" : "Dark"}</span>
+        </button>
       </div>
 
       {/* Floating Bottom Navigation / Control Bar */}
@@ -194,8 +303,8 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           right: "20px",
           display: "flex",
           alignItems: "center",
-          gap: "6px",
-          padding: "6px 8px",
+          gap: "5px",
+          padding: "5px 7px",
           borderRadius: "12px",
           zIndex: 40,
         }}
@@ -213,10 +322,8 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             alignItems: "center",
             justifyContent: "center",
             background: "transparent",
-            color: "#475569",
+            color: "var(--text-muted)",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#f1f5f9")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
         >
           <ZoomOut size={15} />
         </button>
@@ -233,13 +340,11 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             alignItems: "center",
             justifyContent: "center",
             background: "transparent",
-            color: "#0f172a",
+            color: "var(--text-main)",
             fontFamily: "var(--font-mono)",
             fontSize: "11.5px",
             fontWeight: 600,
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#f1f5f9")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
         >
           {Math.round(zoom * 100)}%
         </button>
@@ -256,10 +361,8 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             alignItems: "center",
             justifyContent: "center",
             background: "transparent",
-            color: "#475569",
+            color: "var(--text-muted)",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#f1f5f9")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
         >
           <ZoomIn size={15} />
         </button>
@@ -267,8 +370,8 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
         <div
           style={{
             width: "1px",
-            height: "22px",
-            background: "#e2e8f0",
+            height: "20px",
+            background: "var(--border-subtle)",
             margin: "0 2px",
           }}
         />
@@ -286,10 +389,8 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             alignItems: "center",
             justifyContent: "center",
             background: "transparent",
-            color: "#475569",
+            color: "var(--text-muted)",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#f1f5f9")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
         >
           <Crosshair size={15} />
         </button>
@@ -298,7 +399,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
         <button
           id="btn-reset-layout"
           onClick={onResetLayout}
-          title="Snap nodes back to spider radial formation"
+          title="Reset layout formation"
           style={{
             display: "flex",
             alignItems: "center",
@@ -307,15 +408,13 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             height: "32px",
             borderRadius: "6px",
             background: "transparent",
-            color: "#475569",
+            color: "var(--text-muted)",
             fontSize: "12px",
             fontWeight: 500,
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "#f1f5f9")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
         >
           <RotateCcw size={13} />
-          <span>Reset Web</span>
+          <span>Reset {viewMode === "tree" ? "Tree" : "Spider"}</span>
         </button>
 
         {/* Toggle level 3 details */}
@@ -330,8 +429,8 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             padding: "0 8px",
             height: "32px",
             borderRadius: "6px",
-            background: showLevel3 ? "#e0f2fe" : "transparent",
-            color: showLevel3 ? "#0284c7" : "#475569",
+            background: showLevel3 ? (isDark ? "rgba(56, 189, 248, 0.2)" : "#e0f2fe") : "transparent",
+            color: showLevel3 ? (isDark ? "#38bdf8" : "#0284c7") : "var(--text-muted)",
             fontSize: "12px",
             fontWeight: 600,
           }}
@@ -351,8 +450,8 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: showHelp ? "#f1f5f9" : "transparent",
-            color: "#64748b",
+            background: showHelp ? "var(--toggle-bg)" : "transparent",
+            color: "var(--text-dim)",
           }}
         >
           <HelpCircle size={15} />
@@ -367,11 +466,11 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             position: "fixed",
             bottom: "74px",
             right: "20px",
-            width: "300px",
+            width: "310px",
             borderRadius: "12px",
             padding: "16px",
             zIndex: 60,
-            color: "#0f172a",
+            color: "var(--text-main)",
             fontSize: "12px",
             lineHeight: 1.6,
           }}
@@ -384,15 +483,15 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
               marginBottom: "8px",
               fontWeight: 700,
               fontSize: "13px",
-              color: "#0284c7",
+              color: isDark ? "#38bdf8" : "#0284c7",
             }}
           >
-            <span>Spider Web Guide</span>
+            <span>Navigation & Shortcuts</span>
             <button
               onClick={() => setShowHelp(false)}
               style={{
                 background: "transparent",
-                color: "#64748b",
+                color: "var(--text-dim)",
                 fontSize: "14px",
               }}
             >
@@ -401,19 +500,19 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           </div>
           <ul style={{ paddingLeft: "16px", display: "flex", flexDirection: "column", gap: "6px" }}>
             <li>
-              <strong>Click Keyword:</strong> Opens Google Search for that exact keyword so you learn immediately without text clutter.
+              <strong>Click Keyword:</strong> Opens Google Search for that exact keyword so you learn immediately without reading long text walls.
+            </li>
+            <li>
+              <strong>Spider / Tree Toggle:</strong> Switch between radial spider-web view and top-down hierarchical tree view.
+            </li>
+            <li>
+              <strong>Dark / Light Toggle:</strong> Switch seamlessly between Dark Theme and Light Mode.
             </li>
             <li>
               <strong>Drag Keyword:</strong> Freely reposition any node in the open 2D canvas.
             </li>
             <li>
-              <strong>Pan Canvas:</strong> Click and drag on empty canvas background.
-            </li>
-            <li>
-              <strong>Zoom:</strong> Mouse wheel or use the <kbd>+</kbd> / <kbd>-</kbd> buttons.
-            </li>
-            <li>
-              <strong>Concept Dropdown:</strong> Switch headings to re-center the web on that topic.
+              <strong>Pan & Zoom:</strong> Drag empty canvas to pan, mouse wheel or <kbd>+</kbd>/<kbd>-</kbd> to zoom.
             </li>
           </ul>
         </div>
@@ -433,7 +532,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           padding: "6px 12px",
           borderRadius: "8px",
           fontSize: "11px",
-          color: "#64748b",
+          color: "var(--text-dim)",
           pointerEvents: "none",
         }}
       >

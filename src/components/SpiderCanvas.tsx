@@ -5,13 +5,17 @@ import { SpiderNode, ConceptCategory, ALL_NODES } from "@/data/concepts";
 import {
   PositionedNode,
   Edge,
+  ViewMode,
   calculateSpiderLayout,
+  calculateTreeLayout,
   getNodesForCategory,
 } from "@/utils/spiderLayout";
 import { SpiderNodeCard } from "./SpiderNodeCard";
 
 interface SpiderCanvasProps {
   currentCategory: ConceptCategory;
+  viewMode: ViewMode;
+  theme: "light" | "dark";
   searchQuery: string;
   zoom: number;
   setZoom: React.Dispatch<React.SetStateAction<number>>;
@@ -24,6 +28,8 @@ interface SpiderCanvasProps {
 
 export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   currentCategory,
+  viewMode,
+  theme,
   searchQuery,
   zoom,
   setZoom,
@@ -34,6 +40,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   onMatchCountChange,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isDark = theme === "dark";
 
   // Pan state (canvas offset in px)
   const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -51,30 +58,36 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   const dragNodeStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const hasMovedSignificantlyRef = useRef<boolean>(false);
 
-  // Initialize/Recalculate Spider Layout
+  // Initialize/Recalculate Layout based on current viewMode (spider vs tree)
   const initLayout = useCallback(() => {
     const { nodes: catNodes, rootId: rId } = getNodesForCategory(
       ALL_NODES,
       currentCategory
     );
-    const layout = calculateSpiderLayout(catNodes, rId, currentCategory);
+    const layout =
+      viewMode === "tree"
+        ? calculateTreeLayout(catNodes, rId)
+        : calculateSpiderLayout(catNodes, rId, currentCategory);
+
     setNodes(layout.nodes);
     setEdges(layout.edges);
-  }, [currentCategory]);
+  }, [currentCategory, viewMode]);
 
   useEffect(() => {
     initLayout();
     if (typeof window !== "undefined") {
-      setPan({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+      const centerY = viewMode === "tree" ? window.innerHeight * 0.45 : window.innerHeight / 2;
+      setPan({ x: window.innerWidth / 2, y: centerY });
     }
-  }, [initLayout]);
+  }, [initLayout, viewMode]);
 
   // Recenter trigger
   useEffect(() => {
     if (recenterTrigger > 0 && typeof window !== "undefined") {
-      setPan({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+      const centerY = viewMode === "tree" ? window.innerHeight * 0.45 : window.innerHeight / 2;
+      setPan({ x: window.innerWidth / 2, y: centerY });
     }
-  }, [recenterTrigger]);
+  }, [recenterTrigger, viewMode]);
 
   // Reset layout trigger
   useEffect(() => {
@@ -137,7 +150,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     setPan({ x: newPanX, y: newPanY });
   };
 
-  // Canvas Panning (pointer events on empty canvas)
+  // Canvas Panning
   const handleCanvasPointerDown = (e: React.PointerEvent) => {
     if (e.target !== containerRef.current && (e.target as HTMLElement).tagName !== "svg") {
       return;
@@ -255,9 +268,9 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
           }}
         >
           <g transform="translate(4000, 4000)">
-            {/* Spider concentric rings - Light theme */}
-            {showSpiderRings && (
-              <g opacity="0.45">
+            {/* Spider concentric rings - Only displayed in Spider Mode */}
+            {viewMode === "spider" && showSpiderRings && (
+              <g opacity={isDark ? "0.2" : "0.45"}>
                 {[140, 280, 420, 560, 700, 840, 980].map((radius, idx) => (
                   <circle
                     key={radius}
@@ -265,13 +278,13 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                     cy="0"
                     r={radius}
                     fill="none"
-                    stroke="#94a3b8"
+                    stroke={isDark ? "#38bdf8" : "#94a3b8"}
                     strokeWidth={idx % 2 === 1 ? "1" : "0.75"}
                     strokeDasharray={idx % 2 === 1 ? "5 6" : "none"}
                   />
                 ))}
 
-                {/* Spider radial spokes with rounded coordinates to avoid float hydration differences */}
+                {/* Spider radial spokes */}
                 {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map(
                   (deg) => {
                     const rad = (deg * Math.PI) / 180;
@@ -284,7 +297,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                         y1="0"
                         x2={x2}
                         y2={y2}
-                        stroke="#cbd5e1"
+                        stroke={isDark ? "#38bdf8" : "#cbd5e1"}
                         strokeWidth="0.8"
                         strokeDasharray="4 6"
                       />
@@ -303,25 +316,46 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
               const isHighlighted =
                 matchedNodes.has(edge.source) || matchedNodes.has(edge.target);
 
-              // Light theme stroke colors
-              let strokeColor = "rgba(2, 132, 199, 0.45)";
-              if (edge.category === "scope") strokeColor = "rgba(124, 58, 237, 0.45)";
-              if (edge.category === "node") strokeColor = "rgba(22, 163, 74, 0.45)";
-              if (edge.category === "all") strokeColor = "rgba(217, 119, 6, 0.45)";
-
-              if (isHighlighted) {
-                strokeColor = "#d97706";
+              // Stroke colors based on theme and category
+              let strokeColor = isDark
+                ? "rgba(56, 189, 248, 0.45)"
+                : "rgba(2, 132, 199, 0.45)";
+              if (edge.category === "scope") {
+                strokeColor = isDark
+                  ? "rgba(192, 132, 252, 0.45)"
+                  : "rgba(124, 58, 237, 0.45)";
+              } else if (edge.category === "node") {
+                strokeColor = isDark
+                  ? "rgba(34, 197, 94, 0.45)"
+                  : "rgba(22, 163, 74, 0.45)";
+              } else if (edge.category === "all") {
+                strokeColor = isDark
+                  ? "rgba(245, 158, 11, 0.45)"
+                  : "rgba(217, 119, 6, 0.45)";
               }
 
-              // Subtle curved spider thread (cubic bezier)
-              const dx = targetNode.x - sourceNode.x;
-              const dy = targetNode.y - sourceNode.y;
-              const cx1 = Math.round(sourceNode.x + dx * 0.4);
-              const cy1 = Math.round(sourceNode.y + dy * 0.1);
-              const cx2 = Math.round(sourceNode.x + dx * 0.6);
-              const cy2 = Math.round(sourceNode.y + dy * 0.9);
+              if (isHighlighted) {
+                strokeColor = isDark ? "#f59e0b" : "#d97706";
+              }
 
-              const pathData = `M ${sourceNode.x} ${sourceNode.y} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${targetNode.x} ${targetNode.y}`;
+              // Path computation based on viewMode
+              let pathData = "";
+              if (viewMode === "tree") {
+                // Top-to-bottom tree curve
+                const dy = targetNode.y - sourceNode.y;
+                const cy1 = Math.round(sourceNode.y + dy * 0.5);
+                const cy2 = Math.round(targetNode.y - dy * 0.5);
+                pathData = `M ${sourceNode.x} ${sourceNode.y} C ${sourceNode.x} ${cy1}, ${targetNode.x} ${cy2}, ${targetNode.x} ${targetNode.y}`;
+              } else {
+                // Radial spider thread curve
+                const dx = targetNode.x - sourceNode.x;
+                const dy = targetNode.y - sourceNode.y;
+                const cx1 = Math.round(sourceNode.x + dx * 0.4);
+                const cy1 = Math.round(sourceNode.y + dy * 0.1);
+                const cx2 = Math.round(sourceNode.x + dx * 0.6);
+                const cy2 = Math.round(sourceNode.y + dy * 0.9);
+                pathData = `M ${sourceNode.x} ${sourceNode.y} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${targetNode.x} ${targetNode.y}`;
+              }
 
               return (
                 <g key={`${edge.source}-${edge.target}-${idx}`}>
@@ -356,6 +390,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
             <SpiderNodeCard
               key={node.id}
               node={node}
+              theme={theme}
               isDragging={draggedNodeId === node.id}
               isMatched={matchedNodes.has(node.id)}
               hasQuery={Boolean(queryLower)}

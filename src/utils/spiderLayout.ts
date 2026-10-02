@@ -1,5 +1,7 @@
 import { SpiderNode, ConceptCategory } from "@/data/concepts";
 
+export type ViewMode = "spider" | "tree";
+
 export interface PositionedNode extends SpiderNode {
   x: number;
   y: number;
@@ -69,7 +71,6 @@ export function calculateSpiderLayout(
 
   // Allocate angular sectors to Level 1 nodes
   l1Children.forEach((l1, i) => {
-    // Distribute angles evenly around the 360 circle
     const angle = (2 * Math.PI * i) / l1Count - Math.PI / 2;
     const x1 = Math.round(Math.cos(angle) * r1);
     const y1 = Math.round(Math.sin(angle) * r1);
@@ -92,7 +93,6 @@ export function calculateSpiderLayout(
     const l2Count = l2Children.length;
 
     if (l2Count > 0) {
-      // Angular spread for Level 2 children around the parent's heading angle
       const spread = Math.min((2 * Math.PI) / l1Count * 0.95, Math.PI * 0.85);
       const startAngle = angle - spread / 2;
 
@@ -100,7 +100,6 @@ export function calculateSpiderLayout(
         const step = l2Count === 1 ? 0.5 : j / (l2Count - 1);
         const l2Angle = l2Count === 1 ? angle : startAngle + step * spread;
         
-        // Add subtle staggered radius so items don't collide if many
         const staggeredR2 = r2 + (j % 2 === 1 ? 40 : -20);
         const x2 = Math.round(Math.cos(l2Angle) * staggeredR2);
         const y2 = Math.round(Math.sin(l2Angle) * staggeredR2);
@@ -158,6 +157,103 @@ export function calculateSpiderLayout(
 }
 
 /**
+ * Calculates hierarchical Top-to-Bottom Tree layout.
+ */
+export function calculateTreeLayout(
+  nodes: SpiderNode[],
+  rootId: string
+): { nodes: PositionedNode[]; edges: Edge[] } {
+  const rootNode = nodes.find((n) => n.id === rootId);
+  if (!rootNode) return { nodes: [], edges: [] };
+
+  const childMap = new Map<string, SpiderNode[]>();
+  nodes.forEach((node) => {
+    if (node.parentId) {
+      const list = childMap.get(node.parentId) || [];
+      list.push(node);
+      childMap.set(node.parentId, list);
+    }
+  });
+
+  const positioned: Map<string, PositionedNode> = new Map();
+  const edges: Edge[] = [];
+
+  // Vertical tier levels
+  const yLevel0 = -320;
+  const yLevel1 = -130;
+  const yLevel2 = 80;
+  const yLevel3 = 300;
+
+  // Function to count leaves under a node
+  function countLeaves(nodeId: string): number {
+    const children = childMap.get(nodeId) || [];
+    if (children.length === 0) return 1;
+    let sum = 0;
+    for (const child of children) {
+      sum += countLeaves(child.id);
+    }
+    return sum;
+  }
+
+  const leafSpacing = 160;
+  const totalLeaves = countLeaves(rootNode.id);
+  const totalWidth = totalLeaves * leafSpacing;
+  let currentLeafX = -Math.round(totalWidth / 2) + Math.round(leafSpacing / 2);
+
+  // Position subtrees recursively
+  function layoutSubtree(node: SpiderNode, currentLevel: number): number {
+    const children = childMap.get(node.id) || [];
+    let yPos = yLevel0;
+    if (currentLevel === 1) yPos = yLevel1;
+    else if (currentLevel === 2) yPos = yLevel2;
+    else if (currentLevel >= 3) yPos = yLevel3;
+
+    if (children.length === 0) {
+      const nodeX = currentLeafX;
+      currentLeafX += leafSpacing;
+      positioned.set(node.id, {
+        ...node,
+        x: nodeX,
+        y: yPos,
+      });
+      return nodeX;
+    }
+
+    const childXPositions: number[] = [];
+    for (const child of children) {
+      edges.push({
+        source: node.id,
+        target: child.id,
+        category: child.category,
+        level: currentLevel + 1,
+      });
+      const cX = layoutSubtree(child, currentLevel + 1);
+      childXPositions.push(cX);
+    }
+
+    // Center parent horizontally above its children
+    const firstX = childXPositions[0];
+    const lastX = childXPositions[childXPositions.length - 1];
+    const nodeX = Math.round((firstX + lastX) / 2);
+
+    positioned.set(node.id, {
+      ...node,
+      x: nodeX,
+      y: yPos,
+    });
+
+    return nodeX;
+  }
+
+  layoutSubtree(rootNode, 0);
+
+  return {
+    nodes: Array.from(positioned.values()),
+    edges,
+  };
+}
+
+/**
  * Filter nodes for the chosen category tab
  */
 export function getNodesForCategory(
@@ -165,7 +261,6 @@ export function getNodesForCategory(
   category: ConceptCategory
 ): { nodes: SpiderNode[]; rootId: string } {
   if (category === "all") {
-    // For all, make root-all the master parent of the 3 root category nodes
     const rootAll = allNodes.find((n) => n.id === "root-all")!;
     const v8Root = { ...allNodes.find((n) => n.id === "root-v8")!, parentId: "root-all", level: 1 };
     const scopeRoot = { ...allNodes.find((n) => n.id === "root-scope")!, parentId: "root-all", level: 1 };
