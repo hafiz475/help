@@ -822,7 +822,8 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                 const isCardHighlighted = isEdgeHighlighted(edge);
                 const edgeDimmed = isBranchActive && !isCardHighlighted;
 
-                const strokeColor = isCardMatched || isCardHighlighted
+                // Keep authentic branch color on highlight, only use amber for explicit text search match
+                const strokeColor = isCardMatched
                   ? isDark
                     ? "#f59e0b"
                     : "#d97706"
@@ -837,9 +838,9 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                       <path
                         d={pathData}
                         fill="none"
-                        stroke={isCardHighlighted ? (isDark ? "rgba(245, 158, 11, 0.6)" : "rgba(217, 119, 6, 0.4)") : colorSpec.glow}
+                        stroke={isCardMatched ? (isDark ? "rgba(245, 158, 11, 0.6)" : "rgba(217, 119, 6, 0.4)") : colorSpec.glow}
                         strokeWidth={strokeWidth + 3.2}
-                        strokeOpacity={isCardHighlighted ? 0.6 : 0.28}
+                        strokeOpacity={isCardHighlighted ? 0.65 : 0.28}
                       />
                     )}
                     <path
@@ -893,7 +894,8 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                   strokeOpacity = edgeDimmed ? 0.08 : isEdgeActive ? 1 : isHighlighted ? 1 : 0.72;
                 }
 
-                if (isEdgeActive || isHighlighted) {
+                // Only override to amber if explicit text search keyword match
+                if (isHighlighted && queryLower) {
                   strokeColor = isDark ? "#f59e0b" : "#d97706";
                 }
 
@@ -915,14 +917,14 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
                 return (
                   <g key={`edge-node-${edge.source}-${edge.target}-${idx}`}>
-                    {/* Ambient Glow for active or L1/L2 threads */}
+                    {/* Ambient Glow for active or L1/L2 threads - preserves native thread color! */}
                     {(isEdgeActive || (edge.level <= 2 && !edgeDimmed)) && (
                       <path
                         d={pathData}
                         fill="none"
-                        stroke={isEdgeActive ? (isDark ? "rgba(245, 158, 11, 0.6)" : "rgba(217, 119, 6, 0.4)") : colorSpec.glow}
-                        strokeWidth={strokeWidth + 4}
-                        strokeOpacity={isEdgeActive ? 0.6 : 0.35}
+                        stroke={isHighlighted && queryLower ? (isDark ? "rgba(245, 158, 11, 0.6)" : "rgba(217, 119, 6, 0.4)") : colorSpec.glow}
+                        strokeWidth={strokeWidth + 4.2}
+                        strokeOpacity={isEdgeActive ? 0.68 : 0.35}
                       />
                     )}
                     <path
@@ -955,21 +957,27 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
         {/* HTML Draggable Nodes & Group Cards */}
         <div style={{ pointerEvents: "auto" }}>
           {/* Keyword Nodes (including center circle, pillars, and branched sub-items) */}
-          {(viewMode === "group" ? nodes : visibleNodes).map((node) => (
-            <SpiderNodeCard
-              key={node.id}
-              node={node}
-              theme={theme}
-              isDragging={draggedNodeId === node.id}
-              isMatched={matchedNodes.has(node.id)}
-              hasQuery={Boolean(queryLower)}
-              onPointerDown={handleNodePointerDown}
-              onClick={handleNodeClick}
-              isSelected={selectedNodeIds.includes(node.id)}
-              isBranchConnected={highlightedNodeIds.has(node.id)}
-              isBranchActive={isBranchActive}
-            />
-          ))}
+          {(() => {
+            const primarySelectedId =
+              selectedNodeIds.length > 0 ? selectedNodeIds[selectedNodeIds.length - 1] : null;
+
+            return (viewMode === "group" ? nodes : visibleNodes).map((node) => (
+              <SpiderNodeCard
+                key={node.id}
+                node={node}
+                theme={theme}
+                isDragging={draggedNodeId === node.id}
+                isMatched={matchedNodes.has(node.id)}
+                hasQuery={Boolean(queryLower)}
+                onPointerDown={handleNodePointerDown}
+                onClick={handleNodeClick}
+                isSelected={selectedNodeIds.includes(node.id)}
+                isPrimarySelected={node.id === primarySelectedId}
+                isBranchConnected={highlightedNodeIds.has(node.id)}
+                isBranchActive={isBranchActive}
+              />
+            ));
+          })()}
 
           {/* Group Cards: ONLY for groups that have > 3 children */}
           {viewMode === "group" &&

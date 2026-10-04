@@ -1,21 +1,20 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { SpiderNode } from "@/data/concepts";
 import { PositionedNode } from "@/utils/spiderLayout";
 import { getConceptStory } from "@/data/conceptStories";
 import {
   ExternalLink,
-  BookOpen,
   X,
   Trash2,
   Copy,
   Check,
-  Sparkles,
-  GitBranch,
-  CornerDownRight,
-  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+  ChevronsUpDown,
   Terminal,
+  Bookmark,
 } from "lucide-react";
 
 interface ConceptNotebookDrawerProps {
@@ -40,16 +39,51 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
   onClearAll,
 }) => {
   const isDark = theme === "dark";
-  const [copiedId, setCopiedId] = React.useState<string | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  // Accordion state: set of expanded node IDs
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(() => {
+    return new Set(selectedNodes.map((n) => n.id));
+  });
+
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const lastCardRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to the newest attached concept card
+  // Auto-expand any newly selected/attached nodes and scroll to them
   useEffect(() => {
-    if (selectedNodes.length > 0 && lastCardRef.current) {
-      lastCardRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (selectedNodes.length > 0) {
+      const latest = selectedNodes[selectedNodes.length - 1];
+      setExpandedIds((prev) => {
+        const next = new Set(prev);
+        next.add(latest.id);
+        return next;
+      });
+
+      if (lastCardRef.current) {
+        lastCardRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
     }
   }, [selectedNodes.length]);
+
+  const toggleAccordion = (nodeId: string) => {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(nodeId)) {
+        next.delete(nodeId);
+      } else {
+        next.add(nodeId);
+      }
+      return next;
+    });
+  };
+
+  const handleToggleAll = () => {
+    if (expandedIds.size === selectedNodes.length) {
+      setExpandedIds(new Set());
+    } else {
+      setExpandedIds(new Set(selectedNodes.map((n) => n.id)));
+    }
+  };
 
   const handleCopyCode = (id: string, code: string) => {
     navigator.clipboard.writeText(code);
@@ -65,6 +99,20 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
 
   if (!isOpen || selectedNodes.length === 0) return null;
 
+  const allExpanded = expandedIds.size === selectedNodes.length;
+
+  // Twitter/X Design Tokens
+  const twitterFont =
+    '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+  const bgMain = isDark ? "#000000" : "#ffffff";
+  const borderSubtle = isDark ? "rgb(47, 51, 54)" : "rgb(239, 243, 244)";
+  const borderPill = isDark ? "#2f3336" : "#cfd9de";
+  const textPrimary = isDark ? "#e7e9ea" : "#0f1419";
+  const textSecondary = isDark ? "#71767b" : "#536471";
+  const twitterBlue = "#1d9bf0";
+  const pillBg = isDark ? "#16181c" : "#f7f9f9";
+  const threadLineColor = isDark ? "#333639" : "#cfd9de";
+
   return (
     <aside
       aria-label="Concept Notebook"
@@ -73,31 +121,33 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
         top: 0,
         right: 0,
         bottom: 0,
-        width: "min(460px, 92vw)",
+        width: "min(480px, 94vw)",
         zIndex: 50,
         display: "flex",
         flexDirection: "column",
-        backgroundColor: isDark ? "rgba(10, 14, 26, 0.94)" : "rgba(255, 255, 255, 0.96)",
-        backdropFilter: "blur(24px)",
-        WebkitBackdropFilter: "blur(24px)",
-        borderLeft: isDark ? "1px solid rgba(255, 255, 255, 0.1)" : "1px solid rgba(0, 0, 0, 0.1)",
+        backgroundColor: bgMain,
+        borderLeft: `1px solid ${borderSubtle}`,
         boxShadow: isDark
-          ? "-15px 0 45px rgba(0, 0, 0, 0.7), -1px 0 0 rgba(255, 255, 255, 0.05)"
-          : "-10px 0 40px rgba(0, 0, 0, 0.12)",
+          ? "-8px 0 35px rgba(0, 0, 0, 0.85)"
+          : "-4px 0 25px rgba(0, 0, 0, 0.08)",
+        fontFamily: twitterFont,
         transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
     >
       {/* ---------------------------------------------------- */}
-      {/* DRAWER TOP BAR                                       */}
+      {/* TWITTER-STYLE DRAWER HEADER                          */}
       {/* ---------------------------------------------------- */}
       <div
         style={{
-          padding: "16px 20px",
+          padding: "12px 16px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          borderBottom: isDark ? "1px solid rgba(255, 255, 255, 0.08)" : "1px solid rgba(0, 0, 0, 0.08)",
-          backgroundColor: isDark ? "rgba(15, 23, 42, 0.6)" : "rgba(248, 250, 252, 0.8)",
+          borderBottom: `1px solid ${borderSubtle}`,
+          backgroundColor: bgMain,
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
           flexShrink: 0,
         }}
       >
@@ -106,76 +156,108 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
             style={{
               width: "32px",
               height: "32px",
-              borderRadius: "8px",
-              background: isDark ? "rgba(245, 158, 11, 0.18)" : "rgba(245, 158, 11, 0.12)",
+              borderRadius: "50%",
+              backgroundColor: isDark ? "#16181c" : "#f7f9f9",
+              border: `1px solid ${borderPill}`,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#f59e0b",
+              color: twitterBlue,
             }}
           >
-            <BookOpen size={18} />
+            <Bookmark size={16} />
           </div>
           <div>
             <h2
               style={{
                 margin: 0,
-                fontSize: "15px",
+                fontSize: "17px",
                 fontWeight: 800,
                 letterSpacing: "-0.01em",
-                color: isDark ? "#ffffff" : "#0f172a",
+                color: textPrimary,
                 display: "flex",
                 alignItems: "center",
-                gap: "6px",
+                gap: "8px",
               }}
             >
-              <span>Spider Notebook</span>
+              <span>Thread Notebook</span>
               <span
                 style={{
-                  fontSize: "11px",
+                  fontSize: "12px",
                   fontWeight: 600,
-                  padding: "2px 7px",
-                  borderRadius: "999px",
-                  backgroundColor: isDark ? "rgba(56, 189, 248, 0.2)" : "rgba(2, 132, 199, 0.12)",
-                  color: isDark ? "#38bdf8" : "#0284c7",
+                  padding: "1px 8px",
+                  borderRadius: "9999px",
+                  backgroundColor: isDark ? "rgba(29, 155, 240, 0.15)" : "rgba(29, 155, 240, 0.1)",
+                  color: twitterBlue,
                 }}
               >
-                {selectedNodes.length} {selectedNodes.length === 1 ? "Dot" : "Dots"} Connected
+                {selectedNodes.length} {selectedNodes.length === 1 ? "Post" : "Posts"}
               </span>
             </h2>
             <p
               style={{
                 margin: 0,
-                fontSize: "11px",
-                color: isDark ? "rgba(255,255,255,0.5)" : "var(--text-dim)",
+                fontSize: "13px",
+                color: textSecondary,
               }}
             >
-              Click related dots to chain concepts into your story
+              Connected knowledge thread
             </p>
           </div>
         </div>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          {/* Expand / Collapse All Pill */}
+          <button
+            onClick={handleToggleAll}
+            title={allExpanded ? "Collapse All Cards" : "Expand All Cards"}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+              padding: "5px 12px",
+              borderRadius: "9999px",
+              background: "transparent",
+              border: `1px solid ${borderPill}`,
+              color: textPrimary,
+              fontSize: "12px",
+              fontWeight: 700,
+              cursor: "pointer",
+              transition: "background 0.15s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = isDark ? "#16181c" : "#eff3f4";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "transparent";
+            }}
+          >
+            <ChevronsUpDown size={12} color={twitterBlue} />
+            <span>{allExpanded ? "Collapse All" : "Expand All"}</span>
+          </button>
+
           {selectedNodes.length > 1 && (
             <button
               onClick={onClearAll}
               title="Clear all attached concepts"
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-                padding: "6px 10px",
-                borderRadius: "6px",
+                padding: "6px 8px",
+                borderRadius: "9999px",
                 background: "transparent",
-                border: isDark ? "1px solid rgba(255,255,255,0.12)" : "1px solid rgba(0,0,0,0.12)",
-                color: isDark ? "#94a3b8" : "#64748b",
-                fontSize: "11px",
+                border: "none",
+                color: textSecondary,
+                fontSize: "12px",
                 fontWeight: 600,
                 cursor: "pointer",
               }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#f4212e";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = textSecondary;
+              }}
             >
-              <Trash2 size={12} />
-              <span>Clear</span>
+              <Trash2 size={14} />
             </button>
           )}
 
@@ -183,35 +265,41 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
             onClick={onClose}
             title="Close Notebook"
             style={{
-              width: "30px",
-              height: "30px",
-              borderRadius: "6px",
+              width: "32px",
+              height: "32px",
+              borderRadius: "50%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              background: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)",
+              background: "transparent",
               border: "none",
-              color: isDark ? "#cbd5e1" : "#475569",
+              color: textPrimary,
               cursor: "pointer",
             }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = isDark ? "#16181c" : "#eff3f4";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "transparent";
+            }}
           >
-            <X size={16} />
+            <X size={17} />
           </button>
         </div>
       </div>
 
       {/* ---------------------------------------------------- */}
-      {/* SCROLLABLE CONCEPTS FEED                             */}
+      {/* TWITTER-STYLE THREAD STREAM                          */}
       {/* ---------------------------------------------------- */}
       <div
         ref={scrollContainerRef}
         style={{
           flex: 1,
           overflowY: "auto",
-          padding: "20px 18px",
+          padding: "16px 16px 80px 16px",
           display: "flex",
           flexDirection: "column",
-          gap: "24px",
+          gap: "0px",
         }}
       >
         {selectedNodes.map((node, index) => {
@@ -219,484 +307,583 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
           const parent = node.parentId ? allNodes.find((n) => n.id === node.parentId) : undefined;
           const children = allNodes.filter((n) => n.parentId === node.id);
           const isLast = index === selectedNodes.length - 1;
+          const isExpanded = expandedIds.has(node.id);
 
-          // Concept theme color
-          const accentColor =
+          // Subtle category monogram color
+          const catColor =
             node.category === "v8"
-              ? "#ff6b6b"
+              ? "#f91880" // Twitter Hot Pink
               : node.category === "scope"
-              ? "#fde047"
+              ? "#ffd400" // Twitter Gold
               : node.category === "node"
-              ? "#34d399"
-              : "#f59e0b";
+              ? "#00ba7c" // Twitter Mint
+              : twitterBlue;
+
+          const catInitial =
+            node.category === "v8"
+              ? "V8"
+              : node.category === "scope"
+              ? "SC"
+              : node.category === "node"
+              ? "ND"
+              : "JS";
 
           return (
             <div
               key={`${node.id}-${index}`}
               ref={isLast ? lastCardRef : null}
               style={{
-                borderRadius: "14px",
-                backgroundColor: isDark ? "rgba(15, 23, 42, 0.75)" : "#ffffff",
-                border: isDark
-                  ? `1.5px solid ${accentColor}40`
-                  : `1.5px solid ${accentColor}60`,
-                boxShadow: isDark
-                  ? `0 8px 30px rgba(0,0,0,0.4), 0 0 20px ${accentColor}15`
-                  : `0 6px 24px rgba(0,0,0,0.06), 0 0 15px ${accentColor}20`,
-                overflow: "hidden",
-                transition: "all 0.2s ease",
+                display: "flex",
+                gap: "12px",
+                position: "relative",
               }}
             >
-              {/* CARD TOP BANNER */}
+              {/* ---------------------------------------------- */}
+              {/* LEFT COLUMN: AVATAR & VERTICAL THREAD LINE     */}
+              {/* ---------------------------------------------- */}
               <div
                 style={{
-                  padding: "14px 16px",
-                  background: isDark
-                    ? `linear-gradient(135deg, ${accentColor}20 0%, rgba(15, 23, 42, 0.9) 100%)`
-                    : `linear-gradient(135deg, ${accentColor}15 0%, #ffffff 100%)`,
-                  borderBottom: isDark ? "1px solid rgba(255,255,255,0.06)" : "1px solid rgba(0,0,0,0.06)",
                   display: "flex",
-                  alignItems: "flex-start",
-                  justifyContent: "space-between",
-                  gap: "10px",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  width: "36px",
+                  flexShrink: 0,
                 }}
               >
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
-                    {story.badge && (
-                      <span
-                        style={{
-                          fontSize: "10px",
-                          fontWeight: 700,
-                          textTransform: "uppercase",
-                          letterSpacing: "0.06em",
-                          padding: "2px 7px",
-                          borderRadius: "4px",
-                          backgroundColor: `${accentColor}25`,
-                          color: accentColor,
-                        }}
-                      >
-                        {story.badge}
-                      </span>
-                    )}
-                    <span
-                      style={{
-                        fontSize: "10.5px",
-                        color: isDark ? "rgba(255,255,255,0.4)" : "#64748b",
-                        fontWeight: 500,
-                      }}
-                    >
-                      Stage {node.level} Concept
-                    </span>
-                  </div>
-
-                  <h3
-                    style={{
-                      margin: 0,
-                      fontSize: "17px",
-                      fontWeight: 800,
-                      letterSpacing: "-0.02em",
-                      color: isDark ? "#ffffff" : "#0f172a",
-                    }}
-                  >
-                    {story.title}
-                  </h3>
-
-                  <p
-                    style={{
-                      margin: "4px 0 0 0",
-                      fontSize: "12px",
-                      fontStyle: "italic",
-                      color: isDark ? "rgba(255,255,255,0.7)" : "#475569",
-                      lineHeight: 1.35,
-                    }}
-                  >
-                    "{story.tagline}"
-                  </p>
-                </div>
-
-                {/* ATTACHED GOOGLE SEARCH BUTTON */}
-                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  <button
-                    onClick={() => handleGoogleSearch(node)}
-                    title={`Search Google for ${node.label}`}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "5px",
-                      padding: "6px 10px",
-                      borderRadius: "7px",
-                      backgroundColor: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)",
-                      border: `1px solid ${accentColor}55`,
-                      color: isDark ? "#ffffff" : "#0f172a",
-                      fontSize: "11px",
-                      fontWeight: 600,
-                      cursor: "pointer",
-                      whiteSpace: "nowrap",
-                      transition: "all 0.15s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = `${accentColor}30`;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.05)";
-                    }}
-                  >
-                    <span>Google ↗</span>
-                    <ExternalLink size={11} color={accentColor} />
-                  </button>
-
-                  {selectedNodes.length > 1 && (
-                    <button
-                      onClick={() => onRemoveNode(node.id)}
-                      title="Detach from notebook"
-                      style={{
-                        padding: "5px",
-                        borderRadius: "5px",
-                        background: "transparent",
-                        border: "none",
-                        color: isDark ? "#94a3b8" : "#94a3b8",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <X size={14} />
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              {/* CARD BODY */}
-              <div style={{ padding: "16px" }}>
-                {/* 1. LINEAGE TRAIL (Parent -> Current -> Children) */}
+                {/* Circular Avatar */}
                 <div
                   style={{
-                    marginBottom: "16px",
-                    padding: "8px 12px",
-                    borderRadius: "8px",
-                    backgroundColor: isDark ? "rgba(0, 0, 0, 0.25)" : "rgba(0, 0, 0, 0.03)",
-                    border: isDark ? "1px solid rgba(255, 255, 255, 0.05)" : "1px solid rgba(0, 0, 0, 0.05)",
-                    fontSize: "11.5px",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
-                    <GitBranch size={13} color={accentColor} />
-                    <span style={{ fontWeight: 600, color: isDark ? "#94a3b8" : "#64748b" }}>
-                      Connected Path:
-                    </span>
-
-                    {parent ? (
-                      <button
-                        onClick={() => onSelectNode(parent)}
-                        title={`Focus 1st stage parent: ${parent.label}`}
-                        style={{
-                          background: "transparent",
-                          border: "none",
-                          padding: 0,
-                          cursor: "pointer",
-                          color: isDark ? "#60a5fa" : "#0284c7",
-                          fontWeight: 600,
-                          fontSize: "11.5px",
-                          textDecoration: "underline",
-                        }}
-                      >
-                        {parent.label}
-                      </button>
-                    ) : (
-                      <span style={{ color: isDark ? "#94a3b8" : "#64748b" }}>Root Hub</span>
-                    )}
-
-                    <ArrowRight size={11} color="#94a3b8" />
-
-                    <span
-                      style={{
-                        fontWeight: 800,
-                        color: accentColor,
-                        padding: "1px 6px",
-                        borderRadius: "4px",
-                        backgroundColor: `${accentColor}18`,
-                      }}
-                    >
-                      {node.label}
-                    </span>
-
-                    {children.length > 0 && (
-                      <>
-                        <ArrowRight size={11} color="#94a3b8" />
-                        <span style={{ color: isDark ? "#94a3b8" : "#64748b" }}>
-                          {children.length} {children.length === 1 ? "Child" : "Children"}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                </div>
-
-                {/* 2. THE FUNNY STORY */}
-                <div style={{ marginBottom: "18px" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      marginBottom: "8px",
-                      fontSize: "13px",
-                      fontWeight: 700,
-                      color: isDark ? "#f1f5f9" : "#1e293b",
-                    }}
-                  >
-                    <span>🍿</span>
-                    <span>The Funny Real-World Story</span>
-                  </div>
-
-                  <div
-                    style={{
-                      fontSize: "12.5px",
-                      lineHeight: 1.6,
-                      color: isDark ? "#cbd5e1" : "#334155",
-                      whiteSpace: "pre-line",
-                      padding: "12px 14px",
-                      borderRadius: "8px",
-                      backgroundColor: isDark ? "rgba(255, 255, 255, 0.03)" : "rgba(0, 0, 0, 0.02)",
-                      borderLeft: `3px solid ${accentColor}`,
-                    }}
-                  >
-                    {story.funnyStory}
-                  </div>
-                </div>
-
-                {/* 3. FUNNY & PRACTICAL CODE EXAMPLE */}
-                <div style={{ marginBottom: "18px" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginBottom: "6px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        fontSize: "13px",
-                        fontWeight: 700,
-                        color: isDark ? "#f1f5f9" : "#1e293b",
-                      }}
-                    >
-                      <Terminal size={14} color={accentColor} />
-                      <span>{story.codeExample.title}</span>
-                    </div>
-
-                    <button
-                      onClick={() => handleCopyCode(node.id, story.codeExample.code)}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "4px",
-                        padding: "3px 8px",
-                        borderRadius: "4px",
-                        background: "transparent",
-                        border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid rgba(0,0,0,0.1)",
-                        color: isDark ? "#94a3b8" : "#64748b",
-                        fontSize: "10.5px",
-                        fontWeight: 600,
-                        cursor: "pointer",
-                      }}
-                    >
-                      {copiedId === node.id ? (
-                        <>
-                          <Check size={11} color="#22c55e" />
-                          <span style={{ color: "#22c55e" }}>Copied!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy size={11} />
-                          <span>Copy</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-
-                  {/* Terminal Code Block */}
-                  <div
-                    style={{
-                      borderRadius: "8px",
-                      backgroundColor: "#090d16",
-                      border: "1px solid rgba(255, 255, 255, 0.08)",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <div
-                      style={{
-                        padding: "6px 10px",
-                        backgroundColor: "#0d1322",
-                        borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                      }}
-                    >
-                      <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#ef4444" }} />
-                      <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#f59e0b" }} />
-                      <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10b981" }} />
-                      <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.4)", marginLeft: "4px" }}>
-                        javascript-runtime.js
-                      </span>
-                    </div>
-
-                    <pre
-                      style={{
-                        margin: 0,
-                        padding: "12px",
-                        fontSize: "11.5px",
-                        fontFamily: "'Fira Code', 'JetBrains Mono', Consolas, monospace",
-                        color: "#e2e8f0",
-                        lineHeight: 1.5,
-                        overflowX: "auto",
-                      }}
-                    >
-                      <code>{story.codeExample.code}</code>
-                    </pre>
-
-                    {story.codeExample.output && (
-                      <div
-                        style={{
-                          padding: "8px 12px",
-                          backgroundColor: "#0b0f19",
-                          borderTop: "1px dashed rgba(255, 255, 255, 0.1)",
-                          fontSize: "11px",
-                          fontFamily: "monospace",
-                          color: "#38bdf8",
-                        }}
-                      >
-                        <span style={{ color: "#94a3b8" }}>Output: </span>
-                        {story.codeExample.output}
-                      </div>
-                    )}
-                  </div>
-
-                  <p
-                    style={{
-                      margin: "6px 0 0 0",
-                      fontSize: "11px",
-                      color: isDark ? "rgba(255,255,255,0.5)" : "#64748b",
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    💡 {story.codeExample.explanation}
-                  </p>
-                </div>
-
-                {/* 4. ATTACH CONNECTED DOTS (Interactive Pills to chain concepts) */}
-                <div>
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      fontWeight: 700,
-                      color: isDark ? "#f1f5f9" : "#1e293b",
-                      marginBottom: "8px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "5px",
-                    }}
-                  >
-                    <Sparkles size={13} color={accentColor} />
-                    <span>Connect More Dots into Notebook:</span>
-                  </div>
-
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                    {/* Parent dot pill */}
-                    {parent && (
-                      <button
-                        onClick={() => onSelectNode(parent)}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "5px",
-                          padding: "4px 9px",
-                          borderRadius: "6px",
-                          backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)",
-                          border: `1px solid ${accentColor}40`,
-                          color: isDark ? "#e2e8f0" : "#1e293b",
-                          fontSize: "11px",
-                          fontWeight: 600,
-                          cursor: "pointer",
-                        }}
-                      >
-                        <span style={{ fontSize: "10px", color: accentColor }}>▲ Parent:</span>
-                        <span>{parent.label}</span>
-                      </button>
-                    )}
-
-                    {/* Children dot pills */}
-                    {children.map((child) => (
-                      <button
-                        key={child.id}
-                        onClick={() => onSelectNode(child)}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "5px",
-                          padding: "4px 9px",
-                          borderRadius: "6px",
-                          backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)",
-                          border: isDark ? "1px solid rgba(255,255,255,0.12)" : "1px solid rgba(0,0,0,0.12)",
-                          color: isDark ? "#e2e8f0" : "#1e293b",
-                          fontSize: "11px",
-                          fontWeight: 500,
-                          cursor: "pointer",
-                          transition: "all 0.15s ease",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.borderColor = accentColor;
-                          e.currentTarget.style.backgroundColor = `${accentColor}15`;
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.borderColor = isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.12)";
-                          e.currentTarget.style.backgroundColor = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)";
-                        }}
-                      >
-                        <CornerDownRight size={10} color={accentColor} />
-                        <span>{child.label}</span>
-                        {child.badge && (
-                          <span
-                            style={{
-                              fontSize: "9px",
-                              color: accentColor,
-                              fontWeight: 700,
-                            }}
-                          >
-                            [{child.badge}]
-                          </span>
-                        )}
-                      </button>
-                    ))}
-
-                    {children.length === 0 && !parent && (
-                      <span style={{ fontSize: "11px", color: "#94a3b8" }}>
-                        All primary spokes connected.
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                {/* 5. MEMORY TAKEAWAY */}
-                <div
-                  style={{
-                    marginTop: "14px",
-                    padding: "8px 12px",
-                    borderRadius: "6px",
-                    backgroundColor: isDark ? "rgba(245, 158, 11, 0.08)" : "rgba(245, 158, 11, 0.06)",
-                    border: "1px solid rgba(245, 158, 11, 0.2)",
-                    fontSize: "11.5px",
-                    color: isDark ? "#fef08a" : "#b45309",
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    backgroundColor: isDark ? "#16181c" : "#f7f9f9",
+                    border: `1.5px solid ${catColor}`,
                     display: "flex",
                     alignItems: "center",
-                    gap: "6px",
+                    justifyContent: "center",
+                    fontSize: "11px",
+                    fontWeight: 800,
+                    color: catColor,
+                    flexShrink: 0,
+                    boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
                   }}
                 >
-                  <span style={{ fontSize: "14px" }}>🎯</span>
-                  <span><strong>Key Takeaway:</strong> {story.takeaway}</span>
+                  {catInitial}
+                </div>
+
+                {/* Vertical Thread Connector Line */}
+                {!isLast && (
+                  <div
+                    style={{
+                      width: "2px",
+                      flex: 1,
+                      backgroundColor: threadLineColor,
+                      margin: "4px 0",
+                      minHeight: "24px",
+                    }}
+                  />
+                )}
+              </div>
+
+              {/* ---------------------------------------------- */}
+              {/* RIGHT COLUMN: TWEET CARD BODY                  */}
+              {/* ---------------------------------------------- */}
+              <div
+                style={{
+                  flex: 1,
+                  paddingBottom: isLast ? "16px" : "20px",
+                  minWidth: 0,
+                }}
+              >
+                <div
+                  style={{
+                    borderRadius: "14px",
+                    backgroundColor: bgMain,
+                    border: `1px solid ${borderSubtle}`,
+                    overflow: "hidden",
+                    transition: "border-color 0.15s ease",
+                  }}
+                >
+                  {/* CARD HEADER (Twitter Post Header) */}
+                  <div
+                    onClick={() => toggleAccordion(node.id)}
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={isExpanded}
+                    style={{
+                      padding: "12px 14px",
+                      cursor: "pointer",
+                      userSelect: "none",
+                      backgroundColor: isDark ? "rgba(255,255,255,0.015)" : "#fafbfc",
+                      borderBottom: isExpanded ? `1px solid ${borderSubtle}` : "none",
+                    }}
+                  >
+                    {/* Header Row: Title, Metadata, Search Button */}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        justifyContent: "space-between",
+                        gap: "8px",
+                      }}
+                    >
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "5px",
+                            flexWrap: "wrap",
+                            lineHeight: 1.3,
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: "15px",
+                              fontWeight: 700,
+                              color: textPrimary,
+                              letterSpacing: "-0.01em",
+                            }}
+                          >
+                            {node.label}
+                          </span>
+
+                          {/* Verified-style Badge */}
+                          <span
+                            style={{
+                              fontSize: "11px",
+                              fontWeight: 600,
+                              padding: "1px 6px",
+                              borderRadius: "9999px",
+                              backgroundColor: isDark ? "rgba(29, 155, 240, 0.15)" : "rgba(29, 155, 240, 0.1)",
+                              color: twitterBlue,
+                            }}
+                          >
+                            {story.badge || "Concept"}
+                          </span>
+
+                          <span
+                            style={{
+                              fontSize: "13px",
+                              color: textSecondary,
+                              fontWeight: 400,
+                            }}
+                          >
+                            @stage{node.level}
+                          </span>
+                        </div>
+
+                        {/* Tagline */}
+                        <p
+                          style={{
+                            margin: "4px 0 0 0",
+                            fontSize: "14px",
+                            color: textSecondary,
+                            lineHeight: 1.4,
+                          }}
+                        >
+                          {story.tagline}
+                        </p>
+                      </div>
+
+                      {/* Header Actions: Google Search & Close */}
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          flexShrink: 0,
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {/* Twitter Pill Button for Google Search */}
+                        <button
+                          onClick={() => handleGoogleSearch(node)}
+                          title={`Search Google for ${node.label}`}
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "4px",
+                            padding: "4px 10px",
+                            borderRadius: "9999px",
+                            backgroundColor: "transparent",
+                            border: `1px solid ${borderPill}`,
+                            color: textPrimary,
+                            fontSize: "12px",
+                            fontWeight: 700,
+                            cursor: "pointer",
+                            transition: "all 0.15s ease",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = isDark ? "#16181c" : "#eff3f4";
+                            e.currentTarget.style.borderColor = twitterBlue;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = "transparent";
+                            e.currentTarget.style.borderColor = borderPill;
+                          }}
+                        >
+                          <span>Google</span>
+                          <ExternalLink size={10} color={twitterBlue} />
+                        </button>
+
+                        {/* Accordion Arrow Indicator */}
+                        <div
+                          style={{
+                            width: "24px",
+                            height: "24px",
+                            borderRadius: "50%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            color: textSecondary,
+                          }}
+                        >
+                          {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                        </div>
+
+                        {selectedNodes.length > 1 && (
+                          <button
+                            onClick={() => onRemoveNode(node.id)}
+                            title="Remove from thread"
+                            style={{
+                              padding: "4px",
+                              borderRadius: "50%",
+                              background: "transparent",
+                              border: "none",
+                              color: textSecondary,
+                              cursor: "pointer",
+                            }}
+                          >
+                            <X size={13} />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* -------------------------------------------------- */}
+                    {/* 2-SECTION BADGES: PARENT & CHILDREN (Twitter Pills) */}
+                    {/* -------------------------------------------------- */}
+                    <div
+                      style={{
+                        marginTop: "10px",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "6px",
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {/* SECTION 1: PARENT BADGE with 🗿 / 🗼 */}
+                      <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
+                        <span style={{ fontSize: "12px", fontWeight: 600, color: textSecondary }}>
+                          🗿 Parent:
+                        </span>
+
+                        {parent ? (
+                          <button
+                            onClick={() => onSelectNode(parent)}
+                            title={`Chain parent: ${parent.label}`}
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "4px",
+                              padding: "2px 8px",
+                              borderRadius: "9999px",
+                              backgroundColor: pillBg,
+                              border: `1px solid ${borderPill}`,
+                              color: twitterBlue,
+                              fontSize: "12px",
+                              fontWeight: 600,
+                              cursor: "pointer",
+                              transition: "all 0.15s ease",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = isDark ? "#1d9bf020" : "#1d9bf010";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = pillBg;
+                            }}
+                          >
+                            <span>🗼</span>
+                            <span>{parent.label}</span>
+                            {parent.badge && (
+                              <span style={{ fontSize: "10px", color: textSecondary }}>
+                                · {parent.badge}
+                              </span>
+                            )}
+                          </button>
+                        ) : (
+                          <span
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "4px",
+                              padding: "2px 8px",
+                              borderRadius: "9999px",
+                              backgroundColor: pillBg,
+                              border: `1px solid ${borderPill}`,
+                              color: textSecondary,
+                              fontSize: "12px",
+                            }}
+                          >
+                            <span>🗼</span>
+                            <span>Root Origin</span>
+                          </span>
+                        )}
+                      </div>
+
+                      {/* SECTION 2: CHILDREN BADGES with 🗽 / 🗾 / 😀 / 😁 / 😂 / 🗻 */}
+                      <div style={{ display: "flex", alignItems: "flex-start", gap: "6px", flexWrap: "wrap" }}>
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 600,
+                            color: textSecondary,
+                            paddingTop: "2px",
+                          }}
+                        >
+                          🗽 Children ({children.length}):
+                        </span>
+
+                        {children.length > 0 ? (
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", flex: 1 }}>
+                            {children.map((child, cIdx) => {
+                              const emojis = ["🗽", "🗾", "😀", "😁", "😂", "🗻", "🗼", "🗿"];
+                              const emoji = emojis[cIdx % emojis.length];
+
+                              return (
+                                <button
+                                  key={child.id}
+                                  onClick={() => onSelectNode(child)}
+                                  title={`Chain child: ${child.label}`}
+                                  style={{
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: "4px",
+                                    padding: "2px 8px",
+                                    borderRadius: "9999px",
+                                    backgroundColor: pillBg,
+                                    border: `1px solid ${borderPill}`,
+                                    color: textPrimary,
+                                    fontSize: "12px",
+                                    fontWeight: 500,
+                                    cursor: "pointer",
+                                    transition: "all 0.15s ease",
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.borderColor = twitterBlue;
+                                    e.currentTarget.style.color = twitterBlue;
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.borderColor = borderPill;
+                                    e.currentTarget.style.color = textPrimary;
+                                  }}
+                                >
+                                  <span>{emoji}</span>
+                                  <span>{child.label}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <span
+                            style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "4px",
+                              padding: "2px 8px",
+                              borderRadius: "9999px",
+                              backgroundColor: pillBg,
+                              border: `1px solid ${borderPill}`,
+                              color: textSecondary,
+                              fontSize: "12px",
+                              fontStyle: "italic",
+                            }}
+                          >
+                            <span>😂</span>
+                            <span>Leaf Concept</span>
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* -------------------------------------------------- */}
+                  {/* EXPANDED CONTENT: CLEAN TWITTER THREAD ARTICLE     */}
+                  {/* -------------------------------------------------- */}
+                  {isExpanded && (
+                    <div style={{ padding: "14px 16px 18px 16px" }}>
+                      {/* 1. THE FUNNY REAL-WORLD STORY (Twitter Tweet Font: 15px, 1.5 line-height) */}
+                      <div style={{ marginBottom: "16px" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "6px",
+                            marginBottom: "6px",
+                            fontSize: "13px",
+                            fontWeight: 700,
+                            color: textSecondary,
+                            textTransform: "uppercase",
+                            letterSpacing: "0.04em",
+                          }}
+                        >
+                          <span>🍿</span>
+                          <span>The Story</span>
+                        </div>
+
+                        <div
+                          style={{
+                            fontSize: "15px",
+                            lineHeight: 1.55,
+                            color: textPrimary,
+                            whiteSpace: "pre-line",
+                          }}
+                        >
+                          {story.funnyStory}
+                        </div>
+                      </div>
+
+                      {/* 2. DEVELOPER EMBED: CLEAN GITHUB/TWITTER CODE CARD */}
+                      <div style={{ marginBottom: "16px" }}>
+                        <div
+                          style={{
+                            borderRadius: "10px",
+                            backgroundColor: isDark ? "#16181c" : "#f6f8fa",
+                            border: `1px solid ${borderSubtle}`,
+                            overflow: "hidden",
+                          }}
+                        >
+                          {/* Code Bar */}
+                          <div
+                            style={{
+                              padding: "6px 12px",
+                              borderBottom: `1px solid ${borderSubtle}`,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                              <Terminal size={13} color={textSecondary} />
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  fontWeight: 600,
+                                  color: textSecondary,
+                                  fontFamily: "monospace",
+                                }}
+                              >
+                                {story.codeExample.title || "javascript-runtime.js"}
+                              </span>
+                            </div>
+
+                            <button
+                              onClick={() => handleCopyCode(node.id, story.codeExample.code)}
+                              style={{
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "4px",
+                                padding: "2px 8px",
+                                borderRadius: "9999px",
+                                background: "transparent",
+                                border: `1px solid ${borderPill}`,
+                                color: textSecondary,
+                                fontSize: "11px",
+                                fontWeight: 600,
+                                cursor: "pointer",
+                              }}
+                            >
+                              {copiedId === node.id ? (
+                                <>
+                                  <Check size={11} color="#00ba7c" />
+                                  <span style={{ color: "#00ba7c" }}>Copied</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Copy size={11} />
+                                  <span>Copy</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+
+                          {/* Code Content */}
+                          <pre
+                            style={{
+                              margin: 0,
+                              padding: "12px 14px",
+                              fontSize: "12.5px",
+                              fontFamily:
+                                "SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace",
+                              color: isDark ? "#e2e8f0" : "#24292f",
+                              lineHeight: 1.5,
+                              overflowX: "auto",
+                            }}
+                          >
+                            <code>{story.codeExample.code}</code>
+                          </pre>
+
+                          {/* Output Line */}
+                          {story.codeExample.output && (
+                            <div
+                              style={{
+                                padding: "8px 14px",
+                                borderTop: `1px solid ${borderSubtle}`,
+                                backgroundColor: isDark ? "#0f1419" : "#ffffff",
+                                fontSize: "12px",
+                                fontFamily: "monospace",
+                                color: twitterBlue,
+                              }}
+                            >
+                              <span style={{ color: textSecondary }}>Output: </span>
+                              {story.codeExample.output}
+                            </div>
+                          )}
+                        </div>
+
+                        <p
+                          style={{
+                            margin: "6px 0 0 0",
+                            fontSize: "13px",
+                            color: textSecondary,
+                            lineHeight: 1.4,
+                          }}
+                        >
+                          💡 {story.codeExample.explanation}
+                        </p>
+                      </div>
+
+                      {/* 3. TWITTER QUOTE-TWEET STYLE: KEY TAKEAWAY */}
+                      <div
+                        style={{
+                          padding: "10px 14px",
+                          borderRadius: "12px",
+                          border: `1px solid ${borderSubtle}`,
+                          backgroundColor: isDark ? "rgba(255,255,255,0.02)" : "#f7f9f9",
+                          fontSize: "14px",
+                          color: textPrimary,
+                          lineHeight: 1.45,
+                        }}
+                      >
+                        <div
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: 700,
+                            color: textSecondary,
+                            marginBottom: "2px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "5px",
+                          }}
+                        >
+                          <span>🎯</span>
+                          <span>Key Takeaway</span>
+                        </div>
+                        <div>{story.takeaway}</div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
