@@ -3,18 +3,17 @@
 import React, { useRef, useEffect, useState } from "react";
 import { SpiderNode } from "@/data/concepts";
 import { PositionedNode } from "@/utils/spiderLayout";
-import { getConceptStory } from "@/data/conceptStories";
+import { getConceptTakeaways, TakeawayPrompt } from "@/data/conceptStories";
 import {
   ExternalLink,
   X,
   Trash2,
-  Copy,
-  Check,
   ChevronDown,
   ChevronUp,
   ChevronsUpDown,
-  Terminal,
   Bookmark,
+  MessageSquare,
+  Search,
 } from "lucide-react";
 
 interface ConceptNotebookDrawerProps {
@@ -39,7 +38,6 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
   onClearAll,
 }) => {
   const isDark = theme === "dark";
-  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   // Accordion state: set of expanded node IDs
   const [expandedIds, setExpandedIds] = useState<Set<string>>(() => {
@@ -49,7 +47,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const lastCardRef = useRef<HTMLDivElement>(null);
 
-  // Auto-expand any newly selected/attached nodes and scroll to them
+  // Auto-expand newly selected/attached nodes and scroll to them
   useEffect(() => {
     if (selectedNodes.length > 0) {
       const latest = selectedNodes[selectedNodes.length - 1];
@@ -85,23 +83,21 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
     }
   };
 
-  const handleCopyCode = (id: string, code: string) => {
-    navigator.clipboard.writeText(code);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 2000);
+  const handleGoogleSearchPrompt = (prompt: string) => {
+    const url = `https://www.google.com/search?q=${encodeURIComponent(prompt)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
-  const handleGoogleSearch = (node: SpiderNode) => {
+  const handleGoogleNodeSearch = (node: SpiderNode) => {
     const query = node.searchQuery || `${node.label} JavaScript Node.js`;
-    const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+    handleGoogleSearchPrompt(query);
   };
 
   if (!isOpen || selectedNodes.length === 0) return null;
 
   const allExpanded = expandedIds.size === selectedNodes.length;
 
-  // Twitter/X Design Tokens
+  // Classic Twitter Design Tokens
   const twitterFont =
     '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
   const bgMain = isDark ? "#000000" : "#ffffff";
@@ -135,7 +131,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
       }}
     >
       {/* ---------------------------------------------------- */}
-      {/* TWITTER-STYLE DRAWER HEADER                          */}
+      {/* TWITTER-STYLE DRAWER TOP HEADER                      */}
       {/* ---------------------------------------------------- */}
       <div
         style={{
@@ -171,7 +167,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
             <h2
               style={{
                 margin: 0,
-                fontSize: "17px",
+                fontSize: "16px",
                 fontWeight: 800,
                 letterSpacing: "-0.01em",
                 color: textPrimary,
@@ -180,7 +176,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                 gap: "8px",
               }}
             >
-              <span>Thread Notebook</span>
+              <span>Thread Prompts</span>
               <span
                 style={{
                   fontSize: "12px",
@@ -197,11 +193,11 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
             <p
               style={{
                 margin: 0,
-                fontSize: "13px",
+                fontSize: "12px",
                 color: textSecondary,
               }}
             >
-              Connected knowledge thread
+              Top 3 takeaways per concept · Click to Google prompt
             </p>
           </div>
         </div>
@@ -303,20 +299,20 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
         }}
       >
         {selectedNodes.map((node, index) => {
-          const story = getConceptStory(node, allNodes);
+          const conceptData = getConceptTakeaways(node, allNodes);
           const parent = node.parentId ? allNodes.find((n) => n.id === node.parentId) : undefined;
           const children = allNodes.filter((n) => n.parentId === node.id);
           const isLast = index === selectedNodes.length - 1;
           const isExpanded = expandedIds.has(node.id);
 
-          // Subtle category monogram color
+          // Category monogram and color
           const catColor =
             node.category === "v8"
-              ? "#f91880" // Twitter Hot Pink
+              ? "#f91880"
               : node.category === "scope"
-              ? "#ffd400" // Twitter Gold
+              ? "#ffd400"
               : node.category === "node"
-              ? "#00ba7c" // Twitter Mint
+              ? "#00ba7c"
               : twitterBlue;
 
           const catInitial =
@@ -386,7 +382,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
               </div>
 
               {/* ---------------------------------------------- */}
-              {/* RIGHT COLUMN: TWEET CARD BODY                  */}
+              {/* RIGHT COLUMN: CARD CONTENT                     */}
               {/* ---------------------------------------------- */}
               <div
                 style={{
@@ -418,7 +414,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                       borderBottom: isExpanded ? `1px solid ${borderSubtle}` : "none",
                     }}
                   >
-                    {/* Header Row: Title, Metadata, Search Button */}
+                    {/* Header Row: Title, Metadata, Google Button */}
                     <div
                       style={{
                         display: "flex",
@@ -432,7 +428,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            gap: "5px",
+                            gap: "6px",
                             flexWrap: "wrap",
                             lineHeight: 1.3,
                           }}
@@ -448,7 +444,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                             {node.label}
                           </span>
 
-                          {/* Verified-style Badge */}
+                          {/* Category Badge */}
                           <span
                             style={{
                               fontSize: "11px",
@@ -459,7 +455,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                               color: twitterBlue,
                             }}
                           >
-                            {story.badge || "Concept"}
+                            {conceptData.badge || "Concept"}
                           </span>
 
                           <span
@@ -477,16 +473,16 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                         <p
                           style={{
                             margin: "4px 0 0 0",
-                            fontSize: "14px",
+                            fontSize: "13.5px",
                             color: textSecondary,
                             lineHeight: 1.4,
                           }}
                         >
-                          {story.tagline}
+                          {conceptData.tagline}
                         </p>
                       </div>
 
-                      {/* Header Actions: Google Search & Close */}
+                      {/* Header Actions */}
                       <div
                         style={{
                           display: "flex",
@@ -498,7 +494,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                       >
                         {/* Twitter Pill Button for Google Search */}
                         <button
-                          onClick={() => handleGoogleSearch(node)}
+                          onClick={() => handleGoogleNodeSearch(node)}
                           title={`Search Google for ${node.label}`}
                           style={{
                             display: "inline-flex",
@@ -709,178 +705,134 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                   </div>
 
                   {/* -------------------------------------------------- */}
-                  {/* EXPANDED CONTENT: CLEAN TWITTER THREAD ARTICLE     */}
+                  {/* EXPANDED CONTENT: 3 PROMPT TAKEAWAYS (MAX REACTION)*/}
                   {/* -------------------------------------------------- */}
                   {isExpanded && (
-                    <div style={{ padding: "14px 16px 18px 16px" }}>
-                      {/* 1. THE FUNNY REAL-WORLD STORY (Twitter Tweet Font: 15px, 1.5 line-height) */}
-                      <div style={{ marginBottom: "16px" }}>
-                        <div
+                    <div style={{ padding: "12px 14px 16px 14px" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        <span
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            marginBottom: "6px",
-                            fontSize: "13px",
+                            fontSize: "12px",
                             fontWeight: 700,
                             color: textSecondary,
                             textTransform: "uppercase",
                             letterSpacing: "0.04em",
                           }}
                         >
-                          <span>🍿</span>
-                          <span>The Story</span>
-                        </div>
-
-                        <div
-                          style={{
-                            fontSize: "15px",
-                            lineHeight: 1.55,
-                            color: textPrimary,
-                            whiteSpace: "pre-line",
-                          }}
-                        >
-                          {story.funnyStory}
-                        </div>
+                          Top 3 Community Prompts
+                        </span>
+                        <span style={{ fontSize: "11px", color: textSecondary }}>
+                          Click prompt to Google Search ↗
+                        </span>
                       </div>
 
-                      {/* 2. DEVELOPER EMBED: CLEAN GITHUB/TWITTER CODE CARD */}
-                      <div style={{ marginBottom: "16px" }}>
-                        <div
-                          style={{
-                            borderRadius: "10px",
-                            backgroundColor: isDark ? "#16181c" : "#f6f8fa",
-                            border: `1px solid ${borderSubtle}`,
-                            overflow: "hidden",
-                          }}
-                        >
-                          {/* Code Bar */}
+                      {/* List of 3 Key Takeaways */}
+                      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                        {conceptData.takeaways.map((takeaway, tIdx) => (
                           <div
+                            key={takeaway.id || tIdx}
+                            onClick={() => handleGoogleSearchPrompt(takeaway.searchPrompt)}
+                            role="button"
+                            tabIndex={0}
+                            title={`Search Google: "${takeaway.searchPrompt}"`}
                             style={{
-                              padding: "6px 12px",
-                              borderBottom: `1px solid ${borderSubtle}`,
+                              padding: "10px 12px",
+                              borderRadius: "10px",
+                              border: `1px solid ${borderSubtle}`,
+                              backgroundColor: isDark ? "rgba(255,255,255,0.02)" : "#ffffff",
+                              cursor: "pointer",
+                              transition: "all 0.15s ease",
                               display: "flex",
-                              alignItems: "center",
-                              justifyContent: "space-between",
+                              flexDirection: "column",
+                              gap: "6px",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.borderColor = twitterBlue;
+                              e.currentTarget.style.backgroundColor = isDark ? "#16181c" : "#f7f9f9";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.borderColor = borderSubtle;
+                              e.currentTarget.style.backgroundColor = isDark ? "rgba(255,255,255,0.02)" : "#ffffff";
                             }}
                           >
-                            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                              <Terminal size={13} color={textSecondary} />
-                              <span
-                                style={{
-                                  fontSize: "12px",
-                                  fontWeight: 600,
-                                  color: textSecondary,
-                                  fontFamily: "monospace",
-                                }}
-                              >
-                                {story.codeExample.title || "javascript-runtime.js"}
-                              </span>
-                            </div>
-
-                            <button
-                              onClick={() => handleCopyCode(node.id, story.codeExample.code)}
-                              style={{
-                                display: "inline-flex",
-                                alignItems: "center",
-                                gap: "4px",
-                                padding: "2px 8px",
-                                borderRadius: "9999px",
-                                background: "transparent",
-                                border: `1px solid ${borderPill}`,
-                                color: textSecondary,
-                                fontSize: "11px",
-                                fontWeight: 600,
-                                cursor: "pointer",
-                              }}
-                            >
-                              {copiedId === node.id ? (
-                                <>
-                                  <Check size={11} color="#00ba7c" />
-                                  <span style={{ color: "#00ba7c" }}>Copied</span>
-                                </>
-                              ) : (
-                                <>
-                                  <Copy size={11} />
-                                  <span>Copy</span>
-                                </>
-                              )}
-                            </button>
-                          </div>
-
-                          {/* Code Content */}
-                          <pre
-                            style={{
-                              margin: 0,
-                              padding: "12px 14px",
-                              fontSize: "12.5px",
-                              fontFamily:
-                                "SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace",
-                              color: isDark ? "#e2e8f0" : "#24292f",
-                              lineHeight: 1.5,
-                              overflowX: "auto",
-                            }}
-                          >
-                            <code>{story.codeExample.code}</code>
-                          </pre>
-
-                          {/* Output Line */}
-                          {story.codeExample.output && (
+                            {/* Takeaway Text (Strictly <= 100 characters) */}
                             <div
                               style={{
-                                padding: "8px 14px",
-                                borderTop: `1px solid ${borderSubtle}`,
-                                backgroundColor: isDark ? "#0f1419" : "#ffffff",
-                                fontSize: "12px",
-                                fontFamily: "monospace",
-                                color: twitterBlue,
+                                fontSize: "14px",
+                                lineHeight: 1.45,
+                                color: textPrimary,
+                                fontWeight: 500,
                               }}
                             >
-                              <span style={{ color: textSecondary }}>Output: </span>
-                              {story.codeExample.output}
+                              {takeaway.text}
                             </div>
-                          )}
-                        </div>
 
-                        <p
-                          style={{
-                            margin: "6px 0 0 0",
-                            fontSize: "13px",
-                            color: textSecondary,
-                            lineHeight: 1.4,
-                          }}
-                        >
-                          💡 {story.codeExample.explanation}
-                        </p>
-                      </div>
+                            {/* Takeaway Footer: Emoji Reactions & Action */}
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                marginTop: "2px",
+                              }}
+                            >
+                              {/* Emojis Reaction Count */}
+                              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                <span
+                                  style={{
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: "3px",
+                                    fontSize: "12px",
+                                    fontWeight: 700,
+                                    color: textPrimary,
+                                    backgroundColor: isDark ? "#1f242c" : "#eff3f4",
+                                    padding: "2px 7px",
+                                    borderRadius: "9999px",
+                                  }}
+                                >
+                                  <span>{takeaway.emoji}</span>
+                                  <span>{takeaway.reactionCount}</span>
+                                </span>
 
-                      {/* 3. TWITTER QUOTE-TWEET STYLE: KEY TAKEAWAY */}
-                      <div
-                        style={{
-                          padding: "10px 14px",
-                          borderRadius: "12px",
-                          border: `1px solid ${borderSubtle}`,
-                          backgroundColor: isDark ? "rgba(255,255,255,0.02)" : "#f7f9f9",
-                          fontSize: "14px",
-                          color: textPrimary,
-                          lineHeight: 1.45,
-                        }}
-                      >
-                        <div
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: 700,
-                            color: textSecondary,
-                            marginBottom: "2px",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "5px",
-                          }}
-                        >
-                          <span>🎯</span>
-                          <span>Key Takeaway</span>
-                        </div>
-                        <div>{story.takeaway}</div>
+                                <span
+                                  style={{
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: "3px",
+                                    fontSize: "11px",
+                                    color: textSecondary,
+                                  }}
+                                >
+                                  <MessageSquare size={11} />
+                                  <span>{takeaway.commentCount}</span>
+                                </span>
+                              </div>
+
+                              {/* Search Prompt Trigger Hint */}
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "3px",
+                                  fontSize: "11.5px",
+                                  color: twitterBlue,
+                                  fontWeight: 600,
+                                }}
+                              >
+                                <Search size={11} />
+                                <span>Google Prompt ↗</span>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   )}
