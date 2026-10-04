@@ -430,8 +430,11 @@ export function calculateSpiderLayout(
     n.branchCount = outgoingCountMap.get(n.id) || 0;
   });
 
+  const posNodes = Array.from(positioned.values());
+  preventLayoutOverlaps(posNodes, []);
+
   return {
-    nodes: Array.from(positioned.values()),
+    nodes: posNodes,
     edges,
   };
 }
@@ -536,8 +539,11 @@ export function calculateTreeLayout(
     n.branchCount = outgoingCountMap.get(n.id) || 0;
   });
 
+  const posNodes = Array.from(positioned.values());
+  preventLayoutOverlaps(posNodes, []);
+
   return {
-    nodes: Array.from(positioned.values()),
+    nodes: posNodes,
     edges,
   };
 }
@@ -549,6 +555,362 @@ export function calculateTreeLayout(
  * - Up to 3 children (<= 3): remain individual KEYWORD NODES.
  * - More than 3 children (> 3): grouped into a single CARD STACK.
  * - From the right end of a card: sub-items (<= 3) branch out as individual keyword nodes via threads!
+ */
+/**
+ * Helper to branch out sub-items from a card's right socket anchor ports
+ */
+function layoutCardSubItems(
+  positionedCard: PositionedGroupCard,
+  positionedNodes: PositionedNode[],
+  edges: Edge[],
+  level: number,
+  branchIndex: number
+) {
+  const totalItems = positionedCard.items.length;
+  positionedCard.items.forEach((item, itemIdx) => {
+    const subCount = item.subItems?.length || 0;
+    if (subCount > 0) {
+      const anchor = getCardItemAnchor(positionedCard, itemIdx, totalItems);
+      const lineLength = 110;
+      const leftEdgeX = anchor.x + lineLength;
+
+      item.subItems!.forEach((sub, sIdx) => {
+        const estimatedWidth =
+          46 +
+          Math.round(sub.label.length * 6.8) +
+          (sub.badge ? Math.round(sub.badge.length * 5.5 + 10) : 0);
+        const nodeX = Math.round(leftEdgeX + estimatedWidth / 2);
+
+        let nodeY = anchor.y;
+        if (subCount === 2) {
+          nodeY = anchor.y + (sIdx === 0 ? -20 : 20);
+        } else if (subCount === 3) {
+          nodeY = anchor.y + (sIdx === 0 ? -32 : sIdx === 1 ? 0 : 32);
+        } else if (subCount > 3) {
+          nodeY = anchor.y + Math.round((sIdx - (subCount - 1) / 2) * 26);
+        }
+
+        const subKeywordNode: PositionedNode = {
+          id: sub.id,
+          label: sub.label,
+          category: positionedCard.category,
+          parentId: item.id,
+          level,
+          badge: sub.badge,
+          searchQuery: sub.searchQuery,
+          color: positionedCard.color,
+          x: nodeX,
+          y: nodeY,
+          cardParentId: positionedCard.id,
+          branchIndex,
+        };
+        positionedNodes.push(subKeywordNode);
+
+        edges.push({
+          source: `${positionedCard.id}:${item.id}`,
+          target: sub.id,
+          category: positionedCard.category,
+          level,
+          cardId: positionedCard.id,
+          itemIndex: itemIdx,
+          totalItems,
+          branchIndex,
+        });
+      });
+    }
+  });
+}
+
+/**
+ * Automated AABB overlap prevention & dynamic distribution engine.
+ * Ensures that even as cards or nodes grow in item count or text length,
+ * everything distributes freely across the infinite 2D canvas with zero overlaps.
+ */
+export function preventLayoutOverlaps(
+  nodes: PositionedNode[],
+  cards: PositionedGroupCard[]
+): void {
+  if (nodes.length === 0 && cards.length === 0) return;
+
+  // Build parent -> children map for keyword nodes to preserve subtree structures
+  const childrenMap = new Map<string, string[]>();
+  nodes.forEach((n) => {
+    if (n.parentId && !n.cardParentId) {
+      const list = childrenMap.get(n.parentId) || [];
+      list.push(n.id);
+      childrenMap.set(n.parentId, list);
+    }
+  });
+
+  // Helper to get all descendant node IDs of a node
+  const getSubtreeDescendants = (rootId: string): string[] => {
+    const result: string[] = [];
+    const queue = [rootId];
+    while (queue.length > 0) {
+      const curr = queue.shift()!;
+      const children = childrenMap.get(curr);
+      if (children) {
+        for (const childId of children) {
+          result.push(childId);
+          queue.push(childId);
+        }
+      }
+    }
+    return result;
+  };
+
+  const nodeMap = new Map<string, PositionedNode>();
+  nodes.forEach((n) => nodeMap.set(n.id, n));
+
+  const shiftNodeSubtree = (nodeId: string, dx: number, dy: number) => {
+    const node = nodeMap.get(nodeId);
+    if (!node) return;
+    node.x += dx;
+    node.y += dy;
+    const descendants = getSubtreeDescendants(nodeId);
+    for (const dId of descendants) {
+      const dNode = nodeMap.get(dId);
+      if (dNode) {
+        dNode.x += dx;
+        dNode.y += dy;
+      }
+    }
+  };
+
+  // Accurate AABB bounds calculation for Group Cards including all attached right-hand socket sub-nodes
+  const getCardBounds = (card: PositionedGroupCard) => {
+    const hasSubItems = card.items.some((it) => it.subItems && it.subItems.length > 0);
+    let maxSubWidth = 0;
+    if (hasSubItems) {
+      card.items.forEach((it) => {
+        it.subItems?.forEach((sub) => {
+          const w = 46 + Math.round(sub.label.length * 7.5) + (sub.badge ? Math.round(sub.badge.length * 6 + 10) : 0);
+          if (w > maxSubWidth) maxSubWidth = w;
+        });
+      });
+    }
+
+    const leftMargin = 45;
+    const rightMargin = 45;
+    const minX = card.x - GROUP_CARD_WIDTH / 2 - leftMargin;
+    const maxX = hasSubItems
+      ? card.x + GROUP_CARD_WIDTH / 2 + 110 + maxSubWidth + rightMargin
+      : card.x + GROUP_CARD_WIDTH / 2 + rightMargin;
+
+    const cardHeight = Math.max(260, 70 + card.items.length * 38);
+    const topMargin = 45;
+    const bottomMargin = 45;
+    const minY = card.y - cardHeight / 2 - topMargin;
+    const maxY = card.y + cardHeight / 2 + bottomMargin;
+
+    const width = maxX - minX;
+    const height = maxY - minY;
+    const centerX = (minX + maxX) / 2;
+    const centerY = (minY + maxY) / 2;
+
+    return {
+      minX,
+      maxX,
+      minY,
+      maxY,
+      centerX,
+      centerY,
+      halfW: width / 2,
+      halfH: height / 2,
+    };
+  };
+
+  // Accurate AABB bounds for Standalone Keyword Nodes
+  const getNodeBounds = (node: PositionedNode) => {
+    const w = Math.max(160, 46 + node.label.length * 7.5 + (node.badge ? node.badge.length * 6 : 0));
+    const h = 54;
+    const marginX = 35;
+    const marginY = 30;
+    return {
+      minX: node.x - w / 2 - marginX,
+      maxX: node.x + w / 2 + marginX,
+      minY: node.y - h / 2 - marginY,
+      maxY: node.y + h / 2 + marginY,
+      centerX: node.x,
+      centerY: node.y,
+      halfW: w / 2 + marginX,
+      halfH: h / 2 + marginY,
+    };
+  };
+
+  // Anchor nodes that should remain fixed at their designated hub positions
+  const isFixedAnchorNode = (id: string, level?: number) => {
+    return (
+      id === "root-all" ||
+      id === "root-js-core" ||
+      id === "root-node" ||
+      id === "root-cs-foundations" ||
+      level === 0
+    );
+  };
+
+  // Run up to 35 relaxation passes
+  for (let iter = 0; iter < 35; iter++) {
+    let hadCollision = false;
+
+    // 1. CARD vs CARD separation
+    for (let i = 0; i < cards.length; i++) {
+      for (let j = i + 1; j < cards.length; j++) {
+        const cA = cards[i];
+        const cB = cards[j];
+        const bA = getCardBounds(cA);
+        const bB = getCardBounds(cB);
+
+        const dx = bB.centerX - bA.centerX;
+        const dy = bB.centerY - bA.centerY;
+        const overlapX = bA.halfW + bB.halfW - Math.abs(dx);
+        const overlapY = bA.halfH + bB.halfH - Math.abs(dy);
+
+        if (overlapX > 0 && overlapY > 0) {
+          hadCollision = true;
+          if (overlapX < overlapY) {
+            const shift = Math.ceil(overlapX / 2 + 30);
+            const sign = dx >= 0 ? 1 : -1;
+            cA.x -= shift * sign;
+            cB.x += shift * sign;
+          } else {
+            const shift = Math.ceil(overlapY / 2 + 30);
+            const sign = dy >= 0 ? 1 : -1;
+            cA.y -= shift * sign;
+            cB.y += shift * sign;
+          }
+        }
+      }
+    }
+
+    // 2. CARD vs STANDALONE KEYWORD NODE separation
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      const bCard = getCardBounds(card);
+
+      for (let j = 0; j < nodes.length; j++) {
+        const node = nodes[j];
+        if (node.cardParentId) continue;
+        if (isFixedAnchorNode(node.id, node.level)) continue;
+
+        const bNode = getNodeBounds(node);
+        const dx = bNode.centerX - bCard.centerX;
+        const dy = bNode.centerY - bCard.centerY;
+        const overlapX = bCard.halfW + bNode.halfW - Math.abs(dx);
+        const overlapY = bCard.halfH + bNode.halfH - Math.abs(dy);
+
+        if (overlapX > 0 && overlapY > 0) {
+          hadCollision = true;
+          if (overlapX < overlapY) {
+            const shift = Math.ceil(overlapX + 35);
+            const sign = dx >= 0 ? 1 : -1;
+            shiftNodeSubtree(node.id, shift * sign, 0);
+          } else {
+            const shift = Math.ceil(overlapY + 35);
+            const sign = dy >= 0 ? 1 : -1;
+            shiftNodeSubtree(node.id, 0, shift * sign);
+          }
+        }
+      }
+    }
+
+    // 3. STANDALONE NODE vs STANDALONE NODE separation
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const nA = nodes[i];
+        const nB = nodes[j];
+        if (nA.cardParentId || nB.cardParentId) continue;
+        if (nA.parentId === nB.id || nB.parentId === nA.id) continue;
+
+        const bA = getNodeBounds(nA);
+        const bB = getNodeBounds(nB);
+        const dx = bB.centerX - bA.centerX;
+        const dy = bB.centerY - bA.centerY;
+        const overlapX = bA.halfW + bB.halfW - Math.abs(dx);
+        const overlapY = bA.halfH + bB.halfH - Math.abs(dy);
+
+        if (overlapX > 0 && overlapY > 0) {
+          hadCollision = true;
+          const aFixed = isFixedAnchorNode(nA.id, nA.level);
+          const bFixed = isFixedAnchorNode(nB.id, nB.level);
+
+          if (aFixed && !bFixed) {
+            if (overlapX < overlapY) {
+              const shift = Math.ceil(overlapX + 25);
+              const sign = dx >= 0 ? 1 : -1;
+              shiftNodeSubtree(nB.id, shift * sign, 0);
+            } else {
+              const shift = Math.ceil(overlapY + 25);
+              const sign = dy >= 0 ? 1 : -1;
+              shiftNodeSubtree(nB.id, 0, shift * sign);
+            }
+          } else if (!aFixed && bFixed) {
+            if (overlapX < overlapY) {
+              const shift = Math.ceil(overlapX + 25);
+              const sign = dx >= 0 ? -1 : 1;
+              shiftNodeSubtree(nA.id, shift * sign, 0);
+            } else {
+              const shift = Math.ceil(overlapY + 25);
+              const sign = dy >= 0 ? -1 : 1;
+              shiftNodeSubtree(nA.id, 0, shift * sign);
+            }
+          } else if (!aFixed && !bFixed) {
+            if (overlapX < overlapY) {
+              const shift = Math.ceil(overlapX / 2 + 18);
+              const sign = dx >= 0 ? 1 : -1;
+              shiftNodeSubtree(nA.id, -shift * sign, 0);
+              shiftNodeSubtree(nB.id, shift * sign, 0);
+            } else {
+              const shift = Math.ceil(overlapY / 2 + 18);
+              const sign = dy >= 0 ? 1 : -1;
+              shiftNodeSubtree(nA.id, 0, -shift * sign);
+              shiftNodeSubtree(nB.id, 0, shift * sign);
+            }
+          }
+        }
+      }
+    }
+
+    if (!hadCollision) break;
+  }
+
+  // 4. Finally, synchronize all card-attached sub-nodes to their moved card's anchor ports
+  cards.forEach((card) => {
+    const totalItems = card.items.length;
+    card.items.forEach((item, itemIdx) => {
+      const subCount = item.subItems?.length || 0;
+      if (subCount > 0) {
+        const anchor = getCardItemAnchor(card, itemIdx, totalItems);
+        const lineLength = 110;
+        const leftEdgeX = anchor.x + lineLength;
+
+        item.subItems!.forEach((sub, sIdx) => {
+          const subNode = nodeMap.get(sub.id);
+          if (subNode && subNode.cardParentId === card.id) {
+            const estimatedWidth =
+              46 +
+              Math.round(sub.label.length * 6.8) +
+              (sub.badge ? Math.round(sub.badge.length * 5.5 + 10) : 0);
+            subNode.x = Math.round(leftEdgeX + estimatedWidth / 2);
+            let nodeY = anchor.y;
+            if (subCount === 2) {
+              nodeY = anchor.y + (sIdx === 0 ? -20 : 20);
+            } else if (subCount === 3) {
+              nodeY = anchor.y + (sIdx === 0 ? -32 : sIdx === 1 ? 0 : 32);
+            } else if (subCount > 3) {
+              nodeY = anchor.y + Math.round((sIdx - (subCount - 1) / 2) * 26);
+            }
+            subNode.y = nodeY;
+          }
+        });
+      }
+    });
+  });
+}
+
+/**
+ * Calculates positions for Group View (Concepts with > 3 items become Group Cards).
+ * In All Concepts view, radiates strictly 3 primary branches with non-overlapping sectors.
  */
 export function calculateGroupLayout(
   allNodes: SpiderNode[],
@@ -601,16 +963,16 @@ export function calculateGroupLayout(
 
   if (category === "all") {
     // Center Hub: MASTER UNIVERSE (Node.js + JavaScript)
-    // Radiates STRICTLY 3 primary branches (120° Triad):
-    // - Branch 0: JavaScript & V8 Core (Top-Left -150°) -> Red (branch 0)
-    // - Branch 1: Node.js Runtime (Top-Right -30°) -> Yellow (branch 1)
-    // - Branch 2: CS Foundations (OOP & DSA) (Bottom 90°) -> Green (branch 2)
+    // Radiates STRICTLY 3 primary branches (120° Triad) with infinite open canvas spacing:
+    // - Branch 0: JavaScript & V8 Core (Left & Top-Left) -> Red (branch 0)
+    // - Branch 1: Node.js Runtime (Right & Top-Right) -> Yellow (branch 1)
+    // - Branch 2: CS Foundations (OOP & DSA) (Bottom) -> Green (branch 2)
 
     // ==========================================
     // BRANCH 0: JAVASCRIPT & V8 CORE (Red, branch 0)
     // ==========================================
-    const jsCoreX = -460;
-    const jsCoreY = -270;
+    const jsCoreX = -750;
+    const jsCoreY = -120;
     const jsCoreNode: PositionedNode = {
       id: "root-js-core",
       label: "JavaScript & V8 Core",
@@ -632,127 +994,460 @@ export function calculateGroupLayout(
       branchIndex: 0,
     });
 
-    // Sub-Branch 0A: V8 Engine (angle -165° from jsCore)
-    const v8Layout = calculateGroupLayout(allNodes, "v8", 0, 2);
-    const v8HubX = jsCoreX - 440;
-    const v8HubY = jsCoreY - 260;
-    edges.push({
-      source: jsCoreNode.id,
-      target: v8Layout.rootNode.id,
-      category: "v8",
-      level: 2,
-      branchIndex: 0,
-    });
-    positionedNodes.push({
-      ...v8Layout.rootNode,
+    // Sub-Branch 0A: V8 Engine Hub (North-West)
+    const v8HubX = -1450;
+    const v8HubY = -700;
+    const v8HubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-v8")!,
       x: v8HubX,
       y: v8HubY,
       level: 2,
       branchIndex: 0,
-    });
-    v8Layout.nodes.forEach((n) => {
-      if (n.id !== v8Layout.rootNode.id) {
-        positionedNodes.push({
-          ...n,
-          x: n.x + v8HubX,
-          y: n.y + v8HubY,
-          branchIndex: 0,
-        });
-      }
-    });
-    v8Layout.cards.forEach((c) => {
-      positionedCards.push({
-        ...c,
-        x: c.x + v8HubX,
-        y: c.y + v8HubY,
-        branchIndex: 0,
-      });
-    });
-    edges.push(...v8Layout.edges);
-
-    // Sub-Branch 0B: Scope & Closures (angle -110° from jsCore)
-    const scopeLayout = calculateGroupLayout(allNodes, "scope", 0, 2);
-    const scopeHubX = jsCoreX - 380;
-    const scopeHubY = jsCoreY + 220;
+    };
+    positionedNodes.push(v8HubNode);
     edges.push({
       source: jsCoreNode.id,
-      target: scopeLayout.rootNode.id,
-      category: "scope",
+      target: v8HubNode.id,
+      category: "v8",
       level: 2,
       branchIndex: 0,
     });
-    positionedNodes.push({
-      ...scopeLayout.rootNode,
+
+    // V8 Card 1: JavaScript Execution Pipeline (9 steps) -> Outer North-West
+    const v8ExecCard = cardByPillar.get("v8-js-exec");
+    if (v8ExecCard) {
+      const cardX = -2400;
+      const cardY = -1050;
+      const posCard: PositionedGroupCard = {
+        ...v8ExecCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 0,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: v8HubNode.id,
+        target: v8ExecCard.id,
+        category: "v8",
+        level: 3,
+        branchIndex: 0,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 0);
+    }
+
+    // V8 Node 2: Memory (Heap & GC) -> North from v8HubNode
+    const memNodeRaw = allNodes.find((n) => n.id === "v8-memory");
+    if (memNodeRaw) {
+      const memX = -1450;
+      const memY = -1250;
+      const memNode: PositionedNode = {
+        ...memNodeRaw,
+        x: memX,
+        y: memY,
+        level: 3,
+        branchIndex: 0,
+      };
+      positionedNodes.push(memNode);
+      edges.push({
+        source: v8HubNode.id,
+        target: memNode.id,
+        category: "v8",
+        level: 3,
+        branchIndex: 0,
+      });
+
+      const heapRaw = allNodes.find((n) => n.id === "v8-heap");
+      if (heapRaw) {
+        positionedNodes.push({
+          ...heapRaw,
+          x: memX - 250,
+          y: memY - 60,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: memNode.id,
+          target: heapRaw.id,
+          category: "v8",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+
+      const gcRaw = allNodes.find((n) => n.id === "v8-gc");
+      if (gcRaw) {
+        positionedNodes.push({
+          ...gcRaw,
+          x: memX + 250,
+          y: memY - 60,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: memNode.id,
+          target: gcRaw.id,
+          category: "v8",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+    }
+
+    // V8 Card 3: Execution Stack & Context (4 items) -> West from v8HubNode
+    const v8StackCard = cardByPillar.get("v8-stack-pillar");
+    if (v8StackCard) {
+      const cardX = -2400;
+      const cardY = -450;
+      const posCard: PositionedGroupCard = {
+        ...v8StackCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 0,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: v8HubNode.id,
+        target: v8StackCard.id,
+        category: "v8",
+        level: 3,
+        branchIndex: 0,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 0);
+    }
+
+    // Sub-Branch 0B: Scope & Closures Hub (placed down-left)
+    const scopeHubX = -1450;
+    const scopeHubY = 400;
+    const scopeHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-scope")!,
       x: scopeHubX,
       y: scopeHubY,
       level: 2,
       branchIndex: 0,
+    };
+    positionedNodes.push(scopeHubNode);
+    edges.push({
+      source: jsCoreNode.id,
+      target: scopeHubNode.id,
+      category: "scope",
+      level: 2,
+      branchIndex: 0,
     });
-    scopeLayout.nodes.forEach((n) => {
-      if (n.id !== scopeLayout.rootNode.id) {
+
+    // Scope Node 1: Scope & Scope Chain
+    const scopeNodeRaw = allNodes.find((n) => n.id === "scope-scope");
+    if (scopeNodeRaw) {
+      const scX = -2100;
+      const scY = 160;
+      const scNode: PositionedNode = {
+        ...scopeNodeRaw,
+        x: scX,
+        y: scY,
+        level: 3,
+        branchIndex: 0,
+      };
+      positionedNodes.push(scNode);
+      edges.push({
+        source: scopeHubNode.id,
+        target: scNode.id,
+        category: "scope",
+        level: 3,
+        branchIndex: 0,
+      });
+
+      const lexRaw = allNodes.find((n) => n.id === "scope-lexical");
+      if (lexRaw) {
         positionedNodes.push({
-          ...n,
-          x: n.x + scopeHubX,
-          y: n.y + scopeHubY,
+          ...lexRaw,
+          x: scX - 320,
+          y: scY - 50,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: scNode.id,
+          target: lexRaw.id,
+          category: "scope",
+          level: 4,
           branchIndex: 0,
         });
       }
-    });
-    scopeLayout.cards.forEach((c) => {
-      positionedCards.push({
-        ...c,
-        x: c.x + scopeHubX,
-        y: c.y + scopeHubY,
+
+      const chainRaw = allNodes.find((n) => n.id === "scope-chain");
+      if (chainRaw) {
+        const chX = scX - 320;
+        const chY = scY + 50;
+        positionedNodes.push({
+          ...chainRaw,
+          x: chX,
+          y: chY,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: scNode.id,
+          target: chainRaw.id,
+          category: "scope",
+          level: 4,
+          branchIndex: 0,
+        });
+
+        const orderRaw = allNodes.find((n) => n.id === "scope-chain-order");
+        if (orderRaw) {
+          positionedNodes.push({
+            ...orderRaw,
+            x: chX - 320,
+            y: chY,
+            level: 5,
+            branchIndex: 0,
+          });
+          edges.push({
+            source: chainRaw.id,
+            target: orderRaw.id,
+            category: "scope",
+            level: 5,
+            branchIndex: 0,
+          });
+        }
+      }
+    }
+
+    // Scope Node 2: Lexical Environment
+    const lexEnvRaw = allNodes.find((n) => n.id === "scope-lexical-env");
+    if (lexEnvRaw) {
+      const leX = -2100;
+      const leY = 400;
+      const leNode: PositionedNode = {
+        ...lexEnvRaw,
+        x: leX,
+        y: leY,
+        level: 3,
+        branchIndex: 0,
+      };
+      positionedNodes.push(leNode);
+      edges.push({
+        source: scopeHubNode.id,
+        target: leNode.id,
+        category: "scope",
+        level: 3,
         branchIndex: 0,
       });
-    });
-    edges.push(...scopeLayout.edges);
+    }
+
+    // Scope Node 3: Closure
+    const closureRaw = allNodes.find((n) => n.id === "scope-closure");
+    if (closureRaw) {
+      const clX = -2100;
+      const clY = 640;
+      const clNode: PositionedNode = {
+        ...closureRaw,
+        x: clX,
+        y: clY,
+        level: 3,
+        branchIndex: 0,
+      };
+      positionedNodes.push(clNode);
+      edges.push({
+        source: scopeHubNode.id,
+        target: clNode.id,
+        category: "scope",
+        level: 3,
+        branchIndex: 0,
+      });
+
+      const detailRaw = allNodes.find((n) => n.id === "scope-closure-detail");
+      if (detailRaw) {
+        positionedNodes.push({
+          ...detailRaw,
+          x: clX - 320,
+          y: clY - 60,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: clNode.id,
+          target: detailRaw.id,
+          category: "scope",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+
+      const backpackRaw = allNodes.find((n) => n.id === "scope-backpack");
+      if (backpackRaw) {
+        positionedNodes.push({
+          ...backpackRaw,
+          x: clX - 320,
+          y: clY,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: clNode.id,
+          target: backpackRaw.id,
+          category: "scope",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+
+      const sentRaw = allNodes.find((n) => n.id === "scope-5-sentences");
+      if (sentRaw) {
+        positionedNodes.push({
+          ...sentRaw,
+          x: clX - 320,
+          y: clY + 60,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: clNode.id,
+          target: sentRaw.id,
+          category: "scope",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+    }
 
     // ==========================================
     // BRANCH 1: NODE.JS RUNTIME (Yellow, branch 1)
     // ==========================================
-    const nodeLayout = calculateGroupLayout(allNodes, "node", 1, 1);
-    const nodeHubX = 460;
-    const nodeHubY = -270;
-    edges.push({
-      source: rootNode.id,
-      target: nodeLayout.rootNode.id,
-      category: "node",
-      level: 1,
-      branchIndex: 1,
-    });
-    positionedNodes.push({
-      ...nodeLayout.rootNode,
+    const nodeHubX = 750;
+    const nodeHubY = -120;
+    const nodeHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-node")!,
       x: nodeHubX,
       y: nodeHubY,
       level: 1,
       branchIndex: 1,
+    };
+    positionedNodes.push(nodeHubNode);
+    edges.push({
+      source: rootNode.id,
+      target: nodeHubNode.id,
+      category: "node",
+      level: 1,
+      branchIndex: 1,
     });
-    nodeLayout.nodes.forEach((n) => {
-      if (n.id !== nodeLayout.rootNode.id) {
-        positionedNodes.push({
-          ...n,
-          x: n.x + nodeHubX,
-          y: n.y + nodeHubY,
-          branchIndex: 1,
-        });
-      }
-    });
-    nodeLayout.cards.forEach((c) => {
-      positionedCards.push({
-        ...c,
-        x: c.x + nodeHubX,
-        y: c.y + nodeHubY,
+
+    // 1. The Restaurant Cast (Group Card, 6 items) -> Top-Right
+    const restCard = cardByPillar.get("node-restaurant-pillar");
+    if (restCard) {
+      const cardX = 1750;
+      const cardY = -800;
+      const posCard: PositionedGroupCard = {
+        ...restCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: nodeHubNode.id,
+        target: restCard.id,
+        category: "node",
+        level: 2,
         branchIndex: 1,
       });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 1);
+    }
+
+    // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
+    const apisCard = cardByPillar.get("node-apis-pillar");
+    if (apisCard) {
+      const cardX = 1750;
+      const cardY = -200;
+      const posCard: PositionedGroupCard = {
+        ...apisCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: nodeHubNode.id,
+        target: apisCard.id,
+        category: "node",
+        level: 2,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 1);
+    }
+
+    // 3. Event Loop & libuv (Engine Hub Keyword Node) -> Down-Right
+    const elHubX = 1400;
+    const elHubY = 450;
+    const elHubNode: PositionedNode = {
+      id: "node-eventloop-pillar",
+      label: "Event Loop & libuv",
+      category: "node",
+      level: 2,
+      badge: "Coordinator",
+      color: "#22c55e",
+      searchQuery: "Node.js Event Loop explained coordinator libuv",
+      x: elHubX,
+      y: elHubY,
+      branchIndex: 1,
+    };
+    positionedNodes.push(elHubNode);
+    edges.push({
+      source: nodeHubNode.id,
+      target: elHubNode.id,
+      category: "node",
+      level: 2,
+      branchIndex: 1,
     });
-    edges.push(...nodeLayout.edges);
+
+    // libuv Infrastructure Card -> placed at x = 2250, y = 280
+    const libuvCard = cardByPillar.get("node-libuv-pillar");
+    if (libuvCard) {
+      const cardX = 2250;
+      const cardY = 280;
+      const posCard: PositionedGroupCard = {
+        ...libuvCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: elHubNode.id,
+        target: libuvCard.id,
+        category: "node",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Event Loop 5 Phases Card -> placed at x = 2250, y = 850
+    const phasesCard = cardByPillar.get("node-phases-pillar");
+    if (phasesCard) {
+      const cardX = 2250;
+      const cardY = 850;
+      const posCard: PositionedGroupCard = {
+        ...phasesCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: elHubNode.id,
+        target: phasesCard.id,
+        category: "node",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
 
     // ==========================================
     // BRANCH 2: CS FOUNDATIONS (OOP & DSA) (Green, branch 2)
     // ==========================================
     const csFoundX = 0;
-    const csFoundY = 460;
+    const csFoundY = 750;
     const csFoundNode: PositionedNode = {
       id: "root-cs-foundations",
       label: "CS Foundations",
@@ -774,20 +1469,18 @@ export function calculateGroupLayout(
       branchIndex: 2,
     });
 
-    // CS Foundations connects directly to the 3 Group Cards:
-    // 1. OOP 4 Pillars & Analogies (Card) -> Bottom-Left (-580px)
-    // 2. Data Structures & Stories (Card) -> Bottom-Center (straight down)
-    // 3. Big O Time Complexity (Card) -> Bottom-Right (+580px)
+    // 1. OOP 4 Pillars & Analogies (Card) -> Bottom-Left (-1200px)
     const oopCard = cardByPillar.get("oop-pillars-pillar");
     if (oopCard) {
-      const oopCardX = csFoundX - 580;
-      const oopCardY = csFoundY + 440;
-      positionedCards.push({
+      const cardX = -1200;
+      const cardY = 1450;
+      const posCard: PositionedGroupCard = {
         ...oopCard,
-        x: oopCardX,
-        y: oopCardY,
+        x: cardX,
+        y: cardY,
         branchIndex: 2,
-      });
+      };
+      positionedCards.push(posCard);
       edges.push({
         source: csFoundNode.id,
         target: oopCard.id,
@@ -795,18 +1488,21 @@ export function calculateGroupLayout(
         level: 2,
         branchIndex: 2,
       });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 2);
     }
 
+    // 2. Data Structures & Stories (Card) -> Bottom-Center (0px)
     const dsCard = cardByPillar.get("dsa-structures-pillar");
     if (dsCard) {
-      const dsCardX = csFoundX;
-      const dsCardY = csFoundY + 680;
-      positionedCards.push({
+      const cardX = 0;
+      const cardY = 1600;
+      const posCard: PositionedGroupCard = {
         ...dsCard,
-        x: dsCardX,
-        y: dsCardY,
+        x: cardX,
+        y: cardY,
         branchIndex: 2,
-      });
+      };
+      positionedCards.push(posCard);
       edges.push({
         source: csFoundNode.id,
         target: dsCard.id,
@@ -814,18 +1510,21 @@ export function calculateGroupLayout(
         level: 2,
         branchIndex: 2,
       });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 2);
     }
 
+    // 3. Big O Time Complexity (Card) -> Bottom-Right (+1250px)
     const bigOCard = cardByPillar.get("dsa-big-o-pillar");
     if (bigOCard) {
-      const bigOCardX = csFoundX + 580;
-      const bigOCardY = csFoundY + 440;
-      positionedCards.push({
+      const cardX = 1250;
+      const cardY = 1450;
+      const posCard: PositionedGroupCard = {
         ...bigOCard,
-        x: bigOCardX,
-        y: bigOCardY,
+        x: cardX,
+        y: cardY,
         branchIndex: 2,
-      });
+      };
+      positionedCards.push(posCard);
       edges.push({
         source: csFoundNode.id,
         target: bigOCard.id,
@@ -833,7 +1532,11 @@ export function calculateGroupLayout(
         level: 2,
         branchIndex: 2,
       });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 2);
     }
+
+    // Automated overlap prevention relaxation pass
+    preventLayoutOverlaps(positionedNodes, positionedCards);
 
     // Calculate outgoing branch count for each node in All Concepts view
     const outgoingCountMap = new Map<string, number>();
@@ -871,7 +1574,7 @@ export function calculateGroupLayout(
   }
 
   const pillarCount = pillarIds.length || 1;
-  const r1 = 260;
+  const r1 = 340;
 
   pillarIds.forEach((pId, i) => {
     const rawPillar = allNodes.find((n) => n.id === pId);
@@ -890,8 +1593,7 @@ export function calculateGroupLayout(
     if (cardData) {
       // Group Card directly represents this pillar (> 3 items)
       // Connect rootNode DIRECTLY to the Group Card with 1 single thread!
-      // Do NOT push a duplicate keyword node to positionedNodes.
-      const rCard = r1 + (cardData.items.length > 6 ? 440 : 380);
+      const rCard = r1 + (cardData.items.length > 6 ? 560 : 480);
       const cx = Math.round(Math.cos(angle) * rCard);
       const cy = Math.round(Math.sin(angle) * rCard);
 
@@ -911,58 +1613,7 @@ export function calculateGroupLayout(
         branchIndex,
       });
 
-      // Branch out sub-items from the right end of the card!
-      const totalItems = cardData.items.length;
-      cardData.items.forEach((item, itemIdx) => {
-        const subCount = item.subItems?.length || 0;
-        if (subCount > 0 && subCount <= 3) {
-          const anchor = getCardItemAnchor(positionedCard, itemIdx, totalItems);
-          const lineLength = 110;
-          const leftEdgeX = anchor.x + lineLength;
-
-          item.subItems!.forEach((sub, sIdx) => {
-            const estimatedWidth =
-              46 +
-              Math.round(sub.label.length * 6.8) +
-              (sub.badge ? Math.round(sub.badge.length * 5.5 + 10) : 0);
-            const nodeX = Math.round(leftEdgeX + estimatedWidth / 2);
-
-            let nodeY = anchor.y;
-            if (subCount === 2) {
-              nodeY = anchor.y + (sIdx === 0 ? -20 : 20);
-            } else if (subCount === 3) {
-              nodeY = anchor.y + (sIdx === 0 ? -32 : sIdx === 1 ? 0 : 32);
-            }
-
-            const subKeywordNode: PositionedNode = {
-              id: sub.id,
-              label: sub.label,
-              category: cardData.category,
-              parentId: item.id,
-              level: l3,
-              badge: sub.badge,
-              searchQuery: sub.searchQuery,
-              color: cardData.color,
-              x: nodeX,
-              y: nodeY,
-              cardParentId: cardData.id,
-              branchIndex,
-            };
-            positionedNodes.push(subKeywordNode);
-
-            edges.push({
-              source: `${cardData.id}:${item.id}`,
-              target: sub.id,
-              category: cardData.category,
-              level: l3,
-              cardId: cardData.id,
-              itemIndex: itemIdx,
-              totalItems,
-              branchIndex,
-            });
-          });
-        }
-      });
+      layoutCardSubItems(positionedCard, positionedNodes, edges, l3, branchIndex);
     } else {
       // Pillar has <= 3 children: Render as keyword node!
       const px = Math.round(Math.cos(angle) * r1);
@@ -984,25 +1635,25 @@ export function calculateGroupLayout(
         level: l1,
         branchIndex,
       });
+
       const children = allNodes.filter((n) => n.parentId === pId);
       const m = children.length;
       if (m > 0) {
         const hasChildCard = children.some((c) => cardByPillar.has(c.id));
-        const spread = hasChildCard ? 1.1 : 0.65;
+        const spread = hasChildCard ? 1.8 : 0.85;
         const startAngle = m === 1 ? angle : angle - spread / 2;
 
         children.forEach((child, j) => {
           const step = m === 1 ? 0 : j / (m - 1);
           const childAngle = m === 1 ? angle : startAngle + step * spread;
-          const r2 = r1 + 190;
+          const r2 = r1 + 260;
           const c2x = Math.round(Math.cos(childAngle) * r2);
           const c2y = Math.round(Math.sin(childAngle) * r2);
 
           // Check if this child itself has a Group Card (> 3 items, e.g. Event Loop Phases)
           const childCardData = cardByPillar.get(child.id);
           if (childCardData) {
-            // Group Card represents this branch directly — connect pillarNode directly to the card!
-            const rChildCard = r1 + 440;
+            const rChildCard = r1 + 600;
             const cardX = Math.round(Math.cos(childAngle) * rChildCard);
             const cardY = Math.round(Math.sin(childAngle) * rChildCard);
 
@@ -1022,60 +1673,9 @@ export function calculateGroupLayout(
               branchIndex,
             });
 
-            // Branch out sub-items from this card's right edge
-            const totalChildItems = childCardData.items.length;
-            childCardData.items.forEach((item, itemIdx) => {
-              const subCount = item.subItems?.length || 0;
-              if (subCount > 0 && subCount <= 3) {
-                const anchor = getCardItemAnchor(posChildCard, itemIdx, totalChildItems);
-                const lineLength = 110;
-                const leftEdgeX = anchor.x + lineLength;
-
-                item.subItems!.forEach((sub, sIdx) => {
-                  const estimatedWidth =
-                    46 +
-                    Math.round(sub.label.length * 6.8) +
-                    (sub.badge ? Math.round(sub.badge.length * 5.5 + 10) : 0);
-                  const nodeX = Math.round(leftEdgeX + estimatedWidth / 2);
-
-                  let nodeY = anchor.y;
-                  if (subCount === 2) {
-                    nodeY = anchor.y + (sIdx === 0 ? -20 : 20);
-                  } else if (subCount === 3) {
-                    nodeY = anchor.y + (sIdx === 0 ? -32 : sIdx === 1 ? 0 : 32);
-                  }
-
-                  const subNode: PositionedNode = {
-                    id: sub.id,
-                    label: sub.label,
-                    category: childCardData.category,
-                    parentId: item.id,
-                    level: l3,
-                    badge: sub.badge,
-                    searchQuery: sub.searchQuery,
-                    color: childCardData.color,
-                    x: nodeX,
-                    y: nodeY,
-                    cardParentId: childCardData.id,
-                    branchIndex,
-                  };
-                  positionedNodes.push(subNode);
-
-                  edges.push({
-                    source: `${childCardData.id}:${item.id}`,
-                    target: sub.id,
-                    category: childCardData.category,
-                    level: l3,
-                    cardId: childCardData.id,
-                    itemIndex: itemIdx,
-                    totalItems: totalChildItems,
-                    branchIndex,
-                  });
-                });
-              }
-            });
+            layoutCardSubItems(posChildCard, positionedNodes, edges, l3, branchIndex);
           } else {
-            // Regular child without card (e.g. Single-Threaded JS, Queues / Scheduling)
+            // Regular child without card
             const childNode: PositionedNode = {
               ...child,
               x: c2x,
@@ -1097,13 +1697,13 @@ export function calculateGroupLayout(
             const subChildren = allNodes.filter((n) => n.parentId === child.id);
             const k = subChildren.length;
             if (k > 0) {
-              const subSpread = 0.35;
+              const subSpread = 0.50;
               const subStartAngle = k === 1 ? childAngle : childAngle - subSpread / 2;
 
               subChildren.forEach((sub, sIdx) => {
                 const subStep = k === 1 ? 0 : sIdx / (k - 1);
                 const subAngle = k === 1 ? childAngle : subStartAngle + subStep * subSpread;
-                const r3 = r2 + 160;
+                const r3 = r2 + 200;
                 const c3x = Math.round(Math.cos(subAngle) * r3);
                 const c3y = Math.round(Math.sin(subAngle) * r3);
 
@@ -1130,6 +1730,9 @@ export function calculateGroupLayout(
       }
     }
   });
+
+  // Automated overlap prevention relaxation pass
+  preventLayoutOverlaps(positionedNodes, positionedCards);
 
   // Calculate outgoing branch count for each node in single category view
   const outgoingCountMap = new Map<string, number>();

@@ -68,6 +68,12 @@ export default function Home() {
   const handleSelectCategory = (category: ConceptCategory) => {
     setCurrentCategory(category);
     setSearchQuery("");
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 640;
+    if (category === "all") {
+      setZoom(isMobile ? 0.32 : 0.46);
+    } else {
+      setZoom(isMobile ? 0.52 : 0.88);
+    }
     setRecenterTrigger((prev) => prev + 1);
   };
 
@@ -80,10 +86,21 @@ export default function Home() {
   };
 
   const handleResetZoom = () => {
-    setZoom(1.0);
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 640;
+    if (currentCategory === "all") {
+      setZoom(isMobile ? 0.32 : 0.46);
+    } else {
+      setZoom(isMobile ? 0.52 : 1.0);
+    }
   };
 
   const handleRecenter = () => {
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 640;
+    if (currentCategory === "all") {
+      setZoom(isMobile ? 0.32 : 0.46);
+    } else {
+      setZoom(isMobile ? 0.52 : 0.88);
+    }
     setRecenterTrigger((prev) => prev + 1);
   };
 
