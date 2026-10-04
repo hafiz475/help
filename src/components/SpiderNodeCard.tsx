@@ -30,6 +30,10 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
   const isL1 = node.level === 1;
   const isL2 = node.level === 2;
 
+  // Rule: When a node creates more than 2 branches (branchCount > 2), or is root hub,
+  // it renders as a stadium pill capsule with pulsing halo ring!
+  const isPill = isRoot || Boolean(node.branchCount !== undefined && node.branchCount > 2);
+
   // Accent colors based on hierarchy level (Level 0, 1, 2, 3)
   const getColor = () => {
     if (node.level === 0) {
@@ -51,8 +55,8 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
   const accentColor = getColor();
   const opacity = hasQuery ? (isMatched ? 1 : 0.2) : 1;
 
-  // Render Root (Center concept)
-  if (isRoot) {
+  // Render Stadium Pill Capsule (Root center hub or any node branching out > 2)
+  if (isPill) {
     return (
       <div
         id={`node-${node.id}`}
@@ -65,17 +69,18 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           left: `${node.x}px`,
           top: `${node.y}px`,
           transform: `translate(-50%, -50%) scale(${isDragging ? 1.05 : isHovered ? 1.03 : 1})`,
-          cursor: isDragging ? "grabbing" : "grab",
-          zIndex: isDragging ? 35 : 20,
+          cursor: isDragging ? "grabbing" : "pointer",
+          zIndex: isDragging ? 35 : isHovered ? 25 : isRoot ? 20 : 16,
           opacity,
           transition: isDragging ? "none" : "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s",
         }}
       >
+        {/* Pulsing Outer Halo Ring */}
         <div
           className="animate-pulse-ring"
           style={{
             position: "absolute",
-            inset: "-14px",
+            inset: isRoot ? "-14px" : "-11px",
             borderRadius: "999px",
             border: `2px solid ${accentColor}`,
             opacity: isDark ? 0.45 : 0.35,
@@ -83,16 +88,19 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           }}
         />
 
+        {/* Stadium Capsule Body */}
         <div
           style={{
-            minWidth: "190px",
-            padding: "16px 26px",
+            minWidth: isRoot ? "190px" : "170px",
+            padding: isRoot ? "16px 26px" : "13px 24px",
             borderRadius: "999px",
             background: isDark
               ? `radial-gradient(circle at 50% 30%, ${accentColor}25 0%, #0d1322 95%)`
               : "#ffffff",
-            border: `2.5px solid ${accentColor}`,
-            boxShadow: isDark
+            border: `2.5px solid ${isMatched ? (isDark ? "#f59e0b" : "#d97706") : accentColor}`,
+            boxShadow: isMatched
+              ? `0 0 35px rgba(245, 158, 11, 0.6), 0 0 20px ${accentColor}`
+              : isDark
               ? `0 0 35px ${accentColor}40, 0 10px 25px rgba(0,0,0,0.6)`
               : `0 8px 30px rgba(0, 0, 0, 0.08), 0 0 20px ${accentColor}25`,
             display: "flex",
@@ -105,7 +113,7 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           {node.badge && (
             <span
               style={{
-                fontSize: "11px",
+                fontSize: isRoot ? "11px" : "10px",
                 fontWeight: 700,
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
@@ -118,7 +126,7 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           )}
           <span
             style={{
-              fontSize: "17px",
+              fontSize: isRoot ? "17px" : "15px",
               fontWeight: 800,
               color: isDark ? "#ffffff" : "#0f172a",
               letterSpacing: "-0.02em",
@@ -132,13 +140,13 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
               display: "flex",
               alignItems: "center",
               gap: "4px",
-              fontSize: "10.5px",
+              fontSize: isRoot ? "10.5px" : "10px",
               color: isDark ? "rgba(255,255,255,0.5)" : "var(--text-dim)",
               fontWeight: 500,
             }}
           >
             <span>Google search</span>
-            <ExternalLink size={10} color={accentColor} />
+            <ExternalLink size={isRoot ? 10 : 9.5} color={accentColor} />
           </div>
         </div>
       </div>

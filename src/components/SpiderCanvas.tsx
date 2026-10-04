@@ -645,7 +645,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                     ? "#f59e0b"
                     : "#d97706"
                   : colorSpec.stroke;
-                const strokeWidth = isHighlighted ? 3.2 : 1.8;
+                const strokeWidth = isHighlighted ? 3.0 : 1.6;
                 const strokeOpacity = isHighlighted ? 1 : 0.85;
 
                 return (
@@ -655,8 +655,8 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                       d={pathData}
                       fill="none"
                       stroke={colorSpec.glow}
-                      strokeWidth={strokeWidth + 3.5}
-                      strokeOpacity={0.35}
+                      strokeWidth={strokeWidth + 2.8}
+                      strokeOpacity={0.28}
                     />
                     <path
                       d={pathData}
@@ -733,7 +733,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                     ? "#f59e0b"
                     : "#d97706"
                   : colorSpec.stroke;
-                const strokeWidth = isCardMatched ? 4.5 : 2.8;
+                const strokeWidth = isCardMatched ? 4.0 : 2.2;
 
                 return (
                   <g key={`edge-card-${edge.source}-${edge.target}-${idx}`}>
@@ -742,8 +742,8 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                       d={pathData}
                       fill="none"
                       stroke={colorSpec.glow}
-                      strokeWidth={strokeWidth + 4}
-                      strokeOpacity={0.35}
+                      strokeWidth={strokeWidth + 3.2}
+                      strokeOpacity={0.28}
                     />
                     <path
                       d={pathData}
@@ -756,7 +756,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                       d={pathData}
                       fill="none"
                       stroke={strokeColor}
-                      strokeWidth={1.8}
+                      strokeWidth={1.6}
                       className="web-flow-line"
                       strokeOpacity={0.9}
                     />
@@ -780,18 +780,18 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                 );
 
                 let strokeColor = colorSpec.stroke;
-                let strokeWidth = 1.5;
+                let strokeWidth = 1.4;
                 let strokeOpacity = 0.7;
 
                 if (edge.level === 1) {
-                  strokeWidth = isHighlighted ? 4.5 : 3;
-                  strokeOpacity = isHighlighted ? 1 : 0.9;
+                  strokeWidth = isHighlighted ? 4.0 : 2.4;
+                  strokeOpacity = isHighlighted ? 1 : 0.88;
                 } else if (edge.level === 2) {
-                  strokeWidth = isHighlighted ? 3.5 : 2.2;
-                  strokeOpacity = isHighlighted ? 1 : 0.8;
+                  strokeWidth = isHighlighted ? 3.0 : 1.8;
+                  strokeOpacity = isHighlighted ? 1 : 0.82;
                 } else {
-                  strokeWidth = isHighlighted ? 3 : 1.6;
-                  strokeOpacity = isHighlighted ? 1 : 0.7;
+                  strokeWidth = isHighlighted ? 2.4 : 1.4;
+                  strokeOpacity = isHighlighted ? 1 : 0.72;
                 }
 
                 if (isHighlighted) {

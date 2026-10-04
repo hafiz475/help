@@ -10,6 +10,7 @@ export interface PositionedNode extends SpiderNode {
   vy?: number;
   cardParentId?: string;
   branchIndex?: number; // 0 (Red branch), 1 (Yellow branch), 2 (Green branch)
+  branchCount?: number; // Count of outgoing branches created by this node
 }
 
 export interface PositionedGroupCard extends GroupCardData {
@@ -64,189 +65,189 @@ export function getHierarchyThreadColor(
   const branch = Math.abs(branchIndex) % 3;
   const clampedLevel = Math.max(1, Math.min(level, 8));
 
-  // Branch 0: Red (1) -> Brown (4) -> Black (7) -> White (8)
+  // Branch 0: Tomato Red (1) -> Warm Cinnamon (4) -> Luminous Obsidian (7) -> Diamond White (8)
   if (branch === 0) {
     switch (clampedLevel) {
       case 1:
         return {
-          stroke: isDark ? "#ef4444" : "#dc2626",
-          glow: isDark ? "rgba(239, 68, 68, 0.75)" : "rgba(220, 38, 38, 0.4)",
-          name: "Glowing Red",
+          stroke: isDark ? "#ff6b6b" : "#ff5252",
+          glow: isDark ? "rgba(255, 107, 107, 0.7)" : "rgba(255, 82, 82, 0.35)",
+          name: "Glowing Tomato Red",
           points: 1,
         };
       case 2:
         return {
-          stroke: isDark ? "#f87171" : "#ef4444",
-          glow: isDark ? "rgba(248, 113, 113, 0.6)" : "rgba(239, 68, 68, 0.3)",
-          name: "Light Red",
+          stroke: isDark ? "#ffa8a8" : "#ff7675",
+          glow: isDark ? "rgba(255, 168, 168, 0.55)" : "rgba(255, 118, 117, 0.3)",
+          name: "Light Tomato Red",
           points: 1,
         };
       case 3:
         return {
-          stroke: isDark ? "#d97706" : "#b45309",
-          glow: isDark ? "rgba(217, 119, 6, 0.75)" : "rgba(180, 83, 9, 0.4)",
-          name: "Glowing Brown",
+          stroke: isDark ? "#fb923c" : "#f97316",
+          glow: isDark ? "rgba(251, 146, 60, 0.7)" : "rgba(249, 115, 22, 0.35)",
+          name: "Glowing Cinnamon Amber",
           points: 4,
         };
       case 4:
         return {
-          stroke: isDark ? "#f59e0b" : "#d97706",
-          glow: isDark ? "rgba(245, 158, 11, 0.6)" : "rgba(217, 119, 6, 0.3)",
-          name: "Light Brown",
+          stroke: isDark ? "#fdba74" : "#fb923c",
+          glow: isDark ? "rgba(253, 186, 116, 0.55)" : "rgba(251, 146, 60, 0.3)",
+          name: "Light Apricot Caramel",
           points: 4,
         };
       case 5:
         return {
-          stroke: isDark ? "#94a3b8" : "#1e293b",
-          glow: isDark ? "rgba(148, 163, 184, 0.75)" : "rgba(30, 41, 59, 0.4)",
-          name: "Obsidian Black",
+          stroke: isDark ? "#e2e8f0" : "#64748b",
+          glow: isDark ? "rgba(226, 232, 240, 0.7)" : "rgba(100, 116, 139, 0.3)",
+          name: "Luminous Obsidian Pearl",
           points: 7,
         };
       case 6:
         return {
-          stroke: isDark ? "#64748b" : "#475569",
-          glow: isDark ? "rgba(100, 116, 139, 0.6)" : "rgba(71, 85, 105, 0.3)",
-          name: "Charcoal Black",
+          stroke: isDark ? "#cbd5e1" : "#94a3b8",
+          glow: isDark ? "rgba(203, 213, 225, 0.55)" : "rgba(148, 163, 184, 0.25)",
+          name: "Soft Platinum Slate",
           points: 7,
         };
       case 7:
         return {
-          stroke: isDark ? "#f8fafc" : "#0f172a",
-          glow: isDark ? "rgba(248, 250, 252, 0.85)" : "rgba(15, 23, 42, 0.5)",
+          stroke: isDark ? "#ffffff" : "#475569",
+          glow: isDark ? "rgba(255, 255, 255, 0.85)" : "rgba(71, 85, 105, 0.35)",
           name: "Diamond White",
           points: 8,
         };
       case 8:
       default:
         return {
-          stroke: isDark ? "#fbbf24" : "#ca8a04",
-          glow: isDark ? "rgba(251, 191, 36, 0.85)" : "rgba(202, 138, 4, 0.5)",
-          name: "Royal Gold",
+          stroke: isDark ? "#fde047" : "#eab308",
+          glow: isDark ? "rgba(253, 224, 71, 0.85)" : "rgba(234, 179, 8, 0.4)",
+          name: "Royal Champagne Gold",
           points: 8,
         };
     }
   }
 
-  // Branch 1: Yellow (2) -> Blue (5) -> Black (7) -> White (8)
+  // Branch 1: Canary Yellow (2) -> Sky Blue (5) -> Luminous Obsidian (7) -> Diamond White (8)
   if (branch === 1) {
     switch (clampedLevel) {
       case 1:
         return {
-          stroke: isDark ? "#facc15" : "#ca8a04",
-          glow: isDark ? "rgba(250, 204, 21, 0.8)" : "rgba(202, 138, 4, 0.4)",
-          name: "Glowing Yellow",
+          stroke: isDark ? "#fde047" : "#eab308",
+          glow: isDark ? "rgba(253, 224, 71, 0.75)" : "rgba(234, 179, 8, 0.35)",
+          name: "Glowing Canary Yellow",
           points: 2,
         };
       case 2:
         return {
-          stroke: isDark ? "#fde047" : "#eab308",
-          glow: isDark ? "rgba(253, 224, 71, 0.6)" : "rgba(234, 179, 8, 0.3)",
-          name: "Light Yellow",
+          stroke: isDark ? "#fef08a" : "#facc15",
+          glow: isDark ? "rgba(254, 240, 138, 0.55)" : "rgba(250, 204, 21, 0.3)",
+          name: "Light Butter Yellow",
           points: 2,
         };
       case 3:
         return {
-          stroke: isDark ? "#3b82f6" : "#2563eb",
-          glow: isDark ? "rgba(59, 130, 246, 0.8)" : "rgba(37, 99, 235, 0.4)",
-          name: "Glowing Blue",
+          stroke: isDark ? "#38bdf8" : "#0284c7",
+          glow: isDark ? "rgba(56, 189, 248, 0.7)" : "rgba(2, 132, 199, 0.35)",
+          name: "Glowing Sky Blue",
           points: 5,
         };
       case 4:
         return {
-          stroke: isDark ? "#60a5fa" : "#3b82f6",
-          glow: isDark ? "rgba(96, 165, 250, 0.6)" : "rgba(59, 130, 246, 0.3)",
-          name: "Light Blue",
+          stroke: isDark ? "#93c5fd" : "#38bdf8",
+          glow: isDark ? "rgba(147, 197, 253, 0.55)" : "rgba(56, 189, 248, 0.3)",
+          name: "Light Powder Blue",
           points: 5,
         };
       case 5:
         return {
-          stroke: isDark ? "#94a3b8" : "#1e293b",
-          glow: isDark ? "rgba(148, 163, 184, 0.75)" : "rgba(30, 41, 59, 0.4)",
-          name: "Obsidian Black",
+          stroke: isDark ? "#e2e8f0" : "#64748b",
+          glow: isDark ? "rgba(226, 232, 240, 0.7)" : "rgba(100, 116, 139, 0.3)",
+          name: "Luminous Obsidian Pearl",
           points: 7,
         };
       case 6:
         return {
-          stroke: isDark ? "#64748b" : "#475569",
-          glow: isDark ? "rgba(100, 116, 139, 0.6)" : "rgba(71, 85, 105, 0.3)",
-          name: "Charcoal Black",
+          stroke: isDark ? "#cbd5e1" : "#94a3b8",
+          glow: isDark ? "rgba(203, 213, 225, 0.55)" : "rgba(148, 163, 184, 0.25)",
+          name: "Soft Platinum Slate",
           points: 7,
         };
       case 7:
         return {
-          stroke: isDark ? "#f8fafc" : "#0f172a",
-          glow: isDark ? "rgba(248, 250, 252, 0.85)" : "rgba(15, 23, 42, 0.5)",
+          stroke: isDark ? "#ffffff" : "#475569",
+          glow: isDark ? "rgba(255, 255, 255, 0.85)" : "rgba(71, 85, 105, 0.35)",
           name: "Diamond White",
           points: 8,
         };
       case 8:
       default:
         return {
-          stroke: isDark ? "#fbbf24" : "#ca8a04",
-          glow: isDark ? "rgba(251, 191, 36, 0.85)" : "rgba(202, 138, 4, 0.5)",
-          name: "Royal Gold",
+          stroke: isDark ? "#fde047" : "#eab308",
+          glow: isDark ? "rgba(253, 224, 71, 0.85)" : "rgba(234, 179, 8, 0.4)",
+          name: "Royal Champagne Gold",
           points: 8,
         };
     }
   }
 
-  // Branch 2: Green (3) -> Pink (6) -> Black (7) -> White (8)
+  // Branch 2: Mint Green (3) -> Rose Pink (6) -> Luminous Obsidian (7) -> Diamond White (8)
   switch (clampedLevel) {
     case 1:
       return {
-        stroke: isDark ? "#10b981" : "#059669",
-        glow: isDark ? "rgba(16, 185, 129, 0.8)" : "rgba(5, 150, 105, 0.4)",
-        name: "Glowing Green",
+        stroke: isDark ? "#34d399" : "#10b981",
+        glow: isDark ? "rgba(52, 211, 153, 0.7)" : "rgba(16, 185, 129, 0.35)",
+        name: "Glowing Mint Green",
         points: 3,
       };
     case 2:
       return {
-        stroke: isDark ? "#34d399" : "#10b981",
-        glow: isDark ? "rgba(52, 211, 153, 0.6)" : "rgba(16, 185, 129, 0.3)",
-        name: "Light Green",
+        stroke: isDark ? "#6ee7b7" : "#34d399",
+        glow: isDark ? "rgba(110, 231, 183, 0.55)" : "rgba(52, 211, 153, 0.3)",
+        name: "Light Seafoam Green",
         points: 3,
       };
     case 3:
       return {
-        stroke: isDark ? "#ec4899" : "#db2777",
-        glow: isDark ? "rgba(236, 72, 153, 0.8)" : "rgba(219, 39, 119, 0.4)",
-        name: "Glowing Pink",
+        stroke: isDark ? "#f472b6" : "#ec4899",
+        glow: isDark ? "rgba(244, 114, 182, 0.7)" : "rgba(236, 72, 153, 0.35)",
+        name: "Glowing Rose Pink",
         points: 6,
       };
     case 4:
       return {
-        stroke: isDark ? "#f472b6" : "#ec4899",
-        glow: isDark ? "rgba(244, 114, 182, 0.6)" : "rgba(236, 72, 153, 0.3)",
-        name: "Light Pink",
+        stroke: isDark ? "#fbcfe8" : "#f472b6",
+        glow: isDark ? "rgba(251, 207, 232, 0.55)" : "rgba(244, 114, 182, 0.3)",
+        name: "Light Sakura Pink",
         points: 6,
       };
     case 5:
       return {
-        stroke: isDark ? "#94a3b8" : "#1e293b",
-        glow: isDark ? "rgba(148, 163, 184, 0.75)" : "rgba(30, 41, 59, 0.4)",
-        name: "Obsidian Black",
+        stroke: isDark ? "#e2e8f0" : "#64748b",
+        glow: isDark ? "rgba(226, 232, 240, 0.7)" : "rgba(100, 116, 139, 0.3)",
+        name: "Luminous Obsidian Pearl",
         points: 7,
       };
     case 6:
       return {
-        stroke: isDark ? "#64748b" : "#475569",
-        glow: isDark ? "rgba(100, 116, 139, 0.6)" : "rgba(71, 85, 105, 0.3)",
-        name: "Charcoal Black",
+        stroke: isDark ? "#cbd5e1" : "#94a3b8",
+        glow: isDark ? "rgba(203, 213, 225, 0.55)" : "rgba(148, 163, 184, 0.25)",
+        name: "Soft Platinum Slate",
         points: 7,
       };
     case 7:
       return {
-        stroke: isDark ? "#f8fafc" : "#0f172a",
-        glow: isDark ? "rgba(248, 250, 252, 0.85)" : "rgba(15, 23, 42, 0.5)",
+        stroke: isDark ? "#ffffff" : "#475569",
+        glow: isDark ? "rgba(255, 255, 255, 0.85)" : "rgba(71, 85, 105, 0.35)",
         name: "Diamond White",
         points: 8,
       };
     case 8:
     default:
       return {
-        stroke: isDark ? "#fbbf24" : "#ca8a04",
-        glow: isDark ? "rgba(251, 191, 36, 0.85)" : "rgba(202, 138, 4, 0.5)",
-        name: "Royal Gold",
+        stroke: isDark ? "#fde047" : "#eab308",
+        glow: isDark ? "rgba(253, 224, 71, 0.85)" : "rgba(234, 179, 8, 0.4)",
+        name: "Royal Champagne Gold",
         points: 8,
       };
   }
@@ -407,6 +408,15 @@ export function calculateSpiderLayout(
     }
   });
 
+  // Calculate outgoing branch count for each node
+  const outgoingCountMap = new Map<string, number>();
+  edges.forEach((edge) => {
+    outgoingCountMap.set(edge.source, (outgoingCountMap.get(edge.source) || 0) + 1);
+  });
+  positioned.forEach((n) => {
+    n.branchCount = outgoingCountMap.get(n.id) || 0;
+  });
+
   return {
     nodes: Array.from(positioned.values()),
     edges,
@@ -503,6 +513,15 @@ export function calculateTreeLayout(
   }
 
   layoutSubtree(rootNode, 0);
+
+  // Calculate outgoing branch count for each node
+  const outgoingCountMap = new Map<string, number>();
+  edges.forEach((edge) => {
+    outgoingCountMap.set(edge.source, (outgoingCountMap.get(edge.source) || 0) + 1);
+  });
+  positioned.forEach((n) => {
+    n.branchCount = outgoingCountMap.get(n.id) || 0;
+  });
 
   return {
     nodes: Array.from(positioned.values()),
@@ -620,6 +639,17 @@ export function calculateGroupLayout(
 
       edges.push(...subLayout.edges);
     });
+
+    // Calculate outgoing branch count for each node in All Concepts view
+    const outgoingCountMap = new Map<string, number>();
+    edges.forEach((edge) => {
+      outgoingCountMap.set(edge.source, (outgoingCountMap.get(edge.source) || 0) + 1);
+    });
+
+    positionedNodes.forEach((n) => {
+      n.branchCount = outgoingCountMap.get(n.id) || 0;
+    });
+    rootNode.branchCount = outgoingCountMap.get(rootNode.id) || 0;
 
     return {
       rootNode,
@@ -898,6 +928,17 @@ export function calculateGroupLayout(
       }
     }
   });
+
+  // Calculate outgoing branch count for each node in single category view
+  const outgoingCountMap = new Map<string, number>();
+  edges.forEach((edge) => {
+    outgoingCountMap.set(edge.source, (outgoingCountMap.get(edge.source) || 0) + 1);
+  });
+
+  positionedNodes.forEach((n) => {
+    n.branchCount = outgoingCountMap.get(n.id) || 0;
+  });
+  rootNode.branchCount = outgoingCountMap.get(rootNode.id) || 0;
 
   return {
     rootNode,

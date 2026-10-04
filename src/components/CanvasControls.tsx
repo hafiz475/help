@@ -727,17 +727,17 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             <li>
               <strong>8-Layer Snooker Point Progression:</strong>
               <div style={{ marginTop: "5px", display: "flex", flexWrap: "wrap", gap: "6px", fontSize: "11px" }}>
-                <span style={{ color: isDark ? "#ef4444" : "#dc2626", fontWeight: 700 }}>● Red (1 pt)</span>
-                <span style={{ color: isDark ? "#facc15" : "#ca8a04", fontWeight: 700 }}>● Yellow (2 pts)</span>
-                <span style={{ color: isDark ? "#10b981" : "#059669", fontWeight: 700 }}>● Green (3 pts)</span>
-                <span style={{ color: isDark ? "#d97706" : "#b45309", fontWeight: 700 }}>● Brown (4 pts)</span>
-                <span style={{ color: isDark ? "#3b82f6" : "#2563eb", fontWeight: 700 }}>● Blue (5 pts)</span>
-                <span style={{ color: isDark ? "#ec4899" : "#db2777", fontWeight: 700 }}>● Pink (6 pts)</span>
-                <span style={{ color: isDark ? "#94a3b8" : "#1e293b", fontWeight: 700 }}>● Black (7 pts)</span>
-                <span style={{ color: isDark ? "#fbbf24" : "#ca8a04", fontWeight: 700 }}>● Gold (8 pts)</span>
+                <span style={{ color: isDark ? "#ff6b6b" : "#ff5252", fontWeight: 700 }}>● Tomato Red (1 pt)</span>
+                <span style={{ color: isDark ? "#fde047" : "#eab308", fontWeight: 700 }}>● Canary Yellow (2 pts)</span>
+                <span style={{ color: isDark ? "#34d399" : "#10b981", fontWeight: 700 }}>● Mint Green (3 pts)</span>
+                <span style={{ color: isDark ? "#fb923c" : "#f97316", fontWeight: 700 }}>● Cinnamon (4 pts)</span>
+                <span style={{ color: isDark ? "#38bdf8" : "#0284c7", fontWeight: 700 }}>● Sky Blue (5 pts)</span>
+                <span style={{ color: isDark ? "#f472b6" : "#ec4899", fontWeight: 700 }}>● Rose Pink (6 pts)</span>
+                <span style={{ color: isDark ? "#e2e8f0" : "#64748b", fontWeight: 700 }}>● Obsidian Pearl (7 pts)</span>
+                <span style={{ color: isDark ? "#fde047" : "#eab308", fontWeight: 700 }}>● Gold (8 pts)</span>
               </div>
               <p style={{ marginTop: "4px", fontSize: "10.5px", color: "var(--text-dim)", lineHeight: 1.4 }}>
-                Parent emits 3 primary branches: Red (1 pt), Yellow (2 pts), Green (3 pts). Each tier spans 2 layers (glowing base → light tint), then jumps +3 points (Brown 4, Blue 5, Pink 6), culminating in Black (7 pts) and Diamond White / Gold (8 pts).
+                Parent emits 3 primary branches: Tomato Red (1 pt), Yellow (2 pts), Green (3 pts). Each tier spans 2 layers (glowing base → light tint), then jumps +3 points (Cinnamon 4, Sky Blue 5, Rose Pink 6), culminating in Obsidian Pearl (7 pts) and Diamond White / Gold (8 pts).
               </p>
             </li>
             <li>
@@ -779,36 +779,36 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
         <span style={{ color: "var(--text-dim)", textTransform: "uppercase", fontSize: "10px", letterSpacing: "0.06em", fontWeight: 700 }}>
           Points:
         </span>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#ef4444" : "#dc2626" }} title="Spoke 0: Red (1 pt)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#ef4444" : "#dc2626", boxShadow: "0 0 6px rgba(239, 68, 68, 0.6)" }} />
-          <span>Red (1)</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#ff6b6b" : "#ff5252" }} title="Spoke 0: Tomato Red (1 pt)">
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#ff6b6b" : "#ff5252", boxShadow: "0 0 6px rgba(255, 107, 107, 0.6)" }} />
+          <span>Tomato (1)</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#facc15" : "#ca8a04" }} title="Spoke 1: Yellow (2 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#facc15" : "#ca8a04", boxShadow: "0 0 6px rgba(250, 204, 21, 0.6)" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#fde047" : "#eab308" }} title="Spoke 1: Canary Yellow (2 pts)">
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#fde047" : "#eab308", boxShadow: "0 0 6px rgba(253, 224, 71, 0.6)" }} />
           <span>Yellow (2)</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#10b981" : "#059669" }} title="Spoke 2: Green (3 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#10b981" : "#059669", boxShadow: "0 0 6px rgba(16, 185, 129, 0.6)" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#34d399" : "#10b981" }} title="Spoke 2: Mint Green (3 pts)">
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#34d399" : "#10b981", boxShadow: "0 0 6px rgba(52, 211, 153, 0.6)" }} />
           <span>Green (3)</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#d97706" : "#b45309" }} title="Tier 2 (Red +3): Brown (4 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#d97706" : "#b45309" }} />
-          <span>Brown (4)</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#fb923c" : "#f97316" }} title="Tier 2 (Red +3): Cinnamon Amber (4 pts)">
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#fb923c" : "#f97316" }} />
+          <span>Cinnamon (4)</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#3b82f6" : "#2563eb" }} title="Tier 2 (Yellow +3): Blue (5 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#3b82f6" : "#2563eb" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#38bdf8" : "#0284c7" }} title="Tier 2 (Yellow +3): Sky Blue (5 pts)">
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#38bdf8" : "#0284c7" }} />
           <span>Blue (5)</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#ec4899" : "#db2777" }} title="Tier 2 (Green +3): Pink (6 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#ec4899" : "#db2777" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#f472b6" : "#ec4899" }} title="Tier 2 (Green +3): Rose Pink (6 pts)">
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#f472b6" : "#ec4899" }} />
           <span>Pink (6)</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#94a3b8" : "#1e293b" }} title="Tier 3: Obsidian / Charcoal Black (7 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#94a3b8" : "#1e293b" }} />
-          <span>Black (7)</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#e2e8f0" : "#64748b" }} title="Tier 3: Luminous Obsidian Pearl (7 pts)">
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#e2e8f0" : "#64748b" }} />
+          <span>Pearl (7)</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#fbbf24" : "#ca8a04" }} title="Tier 4: Diamond White / Royal Gold (8 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#fbbf24" : "#ca8a04", boxShadow: "0 0 6px rgba(251, 191, 36, 0.6)" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#fde047" : "#eab308" }} title="Tier 4: Diamond White / Royal Gold (8 pts)">
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#fde047" : "#eab308", boxShadow: "0 0 6px rgba(253, 224, 71, 0.6)" }} />
           <span>Gold (8)</span>
         </div>
       </div>
