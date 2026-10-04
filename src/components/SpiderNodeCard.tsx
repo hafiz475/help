@@ -30,9 +30,13 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
   const isL1 = node.level === 1;
   const isL2 = node.level === 2;
 
-  // Rule: When a node creates more than 2 branches (branchCount > 2), or is root hub,
-  // it renders as a stadium pill capsule with pulsing halo ring!
-  const isPill = isRoot || Boolean(node.branchCount !== undefined && node.branchCount > 2);
+  // 3-Tier Branch-Count Shape Architecture:
+  // - 3 branches (>= 3): Circle with concentric circular rings ("circle circles")
+  // - 2 branches (== 2): Stadium Pill Capsule with halo ring ("the pill")
+  // - 1 or 0 branches (<= 1): Original rectangular chip card ("the older")
+  const branchCount = node.branchCount ?? (isRoot ? 3 : 0);
+  const isCircle = branchCount >= 3;
+  const isPill = branchCount === 2;
 
   // Accent colors based on hierarchy level (Level 0, 1, 2, 3)
   const getColor = () => {
@@ -55,8 +59,11 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
   const accentColor = getColor();
   const opacity = hasQuery ? (isMatched ? 1 : 0.2) : 1;
 
-  // Render Stadium Pill Capsule (Root center hub or any node branching out > 2)
-  if (isPill) {
+  // -------------------------------------------------------------
+  // SHAPE 1: "CIRCLE CIRCLES" (3 or more branches / root hubs)
+  // Concentric circular orbit rings with a central circular disc
+  // -------------------------------------------------------------
+  if (isCircle) {
     return (
       <div
         id={`node-${node.id}`}
@@ -75,12 +82,131 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           transition: isDragging ? "none" : "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s",
         }}
       >
+        {/* Outer Concentric Circle Ring 2 (Dashed Orbital Ring) */}
+        <div
+          style={{
+            position: "absolute",
+            inset: isRoot ? "-20px" : "-16px",
+            borderRadius: "50%",
+            border: `1.5px dashed ${accentColor}`,
+            opacity: isDark ? 0.35 : 0.25,
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* Outer Concentric Circle Ring 1 (Pulsing Halo Ring) */}
+        <div
+          className="animate-pulse-ring"
+          style={{
+            position: "absolute",
+            inset: isRoot ? "-11px" : "-8px",
+            borderRadius: "50%",
+            border: `2px solid ${accentColor}`,
+            opacity: isDark ? 0.45 : 0.35,
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* Core Circular Disc */}
+        <div
+          style={{
+            width: isRoot ? "154px" : "138px",
+            height: isRoot ? "154px" : "138px",
+            borderRadius: "50%",
+            backgroundColor: isDark ? "#0c101d" : "#ffffff",
+            background: isDark
+              ? "radial-gradient(circle at 50% 35%, #18223a 0%, #0c101d 100%)"
+              : "#ffffff",
+            border: `2.5px solid ${isMatched ? (isDark ? "#f59e0b" : "#d97706") : accentColor}`,
+            boxShadow: isMatched
+              ? `0 0 35px rgba(245, 158, 11, 0.6), 0 0 20px ${accentColor}`
+              : isDark
+              ? `0 0 35px ${accentColor}40, 0 10px 25px rgba(0,0,0,0.6)`
+              : `0 8px 30px rgba(0, 0, 0, 0.08), 0 0 20px ${accentColor}25`,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            padding: "10px",
+            boxSizing: "border-box",
+          }}
+        >
+          {node.badge && (
+            <span
+              style={{
+                fontSize: isRoot ? "10.5px" : "9.5px",
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                color: accentColor,
+                marginBottom: "2px",
+                lineHeight: 1.1,
+              }}
+            >
+              {node.badge}
+            </span>
+          )}
+          <span
+            style={{
+              fontSize: isRoot ? "16px" : "14px",
+              fontWeight: 800,
+              color: isDark ? "#ffffff" : "#0f172a",
+              letterSpacing: "-0.02em",
+              lineHeight: 1.18,
+              maxWidth: isRoot ? "124px" : "112px",
+            }}
+          >
+            {node.label}
+          </span>
+          <div
+            style={{
+              marginTop: "4px",
+              display: "flex",
+              alignItems: "center",
+              gap: "3.5px",
+              fontSize: isRoot ? "10px" : "9.5px",
+              color: isDark ? "rgba(255,255,255,0.5)" : "var(--text-dim)",
+              fontWeight: 500,
+            }}
+          >
+            <span>Google search</span>
+            <ExternalLink size={isRoot ? 9.5 : 9} color={accentColor} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // -------------------------------------------------------------
+  // SHAPE 2: "THE PILL" (Exactly 2 branches)
+  // Stadium capsule with outer stadium halo ring
+  // -------------------------------------------------------------
+  if (isPill) {
+    return (
+      <div
+        id={`node-${node.id}`}
+        onPointerDown={(e) => onPointerDown(e, node)}
+        onClick={() => onClick(node)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        style={{
+          position: "absolute",
+          left: `${node.x}px`,
+          top: `${node.y}px`,
+          transform: `translate(-50%, -50%) scale(${isDragging ? 1.05 : isHovered ? 1.03 : 1})`,
+          cursor: isDragging ? "grabbing" : "pointer",
+          zIndex: isDragging ? 35 : isHovered ? 25 : 16,
+          opacity,
+          transition: isDragging ? "none" : "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s",
+        }}
+      >
         {/* Pulsing Outer Halo Ring */}
         <div
           className="animate-pulse-ring"
           style={{
             position: "absolute",
-            inset: isRoot ? "-14px" : "-11px",
+            inset: "-11px",
             borderRadius: "999px",
             border: `2px solid ${accentColor}`,
             opacity: isDark ? 0.45 : 0.35,
@@ -91,11 +217,12 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
         {/* Stadium Capsule Body */}
         <div
           style={{
-            minWidth: isRoot ? "190px" : "170px",
-            padding: isRoot ? "16px 26px" : "13px 24px",
+            minWidth: "165px",
+            padding: "12px 22px",
             borderRadius: "999px",
+            backgroundColor: isDark ? "#0c101d" : "#ffffff",
             background: isDark
-              ? `radial-gradient(circle at 50% 30%, ${accentColor}25 0%, #0d1322 95%)`
+              ? "radial-gradient(circle at 50% 30%, #18223a 0%, #0c101d 100%)"
               : "#ffffff",
             border: `2.5px solid ${isMatched ? (isDark ? "#f59e0b" : "#d97706") : accentColor}`,
             boxShadow: isMatched
@@ -113,12 +240,12 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           {node.badge && (
             <span
               style={{
-                fontSize: isRoot ? "11px" : "10px",
+                fontSize: "10px",
                 fontWeight: 700,
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
                 color: accentColor,
-                marginBottom: "3px",
+                marginBottom: "2px",
               }}
             >
               {node.badge}
@@ -126,7 +253,7 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           )}
           <span
             style={{
-              fontSize: isRoot ? "17px" : "15px",
+              fontSize: "14.5px",
               fontWeight: 800,
               color: isDark ? "#ffffff" : "#0f172a",
               letterSpacing: "-0.02em",
@@ -136,22 +263,27 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           </span>
           <div
             style={{
-              marginTop: "4px",
+              marginTop: "3px",
               display: "flex",
               alignItems: "center",
               gap: "4px",
-              fontSize: isRoot ? "10.5px" : "10px",
+              fontSize: "10px",
               color: isDark ? "rgba(255,255,255,0.5)" : "var(--text-dim)",
               fontWeight: 500,
             }}
           >
             <span>Google search</span>
-            <ExternalLink size={isRoot ? 10 : 9.5} color={accentColor} />
+            <ExternalLink size={9.5} color={accentColor} />
           </div>
         </div>
       </div>
     );
   }
+
+  // -------------------------------------------------------------
+  // SHAPE 3: "THE OLDER" (1 or 0 branches)
+  // Continues to Level 1 / Level 2 / Level 3 compact rectangular chips
+  // -------------------------------------------------------------
 
   // Level 1 Pillars
   if (isL1) {
@@ -177,10 +309,11 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           style={{
             padding: "9px 16px",
             borderRadius: "12px",
+            backgroundColor: isDark ? (isHovered ? "#161e30" : "#0c101d") : "#ffffff",
             background: isDark
               ? isHovered
-                ? `linear-gradient(135deg, ${accentColor}25 0%, #151d2f 100%)`
-                : "rgba(15, 23, 42, 0.9)"
+                ? "#18223a"
+                : "#0c101d"
               : "#ffffff",
             border: `1.5px solid ${isMatched ? (isDark ? "#f59e0b" : "#d97706") : isHovered ? accentColor : `${accentColor}80`}`,
             boxShadow: isDark
@@ -264,17 +397,14 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
         style={{
           padding: isL2 ? "7px 13px" : "5px 10px",
           borderRadius: isL2 ? "10px" : "8px",
+          backgroundColor: isDark ? (isHovered ? "#161e30" : "#0c101d") : "#ffffff",
           background: isDark
             ? isHovered
-              ? `linear-gradient(135deg, ${accentColor}20 0%, #151d2f 100%)`
+              ? "#18223a"
               : isL2
-              ? "rgba(15, 23, 42, 0.88)"
-              : "rgba(11, 17, 31, 0.85)"
-            : isHovered
-            ? "#ffffff"
-            : isL2
-            ? "#ffffff"
-            : "rgba(255, 255, 255, 0.95)",
+              ? "#0f1626"
+              : "#0c101d"
+            : "#ffffff",
           border: `1.5px solid ${
             isMatched
               ? isDark ? "#f59e0b" : "#d97706"
