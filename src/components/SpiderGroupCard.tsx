@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { PositionedGroupCard, getHierarchyThreadColor } from "@/utils/spiderLayout";
+import { GroupItem } from "@/data/groupConcepts";
 import { ExternalLink, GripVertical } from "lucide-react";
 
 interface SpiderGroupCardProps {
@@ -9,8 +10,12 @@ interface SpiderGroupCardProps {
   theme: "light" | "dark";
   isDragging: boolean;
   searchQuery: string;
+  selectedNodeIds?: string[];
   onPointerDown: (e: React.PointerEvent, card: PositionedGroupCard) => void;
-  onKeywordClick: (query: string) => void;
+  onKeywordClick?: (query: string) => void;
+  onCardClick?: (card: PositionedGroupCard, e: React.MouseEvent) => void;
+  onItemClick?: (item: GroupItem, card: PositionedGroupCard, e: React.MouseEvent) => void;
+  onSearchClick?: (query: string, e: React.MouseEvent) => void;
   isBranchActive?: boolean;
   isBranchConnected?: boolean;
 }
@@ -20,12 +25,17 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
   theme,
   isDragging,
   searchQuery,
+  selectedNodeIds = [],
   onPointerDown,
   onKeywordClick,
+  onCardClick,
+  onItemClick,
+  onSearchClick,
   isBranchActive = false,
   isBranchConnected = false,
 }) => {
   const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
+  const [isHeaderHovered, setIsHeaderHovered] = useState(false);
   const isDark = theme === "dark";
   const queryLower = searchQuery.trim().toLowerCase();
 
@@ -33,6 +43,12 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
     card.branchIndex !== undefined
       ? getHierarchyThreadColor(card.branchIndex, 2, isDark).stroke
       : card.color;
+
+  const isCardSelected =
+    selectedNodeIds.includes(card.pillarId) || selectedNodeIds.includes(card.id);
+  const hasSelectedChild = card.items.some((item) =>
+    selectedNodeIds.includes(item.id)
+  );
 
   // Check if any item in this card matches search query
   const hasCardMatches = React.useMemo(() => {
@@ -54,33 +70,63 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
   if (queryLower) {
     opacity = hasCardMatches ? 1 : 0.22;
   } else if (isBranchActive) {
-    opacity = isBranchConnected ? 1 : 0.18;
+    opacity = isBranchConnected || isCardSelected || hasSelectedChild ? 1 : 0.18;
   }
 
   const cardBorder = hasCardMatches
     ? isDark
       ? "2px solid #f59e0b"
       : "2px solid #d97706"
+    : isCardSelected
+    ? `2px solid ${cardThemeColor}`
+    : hasSelectedChild
+    ? `1.5px solid ${cardThemeColor}`
     : `1.5px solid ${cardThemeColor}${isDark ? "70" : "50"}`;
 
   const cardShadow = hasCardMatches
     ? isDark
       ? "0 0 25px rgba(245, 158, 11, 0.45), 0 10px 30px rgba(0,0,0,0.6)"
       : "0 0 20px rgba(217, 119, 6, 0.35), 0 8px 24px rgba(0,0,0,0.12)"
+    : isCardSelected
+    ? isDark
+      ? `0 10px 35px rgba(0,0,0,0.7), 0 0 26px ${cardThemeColor}45`
+      : `0 8px 30px rgba(0,0,0,0.12), 0 0 22px ${cardThemeColor}35`
+    : hasSelectedChild
+    ? isDark
+      ? `0 10px 30px rgba(0,0,0,0.65), 0 0 20px ${cardThemeColor}30`
+      : `0 8px 26px rgba(0,0,0,0.08), 0 0 18px ${cardThemeColor}25`
     : isDark
     ? `0 10px 30px rgba(0,0,0,0.65), 0 0 20px ${cardThemeColor}25`
     : `0 8px 26px rgba(0, 0, 0, 0.08), 0 0 18px ${cardThemeColor}20`;
+
+  const handleSearch = (query: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onSearchClick) {
+      onSearchClick(query, e);
+    } else if (onKeywordClick) {
+      onKeywordClick(query);
+    } else {
+      window.open(
+        `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    }
+  };
 
   return (
     <div
       id={`group-card-${card.id}`}
       onPointerDown={(e) => onPointerDown(e, card)}
+      onClick={(e) => {
+        onCardClick?.(card, e);
+      }}
       style={{
         position: "absolute",
         left: `${card.x}px`,
         top: `${card.y}px`,
         transform: `translate(-50%, -50%) scale(${isDragging ? 1.02 : 1})`,
-        width: "320px",
+        width: "324px",
         borderRadius: "16px",
         background: isDark
           ? "linear-gradient(155deg, rgba(15, 23, 42, 0.94) 0%, rgba(10, 15, 29, 0.97) 100%)"
@@ -89,8 +135,8 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
         boxShadow: cardShadow,
         backdropFilter: "blur(14px)",
         WebkitBackdropFilter: "blur(14px)",
-        cursor: isDragging ? "grabbing" : "grab",
-        zIndex: isDragging ? 35 : 18,
+        cursor: isDragging ? "grabbing" : "default",
+        zIndex: isDragging ? 35 : isCardSelected ? 25 : 18,
         opacity,
         transition: isDragging
           ? "none"
@@ -99,8 +145,15 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
         overflow: "hidden",
       }}
     >
-      {/* Header with Pillar Title & Badge */}
+      {/* Header with Pillar Title & Badge - Clickable to open card notebook */}
       <div
+        onMouseEnter={() => setIsHeaderHovered(true)}
+        onMouseLeave={() => setIsHeaderHovered(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+          onCardClick?.(card, e);
+        }}
+        title="Click card to open in Concept Notebook"
         style={{
           padding: "12px 14px",
           borderBottom: isDark
@@ -109,9 +162,19 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          background: isDark
+          cursor: "pointer",
+          background: isCardSelected
+            ? isDark
+              ? `linear-gradient(90deg, ${cardThemeColor}30 0%, ${cardThemeColor}12 100%)`
+              : `linear-gradient(90deg, ${cardThemeColor}20 0%, ${cardThemeColor}08 100%)`
+            : isHeaderHovered
+            ? isDark
+              ? `linear-gradient(90deg, ${cardThemeColor}24 0%, transparent 100%)`
+              : `linear-gradient(90deg, ${cardThemeColor}16 0%, transparent 100%)`
+            : isDark
             ? `linear-gradient(90deg, ${cardThemeColor}18 0%, transparent 100%)`
             : `linear-gradient(90deg, ${cardThemeColor}10 0%, transparent 100%)`,
+          transition: "background 0.15s ease",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
@@ -143,6 +206,23 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0 }}>
+          {isCardSelected && (
+            <span
+              style={{
+                fontSize: "9.5px",
+                fontWeight: 800,
+                padding: "2px 6px",
+                borderRadius: "6px",
+                background: "#f59e0b",
+                color: "#000000",
+                display: "flex",
+                alignItems: "center",
+                gap: "2px",
+              }}
+            >
+              📖 Active
+            </span>
+          )}
           <span
             style={{
               fontSize: "10px",
@@ -184,37 +264,45 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
               (item.badge && item.badge.toLowerCase().includes(queryLower)));
 
           const isItemHovered = hoveredItemId === item.id;
+          const isItemSelected = selectedNodeIds.includes(item.id);
           const hasChildren = item.subItems && item.subItems.length > 0;
 
           return (
             <div key={item.id} style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-              {/* Item Row */}
+              {/* Item Row - Click to open notebook drawer for this child! */}
               <div
                 onMouseEnter={() => setHoveredItemId(item.id)}
                 onMouseLeave={() => setHoveredItemId(null)}
                 onClick={(e) => {
                   e.stopPropagation();
-                  onKeywordClick(item.searchQuery || `${item.label} JavaScript Node.js`);
+                  onItemClick?.(item, card, e);
                 }}
+                title={`Click to open "${item.label}" in Concept Notebook`}
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "5px 8px",
+                  padding: "6px 8px",
                   borderRadius: "8px",
                   cursor: "pointer",
-                  background: itemMatched
+                  background: isItemSelected
+                    ? isDark
+                      ? `${card.color}35`
+                      : `${card.color}20`
+                    : itemMatched
                     ? isDark
                       ? "rgba(245, 158, 11, 0.22)"
                       : "rgba(254, 243, 199, 0.85)"
                     : isItemHovered
                     ? isDark
-                      ? `${card.color}20`
-                      : `${card.color}12`
+                      ? `${card.color}22`
+                      : `${card.color}14`
                     : isDark
                     ? "rgba(255, 255, 255, 0.03)"
                     : "rgba(0, 0, 0, 0.02)",
-                  border: itemMatched
+                  border: isItemSelected
+                    ? `1.5px solid ${card.color}`
+                    : itemMatched
                     ? isDark
                       ? "1px solid #f59e0b"
                       : "1px solid #d97706"
@@ -223,6 +311,9 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                     : isDark
                     ? "1px solid rgba(255, 255, 255, 0.04)"
                     : "1px solid rgba(0, 0, 0, 0.04)",
+                  boxShadow: isItemSelected
+                    ? `0 0 10px ${card.color}35`
+                    : "none",
                   transition: "all 0.15s ease",
                 }}
               >
@@ -234,14 +325,19 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                         width: "18px",
                         height: "18px",
                         borderRadius: "50%",
-                        background: isDark ? `${card.color}30` : `${card.color}18`,
-                        color: card.color,
+                        background: isItemSelected
+                          ? card.color
+                          : isDark
+                          ? `${card.color}30`
+                          : `${card.color}18`,
+                        color: isItemSelected ? "#ffffff" : card.color,
                         fontSize: "9.5px",
                         fontWeight: 800,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
                         flexShrink: 0,
+                        boxShadow: isItemSelected ? `0 0 8px ${card.color}` : "none",
                       }}
                     >
                       {item.stepNumber}
@@ -249,12 +345,14 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                   ) : (
                     <span
                       style={{
-                        width: "6px",
-                        height: "6px",
+                        width: isItemSelected ? "8px" : "6px",
+                        height: isItemSelected ? "8px" : "6px",
                         borderRadius: "50%",
                         background: card.color,
-                        opacity: 0.8,
+                        opacity: isItemSelected ? 1 : 0.8,
+                        boxShadow: isItemSelected ? `0 0 8px ${card.color}` : "none",
                         flexShrink: 0,
+                        transition: "all 0.15s ease",
                       }}
                     />
                   )}
@@ -262,12 +360,12 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                   <span
                     style={{
                       fontSize: "12px",
-                      fontWeight: 700,
+                      fontWeight: isItemSelected ? 800 : 700,
                       color: isDark
-                        ? isItemHovered
+                        ? isItemSelected || isItemHovered
                           ? "#ffffff"
                           : "#f1f5f9"
-                        : isItemHovered
+                        : isItemSelected || isItemHovered
                         ? "#0f172a"
                         : "#1e293b",
                       whiteSpace: "nowrap",
@@ -281,6 +379,21 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                 </div>
 
                 <div style={{ display: "flex", alignItems: "center", gap: "5px", flexShrink: 0 }}>
+                  {isItemSelected && (
+                    <span
+                      style={{
+                        fontSize: "8.5px",
+                        fontWeight: 800,
+                        padding: "1px 5px",
+                        borderRadius: "4px",
+                        background: card.color,
+                        color: "#ffffff",
+                      }}
+                    >
+                      ✓ In Notebook
+                    </span>
+                  )}
+
                   {item.badge && (
                     <span
                       style={{
@@ -329,14 +442,33 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                     </span>
                   )}
 
-                  <ExternalLink
-                    size={10}
-                    color={card.color}
+                  {/* Dedicated Google Search Button */}
+                  <button
+                    type="button"
+                    title={`Search Google for "${item.label}"`}
+                    onClick={(e) =>
+                      handleSearch(item.searchQuery || `${item.label} JavaScript Node.js`, e)
+                    }
                     style={{
-                      opacity: isItemHovered ? 1 : 0.35,
-                      transition: "opacity 0.15s",
+                      background: "transparent",
+                      border: "none",
+                      padding: "2px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: "4px",
                     }}
-                  />
+                  >
+                    <ExternalLink
+                      size={11}
+                      color={card.color}
+                      style={{
+                        opacity: isItemHovered || isItemSelected ? 1 : 0.45,
+                        transition: "opacity 0.15s",
+                      }}
+                    />
+                  </button>
                 </div>
               </div>
             </div>
@@ -344,8 +476,13 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
         })}
       </div>
 
-      {/* Footer hint */}
+      {/* Footer hint - Clickable to open card notebook */}
       <div
+        onClick={(e) => {
+          e.stopPropagation();
+          onCardClick?.(card, e);
+        }}
+        title="Click card to open in Concept Notebook"
         style={{
           padding: "6px 14px",
           borderTop: isDark
@@ -355,11 +492,12 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
           alignItems: "center",
           justifyContent: "space-between",
           fontSize: "9.5px",
-          color: isDark ? "rgba(255,255,255,0.4)" : "#64748b",
+          color: isDark ? "rgba(255,255,255,0.45)" : "#64748b",
+          cursor: "pointer",
         }}
       >
-        <span>Click keyword to search</span>
-        <span style={{ color: card.color, fontWeight: 600 }}>{card.items.length} items</span>
+        <span>Click card or item for notebook • ↗ search</span>
+        <span style={{ color: card.color, fontWeight: 700 }}>{card.items.length} items</span>
       </div>
     </div>
   );

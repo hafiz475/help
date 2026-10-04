@@ -87,6 +87,39 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  "v8-js-exec": {
+    id: "v8-js-exec",
+    title: "JavaScript Execution Pipeline",
+    badge: "9 Sequential Steps",
+    tagline: "From raw source text down to optimized native binary machine instructions",
+    takeaways: [
+      {
+        id: "v8-pipe-1",
+        text: "Parser converts code into AST, then Ignition generates and executes bytecode.",
+        searchPrompt: "V8 JavaScript execution pipeline parser AST bytecode Ignition",
+        emoji: "⚙️",
+        reactionCount: "4.6k",
+        commentCount: 320,
+      },
+      {
+        id: "v8-pipe-2",
+        text: "Hot code paths are compiled into optimized CPU machine instructions via TurboFan.",
+        searchPrompt: "V8 TurboFan JIT compiler optimization hot code path",
+        emoji: "🔥",
+        reactionCount: "3.2k",
+        commentCount: 215,
+      },
+      {
+        id: "v8-pipe-3",
+        text: "Deoptimization bails back to Ignition if type assumptions suddenly change.",
+        searchPrompt: "V8 deoptimization bailout mechanism when types change",
+        emoji: "⚡",
+        reactionCount: "2.1k",
+        commentCount: 140,
+      },
+    ],
+  },
+
   "root-scope": {
     id: "root-scope",
     title: "Scope & Closures",
@@ -354,6 +387,72 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  "node-apis-pillar": {
+    id: "node-apis-pillar",
+    title: "Node.js Built-in APIs",
+    badge: "Core System APIs",
+    tagline: "C++ backed system modules for file I/O, network sockets, timers, and microtasks",
+    takeaways: [
+      {
+        id: "n-api-1",
+        text: "Core modules (fs, http, timers) wrap native OS system calls via C++ bindings.",
+        searchPrompt: "Node.js built in modules fs http timers C++ bindings",
+        emoji: "📦",
+        reactionCount: "3.8k",
+        commentCount: 260,
+      },
+      {
+        id: "n-api-2",
+        text: "fs.readFile offloads disk I/O to libuv threadpool so the main stack stays non-blocking.",
+        searchPrompt: "how fs.readFile works asynchronously libuv threadpool Node.js",
+        emoji: "⚡",
+        reactionCount: "2.9k",
+        commentCount: 185,
+      },
+      {
+        id: "n-api-3",
+        text: "process.nextTick schedules high-priority microtasks between event loop phase ticks.",
+        searchPrompt: "process.nextTick priority over setTimeout setImmediate Node.js",
+        emoji: "🚀",
+        reactionCount: "1.9k",
+        commentCount: 120,
+      },
+    ],
+  },
+
+  "node-phases-pillar": {
+    id: "node-phases-pillar",
+    title: "Event Loop 5 Phases",
+    badge: "Tick Cycle Order",
+    tagline: "Sequential callback execution order across the event loop ticking cycle",
+    takeaways: [
+      {
+        id: "n-ph-1",
+        text: "Loop ticks through Timers, Pending I/O, Poll, Check (setImmediate), and Close callbacks.",
+        searchPrompt: "Node.js event loop 5 phases execution order explained",
+        emoji: "🔄",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+      {
+        id: "n-ph-2",
+        text: "Poll phase retrieves incoming I/O events, followed immediately by setImmediate in Check.",
+        searchPrompt: "Poll phase vs Check phase setImmediate Node.js Event Loop",
+        emoji: "💡",
+        reactionCount: "3.1k",
+        commentCount: 210,
+      },
+      {
+        id: "n-ph-3",
+        text: "Microtasks (nextTick and Promise.then) drain completely after every phase boundary.",
+        searchPrompt: "when microtasks run in Node.js event loop phases",
+        emoji: "🔥",
+        reactionCount: "2.2k",
+        commentCount: 145,
+      },
+    ],
+  },
+
   // ==========================================
   // OOP 4 PILLARS & ANALOGIES
   // ==========================================
@@ -384,6 +483,39 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
         text: "Real-world stories: Cookie cutters, piggy banks, robots, buttons, and car pedals.",
         searchPrompt: "funny real world analogies for OOP object oriented programming",
         emoji: "🍪",
+        reactionCount: "2.1k",
+        commentCount: 140,
+      },
+    ],
+  },
+
+  "oop-pillars-pillar": {
+    id: "oop-pillars-pillar",
+    title: "4 Pillars of OOP & Analogies",
+    badge: "5 Design Concepts",
+    tagline: "Cookie cutters, piggy banks, robots, game buttons, and gas pedals make OOP intuitive",
+    takeaways: [
+      {
+        id: "oop-pil-1",
+        text: "The 4 pillars (Encapsulation, Inheritance, Polymorphism, Abstraction) structure clean code.",
+        searchPrompt: "4 pillars of OOP object oriented programming JavaScript",
+        emoji: "🔥",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+      {
+        id: "oop-pil-2",
+        text: "Cookie cutter creates objects, piggy bank guards data, robot shares traits, pedal hides engine.",
+        searchPrompt: "funny real world analogies for OOP JavaScript beginner",
+        emoji: "🍪",
+        reactionCount: "3.5k",
+        commentCount: 220,
+      },
+      {
+        id: "oop-pil-3",
+        text: "Combining all four pillars prevents spaghetti code and scales enterprise architectures.",
+        searchPrompt: "OOP design patterns clean code JavaScript enterprise",
+        emoji: "🚀",
         reactionCount: "2.1k",
         commentCount: 140,
       },
@@ -587,6 +719,72 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
         emoji: "🚀",
         reactionCount: "2.4k",
         commentCount: 155,
+      },
+    ],
+  },
+
+  "dsa-structures-pillar": {
+    id: "dsa-structures-pillar",
+    title: "Data Structures & Analogies",
+    badge: "7 Core Structures",
+    tagline: "Parking lots, pancake stacks, coffee queues, clue hunts, family trees, and phonebooks",
+    takeaways: [
+      {
+        id: "dsa-ds-1",
+        text: "Data structures are memory containers tailored for specific access and lookup patterns.",
+        searchPrompt: "Data structures JavaScript real world analogies explained",
+        emoji: "📦",
+        reactionCount: "4.7k",
+        commentCount: 330,
+      },
+      {
+        id: "dsa-ds-2",
+        text: "Pick arrays for indexes, stacks for LIFO history, queues for FIFO jobs, maps for O(1) keys.",
+        searchPrompt: "when to use which data structure JavaScript performance",
+        emoji: "💡",
+        reactionCount: "3.2k",
+        commentCount: 215,
+      },
+      {
+        id: "dsa-ds-3",
+        text: "Trees model hierarchies like the DOM; graphs connect complex many-to-many relationships.",
+        searchPrompt: "trees and graphs data structure real world examples",
+        emoji: "🌳",
+        reactionCount: "2.3k",
+        commentCount: 150,
+      },
+    ],
+  },
+
+  "dsa-big-o-pillar": {
+    id: "dsa-big-o-pillar",
+    title: "Big O Time Complexity",
+    badge: "7 Growth Tiers",
+    tagline: "From O(1) instant phonebook lookups to O(n!) explosive permutation blowouts",
+    takeaways: [
+      {
+        id: "dsa-bo-1",
+        text: "Big O ranks algorithm efficiency: O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ) < O(n!).",
+        searchPrompt: "Big O time complexity best to worst tier list",
+        emoji: "⏱️",
+        reactionCount: "5.1k",
+        commentCount: 390,
+      },
+      {
+        id: "dsa-bo-2",
+        text: "Green tiers (O(1), O(log n), O(n)) scale cleanly; Red tiers (O(2ⁿ), O(n!)) crash servers.",
+        searchPrompt: "Big O complexity chart green yellow red zones",
+        emoji: "🔥",
+        reactionCount: "3.6k",
+        commentCount: 245,
+      },
+      {
+        id: "dsa-bo-3",
+        text: "Always benchmark nested loops and recursive forks to eliminate quadratic bottlenecks.",
+        searchPrompt: "how to identify and fix high Big O bottlenecks in code",
+        emoji: "🚀",
+        reactionCount: "2.4k",
+        commentCount: 160,
       },
     ],
   },

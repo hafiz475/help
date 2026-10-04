@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { SpiderNode, ConceptCategory, ALL_NODES } from "@/data/concepts";
+import { GroupItem } from "@/data/groupConcepts";
 import {
   PositionedNode,
   PositionedGroupCard,
@@ -496,8 +497,11 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   const selectedNodesList = React.useMemo(() => {
     return selectedNodeIds
       .map((id) => {
+        // 1. Direct canvas node
         const found = nodes.find((n) => n.id === id);
         if (found) return found;
+
+        // 2. Direct entry in ALL_NODES
         const fromAll = ALL_NODES.find((n) => n.id === id);
         if (fromAll) {
           return {
@@ -506,10 +510,63 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
             y: 0,
           } as PositionedNode;
         }
+
+        // 3. Matched card directly (card.id or card.pillarId)
+        const matchedCard = groupCards.find((c) => c.id === id || c.pillarId === id);
+        if (matchedCard) {
+          return {
+            id: matchedCard.pillarId || matchedCard.id,
+            label: matchedCard.title,
+            category: matchedCard.category,
+            level: 1,
+            badge: matchedCard.badge,
+            color: matchedCard.color,
+            x: matchedCard.x,
+            y: matchedCard.y,
+          } as PositionedNode;
+        }
+
+        // 4. Matched child item inside any groupCard
+        for (const card of groupCards) {
+          const matchedItem = card.items.find((it) => it.id === id);
+          if (matchedItem) {
+            return {
+              id: matchedItem.id,
+              label: matchedItem.label,
+              category: card.category,
+              parentId: card.pillarId,
+              level: 2,
+              badge: matchedItem.badge,
+              searchQuery: matchedItem.searchQuery,
+              color: card.color,
+              x: card.x,
+              y: card.y,
+            } as PositionedNode;
+          }
+          // Sub-items inside card
+          for (const it of card.items) {
+            const matchedSub = it.subItems?.find((sub) => sub.id === id);
+            if (matchedSub) {
+              return {
+                id: matchedSub.id,
+                label: matchedSub.label,
+                category: card.category,
+                parentId: it.id,
+                level: 3,
+                badge: matchedSub.badge,
+                searchQuery: matchedSub.searchQuery,
+                color: card.color,
+                x: card.x,
+                y: card.y,
+              } as PositionedNode;
+            }
+          }
+        }
+
         return null;
       })
       .filter((n): n is PositionedNode => n !== null);
-  }, [selectedNodeIds, nodes]);
+  }, [selectedNodeIds, nodes, groupCards]);
 
   const isBranchActive = selectedNodeIds.length > 0;
 
@@ -523,7 +580,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     selectedNodeIds.forEach((id) => {
       set.add(id);
 
-      const current = nodes.find((n) => n.id === id);
+      const current = nodes.find((n) => n.id === id) || ALL_NODES.find((n) => n.id === id);
       if (current) {
         // 1. 1st stage parent (ONLY direct parent, no parent siblings!)
         if (current.parentId) {
@@ -536,7 +593,24 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
             set.add(child.id);
           }
         });
+        ALL_NODES.forEach((child) => {
+          if (child.parentId === id) {
+            set.add(child.id);
+          }
+        });
       }
+
+      // Check card association: if id is a card, its pillar, or any item inside a card
+      groupCards.forEach((card) => {
+        const hasItem = card.items.some(
+          (it) => it.id === id || it.subItems?.some((sub) => sub.id === id)
+        );
+        if (hasItem || card.id === id || card.pillarId === id) {
+          set.add(card.id);
+          set.add(card.pillarId);
+          set.add(`root-${card.category}`);
+        }
+      });
 
       // Also attach connected card or target nodes via direct edges
       edges.forEach((edge) => {
@@ -550,7 +624,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     });
 
     return set;
-  }, [selectedNodeIds, nodes, edges]);
+  }, [selectedNodeIds, nodes, edges, groupCards]);
 
   // Check if an edge is part of the highlighted branch
   const isEdgeHighlighted = useCallback(
@@ -575,19 +649,54 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     setIsNotebookOpen(true);
   };
 
-  // Click on Group Keyword -> Attach to Notebook!
+  // Click on Group Card Header or Container -> Highlight card pillar & open Notebook!
+  const handleCardClick = (card: PositionedGroupCard) => {
+    if (hasMovedSignificantlyRef.current) {
+      return;
+    }
+    const targetId = card.pillarId || card.id;
+    setSelectedNodeIds((prev) => {
+      if (prev.includes(targetId)) {
+        return prev;
+      }
+      return [...prev, targetId];
+    });
+    setIsNotebookOpen(true);
+  };
+
+  // Click on Child Item inside Card -> Attach that child to Notebook!
+  const handleCardItemClick = (item: GroupItem, card: PositionedGroupCard) => {
+    if (hasMovedSignificantlyRef.current) {
+      return;
+    }
+    const targetId = item.id;
+    setSelectedNodeIds((prev) => {
+      if (prev.includes(targetId)) {
+        return prev;
+      }
+      return [...prev, targetId];
+    });
+    setIsNotebookOpen(true);
+  };
+
+  // Click on Search Icon -> Open Google Search in new tab
+  const handleExternalSearchClick = (query: string) => {
+    const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+    window.open(googleUrl, "_blank", "noopener,noreferrer");
+  };
+
+  // Click on Group Keyword -> Attach to Notebook or search
   const handleGroupKeywordClick = (query: string) => {
     if (hasMovedSignificantlyRef.current) {
       return;
     }
-    const found = nodes.find(
-      (n) => n.label.toLowerCase() === query.toLowerCase() || n.id === query
-    );
+    const found =
+      nodes.find((n) => n.label.toLowerCase() === query.toLowerCase() || n.id === query) ||
+      ALL_NODES.find((n) => n.label.toLowerCase() === query.toLowerCase() || n.id === query);
     if (found) {
-      handleNodeClick(found);
+      handleNodeClick(found as PositionedNode);
     } else {
-      const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-      window.open(googleUrl, "_blank", "noopener,noreferrer");
+      handleExternalSearchClick(query);
     }
   };
 
@@ -1035,10 +1144,18 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                 theme={theme}
                 isDragging={draggedCardId === card.id}
                 searchQuery={searchQuery}
+                selectedNodeIds={selectedNodeIds}
                 onPointerDown={handleCardPointerDown}
-                onKeywordClick={handleGroupKeywordClick}
+                onCardClick={handleCardClick}
+                onItemClick={handleCardItemClick}
+                onSearchClick={handleExternalSearchClick}
                 isBranchActive={isBranchActive}
-                isBranchConnected={highlightedNodeIds.has(card.id) || selectedNodeIds.includes(card.pillarId)}
+                isBranchConnected={
+                  highlightedNodeIds.has(card.id) ||
+                  highlightedNodeIds.has(card.pillarId) ||
+                  selectedNodeIds.includes(card.pillarId) ||
+                  card.items.some((it) => selectedNodeIds.includes(it.id))
+                }
               />
             ))}
         </div>
