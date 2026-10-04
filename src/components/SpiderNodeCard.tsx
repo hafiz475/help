@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { PositionedNode } from "@/utils/spiderLayout";
+import { PositionedNode, getHierarchyThreadColor } from "@/utils/spiderLayout";
 import { ExternalLink } from "lucide-react";
 
 interface SpiderNodeCardProps {
@@ -34,6 +34,9 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
   const getColor = () => {
     if (node.level === 0) {
       return isDark ? "#f59e0b" : "#d97706"; // Amber / Gold for Center Heading
+    }
+    if (node.branchIndex !== undefined) {
+      return getHierarchyThreadColor(node.branchIndex, node.level, isDark).stroke;
     }
     if (node.level === 1) {
       return isDark ? "#38bdf8" : "#0284c7"; // Sky Blue for Major Pillars

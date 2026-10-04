@@ -9,11 +9,13 @@ export interface PositionedNode extends SpiderNode {
   vx?: number;
   vy?: number;
   cardParentId?: string;
+  branchIndex?: number; // 0 (Red branch), 1 (Yellow branch), 2 (Green branch)
 }
 
 export interface PositionedGroupCard extends GroupCardData {
   x: number;
   y: number;
+  branchIndex?: number;
 }
 
 export interface Edge {
@@ -24,6 +26,230 @@ export interface Edge {
   cardId?: string;
   itemIndex?: number;
   totalItems?: number;
+  branchIndex?: number; // 0: Red, 1: Yellow, 2: Green
+}
+
+export interface HierarchyColorSpec {
+  stroke: string;
+  glow: string;
+  name: string;
+  points: number;
+}
+
+/**
+ * 8-Layer Snooker-based Hierarchy Thread Color Architecture:
+ * - Red (1 point)
+ * - Yellow (2 points)
+ * - Green (3 points)
+ * - Brown (4 points)
+ * - Blue (5 points)
+ * - Pink (6 points)
+ * - Black (7 points)
+ * - Diamond White / Gold (8 points)
+ *
+ * Core parent radiates max 3 branches:
+ * - Branch 0: Red (1 pt) -> Brown (4 pts) -> Black (7 pts) -> Diamond White (8 pts)
+ * - Branch 1: Yellow (2 pts) -> Blue (5 pts) -> Black (7 pts) -> Diamond White (8 pts)
+ * - Branch 2: Green (3 pts) -> Pink (6 pts) -> Black (7 pts) -> Diamond White (8 pts)
+ *
+ * Each color point tier lasts for 2 layers:
+ * Layer 1 (odd): Glowing / vibrant base
+ * Layer 2 (even): Softer / lighter tint
+ */
+export function getHierarchyThreadColor(
+  branchIndex: number = 0,
+  level: number = 1,
+  isDark: boolean = true
+): HierarchyColorSpec {
+  const branch = Math.abs(branchIndex) % 3;
+  const clampedLevel = Math.max(1, Math.min(level, 8));
+
+  // Branch 0: Red (1) -> Brown (4) -> Black (7) -> White (8)
+  if (branch === 0) {
+    switch (clampedLevel) {
+      case 1:
+        return {
+          stroke: isDark ? "#ef4444" : "#dc2626",
+          glow: isDark ? "rgba(239, 68, 68, 0.75)" : "rgba(220, 38, 38, 0.4)",
+          name: "Glowing Red",
+          points: 1,
+        };
+      case 2:
+        return {
+          stroke: isDark ? "#f87171" : "#ef4444",
+          glow: isDark ? "rgba(248, 113, 113, 0.6)" : "rgba(239, 68, 68, 0.3)",
+          name: "Light Red",
+          points: 1,
+        };
+      case 3:
+        return {
+          stroke: isDark ? "#d97706" : "#b45309",
+          glow: isDark ? "rgba(217, 119, 6, 0.75)" : "rgba(180, 83, 9, 0.4)",
+          name: "Glowing Brown",
+          points: 4,
+        };
+      case 4:
+        return {
+          stroke: isDark ? "#f59e0b" : "#d97706",
+          glow: isDark ? "rgba(245, 158, 11, 0.6)" : "rgba(217, 119, 6, 0.3)",
+          name: "Light Brown",
+          points: 4,
+        };
+      case 5:
+        return {
+          stroke: isDark ? "#94a3b8" : "#1e293b",
+          glow: isDark ? "rgba(148, 163, 184, 0.75)" : "rgba(30, 41, 59, 0.4)",
+          name: "Obsidian Black",
+          points: 7,
+        };
+      case 6:
+        return {
+          stroke: isDark ? "#64748b" : "#475569",
+          glow: isDark ? "rgba(100, 116, 139, 0.6)" : "rgba(71, 85, 105, 0.3)",
+          name: "Charcoal Black",
+          points: 7,
+        };
+      case 7:
+        return {
+          stroke: isDark ? "#f8fafc" : "#0f172a",
+          glow: isDark ? "rgba(248, 250, 252, 0.85)" : "rgba(15, 23, 42, 0.5)",
+          name: "Diamond White",
+          points: 8,
+        };
+      case 8:
+      default:
+        return {
+          stroke: isDark ? "#fbbf24" : "#ca8a04",
+          glow: isDark ? "rgba(251, 191, 36, 0.85)" : "rgba(202, 138, 4, 0.5)",
+          name: "Royal Gold",
+          points: 8,
+        };
+    }
+  }
+
+  // Branch 1: Yellow (2) -> Blue (5) -> Black (7) -> White (8)
+  if (branch === 1) {
+    switch (clampedLevel) {
+      case 1:
+        return {
+          stroke: isDark ? "#facc15" : "#ca8a04",
+          glow: isDark ? "rgba(250, 204, 21, 0.8)" : "rgba(202, 138, 4, 0.4)",
+          name: "Glowing Yellow",
+          points: 2,
+        };
+      case 2:
+        return {
+          stroke: isDark ? "#fde047" : "#eab308",
+          glow: isDark ? "rgba(253, 224, 71, 0.6)" : "rgba(234, 179, 8, 0.3)",
+          name: "Light Yellow",
+          points: 2,
+        };
+      case 3:
+        return {
+          stroke: isDark ? "#3b82f6" : "#2563eb",
+          glow: isDark ? "rgba(59, 130, 246, 0.8)" : "rgba(37, 99, 235, 0.4)",
+          name: "Glowing Blue",
+          points: 5,
+        };
+      case 4:
+        return {
+          stroke: isDark ? "#60a5fa" : "#3b82f6",
+          glow: isDark ? "rgba(96, 165, 250, 0.6)" : "rgba(59, 130, 246, 0.3)",
+          name: "Light Blue",
+          points: 5,
+        };
+      case 5:
+        return {
+          stroke: isDark ? "#94a3b8" : "#1e293b",
+          glow: isDark ? "rgba(148, 163, 184, 0.75)" : "rgba(30, 41, 59, 0.4)",
+          name: "Obsidian Black",
+          points: 7,
+        };
+      case 6:
+        return {
+          stroke: isDark ? "#64748b" : "#475569",
+          glow: isDark ? "rgba(100, 116, 139, 0.6)" : "rgba(71, 85, 105, 0.3)",
+          name: "Charcoal Black",
+          points: 7,
+        };
+      case 7:
+        return {
+          stroke: isDark ? "#f8fafc" : "#0f172a",
+          glow: isDark ? "rgba(248, 250, 252, 0.85)" : "rgba(15, 23, 42, 0.5)",
+          name: "Diamond White",
+          points: 8,
+        };
+      case 8:
+      default:
+        return {
+          stroke: isDark ? "#fbbf24" : "#ca8a04",
+          glow: isDark ? "rgba(251, 191, 36, 0.85)" : "rgba(202, 138, 4, 0.5)",
+          name: "Royal Gold",
+          points: 8,
+        };
+    }
+  }
+
+  // Branch 2: Green (3) -> Pink (6) -> Black (7) -> White (8)
+  switch (clampedLevel) {
+    case 1:
+      return {
+        stroke: isDark ? "#10b981" : "#059669",
+        glow: isDark ? "rgba(16, 185, 129, 0.8)" : "rgba(5, 150, 105, 0.4)",
+        name: "Glowing Green",
+        points: 3,
+      };
+    case 2:
+      return {
+        stroke: isDark ? "#34d399" : "#10b981",
+        glow: isDark ? "rgba(52, 211, 153, 0.6)" : "rgba(16, 185, 129, 0.3)",
+        name: "Light Green",
+        points: 3,
+      };
+    case 3:
+      return {
+        stroke: isDark ? "#ec4899" : "#db2777",
+        glow: isDark ? "rgba(236, 72, 153, 0.8)" : "rgba(219, 39, 119, 0.4)",
+        name: "Glowing Pink",
+        points: 6,
+      };
+    case 4:
+      return {
+        stroke: isDark ? "#f472b6" : "#ec4899",
+        glow: isDark ? "rgba(244, 114, 182, 0.6)" : "rgba(236, 72, 153, 0.3)",
+        name: "Light Pink",
+        points: 6,
+      };
+    case 5:
+      return {
+        stroke: isDark ? "#94a3b8" : "#1e293b",
+        glow: isDark ? "rgba(148, 163, 184, 0.75)" : "rgba(30, 41, 59, 0.4)",
+        name: "Obsidian Black",
+        points: 7,
+      };
+    case 6:
+      return {
+        stroke: isDark ? "#64748b" : "#475569",
+        glow: isDark ? "rgba(100, 116, 139, 0.6)" : "rgba(71, 85, 105, 0.3)",
+        name: "Charcoal Black",
+        points: 7,
+      };
+    case 7:
+      return {
+        stroke: isDark ? "#f8fafc" : "#0f172a",
+        glow: isDark ? "rgba(248, 250, 252, 0.85)" : "rgba(15, 23, 42, 0.5)",
+        name: "Diamond White",
+        points: 8,
+      };
+    case 8:
+    default:
+      return {
+        stroke: isDark ? "#fbbf24" : "#ca8a04",
+        glow: isDark ? "rgba(251, 191, 36, 0.85)" : "rgba(202, 138, 4, 0.5)",
+        name: "Royal Gold",
+        points: 8,
+      };
+  }
 }
 
 /**
@@ -95,6 +321,7 @@ export function calculateSpiderLayout(
 
   // Allocate angular sectors to Level 1 nodes (360 / l1Count)
   l1Children.forEach((l1, i) => {
+    const branchIndex = i % 3; // 0: Red, 1: Yellow, 2: Green
     const angle = (2 * Math.PI * i) / l1Count - Math.PI / 2;
     const x1 = Math.round(Math.cos(angle) * r1);
     const y1 = Math.round(Math.sin(angle) * r1);
@@ -103,6 +330,7 @@ export function calculateSpiderLayout(
       ...l1,
       x: x1,
       y: y1,
+      branchIndex,
     });
 
     edges.push({
@@ -110,6 +338,7 @@ export function calculateSpiderLayout(
       target: l1.id,
       category: l1.category,
       level: 1,
+      branchIndex,
     });
 
     // Level 2 children under this Level 1
@@ -132,6 +361,7 @@ export function calculateSpiderLayout(
           ...l2,
           x: x2,
           y: y2,
+          branchIndex,
         });
 
         edges.push({
@@ -139,6 +369,7 @@ export function calculateSpiderLayout(
           target: l2.id,
           category: l2.category,
           level: 2,
+          branchIndex,
         });
 
         // Level 3 children under this Level 2
@@ -160,6 +391,7 @@ export function calculateSpiderLayout(
               ...l3,
               x: x3,
               y: y3,
+              branchIndex,
             });
 
             edges.push({
@@ -167,6 +399,7 @@ export function calculateSpiderLayout(
               target: l3.id,
               category: l3.category,
               level: 3,
+              branchIndex,
             });
           });
         }
@@ -222,7 +455,7 @@ export function calculateTreeLayout(
   const totalWidth = totalLeaves * leafSpacing;
   let currentLeafX = -Math.round(totalWidth / 2) + Math.round(leafSpacing / 2);
 
-  function layoutSubtree(node: SpiderNode, currentLevel: number): number {
+  function layoutSubtree(node: SpiderNode, currentLevel: number, branchIndex?: number): number {
     const children = childMap.get(node.id) || [];
     let yPos = yLevel0;
     if (currentLevel === 1) yPos = yLevel1;
@@ -236,21 +469,24 @@ export function calculateTreeLayout(
         ...node,
         x: nodeX,
         y: yPos,
+        branchIndex,
       });
       return nodeX;
     }
 
     const childXPositions: number[] = [];
-    for (const child of children) {
+    children.forEach((child, idx) => {
+      const childBranch = currentLevel === 0 ? idx % 3 : branchIndex;
       edges.push({
         source: node.id,
         target: child.id,
         category: child.category,
         level: currentLevel + 1,
+        branchIndex: childBranch,
       });
-      const cX = layoutSubtree(child, currentLevel + 1);
+      const cX = layoutSubtree(child, currentLevel + 1, childBranch);
       childXPositions.push(cX);
-    }
+    });
 
     const firstX = childXPositions[0];
     const lastX = childXPositions[childXPositions.length - 1];
@@ -260,6 +496,7 @@ export function calculateTreeLayout(
       ...node,
       x: nodeX,
       y: yPos,
+      branchIndex,
     });
 
     return nodeX;
@@ -283,7 +520,9 @@ export function calculateTreeLayout(
  */
 export function calculateGroupLayout(
   allNodes: SpiderNode[],
-  category: ConceptCategory
+  category: ConceptCategory,
+  overrideBranchIndex?: number,
+  baseLevelOffset: number = 0
 ): {
   rootNode: PositionedNode;
   nodes: PositionedNode[];
@@ -325,15 +564,20 @@ export function calculateGroupLayout(
   positionedNodes.push(rootNode);
 
   if (category === "all") {
-    // 3 sectors for All Concepts: V8 (top -90°), Scope (bottom-left 150°), Node (bottom-right 30°)
-    const subCats: { cat: ConceptCategory; angle: number }[] = [
-      { cat: "v8", angle: -Math.PI / 2 },
-      { cat: "node", angle: Math.PI / 6 },
-      { cat: "scope", angle: (5 * Math.PI) / 6 },
+    // 3 primary branches from Master Web (Node.js + JavaScript):
+    // Spoke 0: V8 Engine (Top -90°) -> Red (1 pt)
+    // Spoke 1: Scope & Closures (Bottom-left 150°) -> Yellow (2 pts)
+    // Spoke 2: Node.js Runtime (Bottom-right 30°) -> Green (3 pts)
+    const subCats: { cat: ConceptCategory; angle: number; branchIndex: number }[] = [
+      { cat: "v8", angle: -Math.PI / 2, branchIndex: 0 },
+      { cat: "scope", angle: (5 * Math.PI) / 6, branchIndex: 1 },
+      { cat: "node", angle: Math.PI / 6, branchIndex: 2 },
     ];
 
-    subCats.forEach(({ cat, angle }) => {
-      const subLayout = calculateGroupLayout(allNodes, cat);
+    subCats.forEach(({ cat, angle, branchIndex }) => {
+      // Pass branchIndex down so the entire sector inherits this spoke's color progression!
+      // baseLevelOffset = 1 so pillars under V8/Scope/Node become Level 2, cards Level 3, sub-items Level 4.
+      const subLayout = calculateGroupLayout(allNodes, cat, branchIndex, 1);
       const sectorDist = 840;
       const secX = Math.round(Math.cos(angle) * sectorDist);
       const secY = Math.round(Math.sin(angle) * sectorDist);
@@ -343,6 +587,7 @@ export function calculateGroupLayout(
         target: subLayout.rootNode.id,
         category: cat,
         level: 1,
+        branchIndex,
       });
 
       positionedNodes.push({
@@ -350,6 +595,7 @@ export function calculateGroupLayout(
         x: secX,
         y: secY,
         level: 1,
+        branchIndex,
       });
 
       subLayout.nodes.forEach((n) => {
@@ -358,6 +604,7 @@ export function calculateGroupLayout(
             ...n,
             x: n.x + secX,
             y: n.y + secY,
+            branchIndex,
           });
         }
       });
@@ -367,6 +614,7 @@ export function calculateGroupLayout(
           ...c,
           x: c.x + secX,
           y: c.y + secY,
+          branchIndex,
         });
       });
 
@@ -399,6 +647,11 @@ export function calculateGroupLayout(
     const rawPillar = allNodes.find((n) => n.id === pId);
     if (!rawPillar) return;
 
+    const branchIndex = overrideBranchIndex !== undefined ? overrideBranchIndex : i;
+    const l1 = 1 + baseLevelOffset;
+    const l2 = 2 + baseLevelOffset;
+    const l3 = 3 + baseLevelOffset;
+
     // Distribute angles evenly around 360° (360° / 3 = 120°): -90°, 30°, 150°
     const angle = (2 * Math.PI * i) / pillarCount - Math.PI / 2;
     const px = Math.round(Math.cos(angle) * r1);
@@ -408,7 +661,8 @@ export function calculateGroupLayout(
       ...rawPillar,
       x: px,
       y: py,
-      level: 1,
+      level: l1,
+      branchIndex,
     };
     positionedNodes.push(pillarNode);
 
@@ -416,7 +670,8 @@ export function calculateGroupLayout(
       source: rootNode.id,
       target: pillarNode.id,
       category: pillarNode.category,
-      level: 1,
+      level: l1,
+      branchIndex,
     });
 
     // Check if this Level 1 pillar has a Group Card (children > 3)
@@ -431,6 +686,7 @@ export function calculateGroupLayout(
         ...cardData,
         x: cx,
         y: cy,
+        branchIndex,
       };
       positionedCards.push(positionedCard);
 
@@ -438,7 +694,8 @@ export function calculateGroupLayout(
         source: pillarNode.id,
         target: cardData.id,
         category: cardData.category,
-        level: 2,
+        level: l2,
+        branchIndex,
       });
 
       // Branch out sub-items from the right end of the card!
@@ -469,13 +726,14 @@ export function calculateGroupLayout(
               label: sub.label,
               category: cardData.category,
               parentId: item.id,
-              level: 3,
+              level: l3,
               badge: sub.badge,
               searchQuery: sub.searchQuery,
               color: cardData.color,
               x: nodeX,
               y: nodeY,
               cardParentId: cardData.id,
+              branchIndex,
             };
             positionedNodes.push(subKeywordNode);
 
@@ -483,10 +741,11 @@ export function calculateGroupLayout(
               source: `${cardData.id}:${item.id}`,
               target: sub.id,
               category: cardData.category,
-              level: 3,
+              level: l3,
               cardId: cardData.id,
               itemIndex: itemIdx,
               totalItems,
+              branchIndex,
             });
           });
         }
@@ -519,6 +778,7 @@ export function calculateGroupLayout(
               ...childCardData,
               x: cardX,
               y: cardY,
+              branchIndex,
             };
             positionedCards.push(posChildCard);
 
@@ -526,7 +786,8 @@ export function calculateGroupLayout(
               source: pillarNode.id,
               target: childCardData.id,
               category: childCardData.category,
-              level: 2,
+              level: l2,
+              branchIndex,
             });
 
             // Branch out sub-items from this card's right edge
@@ -557,13 +818,14 @@ export function calculateGroupLayout(
                     label: sub.label,
                     category: childCardData.category,
                     parentId: item.id,
-                    level: 3,
+                    level: l3,
                     badge: sub.badge,
                     searchQuery: sub.searchQuery,
                     color: childCardData.color,
                     x: nodeX,
                     y: nodeY,
                     cardParentId: childCardData.id,
+                    branchIndex,
                   };
                   positionedNodes.push(subNode);
 
@@ -571,10 +833,11 @@ export function calculateGroupLayout(
                     source: `${childCardData.id}:${item.id}`,
                     target: sub.id,
                     category: childCardData.category,
-                    level: 3,
+                    level: l3,
                     cardId: childCardData.id,
                     itemIndex: itemIdx,
                     totalItems: totalChildItems,
+                    branchIndex,
                   });
                 });
               }
@@ -585,7 +848,8 @@ export function calculateGroupLayout(
               ...child,
               x: c2x,
               y: c2y,
-              level: 2,
+              level: l2,
+              branchIndex,
             };
             positionedNodes.push(childNode);
 
@@ -593,7 +857,8 @@ export function calculateGroupLayout(
               source: pillarNode.id,
               target: childNode.id,
               category: childNode.category,
-              level: 2,
+              level: l2,
+              branchIndex,
             });
 
             // Child has <= 3 children of its own (Level 3 keyword nodes)
@@ -614,7 +879,8 @@ export function calculateGroupLayout(
                   ...sub,
                   x: c3x,
                   y: c3y,
-                  level: 3,
+                  level: l3,
+                  branchIndex,
                 };
                 positionedNodes.push(subNode);
 
@@ -622,7 +888,8 @@ export function calculateGroupLayout(
                   source: childNode.id,
                   target: subNode.id,
                   category: subNode.category,
-                  level: 3,
+                  level: l3,
+                  branchIndex,
                 });
               });
             }

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { PositionedGroupCard } from "@/utils/spiderLayout";
+import { PositionedGroupCard, getHierarchyThreadColor } from "@/utils/spiderLayout";
 import { ExternalLink, GripVertical } from "lucide-react";
 
 interface SpiderGroupCardProps {
@@ -25,6 +25,11 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
   const isDark = theme === "dark";
   const queryLower = searchQuery.trim().toLowerCase();
 
+  const cardThemeColor =
+    card.branchIndex !== undefined
+      ? getHierarchyThreadColor(card.branchIndex, 2, isDark).stroke
+      : card.color;
+
   // Check if any item in this card matches search query
   const hasCardMatches = React.useMemo(() => {
     if (!queryLower) return false;
@@ -47,15 +52,15 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
     ? isDark
       ? "2px solid #f59e0b"
       : "2px solid #d97706"
-    : `1.5px solid ${card.color}${isDark ? "70" : "50"}`;
+    : `1.5px solid ${cardThemeColor}${isDark ? "70" : "50"}`;
 
   const cardShadow = hasCardMatches
     ? isDark
       ? "0 0 25px rgba(245, 158, 11, 0.45), 0 10px 30px rgba(0,0,0,0.6)"
       : "0 0 20px rgba(217, 119, 6, 0.35), 0 8px 24px rgba(0,0,0,0.12)"
     : isDark
-    ? `0 10px 30px rgba(0,0,0,0.65), 0 0 20px ${card.color}25`
-    : `0 8px 26px rgba(0, 0, 0, 0.08), 0 0 18px ${card.color}20`;
+    ? `0 10px 30px rgba(0,0,0,0.65), 0 0 20px ${cardThemeColor}25`
+    : `0 8px 26px rgba(0, 0, 0, 0.08), 0 0 18px ${cardThemeColor}20`;
 
   return (
     <div
@@ -96,8 +101,8 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
           alignItems: "center",
           justifyContent: "space-between",
           background: isDark
-            ? `linear-gradient(90deg, ${card.color}18 0%, transparent 100%)`
-            : `linear-gradient(90deg, ${card.color}10 0%, transparent 100%)`,
+            ? `linear-gradient(90deg, ${cardThemeColor}18 0%, transparent 100%)`
+            : `linear-gradient(90deg, ${cardThemeColor}10 0%, transparent 100%)`,
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
@@ -106,8 +111,8 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
               width: "10px",
               height: "10px",
               borderRadius: "50%",
-              background: card.color,
-              boxShadow: `0 0 10px ${card.color}`,
+              background: cardThemeColor,
+              boxShadow: `0 0 10px ${cardThemeColor}`,
               flexShrink: 0,
             }}
           />

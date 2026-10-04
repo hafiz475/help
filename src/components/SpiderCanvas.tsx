@@ -12,6 +12,7 @@ import {
   calculateGroupLayout,
   getCardItemAnchor,
   getNodesForCategory,
+  getHierarchyThreadColor,
 } from "@/utils/spiderLayout";
 import { SpiderNodeCard } from "./SpiderNodeCard";
 import { SpiderGroupCard } from "./SpiderGroupCard";
@@ -466,7 +467,14 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
     const portsMap = new Map<
       string,
-      { key: string; x: number; y: number; color: string; isHighlighted: boolean }
+      {
+        key: string;
+        x: number;
+        y: number;
+        color: string;
+        glow: string;
+        isHighlighted: boolean;
+      }
     >();
 
     edges.forEach((edge) => {
@@ -484,6 +492,12 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
               matchedNodes.has(edge.target) ||
               Boolean(queryLower && card.title.toLowerCase().includes(queryLower));
 
+            const colorSpec = getHierarchyThreadColor(
+              edge.branchIndex ?? card.branchIndex ?? 0,
+              edge.level,
+              isDark
+            );
+
             portsMap.set(portKey, {
               key: portKey,
               x: anchor.x,
@@ -492,9 +506,8 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                 ? isDark
                   ? "#f59e0b"
                   : "#d97706"
-                : isDark
-                ? "#34d399"
-                : "#059669",
+                : colorSpec.stroke,
+              glow: colorSpec.glow,
               isHighlighted,
             });
           }
@@ -621,18 +634,30 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                   matchedNodes.has(edge.target) ||
                   Boolean(queryLower && card.title.toLowerCase().includes(queryLower));
 
+                const colorSpec = getHierarchyThreadColor(
+                  edge.branchIndex ?? card.branchIndex ?? 0,
+                  edge.level,
+                  isDark
+                );
+
                 const strokeColor = isHighlighted
                   ? isDark
                     ? "#f59e0b"
                     : "#d97706"
-                  : isDark
-                  ? "#34d399"
-                  : "#059669";
-                const strokeWidth = isHighlighted ? 3 : 1.6;
-                const strokeOpacity = isHighlighted ? 1 : 0.75;
+                  : colorSpec.stroke;
+                const strokeWidth = isHighlighted ? 3.2 : 1.8;
+                const strokeOpacity = isHighlighted ? 1 : 0.85;
 
                 return (
                   <g key={`edge-card-item-${edge.source}-${edge.target}-${idx}`}>
+                    {/* Ambient Glow */}
+                    <path
+                      d={pathData}
+                      fill="none"
+                      stroke={colorSpec.glow}
+                      strokeWidth={strokeWidth + 3.5}
+                      strokeOpacity={0.35}
+                    />
                     <path
                       d={pathData}
                       fill="none"
@@ -697,21 +722,35 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                         )
                     ));
 
+                const colorSpec = getHierarchyThreadColor(
+                  edge.branchIndex ?? targetCard.branchIndex ?? 0,
+                  edge.level,
+                  isDark
+                );
+
                 const strokeColor = isCardMatched
                   ? isDark
                     ? "#f59e0b"
                     : "#d97706"
-                  : targetCard.color;
+                  : colorSpec.stroke;
                 const strokeWidth = isCardMatched ? 4.5 : 2.8;
 
                 return (
                   <g key={`edge-card-${edge.source}-${edge.target}-${idx}`}>
+                    {/* Ambient Glow */}
+                    <path
+                      d={pathData}
+                      fill="none"
+                      stroke={colorSpec.glow}
+                      strokeWidth={strokeWidth + 4}
+                      strokeOpacity={0.35}
+                    />
                     <path
                       d={pathData}
                       fill="none"
                       stroke={strokeColor}
                       strokeWidth={strokeWidth}
-                      strokeOpacity={isCardMatched ? 1 : 0.8}
+                      strokeOpacity={isCardMatched ? 1 : 0.85}
                     />
                     <path
                       d={pathData}
@@ -734,22 +773,25 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                 const isHighlighted =
                   matchedNodes.has(edge.source) || matchedNodes.has(edge.target);
 
-                let strokeColor = "";
+                const colorSpec = getHierarchyThreadColor(
+                  edge.branchIndex ?? targetNode.branchIndex ?? 0,
+                  edge.level,
+                  isDark
+                );
+
+                let strokeColor = colorSpec.stroke;
                 let strokeWidth = 1.5;
                 let strokeOpacity = 0.7;
 
                 if (edge.level === 1) {
-                  strokeColor = isDark ? "#38bdf8" : "#0284c7";
                   strokeWidth = isHighlighted ? 4.5 : 3;
-                  strokeOpacity = isHighlighted ? 1 : 0.85;
+                  strokeOpacity = isHighlighted ? 1 : 0.9;
                 } else if (edge.level === 2) {
-                  strokeColor = isDark ? "#c084fc" : "#7c3aed";
-                  strokeWidth = isHighlighted ? 3.5 : 2;
-                  strokeOpacity = isHighlighted ? 1 : 0.75;
+                  strokeWidth = isHighlighted ? 3.5 : 2.2;
+                  strokeOpacity = isHighlighted ? 1 : 0.8;
                 } else {
-                  strokeColor = isDark ? "#34d399" : "#059669";
-                  strokeWidth = isHighlighted ? 3 : 1.5;
-                  strokeOpacity = isHighlighted ? 1 : 0.65;
+                  strokeWidth = isHighlighted ? 3 : 1.6;
+                  strokeOpacity = isHighlighted ? 1 : 0.7;
                 }
 
                 if (isHighlighted) {
@@ -774,6 +816,16 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
                 return (
                   <g key={`edge-node-${edge.source}-${edge.target}-${idx}`}>
+                    {/* Ambient Glow for L1/L2 threads */}
+                    {edge.level <= 2 && (
+                      <path
+                        d={pathData}
+                        fill="none"
+                        stroke={colorSpec.glow}
+                        strokeWidth={strokeWidth + 4}
+                        strokeOpacity={0.35}
+                      />
+                    )}
                     <path
                       d={pathData}
                       fill="none"
@@ -853,11 +905,11 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                   <circle
                     cx={port.x}
                     cy={port.y}
-                    r={8}
+                    r={9}
                     fill="none"
-                    stroke={port.color}
-                    strokeWidth={1.5}
-                    strokeOpacity={0.4}
+                    stroke={port.glow || port.color}
+                    strokeWidth={2}
+                    strokeOpacity={0.55}
                   />
                   {/* Main connector socket disc */}
                   <circle
