@@ -1,12 +1,18 @@
 import { SpiderNode, ConceptCategory } from "@/data/concepts";
+import { GroupCardData } from "@/data/groupConcepts";
 
-export type ViewMode = "spider" | "tree";
+export type ViewMode = "spider" | "tree" | "group";
 
 export interface PositionedNode extends SpiderNode {
   x: number;
   y: number;
   vx?: number;
   vy?: number;
+}
+
+export interface PositionedGroupCard extends GroupCardData {
+  x: number;
+  y: number;
 }
 
 export interface Edge {
@@ -157,7 +163,7 @@ export function calculateSpiderLayout(
 }
 
 /**
- * Calculates hierarchical Top-to-Bottom Tree layout.
+ * Calculates hierarchical Top-to-Bottom Tree layout with generous leaf spacing to prevent card collision.
  */
 export function calculateTreeLayout(
   nodes: SpiderNode[],
@@ -181,10 +187,9 @@ export function calculateTreeLayout(
   // Vertical tier levels
   const yLevel0 = -320;
   const yLevel1 = -130;
-  const yLevel2 = 80;
-  const yLevel3 = 300;
+  const yLevel2 = 90;
+  const yLevel3 = 320;
 
-  // Function to count leaves under a node
   function countLeaves(nodeId: string): number {
     const children = childMap.get(nodeId) || [];
     if (children.length === 0) return 1;
@@ -195,7 +200,8 @@ export function calculateTreeLayout(
     return sum;
   }
 
-  const leafSpacing = 160;
+  // Generous spacing so badges like "Runtime Feedback [Profiling]" never overlap
+  const leafSpacing = 240;
   const totalLeaves = countLeaves(rootNode.id);
   const totalWidth = totalLeaves * leafSpacing;
   let currentLeafX = -Math.round(totalWidth / 2) + Math.round(leafSpacing / 2);
@@ -249,6 +255,70 @@ export function calculateTreeLayout(
 
   return {
     nodes: Array.from(positioned.values()),
+    edges,
+  };
+}
+
+/**
+ * Calculates Group / Stack Card View:
+ * Center Circle connects at 360° / count to structured Group Cards with stacked sequential items.
+ */
+export function calculateGroupLayout(
+  rootId: string,
+  rootLabel: string,
+  rootBadge: string,
+  rootColor: string,
+  cards: GroupCardData[]
+): {
+  rootNode: PositionedNode;
+  cards: PositionedGroupCard[];
+  edges: Edge[];
+} {
+  const rootNode: PositionedNode = {
+    id: rootId,
+    label: rootLabel,
+    category: "root",
+    level: 0,
+    badge: rootBadge,
+    color: rootColor,
+    x: 0,
+    y: 0,
+  };
+
+  const count = cards.length;
+  // Radius based on number of cards
+  let radius = 620;
+  if (count <= 3) radius = 540;
+  else if (count <= 6) radius = 860;
+  else radius = 1260;
+
+  const positionedCards: PositionedGroupCard[] = [];
+  const edges: Edge[] = [];
+
+  cards.forEach((card, i) => {
+    // Distribute angles evenly around circle: 360 / count
+    const angle = (2 * Math.PI * i) / count - Math.PI / 2;
+    const r = radius + (card.items.length > 5 ? 40 : 0);
+    const x = Math.round(Math.cos(angle) * r);
+    const y = Math.round(Math.sin(angle) * r);
+
+    positionedCards.push({
+      ...card,
+      x,
+      y,
+    });
+
+    edges.push({
+      source: rootId,
+      target: card.id,
+      category: card.category,
+      level: 1,
+    });
+  });
+
+  return {
+    rootNode,
+    cards: positionedCards,
     edges,
   };
 }

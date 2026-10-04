@@ -132,10 +132,15 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
               </select>
             </div>
 
-            {/* Spider / Tree View Toggle Button */}
+            {/* Spider / Tree / Group View Toggle Button */}
             <button
-              onClick={() => onToggleViewMode(viewMode === "spider" ? "tree" : "spider")}
-              title="Toggle Spider / Tree View"
+              id="btn-view-toggle-mobile"
+              onClick={() =>
+                onToggleViewMode(
+                  viewMode === "spider" ? "tree" : viewMode === "tree" ? "group" : "spider"
+                )
+              }
+              title={`Current: ${viewMode}. Tap to switch view mode`}
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -150,8 +155,20 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
                 flexShrink: 0,
               }}
             >
-              {viewMode === "spider" ? <Share2 size={13} /> : <GitBranch size={13} />}
-              <span>{viewMode === "spider" ? "Spider" : "Tree"}</span>
+              {viewMode === "spider" ? (
+                <Share2 size={13} />
+              ) : viewMode === "tree" ? (
+                <GitBranch size={13} />
+              ) : (
+                <Layers size={13} />
+              )}
+              <span>
+                {viewMode === "spider"
+                  ? "Spider"
+                  : viewMode === "tree"
+                  ? "Tree"
+                  : "Group"}
+              </span>
             </button>
 
             {/* Dark / Light Theme Toggle Button */}
@@ -447,6 +464,27 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
               >
                 <GitBranch size={12} />
                 <span>Tree</span>
+              </button>
+
+              <button
+                id="btn-view-group"
+                onClick={() => onToggleViewMode("group")}
+                title="Group / Stack Card View"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  padding: "4px 8px",
+                  borderRadius: "6px",
+                  fontSize: "11.5px",
+                  fontWeight: viewMode === "group" ? 700 : 500,
+                  background: viewMode === "group" ? "var(--toggle-active-bg)" : "transparent",
+                  color: viewMode === "group" ? (isDark ? "#38bdf8" : "#0284c7") : "var(--text-muted)",
+                  boxShadow: viewMode === "group" ? "0 1px 3px rgba(0,0,0,0.1)" : "none",
+                }}
+              >
+                <Layers size={12} />
+                <span>Group</span>
               </button>
             </div>
 
