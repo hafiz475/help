@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { PositionedGroupCard, getHierarchyThreadColor } from "@/utils/spiderLayout";
+import { PositionedGroupCard, getHierarchyThreadColor, GROUP_CARD_WIDTH } from "@/utils/spiderLayout";
 import { GroupItem } from "@/data/groupConcepts";
 import { ExternalLink, GripVertical } from "lucide-react";
 
@@ -126,7 +126,8 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
         left: `${card.x}px`,
         top: `${card.y}px`,
         transform: `translate(-50%, -50%) scale(${isDragging ? 1.02 : 1})`,
-        width: "324px",
+        width: `${GROUP_CARD_WIDTH}px`,
+        maxWidth: "calc(100vw - 32px)",
         borderRadius: "16px",
         background: isDark
           ? "linear-gradient(155deg, rgba(15, 23, 42, 0.94) 0%, rgba(10, 15, 29, 0.97) 100%)"
@@ -177,21 +178,22 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
           transition: "background 0.15s ease",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "9px", minWidth: 0, flex: 1, marginRight: "10px" }}>
           <div
             style={{
-              width: "10px",
-              height: "10px",
+              width: "11px",
+              height: "11px",
               borderRadius: "50%",
               background: cardThemeColor,
               boxShadow: `0 0 10px ${cardThemeColor}`,
               flexShrink: 0,
             }}
           />
-          <div style={{ minWidth: 0 }}>
+          <div style={{ minWidth: 0, flex: 1 }}>
             <div
+              title={card.title}
               style={{
-                fontSize: "13.5px",
+                fontSize: "14px",
                 fontWeight: 800,
                 color: isDark ? "#ffffff" : "#0f172a",
                 letterSpacing: "-0.01em",
@@ -317,13 +319,13 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                   transition: "all 0.15s ease",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: "7px", minWidth: 0 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0, flex: 1, marginRight: "8px" }}>
                   {/* Step Number or Bullet Icon */}
                   {item.stepNumber ? (
                     <span
                       style={{
-                        width: "18px",
-                        height: "18px",
+                        width: "19px",
+                        height: "19px",
                         borderRadius: "50%",
                         background: isItemSelected
                           ? card.color
@@ -358,8 +360,9 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                   )}
 
                   <span
+                    title={item.label}
                     style={{
-                      fontSize: "12px",
+                      fontSize: "12.5px",
                       fontWeight: isItemSelected ? 800 : 700,
                       color: isDark
                         ? isItemSelected || isItemHovered
@@ -372,37 +375,44 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       letterSpacing: "-0.01em",
+                      minWidth: 0,
                     }}
                   >
                     {item.label}
                   </span>
                 </div>
 
-                <div style={{ display: "flex", alignItems: "center", gap: "5px", flexShrink: 0 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px", flexShrink: 0 }}>
                   {isItemSelected && (
                     <span
                       style={{
                         fontSize: "8.5px",
                         fontWeight: 800,
-                        padding: "1px 5px",
+                        padding: "1.5px 6px",
                         borderRadius: "4px",
                         background: card.color,
                         color: "#ffffff",
+                        whiteSpace: "nowrap",
                       }}
                     >
-                      ✓ In Notebook
+                      ✓ Notes
                     </span>
                   )}
 
                   {item.badge && (
                     <span
+                      title={item.badge}
                       style={{
                         fontSize: "9px",
                         fontWeight: 600,
-                        padding: "1px 5px",
+                        padding: "1.5px 6.5px",
                         borderRadius: "4px",
                         background: isDark ? "rgba(255, 255, 255, 0.07)" : "rgba(0, 0, 0, 0.05)",
-                        color: isDark ? "rgba(255, 255, 255, 0.7)" : "#475569",
+                        color: isDark ? "rgba(255, 255, 255, 0.75)" : "#475569",
+                        maxWidth: "185px",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
                       }}
                     >
                       {item.badge}

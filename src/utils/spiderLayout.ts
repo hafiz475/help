@@ -254,6 +254,11 @@ export function getHierarchyThreadColor(
 }
 
 /**
+ * Standard width for grouped concept cards (up to 50 characters of text per item row)
+ */
+export const GROUP_CARD_WIDTH = 500;
+
+/**
  * Calculates anchor point on the right end of a Group Card for an item row.
  */
 export function getCardItemAnchor(
@@ -264,7 +269,7 @@ export function getCardItemAnchor(
   const itemHeight = 36;
   const startY = -(totalItems * itemHeight) / 2 + 18;
   const itemY = Math.round(card.y + startY + itemIndex * itemHeight);
-  const anchorX = card.x + 160; // Right end of card (width 320px -> +160px from center)
+  const anchorX = card.x + Math.round(GROUP_CARD_WIDTH / 2); // Right end of card (width 500px -> +250px from center)
   return { x: anchorX, y: itemY };
 }
 
@@ -727,7 +732,7 @@ export function calculateGroupLayout(
     const cardData = cardByPillar.get(pId);
     if (cardData) {
       // Group Card attached to this pillar
-      const rCard = r1 + (cardData.items.length > 6 ? 400 : 360);
+      const rCard = r1 + (cardData.items.length > 6 ? 480 : 440);
       const cx = Math.round(Math.cos(angle) * rCard);
       const cy = Math.round(Math.sin(angle) * rCard);
 
@@ -819,7 +824,7 @@ export function calculateGroupLayout(
           const childCardData = cardByPillar.get(child.id);
           if (childCardData) {
             // Group Card represents this branch directly — connect pillarNode directly to the card!
-            const rChildCard = r1 + 380;
+            const rChildCard = r1 + 440;
             const cardX = Math.round(Math.cos(childAngle) * rChildCard);
             const cardY = Math.round(Math.sin(childAngle) * rChildCard);
 
