@@ -165,6 +165,7 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
 
       {/* Card Items Stack */}
       <div
+        onWheel={(e) => e.stopPropagation()}
         style={{
           padding: "10px 12px",
           display: "flex",
@@ -172,6 +173,7 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
           gap: "6px",
           maxHeight: "440px",
           overflowY: "auto",
+          overscrollBehavior: "contain",
         }}
         className="custom-scrollbar"
       >

@@ -129,6 +129,10 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
       {isMobile && (
         <div
           onClick={onClose}
+          onWheel={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
+          onPointerDown={(e) => e.stopPropagation()}
           style={{
             position: "fixed",
             inset: 0,
@@ -142,6 +146,10 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
 
       <aside
         aria-label="Concept Notebook"
+        onWheel={(e) => e.stopPropagation()}
+        onTouchStart={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
+        onPointerDown={(e) => e.stopPropagation()}
         style={{
           position: "fixed",
           top: 0,
@@ -159,6 +167,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
             ? "-10px 0 40px rgba(0, 0, 0, 0.9)"
             : "-6px 0 30px rgba(0, 0, 0, 0.1)",
           fontFamily: twitterFont,
+          overscrollBehavior: "contain",
           transition: "transform 0.28s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
@@ -350,9 +359,13 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
         {/* ---------------------------------------------------- */}
         <div
           ref={scrollContainerRef}
+          onWheel={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
           style={{
             flex: 1,
             overflowY: "auto",
+            overscrollBehavior: "contain",
+            WebkitOverflowScrolling: "touch",
             padding: isMobile ? "12px 12px 80px 12px" : "16px 20px 80px 20px",
             display: "flex",
             flexDirection: "column",

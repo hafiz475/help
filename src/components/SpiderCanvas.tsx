@@ -235,27 +235,54 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     }
   }, [queryLower, matchedNodes, nodes, groupCards, viewMode, zoom]);
 
-  // Handle Zoom via mouse wheel around cursor
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    if (!containerRef.current) return;
+  // Handle Zoom via native non-passive wheel listener around cursor (prevents 'Unable to preventDefault inside passive event listener' error)
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
 
-    const rect = containerRef.current.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
+    const onWheel = (e: WheelEvent) => {
+      // If mouse is inside the notebook drawer or scrollable card, do NOT zoom canvas! Let sidebar scroll naturally!
+      if (
+        (e.target as HTMLElement)?.closest?.("aside") ||
+        (e.target as HTMLElement)?.closest?.('[aria-label="Concept Notebook"]') ||
+        (e.target as HTMLElement)?.closest?.(".custom-scrollbar")
+      ) {
+        return;
+      }
 
-    const zoomFactor = e.deltaY < 0 ? 1.12 : 0.89;
-    const newZoom = Math.min(Math.max(zoom * zoomFactor, 0.18), 2.5);
+      e.preventDefault();
 
-    const newPanX = Math.round(mouseX - (mouseX - pan.x) * (newZoom / zoom));
-    const newPanY = Math.round(mouseY - (mouseY - pan.y) * (newZoom / zoom));
+      const rect = container.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
 
-    setZoom(newZoom);
-    setPan({ x: newPanX, y: newPanY });
-  };
+      const zoomFactor = e.deltaY < 0 ? 1.12 : 0.89;
+
+      setZoom((prevZoom) => {
+        const newZoom = Math.min(Math.max(prevZoom * zoomFactor, 0.18), 2.5);
+        setPan((prevPan) => {
+          const newPanX = Math.round(mouseX - (mouseX - prevPan.x) * (newZoom / prevZoom));
+          const newPanY = Math.round(mouseY - (mouseY - prevPan.y) * (newZoom / prevZoom));
+          return { x: newPanX, y: newPanY };
+        });
+        return newZoom;
+      });
+    };
+
+    container.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      container.removeEventListener("wheel", onWheel);
+    };
+  }, []);
 
   // Mouse / Pointer Canvas Panning
   const handleCanvasPointerDown = (e: React.PointerEvent) => {
+    if (
+      (e.target as HTMLElement)?.closest?.("aside") ||
+      (e.target as HTMLElement)?.closest?.('[aria-label="Concept Notebook"]')
+    ) {
+      return;
+    }
     if (e.target !== containerRef.current && (e.target as HTMLElement).tagName !== "svg") {
       return;
     }
@@ -381,6 +408,13 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
   // Mobile multi-touch gestures
   const handleTouchStart = (e: React.TouchEvent) => {
+    if (
+      (e.target as HTMLElement)?.closest?.("aside") ||
+      (e.target as HTMLElement)?.closest?.('[aria-label="Concept Notebook"]')
+    ) {
+      return;
+    }
+
     if (e.touches.length === 2) {
       const t0 = e.touches[0];
       const t1 = e.touches[1];
@@ -401,6 +435,13 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
+    if (
+      (e.target as HTMLElement)?.closest?.("aside") ||
+      (e.target as HTMLElement)?.closest?.('[aria-label="Concept Notebook"]')
+    ) {
+      return;
+    }
+
     if (e.touches.length === 2 && pinchStartDistRef.current !== null && containerRef.current) {
       const t0 = e.touches[0];
       const t1 = e.touches[1];
@@ -613,7 +654,6 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   return (
     <div
       ref={containerRef}
-      onWheel={handleWheel}
       onPointerDown={handleCanvasPointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
