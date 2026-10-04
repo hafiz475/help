@@ -54,6 +54,72 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  "root-js-core": {
+    id: "root-js-core",
+    title: "JavaScript & V8 Core",
+    badge: "Language & Engine",
+    tagline: "V8 execution engine and JavaScript lexical scope architecture",
+    takeaways: [
+      {
+        id: "jscore-1",
+        text: "V8 compiles JS to machine code while lexical environments enforce variable visibility.",
+        searchPrompt: "JavaScript engine V8 execution pipeline and lexical environment internals",
+        emoji: "🔥",
+        reactionCount: "3.8k",
+        commentCount: 228,
+      },
+      {
+        id: "jscore-2",
+        text: "Closures preserve references to outer scopes even after the parent function returns.",
+        searchPrompt: "JavaScript closures lexical scope backpack analogy memory retention",
+        emoji: "🤯",
+        reactionCount: "2.7k",
+        commentCount: 175,
+      },
+      {
+        id: "jscore-3",
+        text: "The call stack manages execution frames in LIFO order while the heap stores allocated objects.",
+        searchPrompt: "Call stack LIFO execution context heap memory allocation JavaScript",
+        emoji: "💡",
+        reactionCount: "1.9k",
+        commentCount: 94,
+      },
+    ],
+  },
+
+  "root-cs-foundations": {
+    id: "root-cs-foundations",
+    title: "CS Foundations (OOP & DSA)",
+    badge: "OOP & DSA",
+    tagline: "Object-oriented design patterns, core data structures, and asymptotic algorithmic complexity",
+    takeaways: [
+      {
+        id: "csfound-1",
+        text: "Four OOP pillars: encapsulation hides state, inheritance reuses, polymorphism adapts, abstraction simplifies.",
+        searchPrompt: "OOP four pillars encapsulation inheritance polymorphism abstraction examples",
+        emoji: "🔥",
+        reactionCount: "4.5k",
+        commentCount: 382,
+      },
+      {
+        id: "csfound-2",
+        text: "Hash maps deliver O(1) instant key lookups while trees and binary search provide O(log n).",
+        searchPrompt: "Data structures time complexity hash map O(1) binary search tree O(log n)",
+        emoji: "⚡",
+        reactionCount: "3.1k",
+        commentCount: 219,
+      },
+      {
+        id: "csfound-3",
+        text: "Big O measures how execution time scales as input grows, from O(1) to worst-case O(n!).",
+        searchPrompt: "Big O time complexity best to worst explanation programmer interview",
+        emoji: "🚀",
+        reactionCount: "2.4k",
+        commentCount: 147,
+      },
+    ],
+  },
+
   "root-v8": {
     id: "root-v8",
     title: "V8 Engine",

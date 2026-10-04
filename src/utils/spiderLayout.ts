@@ -600,71 +600,247 @@ export function calculateGroupLayout(
   positionedNodes.push(rootNode);
 
   if (category === "all") {
-    // 5 primary branches from Master Web (Node.js + JavaScript & CS):
-    // Spoke 0: V8 Engine (Top -90°) -> Red (branch 0)
-    // Spoke 1: Node.js Runtime (Top-Right -18°) -> Yellow (branch 1)
-    // Spoke 2: DSA & Big O (Bottom-Right 54°) -> Green (branch 2)
-    // Spoke 3: OOP (4 Pillars) (Bottom-Left 126°) -> Red (branch 0)
-    // Spoke 4: Scope & Closures (Top-Left 198°) -> Yellow (branch 1)
-    const subCats: { cat: ConceptCategory; angle: number; branchIndex: number }[] = [
-      { cat: "v8", angle: -Math.PI / 2, branchIndex: 0 },
-      { cat: "node", angle: -Math.PI / 10, branchIndex: 1 },
-      { cat: "dsa", angle: (3 * Math.PI) / 10, branchIndex: 2 },
-      { cat: "oop", angle: (7 * Math.PI) / 10, branchIndex: 0 },
-      { cat: "scope", angle: (11 * Math.PI) / 10, branchIndex: 1 },
-    ];
+    // Center Hub: MASTER UNIVERSE (Node.js + JavaScript)
+    // Radiates STRICTLY 3 primary branches (120° Triad):
+    // - Branch 0: JavaScript & V8 Core (Top-Left -150°) -> Red (branch 0)
+    // - Branch 1: Node.js Runtime (Top-Right -30°) -> Yellow (branch 1)
+    // - Branch 2: CS Foundations (OOP & DSA) (Bottom 90°) -> Green (branch 2)
 
-    subCats.forEach(({ cat, angle, branchIndex }) => {
-      // Pass branchIndex down so the entire sector inherits this spoke's color progression!
-      // baseLevelOffset = 1 so pillars under V8/Scope/Node become Level 2, cards Level 3, sub-items Level 4.
-      const subLayout = calculateGroupLayout(allNodes, cat, branchIndex, 1);
-      const sectorDist = 960;
-      const secX = Math.round(Math.cos(angle) * sectorDist);
-      const secY = Math.round(Math.sin(angle) * sectorDist);
-
-      edges.push({
-        source: rootNode.id,
-        target: subLayout.rootNode.id,
-        category: cat,
-        level: 1,
-        branchIndex,
-      });
-
-      positionedNodes.push({
-        ...subLayout.rootNode,
-        x: secX,
-        y: secY,
-        level: 1,
-        branchIndex,
-      });
-
-      subLayout.nodes.forEach((n) => {
-        if (n.id !== subLayout.rootNode.id) {
-          positionedNodes.push({
-            ...n,
-            x: n.x + secX,
-            y: n.y + secY,
-            branchIndex,
-          });
-        }
-      });
-
-      subLayout.cards.forEach((c) => {
-        positionedCards.push({
-          ...c,
-          x: c.x + secX,
-          y: c.y + secY,
-          branchIndex,
-        });
-      });
-
-      edges.push(...subLayout.edges);
+    // ==========================================
+    // BRANCH 0: JAVASCRIPT & V8 CORE (Red, branch 0)
+    // ==========================================
+    const jsCoreX = -460;
+    const jsCoreY = -270;
+    const jsCoreNode: PositionedNode = {
+      id: "root-js-core",
+      label: "JavaScript & V8 Core",
+      category: "root",
+      level: 1,
+      badge: "Language & Engine",
+      color: "#ff6b6b",
+      searchQuery: "JavaScript language core V8 engine scope closures",
+      x: jsCoreX,
+      y: jsCoreY,
+      branchIndex: 0,
+    };
+    positionedNodes.push(jsCoreNode);
+    edges.push({
+      source: rootNode.id,
+      target: jsCoreNode.id,
+      category: "root",
+      level: 1,
+      branchIndex: 0,
     });
+
+    // Sub-Branch 0A: V8 Engine (angle -165° from jsCore)
+    const v8Layout = calculateGroupLayout(allNodes, "v8", 0, 2);
+    const v8HubX = jsCoreX - 440;
+    const v8HubY = jsCoreY - 260;
+    edges.push({
+      source: jsCoreNode.id,
+      target: v8Layout.rootNode.id,
+      category: "v8",
+      level: 2,
+      branchIndex: 0,
+    });
+    positionedNodes.push({
+      ...v8Layout.rootNode,
+      x: v8HubX,
+      y: v8HubY,
+      level: 2,
+      branchIndex: 0,
+    });
+    v8Layout.nodes.forEach((n) => {
+      if (n.id !== v8Layout.rootNode.id) {
+        positionedNodes.push({
+          ...n,
+          x: n.x + v8HubX,
+          y: n.y + v8HubY,
+          branchIndex: 0,
+        });
+      }
+    });
+    v8Layout.cards.forEach((c) => {
+      positionedCards.push({
+        ...c,
+        x: c.x + v8HubX,
+        y: c.y + v8HubY,
+        branchIndex: 0,
+      });
+    });
+    edges.push(...v8Layout.edges);
+
+    // Sub-Branch 0B: Scope & Closures (angle -110° from jsCore)
+    const scopeLayout = calculateGroupLayout(allNodes, "scope", 0, 2);
+    const scopeHubX = jsCoreX - 380;
+    const scopeHubY = jsCoreY + 220;
+    edges.push({
+      source: jsCoreNode.id,
+      target: scopeLayout.rootNode.id,
+      category: "scope",
+      level: 2,
+      branchIndex: 0,
+    });
+    positionedNodes.push({
+      ...scopeLayout.rootNode,
+      x: scopeHubX,
+      y: scopeHubY,
+      level: 2,
+      branchIndex: 0,
+    });
+    scopeLayout.nodes.forEach((n) => {
+      if (n.id !== scopeLayout.rootNode.id) {
+        positionedNodes.push({
+          ...n,
+          x: n.x + scopeHubX,
+          y: n.y + scopeHubY,
+          branchIndex: 0,
+        });
+      }
+    });
+    scopeLayout.cards.forEach((c) => {
+      positionedCards.push({
+        ...c,
+        x: c.x + scopeHubX,
+        y: c.y + scopeHubY,
+        branchIndex: 0,
+      });
+    });
+    edges.push(...scopeLayout.edges);
+
+    // ==========================================
+    // BRANCH 1: NODE.JS RUNTIME (Yellow, branch 1)
+    // ==========================================
+    const nodeLayout = calculateGroupLayout(allNodes, "node", 1, 1);
+    const nodeHubX = 460;
+    const nodeHubY = -270;
+    edges.push({
+      source: rootNode.id,
+      target: nodeLayout.rootNode.id,
+      category: "node",
+      level: 1,
+      branchIndex: 1,
+    });
+    positionedNodes.push({
+      ...nodeLayout.rootNode,
+      x: nodeHubX,
+      y: nodeHubY,
+      level: 1,
+      branchIndex: 1,
+    });
+    nodeLayout.nodes.forEach((n) => {
+      if (n.id !== nodeLayout.rootNode.id) {
+        positionedNodes.push({
+          ...n,
+          x: n.x + nodeHubX,
+          y: n.y + nodeHubY,
+          branchIndex: 1,
+        });
+      }
+    });
+    nodeLayout.cards.forEach((c) => {
+      positionedCards.push({
+        ...c,
+        x: c.x + nodeHubX,
+        y: c.y + nodeHubY,
+        branchIndex: 1,
+      });
+    });
+    edges.push(...nodeLayout.edges);
+
+    // ==========================================
+    // BRANCH 2: CS FOUNDATIONS (OOP & DSA) (Green, branch 2)
+    // ==========================================
+    const csFoundX = 0;
+    const csFoundY = 460;
+    const csFoundNode: PositionedNode = {
+      id: "root-cs-foundations",
+      label: "CS Foundations",
+      category: "root",
+      level: 1,
+      badge: "OOP & DSA",
+      color: "#10b981",
+      searchQuery: "Computer Science Foundations OOP Data Structures Algorithms Big O",
+      x: csFoundX,
+      y: csFoundY,
+      branchIndex: 2,
+    };
+    positionedNodes.push(csFoundNode);
+    edges.push({
+      source: rootNode.id,
+      target: csFoundNode.id,
+      category: "root",
+      level: 1,
+      branchIndex: 2,
+    });
+
+    // CS Foundations connects directly to the 3 Group Cards:
+    // 1. OOP 4 Pillars & Analogies (Card) -> Bottom-Left (-580px)
+    // 2. Data Structures & Stories (Card) -> Bottom-Center (straight down)
+    // 3. Big O Time Complexity (Card) -> Bottom-Right (+580px)
+    const oopCard = cardByPillar.get("oop-pillars-pillar");
+    if (oopCard) {
+      const oopCardX = csFoundX - 580;
+      const oopCardY = csFoundY + 440;
+      positionedCards.push({
+        ...oopCard,
+        x: oopCardX,
+        y: oopCardY,
+        branchIndex: 2,
+      });
+      edges.push({
+        source: csFoundNode.id,
+        target: oopCard.id,
+        category: "oop",
+        level: 2,
+        branchIndex: 2,
+      });
+    }
+
+    const dsCard = cardByPillar.get("dsa-structures-pillar");
+    if (dsCard) {
+      const dsCardX = csFoundX;
+      const dsCardY = csFoundY + 680;
+      positionedCards.push({
+        ...dsCard,
+        x: dsCardX,
+        y: dsCardY,
+        branchIndex: 2,
+      });
+      edges.push({
+        source: csFoundNode.id,
+        target: dsCard.id,
+        category: "dsa",
+        level: 2,
+        branchIndex: 2,
+      });
+    }
+
+    const bigOCard = cardByPillar.get("dsa-big-o-pillar");
+    if (bigOCard) {
+      const bigOCardX = csFoundX + 580;
+      const bigOCardY = csFoundY + 440;
+      positionedCards.push({
+        ...bigOCard,
+        x: bigOCardX,
+        y: bigOCardY,
+        branchIndex: 2,
+      });
+      edges.push({
+        source: csFoundNode.id,
+        target: bigOCard.id,
+        category: "dsa",
+        level: 2,
+        branchIndex: 2,
+      });
+    }
 
     // Calculate outgoing branch count for each node in All Concepts view
     const outgoingCountMap = new Map<string, number>();
     edges.forEach((edge) => {
-      outgoingCountMap.set(edge.source, (outgoingCountMap.get(edge.source) || 0) + 1);
+      if (!edge.source.includes(":")) {
+        outgoingCountMap.set(edge.source, (outgoingCountMap.get(edge.source) || 0) + 1);
+      }
     });
 
     positionedNodes.forEach((n) => {
@@ -680,14 +856,14 @@ export function calculateGroupLayout(
     };
   }
 
-  // Level 1 Pillars for each category
+  // Level 1 Pillars for each category (strictly max 3 pillars per hub!)
   let pillarIds: string[] = [];
   if (category === "v8") {
     pillarIds = ["v8-js-exec", "v8-memory", "v8-stack-pillar"];
   } else if (category === "scope") {
-    pillarIds = ["scope-scope", "scope-lexical-env", "scope-closure", "scope-5-sentences"];
+    pillarIds = ["scope-scope", "scope-lexical-env", "scope-closure"];
   } else if (category === "node") {
-    pillarIds = ["node-apis-pillar", "node-libuv-pillar", "node-eventloop-pillar", "node-restaurant-pillar"];
+    pillarIds = ["node-restaurant-pillar", "node-apis-pillar", "node-eventloop-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -708,31 +884,14 @@ export function calculateGroupLayout(
 
     // Distribute angles evenly around 360° (360° / 3 = 120°): -90°, 30°, 150°
     const angle = (2 * Math.PI * i) / pillarCount - Math.PI / 2;
-    const px = Math.round(Math.cos(angle) * r1);
-    const py = Math.round(Math.sin(angle) * r1);
-
-    const pillarNode: PositionedNode = {
-      ...rawPillar,
-      x: px,
-      y: py,
-      level: l1,
-      branchIndex,
-    };
-    positionedNodes.push(pillarNode);
-
-    edges.push({
-      source: rootNode.id,
-      target: pillarNode.id,
-      category: pillarNode.category,
-      level: l1,
-      branchIndex,
-    });
 
     // Check if this Level 1 pillar has a Group Card (children > 3)
     const cardData = cardByPillar.get(pId);
     if (cardData) {
-      // Group Card attached to this pillar
-      const rCard = r1 + (cardData.items.length > 6 ? 480 : 440);
+      // Group Card directly represents this pillar (> 3 items)
+      // Connect rootNode DIRECTLY to the Group Card with 1 single thread!
+      // Do NOT push a duplicate keyword node to positionedNodes.
+      const rCard = r1 + (cardData.items.length > 6 ? 440 : 380);
       const cx = Math.round(Math.cos(angle) * rCard);
       const cy = Math.round(Math.sin(angle) * rCard);
 
@@ -745,10 +904,10 @@ export function calculateGroupLayout(
       positionedCards.push(positionedCard);
 
       edges.push({
-        source: pillarNode.id,
+        source: rootNode.id,
         target: cardData.id,
         category: cardData.category,
-        level: l2,
+        level: l1,
         branchIndex,
       });
 
@@ -805,7 +964,26 @@ export function calculateGroupLayout(
         }
       });
     } else {
-      // Pillar has <= 3 children: Render them as individual keyword nodes!
+      // Pillar has <= 3 children: Render as keyword node!
+      const px = Math.round(Math.cos(angle) * r1);
+      const py = Math.round(Math.sin(angle) * r1);
+
+      const pillarNode: PositionedNode = {
+        ...rawPillar,
+        x: px,
+        y: py,
+        level: l1,
+        branchIndex,
+      };
+      positionedNodes.push(pillarNode);
+
+      edges.push({
+        source: rootNode.id,
+        target: pillarNode.id,
+        category: pillarNode.category,
+        level: l1,
+        branchIndex,
+      });
       const children = allNodes.filter((n) => n.parentId === pId);
       const m = children.length;
       if (m > 0) {
@@ -956,7 +1134,9 @@ export function calculateGroupLayout(
   // Calculate outgoing branch count for each node in single category view
   const outgoingCountMap = new Map<string, number>();
   edges.forEach((edge) => {
-    outgoingCountMap.set(edge.source, (outgoingCountMap.get(edge.source) || 0) + 1);
+    if (!edge.source.includes(":")) {
+      outgoingCountMap.set(edge.source, (outgoingCountMap.get(edge.source) || 0) + 1);
+    }
   });
 
   positionedNodes.forEach((n) => {
@@ -981,13 +1161,16 @@ export function getNodesForCategory(
 ): { nodes: SpiderNode[]; rootId: string } {
   if (category === "all") {
     const rootAll = allNodes.find((n) => n.id === "root-all")!;
-    const v8Root = {
-      ...allNodes.find((n) => n.id === "root-v8")!,
-      parentId: "root-all",
-      level: 1,
-    };
-    const scopeRoot = {
-      ...allNodes.find((n) => n.id === "root-scope")!,
+    const jsCoreRoot = {
+      ...(allNodes.find((n) => n.id === "root-js-core") || {
+        id: "root-js-core",
+        label: "JavaScript & V8 Core",
+        category: "root" as const,
+        level: 1,
+        searchQuery: "JavaScript language core V8 engine scope closures",
+        badge: "Language & Engine",
+        color: "#ff6b6b",
+      }),
       parentId: "root-all",
       level: 1,
     };
@@ -996,20 +1179,46 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
-    const oopRoot = {
-      ...allNodes.find((n) => n.id === "root-oop")!,
+    const csFoundRoot = {
+      ...(allNodes.find((n) => n.id === "root-cs-foundations") || {
+        id: "root-cs-foundations",
+        label: "CS Foundations",
+        category: "root" as const,
+        level: 1,
+        searchQuery: "Computer Science Foundations OOP Data Structures Algorithms Big O",
+        badge: "OOP & DSA",
+        color: "#10b981",
+      }),
       parentId: "root-all",
       level: 1,
     };
+
+    const v8Root = {
+      ...allNodes.find((n) => n.id === "root-v8")!,
+      parentId: "root-js-core",
+      level: 2,
+    };
+    const scopeRoot = {
+      ...allNodes.find((n) => n.id === "root-scope")!,
+      parentId: "root-js-core",
+      level: 2,
+    };
+    const oopRoot = {
+      ...allNodes.find((n) => n.id === "root-oop")!,
+      parentId: "root-cs-foundations",
+      level: 2,
+    };
     const dsaRoot = {
       ...allNodes.find((n) => n.id === "root-dsa")!,
-      parentId: "root-all",
-      level: 1,
+      parentId: "root-cs-foundations",
+      level: 2,
     };
 
     const remaining = allNodes.filter(
       (n) =>
         n.id !== "root-all" &&
+        n.id !== "root-js-core" &&
+        n.id !== "root-cs-foundations" &&
         n.id !== "root-v8" &&
         n.id !== "root-scope" &&
         n.id !== "root-node" &&
@@ -1018,7 +1227,7 @@ export function getNodesForCategory(
     );
 
     return {
-      nodes: [rootAll, v8Root, scopeRoot, nodeRoot, oopRoot, dsaRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, oopRoot, dsaRoot, ...remaining],
       rootId: "root-all",
     };
   }
