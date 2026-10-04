@@ -314,10 +314,18 @@ export function calculateSpiderLayout(
     r1 = 300;
     r2 = 600;
     r3 = 880;
+  } else if (category === "oop") {
+    r1 = 260;
+    r2 = 520;
+    r3 = 740;
+  } else if (category === "dsa") {
+    r1 = 300;
+    r2 = 600;
+    r3 = 880;
   } else if (category === "all") {
-    r1 = 440;
-    r2 = 850;
-    r3 = 1260;
+    r1 = 480;
+    r2 = 920;
+    r3 = 1360;
   }
 
   // Allocate angular sectors to Level 1 nodes (360 / l1Count)
@@ -568,6 +576,10 @@ export function calculateGroupLayout(
         ? "Scope & Closures"
         : category === "node"
         ? "Node.js Runtime"
+        : category === "oop"
+        ? "OOP (4 Pillars)"
+        : category === "dsa"
+        ? "DSA & Big O"
         : "Node.js + JavaScript",
     category: category === "all" ? "root" : category,
     level: 0,
@@ -583,21 +595,25 @@ export function calculateGroupLayout(
   positionedNodes.push(rootNode);
 
   if (category === "all") {
-    // 3 primary branches from Master Web (Node.js + JavaScript):
-    // Spoke 0: V8 Engine (Top -90°) -> Red (1 pt)
-    // Spoke 1: Scope & Closures (Bottom-left 150°) -> Yellow (2 pts)
-    // Spoke 2: Node.js Runtime (Bottom-right 30°) -> Green (3 pts)
+    // 5 primary branches from Master Web (Node.js + JavaScript & CS):
+    // Spoke 0: V8 Engine (Top -90°) -> Red (branch 0)
+    // Spoke 1: Node.js Runtime (Top-Right -18°) -> Yellow (branch 1)
+    // Spoke 2: DSA & Big O (Bottom-Right 54°) -> Green (branch 2)
+    // Spoke 3: OOP (4 Pillars) (Bottom-Left 126°) -> Red (branch 0)
+    // Spoke 4: Scope & Closures (Top-Left 198°) -> Yellow (branch 1)
     const subCats: { cat: ConceptCategory; angle: number; branchIndex: number }[] = [
       { cat: "v8", angle: -Math.PI / 2, branchIndex: 0 },
-      { cat: "scope", angle: (5 * Math.PI) / 6, branchIndex: 1 },
-      { cat: "node", angle: Math.PI / 6, branchIndex: 2 },
+      { cat: "node", angle: -Math.PI / 10, branchIndex: 1 },
+      { cat: "dsa", angle: (3 * Math.PI) / 10, branchIndex: 2 },
+      { cat: "oop", angle: (7 * Math.PI) / 10, branchIndex: 0 },
+      { cat: "scope", angle: (11 * Math.PI) / 10, branchIndex: 1 },
     ];
 
     subCats.forEach(({ cat, angle, branchIndex }) => {
       // Pass branchIndex down so the entire sector inherits this spoke's color progression!
       // baseLevelOffset = 1 so pillars under V8/Scope/Node become Level 2, cards Level 3, sub-items Level 4.
       const subLayout = calculateGroupLayout(allNodes, cat, branchIndex, 1);
-      const sectorDist = 840;
+      const sectorDist = 960;
       const secX = Math.round(Math.cos(angle) * sectorDist);
       const secY = Math.round(Math.sin(angle) * sectorDist);
 
@@ -659,18 +675,21 @@ export function calculateGroupLayout(
     };
   }
 
-  // Exactly 3 Level 1 Pillars for each category (360° / 3 = 120°)
+  // Level 1 Pillars for each category
   let pillarIds: string[] = [];
   if (category === "v8") {
     pillarIds = ["v8-js-exec", "v8-memory", "v8-stack-pillar"];
   } else if (category === "scope") {
-    pillarIds = ["scope-scope", "scope-lexical-env", "scope-closure"];
+    pillarIds = ["scope-scope", "scope-lexical-env", "scope-closure", "scope-5-sentences"];
   } else if (category === "node") {
-    // Exactly 3 pillars from Node.js Runtime parent: APIs, libuv, Event Loop
-    pillarIds = ["node-apis-pillar", "node-libuv-pillar", "node-eventloop-pillar"];
+    pillarIds = ["node-apis-pillar", "node-libuv-pillar", "node-eventloop-pillar", "node-restaurant-pillar"];
+  } else if (category === "oop") {
+    pillarIds = ["oop-pillars-pillar"];
+  } else if (category === "dsa") {
+    pillarIds = ["dsa-structures-pillar", "dsa-big-o-pillar"];
   }
 
-  const pillarCount = pillarIds.length; // Always 3!
+  const pillarCount = pillarIds.length || 1;
   const r1 = 260;
 
   pillarIds.forEach((pId, i) => {
@@ -972,17 +991,29 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
+    const oopRoot = {
+      ...allNodes.find((n) => n.id === "root-oop")!,
+      parentId: "root-all",
+      level: 1,
+    };
+    const dsaRoot = {
+      ...allNodes.find((n) => n.id === "root-dsa")!,
+      parentId: "root-all",
+      level: 1,
+    };
 
     const remaining = allNodes.filter(
       (n) =>
         n.id !== "root-all" &&
         n.id !== "root-v8" &&
         n.id !== "root-scope" &&
-        n.id !== "root-node"
+        n.id !== "root-node" &&
+        n.id !== "root-oop" &&
+        n.id !== "root-dsa"
     );
 
     return {
-      nodes: [rootAll, v8Root, scopeRoot, nodeRoot, ...remaining],
+      nodes: [rootAll, v8Root, scopeRoot, nodeRoot, oopRoot, dsaRoot, ...remaining],
       rootId: "root-all",
     };
   }

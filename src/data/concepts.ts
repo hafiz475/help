@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "node" | "root";
+  category: "v8" | "scope" | "node" | "root" | "oop" | "dsa";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "node";
+export type ConceptCategory = "all" | "v8" | "scope" | "node" | "oop" | "dsa";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -25,9 +25,9 @@ export interface ConceptTab {
 export const CONCEPT_TABS: ConceptTab[] = [
   {
     id: "v8",
-    name: "1. V8 (JavaScript Execution)",
+    name: "1. V8 Engine",
     title: "V8 Engine & JavaScript Execution",
-    description: "Parser, AST, Bytecode, Ignition, JIT Compilers, Heap, Call Stack & Execution Context",
+    description: "Parser, AST, Bytecode, Ignition, Sparkplug, Maglev, TurboFan, Heap & GC",
     color: "#38bdf8", // Sky blue / cyan
     icon: "Cpu",
     count: 24,
@@ -35,29 +35,47 @@ export const CONCEPT_TABS: ConceptTab[] = [
   {
     id: "scope",
     name: "2. Scope & Closures",
-    title: "JavaScript Scope & Closures",
-    description: "Lexical Scope, Scope Chain, Lexical Environment & Closures",
+    title: "JavaScript Scope, Closures & The Backpack",
+    description: "Lexical Scope, Scope Chain, The Backpack Story, Lexical Environment & 5 Core Rules",
     color: "#a855f7", // Purple / Violet
     icon: "GitFork",
-    count: 7,
+    count: 10,
   },
   {
     id: "node",
-    name: "3. Node.js Runtime",
-    title: "Node.js Runtime & Event Loop",
-    description: "Node APIs, libuv, Thread Pool, Event Loop, Queues & 5 Execution Phases",
+    name: "3. Node.js & Restaurant",
+    title: "Node.js Runtime & The Restaurant Cast",
+    description: "The Chef, Waiter, Back Kitchen, Thread Pool Helpers, VIP Notes & 5 Loop Phases",
     color: "#22c55e", // Node green
     icon: "Network",
-    count: 32,
+    count: 38,
+  },
+  {
+    id: "oop",
+    name: "4. OOP (4 Pillars)",
+    title: "Object-Oriented Programming (4 Pillars)",
+    description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
+    color: "#ec4899", // Pink
+    icon: "Box",
+    count: 6,
+  },
+  {
+    id: "dsa",
+    name: "5. DSA & Big O",
+    title: "Data Structures & Big O Time Complexity",
+    description: "Parking Lots, Pancake Plates, Coffee Lines, Phonebooks & Big O tiers O(1) to O(n!)",
+    color: "#f59e0b", // Amber
+    icon: "Layers",
+    count: 16,
   },
   {
     id: "all",
     name: "All Concepts (Full Spider)",
-    title: "Complete Node.js & JavaScript Web",
+    title: "Complete JavaScript, Node.js & CS Universe",
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
-    color: "#f59e0b", // Amber
+    color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 63,
+    count: 94,
   },
 ];
 
@@ -71,7 +89,7 @@ export const ALL_NODES: SpiderNode[] = [
     category: "root",
     level: 0,
     searchQuery: "Node.js JavaScript architecture",
-    badge: "Master Web",
+    badge: "Master Universe",
     color: "#f59e0b",
   },
   {
@@ -100,6 +118,24 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Node.js Runtime architecture libuv event loop",
     badge: "System Runtime",
     color: "#22c55e",
+  },
+  {
+    id: "root-oop",
+    label: "OOP (4 Pillars)",
+    category: "oop",
+    level: 0,
+    searchQuery: "JavaScript Object Oriented Programming 4 pillars",
+    badge: "Design Paradigm",
+    color: "#ec4899",
+  },
+  {
+    id: "root-dsa",
+    label: "DSA & Big O",
+    category: "dsa",
+    level: 0,
+    searchQuery: "Data Structures Algorithms Big O complexity JavaScript",
+    badge: "CS Foundations",
+    color: "#f59e0b",
   },
 
   // ==========================================
@@ -430,6 +466,25 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Closure retains access to outer lexical environment JavaScript",
     badge: "Persistent Memory",
   },
+  {
+    id: "scope-backpack",
+    label: "🎒 The Backpack Story",
+    category: "scope",
+    parentId: "scope-closure",
+    level: 2,
+    searchQuery: "JavaScript Closure backpack story analogy",
+    badge: "Packs Scope Forever",
+  },
+  {
+    id: "scope-5-sentences",
+    label: "🧠 5 Sentences to Remember",
+    category: "scope",
+    parentId: "root-scope",
+    level: 1,
+    searchQuery: "V8 Call Stack Execution Context Scope Chain Closure",
+    badge: "Interview Core",
+    color: "#f43f5e",
+  },
 
   // ==========================================
   // 3. NODE.JS RUNTIME
@@ -464,6 +519,70 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Node.js Event Loop explained coordinator",
     badge: "Coordinator",
     color: "#22c55e",
+  },
+  {
+    id: "node-restaurant-pillar",
+    label: "The Restaurant Cast",
+    category: "node",
+    parentId: "root-node",
+    level: 1,
+    searchQuery: "Node.js architecture restaurant chef libuv event loop analogy",
+    badge: "Analogy Cast",
+    color: "#f97316",
+  },
+  {
+    id: "node-cast-chef",
+    label: "🧑🍳 The Chef (V8)",
+    category: "node",
+    parentId: "node-restaurant-pillar",
+    level: 2,
+    searchQuery: "V8 Engine JavaScript single thread chef analogy",
+    badge: "Runs JS 1 line at a time",
+  },
+  {
+    id: "node-cast-building",
+    label: "🏢 The Restaurant (Node.js)",
+    category: "node",
+    parentId: "node-restaurant-pillar",
+    level: 2,
+    searchQuery: "Node.js runtime wrapped around V8 C++ bindings",
+    badge: "Wraps fs, network, timers",
+  },
+  {
+    id: "node-cast-kitchen",
+    label: "🧰 Back Kitchen Staff (libuv)",
+    category: "node",
+    parentId: "node-restaurant-pillar",
+    level: 2,
+    searchQuery: "libuv C library slow heavy background jobs",
+    badge: "Quiet Heavy Lifting",
+  },
+  {
+    id: "node-cast-waiter",
+    label: "🧑💼 Head Waiter (Event Loop)",
+    category: "node",
+    parentId: "node-restaurant-pillar",
+    level: 2,
+    searchQuery: "Event loop waiter strict lap cycle stations",
+    badge: "Checks If Chef Is Free",
+  },
+  {
+    id: "node-cast-helpers",
+    label: "🧵 Extra Helpers (Thread Pool)",
+    category: "node",
+    parentId: "node-restaurant-pillar",
+    level: 2,
+    searchQuery: "libuv thread pool 4 helpers fs crypto zlib",
+    badge: "4 Backup Helpers for Heavy Jobs",
+  },
+  {
+    id: "node-fs-lifecycle",
+    label: "🎟️ fs.readFile() Lifecycle",
+    category: "node",
+    parentId: "node-restaurant-pillar",
+    level: 2,
+    searchQuery: "fs.readFile async lifecycle call stack non-blocking Node.js",
+    badge: "Call Stack Freed During Wait",
   },
   {
     id: "node-single-thread-pillar",
@@ -756,5 +875,219 @@ export const ALL_NODES: SpiderNode[] = [
     level: 3,
     searchQuery: "socket.on close Close Callbacks Node.js",
     badge: "Cleanup",
+  },
+
+  // ==========================================
+  // 4. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // ==========================================
+  {
+    id: "oop-pillars-pillar",
+    label: "4 Pillars of OOP",
+    category: "oop",
+    parentId: "root-oop",
+    level: 1,
+    searchQuery: "Object Oriented Programming 4 pillars JavaScript",
+    badge: "Core Pillars",
+    color: "#ec4899",
+  },
+  {
+    id: "oop-class-obj",
+    label: "Class & Object",
+    category: "oop",
+    parentId: "oop-pillars-pillar",
+    level: 2,
+    searchQuery: "JavaScript class and object cookie cutter analogy",
+    badge: "🍪 Cookie Cutter & Cookie",
+  },
+  {
+    id: "oop-encapsulation",
+    label: "Encapsulation",
+    category: "oop",
+    parentId: "oop-pillars-pillar",
+    level: 2,
+    searchQuery: "OOP Encapsulation piggy bank private properties JavaScript",
+    badge: "🪙 Piggy Bank (Hidden Coins)",
+  },
+  {
+    id: "oop-inheritance",
+    label: "Inheritance",
+    category: "oop",
+    parentId: "oop-pillars-pillar",
+    level: 2,
+    searchQuery: "JavaScript inheritance extends base robot analogy",
+    badge: "🤖 Base Robot (Reused Code)",
+  },
+  {
+    id: "oop-polymorphism",
+    label: "Polymorphism",
+    category: "oop",
+    parentId: "oop-pillars-pillar",
+    level: 2,
+    searchQuery: "JavaScript Polymorphism method overriding analogy",
+    badge: "🎮 Same Button, Varied Action",
+  },
+  {
+    id: "oop-abstraction",
+    label: "Abstraction",
+    category: "oop",
+    parentId: "oop-pillars-pillar",
+    level: 2,
+    searchQuery: "OOP Abstraction car gas pedal complexity JavaScript",
+    badge: "🚗 Gas Pedal (Hidden Engine)",
+  },
+
+  // ==========================================
+  // 5. DATA STRUCTURES & BIG O (DSA)
+  // ==========================================
+  // Level 1 Major Pillars
+  {
+    id: "dsa-structures-pillar",
+    label: "Data Structures",
+    category: "dsa",
+    parentId: "root-dsa",
+    level: 1,
+    searchQuery: "Data Structures JavaScript real world analogies",
+    badge: "7 Core Structures",
+    color: "#3b82f6",
+  },
+  {
+    id: "dsa-big-o-pillar",
+    label: "Big O Time Complexity",
+    category: "dsa",
+    parentId: "root-dsa",
+    level: 1,
+    searchQuery: "Big O time complexity best to worst JavaScript",
+    badge: "Best to Worst Tiers",
+    color: "#f59e0b",
+  },
+
+  // Level 2: Data Structures
+  {
+    id: "ds-array",
+    label: "Array / List",
+    category: "dsa",
+    parentId: "dsa-structures-pillar",
+    level: 2,
+    searchQuery: "JavaScript Array numbered parking lot index lookup",
+    badge: "🚗 Numbered Parking Lot",
+  },
+  {
+    id: "ds-stack",
+    label: "Stack (LIFO)",
+    category: "dsa",
+    parentId: "dsa-structures-pillar",
+    level: 2,
+    searchQuery: "Stack data structure pancake plate LIFO JavaScript",
+    badge: "🥞 Pancake Plate (Top Only)",
+  },
+  {
+    id: "ds-queue",
+    label: "Queue (FIFO)",
+    category: "dsa",
+    parentId: "dsa-structures-pillar",
+    level: 2,
+    searchQuery: "Queue data structure coffee shop line FIFO JavaScript",
+    badge: "☕ Coffee Shop Line (FIFO)",
+  },
+  {
+    id: "ds-linked-list",
+    label: "Linked List",
+    category: "dsa",
+    parentId: "dsa-structures-pillar",
+    level: 2,
+    searchQuery: "Linked List data structure treasure hunt pointers JavaScript",
+    badge: "🗺️ Treasure Hunt Clues",
+  },
+  {
+    id: "ds-tree",
+    label: "Tree",
+    category: "dsa",
+    parentId: "dsa-structures-pillar",
+    level: 2,
+    searchQuery: "Tree data structure family tree binary search tree JavaScript",
+    badge: "🌳 Family Tree (No Loops)",
+  },
+  {
+    id: "ds-graph",
+    label: "Graph",
+    category: "dsa",
+    parentId: "dsa-structures-pillar",
+    level: 2,
+    searchQuery: "Graph data structure social network connections JavaScript",
+    badge: "🕸️ Social Network Map",
+  },
+  {
+    id: "ds-hashmap",
+    label: "Hash Map / Object",
+    category: "dsa",
+    parentId: "dsa-structures-pillar",
+    level: 2,
+    searchQuery: "Hash map data structure phonebook O(1) JavaScript",
+    badge: "📖 Phonebook (Direct Key)",
+  },
+
+  // Level 2: Big O Complexity Tiers (Best to Worst)
+  {
+    id: "big-o-1",
+    label: "O(1) Constant",
+    category: "dsa",
+    parentId: "dsa-big-o-pillar",
+    level: 2,
+    searchQuery: "Big O O(1) constant time phonebook lookup JavaScript",
+    badge: "📖 Phonebook: Instant",
+  },
+  {
+    id: "big-o-logn",
+    label: "O(log n) Logarithmic",
+    category: "dsa",
+    parentId: "dsa-big-o-pillar",
+    level: 2,
+    searchQuery: "Big O O(log n) logarithmic binary search guessing game",
+    badge: "🎯 Guessing Game: Cut Half",
+  },
+  {
+    id: "big-o-n",
+    label: "O(n) Linear",
+    category: "dsa",
+    parentId: "dsa-big-o-pillar",
+    level: 2,
+    searchQuery: "Big O O(n) linear search scan list once",
+    badge: "🍬 Check Every Candy Once",
+  },
+  {
+    id: "big-o-nlogn",
+    label: "O(n log n) Linearithmic",
+    category: "dsa",
+    parentId: "dsa-big-o-pillar",
+    level: 2,
+    searchQuery: "Big O O(n log n) merge sort quick sort divide conquer",
+    badge: "✂️ Split & Merge Back",
+  },
+  {
+    id: "big-o-n2",
+    label: "O(n²) Quadratic",
+    category: "dsa",
+    parentId: "dsa-big-o-pillar",
+    level: 2,
+    searchQuery: "Big O O(n^2) quadratic bubble sort nested loops",
+    badge: "🔄 Nested Loop: Compare Pairs",
+  },
+  {
+    id: "big-o-2n",
+    label: "O(2ⁿ) Exponential",
+    category: "dsa",
+    parentId: "dsa-big-o-pillar",
+    level: 2,
+    searchQuery: "Big O O(2^n) exponential power set all subsets",
+    badge: "🎲 Double Choices: Subsets",
+  },
+  {
+    id: "big-o-nfact",
+    label: "O(n!) Factorial",
+    category: "dsa",
+    parentId: "dsa-big-o-pillar",
+    level: 2,
+    searchQuery: "Big O O(n!) factorial traveling salesperson permutations",
+    badge: "💥 Every Order: Permutations",
   },
 ];

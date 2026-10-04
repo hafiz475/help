@@ -11,6 +11,8 @@ import {
   X,
   ExternalLink,
   Sparkles,
+  Box,
+  Layers,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -38,6 +40,10 @@ export const Header: React.FC<HeaderProps> = ({
         return <GitFork size={16} />;
       case "node":
         return <Network size={16} />;
+      case "oop":
+        return <Box size={16} />;
+      case "dsa":
+        return <Layers size={16} />;
       case "all":
         return <Compass size={16} />;
     }

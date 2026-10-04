@@ -387,6 +387,10 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                 ? "#ffd400"
                 : node.category === "node"
                 ? "#00ba7c"
+                : node.category === "oop"
+                ? "#ec4899"
+                : node.category === "dsa"
+                ? "#f59e0b"
                 : twitterBlue;
 
             const catInitial =
@@ -396,6 +400,10 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                 ? "SC"
                 : node.category === "node"
                 ? "ND"
+                : node.category === "oop"
+                ? "OOP"
+                : node.category === "dsa"
+                ? "DSA"
                 : "JS";
 
             return (

@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "node";
+  category: "v8" | "scope" | "node" | "oop" | "dsa";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -371,11 +371,217 @@ export const NODE_GROUP_CARDS: GroupCardData[] = [
       },
     ],
   },
+  {
+    id: "group-node-restaurant",
+    pillarId: "node-restaurant-pillar",
+    title: "The Restaurant Cast (Node.js)",
+    category: "node",
+    badge: "Analogy Cast",
+    color: "#f97316",
+    items: [
+      {
+        id: "node-cast-chef",
+        label: "🧑🍳 The Chef (V8 Engine)",
+        badge: "Runs JS 1 line at a time",
+        searchQuery: "V8 Engine JavaScript single thread chef analogy",
+      },
+      {
+        id: "node-cast-building",
+        label: "🏢 The Restaurant (Node.js Runtime)",
+        badge: "Wraps fs, network, timers",
+        searchQuery: "Node.js runtime wrapped around V8 C++ bindings",
+      },
+      {
+        id: "node-cast-kitchen",
+        label: "🧰 Back Kitchen Staff (libuv)",
+        badge: "Quiet background heavy lifting",
+        searchQuery: "libuv C library slow heavy background jobs",
+      },
+      {
+        id: "node-cast-waiter",
+        label: "🧑💼 Head Waiter (Event Loop)",
+        badge: "Checks if chef is free",
+        searchQuery: "Event loop waiter strict lap cycle stations",
+      },
+      {
+        id: "node-cast-helpers",
+        label: "🧵 Extra Helpers (Thread Pool)",
+        badge: "4 backup threads (fs, crypto, zlib)",
+        searchQuery: "libuv thread pool 4 helpers fs crypto zlib",
+      },
+      {
+        id: "node-fs-lifecycle",
+        label: "🎟️ fs.readFile() Lifecycle",
+        badge: "Stack freed during I/O wait",
+        searchQuery: "fs.readFile async lifecycle call stack non-blocking Node.js",
+      },
+    ],
+  },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "node"): GroupCardData[] {
+export const OOP_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-oop-pillars",
+    pillarId: "oop-pillars-pillar",
+    title: "OOP 4 Pillars & Analogies",
+    category: "oop",
+    badge: "5 Design Concepts",
+    color: "#ec4899",
+    items: [
+      {
+        id: "oop-class-obj",
+        label: "Class & Object",
+        badge: "🍪 Cookie Cutter & Cookie",
+        searchQuery: "JavaScript class and object cookie cutter analogy",
+      },
+      {
+        id: "oop-encapsulation",
+        label: "Encapsulation",
+        badge: "🪙 Piggy Bank (Safe Coin Slot)",
+        searchQuery: "OOP Encapsulation piggy bank private properties JavaScript",
+      },
+      {
+        id: "oop-inheritance",
+        label: "Inheritance",
+        badge: "🤖 Base Robot (Reused Code)",
+        searchQuery: "JavaScript inheritance extends base robot analogy",
+      },
+      {
+        id: "oop-polymorphism",
+        label: "Polymorphism",
+        badge: "🎮 Same Button, Varied Action",
+        searchQuery: "JavaScript Polymorphism method overriding analogy",
+      },
+      {
+        id: "oop-abstraction",
+        label: "Abstraction",
+        badge: "🚗 Gas Pedal (Hidden Engine)",
+        searchQuery: "OOP Abstraction car gas pedal complexity JavaScript",
+      },
+    ],
+  },
+];
+
+export const DSA_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-ds-structures",
+    pillarId: "dsa-structures-pillar",
+    title: "Data Structures & Stories",
+    category: "dsa",
+    badge: "7 Core Structures",
+    color: "#3b82f6",
+    items: [
+      {
+        id: "ds-array",
+        label: "Array / List",
+        badge: "🚗 Numbered Parking Lot",
+        searchQuery: "JavaScript Array numbered parking lot index lookup",
+      },
+      {
+        id: "ds-stack",
+        label: "Stack (LIFO)",
+        badge: "🥞 Pancake Plate (Top Only)",
+        searchQuery: "Stack data structure pancake plate LIFO JavaScript",
+      },
+      {
+        id: "ds-queue",
+        label: "Queue (FIFO)",
+        badge: "☕ Coffee Shop Line (FIFO)",
+        searchQuery: "Queue data structure coffee shop line FIFO JavaScript",
+      },
+      {
+        id: "ds-linked-list",
+        label: "Linked List",
+        badge: "🗺️ Treasure Hunt Clues",
+        searchQuery: "Linked List data structure treasure hunt pointers JavaScript",
+      },
+      {
+        id: "ds-tree",
+        label: "Tree",
+        badge: "🌳 Family Tree (No Loops)",
+        searchQuery: "Tree data structure family tree binary search tree JavaScript",
+      },
+      {
+        id: "ds-graph",
+        label: "Graph",
+        badge: "🕸️ Social Network Map",
+        searchQuery: "Graph data structure social network connections JavaScript",
+      },
+      {
+        id: "ds-hashmap",
+        label: "Hash Map / Object",
+        badge: "📖 Phonebook (Direct Key)",
+        searchQuery: "Hash map data structure phonebook O(1) JavaScript",
+      },
+    ],
+  },
+  {
+    id: "group-big-o-tiers",
+    pillarId: "dsa-big-o-pillar",
+    title: "Big O Time Complexity (Best → Worst)",
+    category: "dsa",
+    badge: "7 Complexity Tiers",
+    color: "#f59e0b",
+    isPipeline: true,
+    items: [
+      {
+        id: "big-o-1",
+        stepNumber: 1,
+        label: "O(1) Constant",
+        badge: "📖 Phonebook: Instant",
+        searchQuery: "Big O O(1) constant time phonebook lookup JavaScript",
+      },
+      {
+        id: "big-o-logn",
+        stepNumber: 2,
+        label: "O(log n) Logarithmic",
+        badge: "🎯 Guessing Game: Cut Half",
+        searchQuery: "Big O O(log n) logarithmic binary search guessing game",
+      },
+      {
+        id: "big-o-n",
+        stepNumber: 3,
+        label: "O(n) Linear",
+        badge: "🍬 Check Every Candy Once",
+        searchQuery: "Big O O(n) linear search scan list once",
+      },
+      {
+        id: "big-o-nlogn",
+        stepNumber: 4,
+        label: "O(n log n) Linearithmic",
+        badge: "✂️ Split & Merge Back",
+        searchQuery: "Big O O(n log n) merge sort quick sort divide conquer",
+      },
+      {
+        id: "big-o-n2",
+        stepNumber: 5,
+        label: "O(n²) Quadratic",
+        badge: "🔄 Nested Loop: Compare Pairs",
+        searchQuery: "Big O O(n^2) quadratic bubble sort nested loops",
+      },
+      {
+        id: "big-o-2n",
+        stepNumber: 6,
+        label: "O(2ⁿ) Exponential",
+        badge: "🎲 Double Choices: Subsets",
+        searchQuery: "Big O O(2^n) exponential power set all subsets",
+      },
+      {
+        id: "big-o-nfact",
+        stepNumber: 7,
+        label: "O(n!) Factorial",
+        badge: "💥 Every Order: Permutations",
+        searchQuery: "Big O O(n!) factorial traveling salesperson permutations",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "node" | "oop" | "dsa"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "node") return NODE_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...NODE_GROUP_CARDS];
+  if (category === "oop") return OOP_GROUP_CARDS;
+  if (category === "dsa") return DSA_GROUP_CARDS;
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...NODE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS];
 }
