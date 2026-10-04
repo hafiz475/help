@@ -1,5 +1,5 @@
-import { SpiderNode, ConceptCategory } from "@/data/concepts";
-import { GroupCardData } from "@/data/groupConcepts";
+import { SpiderNode, ConceptCategory, ALL_NODES } from "@/data/concepts";
+import { GroupCardData, getGroupCardsForCategory } from "@/data/groupConcepts";
 
 export type ViewMode = "spider" | "tree" | "group";
 
@@ -99,13 +99,13 @@ export function calculateSpiderLayout(
     const l2Count = l2Children.length;
 
     if (l2Count > 0) {
-      const spread = Math.min((2 * Math.PI) / l1Count * 0.95, Math.PI * 0.85);
+      const spread = Math.min(((2 * Math.PI) / l1Count) * 0.95, Math.PI * 0.85);
       const startAngle = angle - spread / 2;
 
       l2Children.forEach((l2, j) => {
         const step = l2Count === 1 ? 0.5 : j / (l2Count - 1);
         const l2Angle = l2Count === 1 ? angle : startAngle + step * spread;
-        
+
         const staggeredR2 = r2 + (j % 2 === 1 ? 40 : -20);
         const x2 = Math.round(Math.cos(l2Angle) * staggeredR2);
         const y2 = Math.round(Math.sin(l2Angle) * staggeredR2);
@@ -128,7 +128,7 @@ export function calculateSpiderLayout(
         const l3Count = l3Children.length;
 
         if (l3Count > 0) {
-          const l3Spread = Math.min(spread / (l2Count || 1) * 1.2, 0.45);
+          const l3Spread = Math.min((spread / (l2Count || 1)) * 1.2, 0.45);
           const l3StartAngle = l2Angle - l3Spread / 2;
 
           l3Children.forEach((l3, k) => {
@@ -200,13 +200,12 @@ export function calculateTreeLayout(
     return sum;
   }
 
-  // Generous spacing so badges like "Runtime Feedback [Profiling]" never overlap
+  // Generous spacing so badges never overlap
   const leafSpacing = 240;
   const totalLeaves = countLeaves(rootNode.id);
   const totalWidth = totalLeaves * leafSpacing;
   let currentLeafX = -Math.round(totalWidth / 2) + Math.round(leafSpacing / 2);
 
-  // Position subtrees recursively
   function layoutSubtree(node: SpiderNode, currentLevel: number): number {
     const children = childMap.get(node.id) || [];
     let yPos = yLevel0;
@@ -237,7 +236,6 @@ export function calculateTreeLayout(
       childXPositions.push(cX);
     }
 
-    // Center parent horizontally above its children
     const firstX = childXPositions[0];
     const lastX = childXPositions[childXPositions.length - 1];
     const nodeX = Math.round((firstX + lastX) / 2);
@@ -260,64 +258,243 @@ export function calculateTreeLayout(
 }
 
 /**
- * Calculates Group / Stack Card View:
- * Center Circle connects at 360° / count to structured Group Cards with stacked sequential items.
+ * Calculates Group / Codrin View:
+ * STRICT RULE:
+ * - Up to 3 children (<= 3): remain individual KEYWORD NODES (even for children & grandchildren).
+ * - More than 3 children (> 3): grouped into a single CARD STACK.
  */
 export function calculateGroupLayout(
-  rootId: string,
-  rootLabel: string,
-  rootBadge: string,
-  rootColor: string,
-  cards: GroupCardData[]
+  allNodes: SpiderNode[],
+  category: ConceptCategory
 ): {
   rootNode: PositionedNode;
+  nodes: PositionedNode[];
   cards: PositionedGroupCard[];
   edges: Edge[];
 } {
-  const rootNode: PositionedNode = {
-    id: rootId,
-    label: rootLabel,
-    category: "root",
-    level: 0,
-    badge: rootBadge,
-    color: rootColor,
-    x: 0,
-    y: 0,
-  };
-
-  const count = cards.length;
-  // Radius based on number of cards
-  let radius = 620;
-  if (count <= 3) radius = 540;
-  else if (count <= 6) radius = 860;
-  else radius = 1260;
-
+  const positionedNodes: PositionedNode[] = [];
   const positionedCards: PositionedGroupCard[] = [];
   const edges: Edge[] = [];
 
-  cards.forEach((card, i) => {
-    // Distribute angles evenly around circle: 360 / count
-    const angle = (2 * Math.PI * i) / count - Math.PI / 2;
-    const r = radius + (card.items.length > 5 ? 40 : 0);
-    const x = Math.round(Math.cos(angle) * r);
-    const y = Math.round(Math.sin(angle) * r);
+  const availableCards = getGroupCardsForCategory(category);
+  const cardByPillar = new Map<string, GroupCardData>();
+  availableCards.forEach((c) => cardByPillar.set(c.pillarId, c));
 
-    positionedCards.push({
-      ...card,
-      x,
-      y,
+  let rootId = `root-${category}`;
+  if (category === "all") rootId = "root-all";
+
+  const rawRoot = allNodes.find((n) => n.id === rootId) || {
+    id: rootId,
+    label:
+      category === "v8"
+        ? "V8 Engine"
+        : category === "scope"
+        ? "Scope & Closures"
+        : category === "node"
+        ? "Node.js Runtime"
+        : "Node.js + JavaScript",
+    category: category === "all" ? "root" : category,
+    level: 0,
+    badge: "Core Hub",
+    color: "#f59e0b",
+  };
+
+  const rootNode: PositionedNode = {
+    ...rawRoot,
+    x: 0,
+    y: 0,
+  };
+  positionedNodes.push(rootNode);
+
+  if (category === "all") {
+    // 3 sectors for All Concepts: V8 (top -90°), Scope (bottom-left 150°), Node (bottom-right 30°)
+    const subCats: { cat: ConceptCategory; angle: number }[] = [
+      { cat: "v8", angle: -Math.PI / 2 },
+      { cat: "node", angle: Math.PI / 6 },
+      { cat: "scope", angle: (5 * Math.PI) / 6 },
+    ];
+
+    subCats.forEach(({ cat, angle }) => {
+      const subLayout = calculateGroupLayout(allNodes, cat);
+      const sectorDist = 780;
+      const secX = Math.round(Math.cos(angle) * sectorDist);
+      const secY = Math.round(Math.sin(angle) * sectorDist);
+
+      edges.push({
+        source: rootNode.id,
+        target: subLayout.rootNode.id,
+        category: cat,
+        level: 1,
+      });
+
+      positionedNodes.push({
+        ...subLayout.rootNode,
+        x: secX,
+        y: secY,
+        level: 1,
+      });
+
+      subLayout.nodes.forEach((n) => {
+        if (n.id !== subLayout.rootNode.id) {
+          positionedNodes.push({
+            ...n,
+            x: n.x + secX,
+            y: n.y + secY,
+          });
+        }
+      });
+
+      subLayout.cards.forEach((c) => {
+        positionedCards.push({
+          ...c,
+          x: c.x + secX,
+          y: c.y + secY,
+        });
+      });
+
+      edges.push(...subLayout.edges);
     });
+
+    return {
+      rootNode,
+      nodes: positionedNodes,
+      cards: positionedCards,
+      edges,
+    };
+  }
+
+  // Level 1 Pillars
+  let pillarIds: string[] = [];
+  if (category === "v8") {
+    pillarIds = ["v8-js-exec", "v8-memory", "v8-stack-pillar"];
+  } else if (category === "scope") {
+    pillarIds = ["scope-scope", "scope-lexical-env", "scope-closure"];
+  } else if (category === "node") {
+    pillarIds = [
+      "node-apis-pillar",
+      "node-libuv-pillar",
+      "node-single-thread-pillar",
+      "node-eventloop-pillar",
+      "node-queues-pillar",
+      "node-phases-pillar",
+    ];
+  }
+
+  const pillarCount = pillarIds.length;
+  const r1 = category === "node" ? 280 : 250;
+
+  pillarIds.forEach((pId, i) => {
+    const rawPillar = allNodes.find((n) => n.id === pId);
+    if (!rawPillar) return;
+
+    // Distribute angles evenly around 360° (360 / count)
+    const angle = (2 * Math.PI * i) / pillarCount - Math.PI / 2;
+    const px = Math.round(Math.cos(angle) * r1);
+    const py = Math.round(Math.sin(angle) * r1);
+
+    const pillarNode: PositionedNode = {
+      ...rawPillar,
+      x: px,
+      y: py,
+      level: 1,
+    };
+    positionedNodes.push(pillarNode);
 
     edges.push({
-      source: rootId,
-      target: card.id,
-      category: card.category,
+      source: rootNode.id,
+      target: pillarNode.id,
+      category: pillarNode.category,
       level: 1,
     });
+
+    // Check if this pillar has a Group Card (children > 3)
+    const cardData = cardByPillar.get(pId);
+    if (cardData) {
+      // Group Card attached to this pillar
+      const rCard = r1 + (cardData.items.length > 6 ? 400 : 360);
+      const cx = Math.round(Math.cos(angle) * rCard);
+      const cy = Math.round(Math.sin(angle) * rCard);
+
+      positionedCards.push({
+        ...cardData,
+        x: cx,
+        y: cy,
+      });
+
+      edges.push({
+        source: pillarNode.id,
+        target: cardData.id,
+        category: cardData.category,
+        level: 2,
+      });
+    } else {
+      // Pillar has <= 3 children: Render them as individual keyword nodes!
+      const children = allNodes.filter((n) => n.parentId === pId);
+      const m = children.length;
+      if (m > 0) {
+        const spread = Math.min(((2 * Math.PI) / pillarCount) * 0.7, 0.7);
+        const startAngle = m === 1 ? angle : angle - spread / 2;
+
+        children.forEach((child, j) => {
+          const step = m === 1 ? 0 : j / (m - 1);
+          const childAngle = m === 1 ? angle : startAngle + step * spread;
+          const r2 = r1 + 190;
+          const c2x = Math.round(Math.cos(childAngle) * r2);
+          const c2y = Math.round(Math.sin(childAngle) * r2);
+
+          const childNode: PositionedNode = {
+            ...child,
+            x: c2x,
+            y: c2y,
+            level: 2,
+          };
+          positionedNodes.push(childNode);
+
+          edges.push({
+            source: pillarNode.id,
+            target: childNode.id,
+            category: childNode.category,
+            level: 2,
+          });
+
+          // Check if this child has children of its own (Level 3, <= 3 items)
+          const subChildren = allNodes.filter((n) => n.parentId === child.id);
+          const k = subChildren.length;
+          if (k > 0) {
+            const subSpread = 0.35;
+            const subStartAngle = k === 1 ? childAngle : childAngle - subSpread / 2;
+
+            subChildren.forEach((sub, sIdx) => {
+              const subStep = k === 1 ? 0 : sIdx / (k - 1);
+              const subAngle = k === 1 ? childAngle : subStartAngle + subStep * subSpread;
+              const r3 = r2 + 160;
+              const c3x = Math.round(Math.cos(subAngle) * r3);
+              const c3y = Math.round(Math.sin(subAngle) * r3);
+
+              const subNode: PositionedNode = {
+                ...sub,
+                x: c3x,
+                y: c3y,
+                level: 3,
+              };
+              positionedNodes.push(subNode);
+
+              edges.push({
+                source: childNode.id,
+                target: subNode.id,
+                category: subNode.category,
+                level: 3,
+              });
+            });
+          }
+        });
+      }
+    }
   });
 
   return {
     rootNode,
+    nodes: positionedNodes,
     cards: positionedCards,
     edges,
   };
@@ -332,12 +509,28 @@ export function getNodesForCategory(
 ): { nodes: SpiderNode[]; rootId: string } {
   if (category === "all") {
     const rootAll = allNodes.find((n) => n.id === "root-all")!;
-    const v8Root = { ...allNodes.find((n) => n.id === "root-v8")!, parentId: "root-all", level: 1 };
-    const scopeRoot = { ...allNodes.find((n) => n.id === "root-scope")!, parentId: "root-all", level: 1 };
-    const nodeRoot = { ...allNodes.find((n) => n.id === "root-node")!, parentId: "root-all", level: 1 };
+    const v8Root = {
+      ...allNodes.find((n) => n.id === "root-v8")!,
+      parentId: "root-all",
+      level: 1,
+    };
+    const scopeRoot = {
+      ...allNodes.find((n) => n.id === "root-scope")!,
+      parentId: "root-all",
+      level: 1,
+    };
+    const nodeRoot = {
+      ...allNodes.find((n) => n.id === "root-node")!,
+      parentId: "root-all",
+      level: 1,
+    };
 
     const remaining = allNodes.filter(
-      (n) => n.id !== "root-all" && n.id !== "root-v8" && n.id !== "root-scope" && n.id !== "root-node"
+      (n) =>
+        n.id !== "root-all" &&
+        n.id !== "root-v8" &&
+        n.id !== "root-scope" &&
+        n.id !== "root-node"
     );
 
     return {

@@ -2,7 +2,6 @@
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { SpiderNode, ConceptCategory, ALL_NODES } from "@/data/concepts";
-import { getGroupCardsForCategory } from "@/data/groupConcepts";
 import {
   PositionedNode,
   PositionedGroupCard,
@@ -49,11 +48,11 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   // Pan state (canvas offset in px)
   const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  // Nodes & Edges state (Spider / Tree view)
+  // Nodes & Edges state
   const [nodes, setNodes] = useState<PositionedNode[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
 
-  // Group View State
+  // Group View Cards state (only for groups with > 3 items)
   const [groupCards, setGroupCards] = useState<PositionedGroupCard[]>([]);
   const [groupRootNode, setGroupRootNode] = useState<PositionedNode | null>(null);
 
@@ -77,17 +76,10 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   // Initialize/Recalculate Layout based on current viewMode
   const initLayout = useCallback(() => {
     if (viewMode === "group") {
-      const groupData = getGroupCardsForCategory(currentCategory);
-      const layout = calculateGroupLayout(
-        `root-${currentCategory}`,
-        groupData.rootLabel,
-        groupData.rootBadge,
-        groupData.rootColor,
-        groupData.cards
-      );
+      const layout = calculateGroupLayout(ALL_NODES, currentCategory);
       setGroupRootNode(layout.rootNode);
       setGroupCards(layout.cards);
-      setNodes([layout.rootNode]);
+      setNodes(layout.nodes);
       setEdges(layout.edges);
     } else {
       setGroupCards([]);
@@ -134,7 +126,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   // Search filtering
   const queryLower = searchQuery.trim().toLowerCase();
 
-  // Matched nodes for spider/tree
+  // Matched nodes
   const matchedNodes = React.useMemo(() => {
     if (!queryLower) return new Set<string>();
     const matches = new Set<string>();
@@ -150,57 +142,50 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     return matches;
   }, [nodes, queryLower]);
 
-  // Matched count for group mode
-  const groupMatchCount = React.useMemo(() => {
-    if (!queryLower || viewMode !== "group") return 0;
-    let count = 0;
-    if (
-      groupRootNode &&
-      (groupRootNode.label.toLowerCase().includes(queryLower) ||
-        (groupRootNode.badge && groupRootNode.badge.toLowerCase().includes(queryLower)))
-    ) {
-      count++;
-    }
-    groupCards.forEach((c) => {
-      if (
-        c.title.toLowerCase().includes(queryLower) ||
-        c.badge.toLowerCase().includes(queryLower)
-      ) {
-        count++;
-      }
-      c.items.forEach((item) => {
+  // Matched count including both keyword nodes and cards
+  const totalMatchCount = React.useMemo(() => {
+    if (!queryLower) return 0;
+    let count = matchedNodes.size;
+
+    if (viewMode === "group") {
+      groupCards.forEach((c) => {
         if (
-          item.label.toLowerCase().includes(queryLower) ||
-          (item.badge && item.badge.toLowerCase().includes(queryLower))
+          c.title.toLowerCase().includes(queryLower) ||
+          c.badge.toLowerCase().includes(queryLower)
         ) {
           count++;
         }
-        item.subItems?.forEach((sub) => {
+        c.items.forEach((item) => {
           if (
-            sub.label.toLowerCase().includes(queryLower) ||
-            (sub.badge && sub.badge.toLowerCase().includes(queryLower))
+            item.label.toLowerCase().includes(queryLower) ||
+            (item.badge && item.badge.toLowerCase().includes(queryLower))
           ) {
             count++;
           }
+          item.subItems?.forEach((sub) => {
+            if (
+              sub.label.toLowerCase().includes(queryLower) ||
+              (sub.badge && sub.badge.toLowerCase().includes(queryLower))
+            ) {
+              count++;
+            }
+          });
         });
       });
-    });
+    }
+
     return count;
-  }, [groupCards, groupRootNode, queryLower, viewMode]);
+  }, [matchedNodes, groupCards, queryLower, viewMode]);
 
   useEffect(() => {
-    if (viewMode === "group") {
-      onMatchCountChange?.(groupMatchCount);
-    } else {
-      onMatchCountChange?.(matchedNodes.size);
-    }
-  }, [groupMatchCount, matchedNodes, onMatchCountChange, viewMode]);
+    onMatchCountChange?.(totalMatchCount);
+  }, [totalMatchCount, onMatchCountChange]);
 
   // Auto-center on first search match
   useEffect(() => {
-    if (!queryLower || typeof window !== "undefined" && !queryLower) return;
+    if (!queryLower || typeof window === "undefined") return;
 
-    if (viewMode === "group") {
+    if (viewMode === "group" && groupCards.length > 0) {
       const matchingCard = groupCards.find((c) => {
         const titleMatch =
           c.title.toLowerCase().includes(queryLower) ||
@@ -218,13 +203,16 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
         return titleMatch || itemMatch;
       });
 
-      if (matchingCard && typeof window !== "undefined") {
+      if (matchingCard) {
         setPan({
           x: Math.round(window.innerWidth / 2 - matchingCard.x * zoom),
           y: Math.round(window.innerHeight / 2 - matchingCard.y * zoom),
         });
+        return;
       }
-    } else if (matchedNodes.size > 0 && typeof window !== "undefined") {
+    }
+
+    if (matchedNodes.size > 0) {
       const firstMatchId = Array.from(matchedNodes)[0];
       const matchNode = nodes.find((n) => n.id === firstMatchId);
       if (matchNode) {
@@ -354,12 +342,9 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     setDraggedCardId(null);
   };
 
-  // ==========================================
-  // MOBILE MULTI-TOUCH GESTURES (Pinch-to-zoom & Touch Pan)
-  // ==========================================
+  // Mobile multi-touch gestures
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length === 2) {
-      // 2 fingers = start pinch-to-zoom
       const t0 = e.touches[0];
       const t1 = e.touches[1];
       const dist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
@@ -372,7 +357,6 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
       };
       setIsPanning(false);
     } else if (e.touches.length === 1 && !draggedNodeId && !draggedCardId) {
-      // 1 finger on canvas = touch pan
       const t = e.touches[0];
       panStartRef.current = { x: t.clientX - pan.x, y: t.clientY - pan.y };
       setIsPanning(true);
@@ -381,7 +365,6 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (e.touches.length === 2 && pinchStartDistRef.current !== null && containerRef.current) {
-      // Pinching with two fingers
       const t0 = e.touches[0];
       const t1 = e.touches[1];
       const currentDist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
@@ -402,7 +385,6 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
       setZoom(newZoom);
       setPan({ x: newPanX, y: newPanY });
     } else if (e.touches.length === 1 && isPanning && !draggedNodeId && !draggedCardId) {
-      // 1 finger panning
       const t = e.touches[0];
       setPan({
         x: Math.round(t.clientX - panStartRef.current.x),
@@ -439,15 +421,15 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     window.open(googleUrl, "_blank", "noopener,noreferrer");
   };
 
-  // Filter visible nodes based on Level 3 toggle (Spider/Tree view)
+  // Filter visible nodes based on Level 3 toggle
   const visibleNodes = nodes.filter((n) => (showLevel3 ? true : n.level < 3));
   const visibleNodeIds = new Set(visibleNodes.map((n) => n.id));
-  const visibleEdges = edges.filter(
-    (e) => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target)
-  );
 
   const nodeMap = new Map<string, PositionedNode>();
-  visibleNodes.forEach((n) => nodeMap.set(n.id, n));
+  nodes.forEach((n) => nodeMap.set(n.id, n));
+
+  const cardMap = new Map<string, PositionedGroupCard>();
+  groupCards.forEach((c) => cardMap.set(c.id, c));
 
   return (
     <div
@@ -534,13 +516,20 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
               </g>
             )}
 
-            {/* GROUP VIEW CONNECTING CURVES */}
-            {viewMode === "group" &&
-              groupCards.map((card) => {
-                const sx = groupRootNode ? groupRootNode.x : 0;
-                const sy = groupRootNode ? groupRootNode.y : 0;
-                const tx = card.x;
-                const ty = card.y;
+            {/* Connecting Edges (both node-to-node and node-to-card) */}
+            {edges.map((edge, idx) => {
+              const sourceNode = nodeMap.get(edge.source);
+              if (!sourceNode) return null;
+
+              const targetCard = viewMode === "group" ? cardMap.get(edge.target) : undefined;
+              const targetNode = nodeMap.get(edge.target);
+
+              // 1. Connection from Node to Group Card (when child count > 3)
+              if (targetCard) {
+                const sx = sourceNode.x;
+                const sy = sourceNode.y;
+                const tx = targetCard.x;
+                const ty = targetCard.y;
 
                 const dx = tx - sx;
                 const dy = ty - sy;
@@ -552,9 +541,9 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
                 const isCardMatched =
                   Boolean(queryLower) &&
-                  (card.title.toLowerCase().includes(queryLower) ||
-                    card.badge.toLowerCase().includes(queryLower) ||
-                    card.items.some(
+                  (targetCard.title.toLowerCase().includes(queryLower) ||
+                    targetCard.badge.toLowerCase().includes(queryLower) ||
+                    targetCard.items.some(
                       (item) =>
                         item.label.toLowerCase().includes(queryLower) ||
                         (item.badge && item.badge.toLowerCase().includes(queryLower)) ||
@@ -569,11 +558,11 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                   ? isDark
                     ? "#f59e0b"
                     : "#d97706"
-                  : card.color;
+                  : targetCard.color;
                 const strokeWidth = isCardMatched ? 4.5 : 2.8;
 
                 return (
-                  <g key={`group-edge-${card.id}`}>
+                  <g key={`edge-card-${edge.source}-${edge.target}-${idx}`}>
                     <path
                       d={pathData}
                       fill="none"
@@ -591,35 +580,31 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                     />
                   </g>
                 );
-              })}
+              }
 
-            {/* SPIDER / TREE VIEW CONNECTING EDGES */}
-            {viewMode !== "group" &&
-              visibleEdges.map((edge, idx) => {
-                const sourceNode = nodeMap.get(edge.source);
-                const targetNode = nodeMap.get(edge.target);
-                if (!sourceNode || !targetNode) return null;
+              // 2. Connection between Keyword Nodes (when child count <= 3)
+              if (targetNode) {
+                // If level 3 is hidden in spider/tree mode
+                if (viewMode !== "group" && !showLevel3 && targetNode.level >= 3) {
+                  return null;
+                }
 
                 const isHighlighted =
                   matchedNodes.has(edge.source) || matchedNodes.has(edge.target);
 
-                // Distinct thread colors according to hierarchy level
                 let strokeColor = "";
                 let strokeWidth = 1.5;
                 let strokeOpacity = 0.7;
 
                 if (edge.level === 1) {
-                  // Primary Pillar Trunk: Vibrant Electric / Sky Blue
                   strokeColor = isDark ? "#38bdf8" : "#0284c7";
                   strokeWidth = isHighlighted ? 4.5 : 3;
                   strokeOpacity = isHighlighted ? 1 : 0.85;
                 } else if (edge.level === 2) {
-                  // Secondary Concept Branch: Royal Violet / Purple
                   strokeColor = isDark ? "#c084fc" : "#7c3aed";
                   strokeWidth = isHighlighted ? 3.5 : 2;
                   strokeOpacity = isHighlighted ? 1 : 0.75;
                 } else {
-                  // Tertiary Detail Leaf: Vivid Emerald / Green
                   strokeColor = isDark ? "#34d399" : "#059669";
                   strokeWidth = isHighlighted ? 3 : 1.5;
                   strokeOpacity = isHighlighted ? 1 : 0.65;
@@ -646,7 +631,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                 }
 
                 return (
-                  <g key={`${edge.source}-${edge.target}-${idx}`}>
+                  <g key={`edge-node-${edge.source}-${edge.target}-${idx}`}>
                     <path
                       d={pathData}
                       fill="none"
@@ -667,60 +652,42 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                     )}
                   </g>
                 );
-              })}
+              }
+
+              return null;
+            })}
           </g>
         </svg>
 
         {/* HTML Draggable Nodes & Group Cards */}
         <div style={{ pointerEvents: "auto" }}>
-          {viewMode === "group" ? (
-            <>
-              {/* Center Parent Circle */}
-              {groupRootNode && (
-                <SpiderNodeCard
-                  key={groupRootNode.id}
-                  node={groupRootNode}
-                  theme={theme}
-                  isDragging={draggedNodeId === groupRootNode.id}
-                  isMatched={Boolean(
-                    queryLower &&
-                      (groupRootNode.label.toLowerCase().includes(queryLower) ||
-                        (groupRootNode.badge &&
-                          groupRootNode.badge.toLowerCase().includes(queryLower)))
-                  )}
-                  hasQuery={Boolean(queryLower)}
-                  onPointerDown={handleNodePointerDown}
-                  onClick={handleNodeClick}
-                />
-              )}
+          {/* Keyword Nodes: Root, Level 1 pillars, and Level 2/3 keyword nodes (<= 3 children) */}
+          {(viewMode === "group" ? nodes : visibleNodes).map((node) => (
+            <SpiderNodeCard
+              key={node.id}
+              node={node}
+              theme={theme}
+              isDragging={draggedNodeId === node.id}
+              isMatched={matchedNodes.has(node.id)}
+              hasQuery={Boolean(queryLower)}
+              onPointerDown={handleNodePointerDown}
+              onClick={handleNodeClick}
+            />
+          ))}
 
-              {/* Group Cards */}
-              {groupCards.map((card) => (
-                <SpiderGroupCard
-                  key={card.id}
-                  card={card}
-                  theme={theme}
-                  isDragging={draggedCardId === card.id}
-                  searchQuery={searchQuery}
-                  onPointerDown={handleCardPointerDown}
-                  onKeywordClick={handleGroupKeywordClick}
-                />
-              ))}
-            </>
-          ) : (
-            visibleNodes.map((node) => (
-              <SpiderNodeCard
-                key={node.id}
-                node={node}
+          {/* Group Cards: ONLY for groups that have > 3 children */}
+          {viewMode === "group" &&
+            groupCards.map((card) => (
+              <SpiderGroupCard
+                key={card.id}
+                card={card}
                 theme={theme}
-                isDragging={draggedNodeId === node.id}
-                isMatched={matchedNodes.has(node.id)}
-                hasQuery={Boolean(queryLower)}
-                onPointerDown={handleNodePointerDown}
-                onClick={handleNodeClick}
+                isDragging={draggedCardId === card.id}
+                searchQuery={searchQuery}
+                onPointerDown={handleCardPointerDown}
+                onKeywordClick={handleGroupKeywordClick}
               />
-            ))
-          )}
+            ))}
         </div>
       </div>
     </div>

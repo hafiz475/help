@@ -1,5 +1,3 @@
-import { ConceptCategory } from "./concepts";
-
 export interface GroupSubItem {
   id: string;
   label: string;
@@ -27,6 +25,15 @@ export interface GroupCardData {
   items: GroupItem[];
 }
 
+/**
+ * ONLY concepts with MORE THAN 3 children (> 3) are grouped into cards.
+ * Concepts with <= 3 children remain individual keyword nodes.
+ */
+
+// V8 Groups with > 3 children:
+// 1. JavaScript Execution (9 steps > 3)
+// 2. Execution Stack & Context (4 items > 3)
+// (Memory has only 2 items: Heap & GC <= 3, so it remains keyword nodes)
 export const V8_GROUP_CARDS: GroupCardData[] = [
   {
     id: "group-v8-exec",
@@ -137,36 +144,6 @@ export const V8_GROUP_CARDS: GroupCardData[] = [
     ],
   },
   {
-    id: "group-v8-memory",
-    pillarId: "v8-memory",
-    title: "Memory System",
-    category: "v8",
-    badge: "Storage & GC",
-    color: "#06b6d4",
-    items: [
-      {
-        id: "v8-heap",
-        label: "Heap",
-        badge: "Dynamic Memory",
-        searchQuery: "V8 Memory Heap JavaScript",
-        subItems: [
-          {
-            id: "v8-heap-objects",
-            label: "Objects",
-            badge: "Allocated Entities",
-            searchQuery: "JavaScript Heap Object allocation V8",
-          },
-        ],
-      },
-      {
-        id: "v8-gc",
-        label: "Garbage Collector",
-        badge: "Major GC / Orinoco / Scavenge",
-        searchQuery: "V8 Garbage Collection Scavenger Major GC Orinoco",
-      },
-    ],
-  },
-  {
     id: "group-v8-stack",
     pillarId: "v8-stack-pillar",
     title: "Execution Stack & Context",
@@ -224,85 +201,15 @@ export const V8_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export const SCOPE_GROUP_CARDS: GroupCardData[] = [
-  {
-    id: "group-scope-rules",
-    pillarId: "scope-scope",
-    title: "Scope & Lookup Chain",
-    category: "scope",
-    badge: "Rules",
-    color: "#a855f7",
-    items: [
-      {
-        id: "scope-scope",
-        label: "Scope",
-        badge: "Variable Boundary",
-        searchQuery: "JavaScript Scope explained",
-      },
-      {
-        id: "scope-lexical",
-        label: "Lexical Scope",
-        badge: "Author-time Placement",
-        searchQuery: "JavaScript Lexical Scope static scoping",
-      },
-      {
-        id: "scope-chain",
-        label: "Scope Chain",
-        badge: "Resolution Order",
-        searchQuery: "JavaScript Scope Chain lookup",
-        subItems: [
-          {
-            id: "scope-chain-order",
-            label: "Current → Outer → Global",
-            badge: "Lookup Flow",
-            searchQuery: "JavaScript Scope Chain Current Outer Global resolution",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "group-scope-env",
-    pillarId: "scope-lexical-env",
-    title: "Lexical Environment",
-    category: "scope",
-    badge: "Engine Spec",
-    color: "#7c3aed",
-    items: [
-      {
-        id: "scope-lexical-env",
-        label: "Lexical Environment",
-        badge: "Internal Spec Structure",
-        searchQuery: "JavaScript Lexical Environment Environment Record",
-      },
-    ],
-  },
-  {
-    id: "group-scope-closure",
-    pillarId: "scope-closure",
-    title: "Closure Mechanism",
-    category: "scope",
-    badge: "Core Feature",
-    color: "#ec4899",
-    items: [
-      {
-        id: "scope-closure",
-        label: "Closure",
-        badge: "Persistent Scope",
-        searchQuery: "JavaScript Closure retain access outer environment",
-        subItems: [
-          {
-            id: "scope-closure-detail",
-            label: "Access to Outer Lexical Env",
-            badge: "Preserved References",
-            searchQuery: "Closure retains access to outer lexical environment JavaScript",
-          },
-        ],
-      },
-    ],
-  },
-];
+// Scope Groups: ALL groups have <= 3 items (Scope & Lookup has 3, Lexical Env has 1, Closure has 1)
+// Therefore, Scope has ZERO cards and renders completely as individual keyword nodes!
+export const SCOPE_GROUP_CARDS: GroupCardData[] = [];
 
+// Node.js Groups with > 3 children:
+// 1. Node.js Built-in APIs (4 items > 3)
+// 2. libuv Infrastructure (4 items > 3)
+// 3. Event Loop 5 Phases (5 items > 3)
+// (Single-Threaded has 3 <= 3, Coordinator has 2 <= 3, Priority Queues has 3 <= 3, so they remain keyword nodes)
 export const NODE_GROUP_CARDS: GroupCardData[] = [
   {
     id: "group-node-apis",
@@ -312,12 +219,6 @@ export const NODE_GROUP_CARDS: GroupCardData[] = [
     badge: "Core APIs",
     color: "#10b981",
     items: [
-      {
-        id: "node-v8-pillar",
-        label: "V8 Integration",
-        badge: "Executes JavaScript",
-        searchQuery: "Node.js V8 integration",
-      },
       {
         id: "node-api-timers",
         label: "Timers API",
@@ -401,112 +302,6 @@ export const NODE_GROUP_CARDS: GroupCardData[] = [
     ],
   },
   {
-    id: "group-node-singlethread",
-    pillarId: "node-single-thread-pillar",
-    title: "Single-Threaded Model",
-    category: "node",
-    badge: "Concurrency",
-    color: "#eab308",
-    items: [
-      {
-        id: "node-main-js-thread",
-        label: "Main JavaScript Thread",
-        badge: "1 Execution Thread",
-        searchQuery: "Node.js Main JavaScript Thread",
-      },
-      {
-        id: "node-cpu-bound",
-        label: "CPU-Bound Work",
-        badge: "Can Block JS Loop",
-        searchQuery: "Node.js CPU-bound tasks blocking event loop",
-      },
-      {
-        id: "node-io-bound",
-        label: "I/O-Bound Work",
-        badge: "Offloaded Asynchronously",
-        searchQuery: "Node.js I/O-bound tasks asynchronous non-blocking",
-      },
-    ],
-  },
-  {
-    id: "group-node-eventloop",
-    pillarId: "node-eventloop-pillar",
-    title: "Event Loop Coordinator",
-    category: "node",
-    badge: "Orchestrator",
-    color: "#22c55e",
-    items: [
-      {
-        id: "node-el-not-exec",
-        label: "Does NOT Execute JS",
-        badge: "Only Coordinates Work",
-        searchQuery: "Event loop does not execute javascript V8 does",
-      },
-      {
-        id: "node-v8-exec-cb",
-        label: "V8 Executes Callbacks",
-        badge: "Pushed to Call Stack",
-        searchQuery: "Node.js V8 executes event loop callbacks call stack",
-      },
-    ],
-  },
-  {
-    id: "group-node-queues",
-    pillarId: "node-queues-pillar",
-    title: "Queues & Scheduling Priority",
-    category: "node",
-    badge: "Priority Order",
-    color: "#f97316",
-    isPipeline: true,
-    items: [
-      {
-        id: "node-q-nexttick",
-        stepNumber: 1,
-        label: "Next Tick Queue",
-        badge: "Priority 1 (Highest)",
-        searchQuery: "Node.js Next Tick Queue process.nextTick priority",
-        subItems: [
-          {
-            id: "node-q-nexttick-item",
-            label: "process.nextTick()",
-            badge: "Runs before any other queue",
-            searchQuery: "process.nextTick queue execution order",
-          },
-        ],
-      },
-      {
-        id: "node-q-microtask",
-        stepNumber: 2,
-        label: "Microtask Queue",
-        badge: "Priority 2 (High)",
-        searchQuery: "Node.js Microtask Queue Promise.then queueMicrotask",
-        subItems: [
-          {
-            id: "node-q-promise-then",
-            label: "Promise.then()",
-            badge: "queueMicrotask()",
-            searchQuery: "Promise.then microtask queue Node.js",
-          },
-        ],
-      },
-      {
-        id: "node-q-macrotask",
-        stepNumber: 3,
-        label: "Task / Macrotask Queue",
-        badge: "Priority 3 (Standard)",
-        searchQuery: "Node.js Task Macrotask Queue timer callbacks",
-        subItems: [
-          {
-            id: "node-q-macro-item",
-            label: "Timer-style Callbacks",
-            badge: "Timers & I/O Events",
-            searchQuery: "Timer-style callbacks macrotask queue Node.js",
-          },
-        ],
-      },
-    ],
-  },
-  {
     id: "group-node-phases",
     pillarId: "node-phases-pillar",
     title: "Event Loop 5 Phases",
@@ -578,53 +373,9 @@ export const NODE_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: ConceptCategory): {
-  rootLabel: string;
-  rootBadge: string;
-  rootColor: string;
-  rootSearchQuery: string;
-  cards: GroupCardData[];
-} {
-  if (category === "v8") {
-    return {
-      rootLabel: "V8 Engine",
-      rootBadge: "Core Engine",
-      rootColor: "#0284c7",
-      rootSearchQuery: "V8 JavaScript Engine architecture",
-      cards: V8_GROUP_CARDS,
-    };
-  }
-
-  if (category === "scope") {
-    return {
-      rootLabel: "Scope & Closures",
-      rootBadge: "Language Core",
-      rootColor: "#a855f7",
-      rootSearchQuery: "JavaScript Scope and Closures explained",
-      cards: SCOPE_GROUP_CARDS,
-    };
-  }
-
-  if (category === "node") {
-    return {
-      rootLabel: "Node.js Runtime",
-      rootBadge: "System Runtime",
-      rootColor: "#22c55e",
-      rootSearchQuery: "Node.js Runtime architecture libuv event loop",
-      cards: NODE_GROUP_CARDS,
-    };
-  }
-
-  // All Concepts (Combined)
-  return {
-    rootLabel: "Node.js + JavaScript",
-    rootBadge: "Master Hierarchy",
-    rootColor: "#f59e0b",
-    rootSearchQuery: "Node.js JavaScript architecture",
-    cards: [
-      ...V8_GROUP_CARDS,
-      ...SCOPE_GROUP_CARDS,
-      ...NODE_GROUP_CARDS,
-    ],
-  };
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "node"): GroupCardData[] {
+  if (category === "v8") return V8_GROUP_CARDS;
+  if (category === "scope") return SCOPE_GROUP_CARDS;
+  if (category === "node") return NODE_GROUP_CARDS;
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...NODE_GROUP_CARDS];
 }
