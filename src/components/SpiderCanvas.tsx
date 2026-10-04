@@ -52,6 +52,12 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   // Pan state (canvas offset in px)
   const [pan, setPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
+  // Zoom & Pan refs to ensure event listeners always access latest values without setState-in-render issues
+  const zoomRef = useRef(zoom);
+  zoomRef.current = zoom;
+  const panRef = useRef(pan);
+  panRef.current = pan;
+
   // Nodes & Edges state
   const [nodes, setNodes] = useState<PositionedNode[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
@@ -256,24 +262,24 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
 
-      const zoomFactor = e.deltaY < 0 ? 1.12 : 0.89;
+      const currentZoom = zoomRef.current;
+      const currentPan = panRef.current;
 
-      setZoom((prevZoom) => {
-        const newZoom = Math.min(Math.max(prevZoom * zoomFactor, 0.18), 2.5);
-        setPan((prevPan) => {
-          const newPanX = Math.round(mouseX - (mouseX - prevPan.x) * (newZoom / prevZoom));
-          const newPanY = Math.round(mouseY - (mouseY - prevPan.y) * (newZoom / prevZoom));
-          return { x: newPanX, y: newPanY };
-        });
-        return newZoom;
-      });
+      const zoomFactor = e.deltaY < 0 ? 1.12 : 0.89;
+      const newZoom = Math.min(Math.max(currentZoom * zoomFactor, 0.18), 2.5);
+
+      const newPanX = Math.round(mouseX - (mouseX - currentPan.x) * (newZoom / currentZoom));
+      const newPanY = Math.round(mouseY - (mouseY - currentPan.y) * (newZoom / currentZoom));
+
+      setZoom(newZoom);
+      setPan({ x: newPanX, y: newPanY });
     };
 
     container.addEventListener("wheel", onWheel, { passive: false });
     return () => {
       container.removeEventListener("wheel", onWheel);
     };
-  }, []);
+  }, [setZoom]);
 
   // Mouse / Pointer Canvas Panning
   const handleCanvasPointerDown = (e: React.PointerEvent) => {
