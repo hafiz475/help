@@ -391,21 +391,26 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
               const isHighlighted =
                 matchedNodes.has(edge.source) || matchedNodes.has(edge.target);
 
-              let strokeColor = isDark
-                ? "rgba(56, 189, 248, 0.45)"
-                : "rgba(2, 132, 199, 0.45)";
-              if (edge.category === "scope") {
-                strokeColor = isDark
-                  ? "rgba(192, 132, 252, 0.45)"
-                  : "rgba(124, 58, 237, 0.45)";
-              } else if (edge.category === "node") {
-                strokeColor = isDark
-                  ? "rgba(34, 197, 94, 0.45)"
-                  : "rgba(22, 163, 74, 0.45)";
-              } else if (edge.category === "all") {
-                strokeColor = isDark
-                  ? "rgba(245, 158, 11, 0.45)"
-                  : "rgba(217, 119, 6, 0.45)";
+              // Distinct thread colors according to hierarchy level
+              let strokeColor = "";
+              let strokeWidth = 1.5;
+              let strokeOpacity = 0.7;
+
+              if (edge.level === 1) {
+                // Primary Pillar Trunk: Vibrant Electric / Sky Blue
+                strokeColor = isDark ? "#38bdf8" : "#0284c7";
+                strokeWidth = isHighlighted ? 4.5 : 3;
+                strokeOpacity = isHighlighted ? 1 : 0.85;
+              } else if (edge.level === 2) {
+                // Secondary Concept Branch: Royal Violet / Purple
+                strokeColor = isDark ? "#c084fc" : "#7c3aed";
+                strokeWidth = isHighlighted ? 3.5 : 2;
+                strokeOpacity = isHighlighted ? 1 : 0.75;
+              } else {
+                // Tertiary Detail Leaf: Vivid Emerald / Green
+                strokeColor = isDark ? "#34d399" : "#059669";
+                strokeWidth = isHighlighted ? 3 : 1.5;
+                strokeOpacity = isHighlighted ? 1 : 0.65;
               }
 
               if (isHighlighted) {
@@ -434,8 +439,8 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                     d={pathData}
                     fill="none"
                     stroke={strokeColor}
-                    strokeWidth={isHighlighted ? 3.5 : edge.level === 1 ? 2.5 : 1.5}
-                    strokeOpacity={isHighlighted ? 0.9 : 0.6}
+                    strokeWidth={strokeWidth}
+                    strokeOpacity={strokeOpacity}
                   />
 
                   {edge.level <= 2 && (
@@ -443,9 +448,9 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                       d={pathData}
                       fill="none"
                       stroke={strokeColor}
-                      strokeWidth={edge.level === 1 ? 1.8 : 1.2}
+                      strokeWidth={edge.level === 1 ? 2.2 : 1.4}
                       className="web-flow-line"
-                      strokeOpacity="0.8"
+                      strokeOpacity={0.9}
                     />
                   )}
                 </g>

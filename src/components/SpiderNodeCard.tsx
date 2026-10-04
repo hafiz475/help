@@ -30,19 +30,19 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
   const isL1 = node.level === 1;
   const isL2 = node.level === 2;
 
-  // Category Accent colors based on theme
+  // Accent colors based on hierarchy level (Level 0, 1, 2, 3)
   const getColor = () => {
-    if (node.color) return node.color;
-    switch (node.category) {
-      case "v8":
-        return isDark ? "#38bdf8" : "#0284c7";
-      case "scope":
-        return isDark ? "#c084fc" : "#7c3aed";
-      case "node":
-        return isDark ? "#22c55e" : "#16a34a";
-      default:
-        return isDark ? "#f59e0b" : "#d97706";
+    if (node.level === 0) {
+      return isDark ? "#f59e0b" : "#d97706"; // Amber / Gold for Center Heading
     }
+    if (node.level === 1) {
+      return isDark ? "#38bdf8" : "#0284c7"; // Sky Blue for Major Pillars
+    }
+    if (node.level === 2) {
+      return isDark ? "#c084fc" : "#7c3aed"; // Violet / Purple for Core Concepts
+    }
+    // Level 3 (Details / Items)
+    return isDark ? "#34d399" : "#059669"; // Emerald / Green for Detail Items
   };
 
   const accentColor = getColor();
@@ -264,14 +264,14 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
             : isL2
             ? "#ffffff"
             : "rgba(255, 255, 255, 0.95)",
-          border: `1px solid ${
+          border: `1.5px solid ${
             isMatched
               ? isDark ? "#f59e0b" : "#d97706"
               : isHovered
               ? accentColor
               : isDark
-              ? isL2 ? "rgba(255, 255, 255, 0.12)" : "rgba(255, 255, 255, 0.08)"
-              : isL2 ? "#cbd5e1" : "#e2e8f0"
+              ? `${accentColor}55`
+              : `${accentColor}40`
           }`,
           boxShadow: isMatched
             ? isDark ? "0 0 16px rgba(245, 158, 11, 0.5)" : "0 0 14px rgba(217, 119, 6, 0.4)"
@@ -284,6 +284,16 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           whiteSpace: "nowrap",
         }}
       >
+        {/* Hierarchy dot */}
+        <div
+          style={{
+            width: isL2 ? "6.5px" : "5.5px",
+            height: isL2 ? "6.5px" : "5.5px",
+            borderRadius: "50%",
+            background: accentColor,
+            flexShrink: 0,
+          }}
+        />
         <span
           style={{
             fontSize: isL2 ? "12px" : "11px",

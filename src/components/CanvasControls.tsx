@@ -687,6 +687,14 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           </div>
           <ul style={{ paddingLeft: "16px", display: "flex", flexDirection: "column", gap: "6px" }}>
             <li>
+              <strong>Thread Hierarchy Colors:</strong>
+              <div style={{ marginTop: "4px", display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "11.5px" }}>
+                <span style={{ color: isDark ? "#38bdf8" : "#0284c7", fontWeight: 600 }}>● Level 1 Pillars</span>
+                <span style={{ color: isDark ? "#c084fc" : "#7c3aed", fontWeight: 600 }}>● Level 2 Concepts</span>
+                <span style={{ color: isDark ? "#34d399" : "#059669", fontWeight: 600 }}>● Level 3 Details</span>
+              </div>
+            </li>
+            <li>
               <strong>Pinch with 2 fingers:</strong> Zoom in and out smoothly on mobile.
             </li>
             <li>
@@ -705,7 +713,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
         </div>
       )}
 
-      {/* Floating Bottom Left Helper reminder - hidden on mobile screens */}
+      {/* Floating Bottom Left Hierarchy Color Legend */}
       <div
         className="glass-panel hide-on-mobile"
         style={{
@@ -715,19 +723,28 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           zIndex: 40,
           display: "flex",
           alignItems: "center",
-          gap: "12px",
-          padding: "6px 12px",
-          borderRadius: "8px",
+          gap: "14px",
+          padding: "7px 14px",
+          borderRadius: "10px",
           fontSize: "11px",
-          color: "var(--text-dim)",
-          pointerEvents: "none",
+          fontWeight: 600,
         }}
       >
-        <span>💡 <strong>Click:</strong> Google Search</span>
-        <span>•</span>
-        <span><strong>Drag node:</strong> Move in 2D</span>
-        <span>•</span>
-        <span><strong>Drag canvas:</strong> Pan</span>
+        <span style={{ color: "var(--text-dim)", textTransform: "uppercase", fontSize: "10px", letterSpacing: "0.06em", fontWeight: 700 }}>
+          Threads:
+        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: "5px", color: isDark ? "#38bdf8" : "#0284c7" }}>
+          <div style={{ width: "9px", height: "9px", borderRadius: "50%", background: isDark ? "#38bdf8" : "#0284c7" }} />
+          <span>L1 Pillars</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "5px", color: isDark ? "#c084fc" : "#7c3aed" }}>
+          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#c084fc" : "#7c3aed" }} />
+          <span>L2 Concepts</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "5px", color: isDark ? "#34d399" : "#059669" }}>
+          <div style={{ width: "7px", height: "7px", borderRadius: "50%", background: isDark ? "#34d399" : "#059669" }} />
+          <span>L3 Details</span>
+        </div>
       </div>
     </>
   );
