@@ -286,18 +286,30 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                       style={{
                         fontSize: "8.5px",
                         fontWeight: 700,
-                        padding: "1px 4px",
+                        padding: "1px 5px",
                         borderRadius: "4px",
                         background: isDark ? `${card.color}25` : `${card.color}18`,
                         color: card.color,
                         display: "flex",
                         alignItems: "center",
-                        gap: "2px",
+                        gap: "3px",
                       }}
                       title={`${item.subItems!.length} keyword branch${item.subItems!.length > 1 ? "es" : ""} connected`}
                     >
                       <span>{item.subItems!.length}</span>
                       <span style={{ fontSize: "9px" }}>→</span>
+                      <span
+                        style={{
+                          width: "5px",
+                          height: "5px",
+                          borderRadius: "50%",
+                          background: isDark ? "#34d399" : "#059669",
+                          boxShadow: isDark
+                            ? "0 0 6px rgba(52, 211, 153, 0.7)"
+                            : "0 0 4px rgba(5, 150, 105, 0.5)",
+                          display: "inline-block",
+                        }}
+                      />
                     </span>
                   )}
 

@@ -460,6 +460,51 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   const cardMap = new Map<string, PositionedGroupCard>();
   groupCards.forEach((c) => cardMap.set(c.id, c));
 
+  // Collect unique card item anchor ports where mini cards branch out
+  const cardPorts = React.useMemo(() => {
+    if (viewMode !== "group") return [];
+
+    const portsMap = new Map<
+      string,
+      { key: string; x: number; y: number; color: string; isHighlighted: boolean }
+    >();
+
+    edges.forEach((edge) => {
+      if (
+        edge.cardId &&
+        edge.itemIndex !== undefined &&
+        edge.totalItems !== undefined
+      ) {
+        const portKey = `${edge.cardId}-${edge.itemIndex}`;
+        if (!portsMap.has(portKey)) {
+          const card = cardMap.get(edge.cardId);
+          if (card) {
+            const anchor = getCardItemAnchor(card, edge.itemIndex, edge.totalItems);
+            const isHighlighted =
+              matchedNodes.has(edge.target) ||
+              Boolean(queryLower && card.title.toLowerCase().includes(queryLower));
+
+            portsMap.set(portKey, {
+              key: portKey,
+              x: anchor.x,
+              y: anchor.y,
+              color: isHighlighted
+                ? isDark
+                  ? "#f59e0b"
+                  : "#d97706"
+                : isDark
+                ? "#34d399"
+                : "#059669",
+              isHighlighted,
+            });
+          }
+        }
+      }
+    });
+
+    return Array.from(portsMap.values());
+  }, [edges, groupCards, viewMode, isDark, matchedNodes, queryLower, cardMap]);
+
   return (
     <div
       ref={containerRef}
@@ -560,16 +605,17 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                 const anchor = getCardItemAnchor(card, edge.itemIndex, edge.totalItems);
                 const sx = anchor.x;
                 const sy = anchor.y;
-                const tx = targetNode.x;
+
+                // Connect directly to the mini card's left-hand hierarchy dot
+                const estimatedWidth =
+                  46 +
+                  Math.round(targetNode.label.length * 6.8) +
+                  (targetNode.badge ? Math.round(targetNode.badge.length * 5.5 + 10) : 0);
+                const tx = Math.round(targetNode.x - estimatedWidth / 2 + 13);
                 const ty = targetNode.y;
 
-                const dx = tx - sx;
-                const dy = ty - sy;
-                const cx1 = Math.round(sx + dx * 0.45);
-                const cy1 = sy;
-                const cx2 = Math.round(sx + dx * 0.55);
-                const cy2 = ty;
-                const pathData = `M ${sx} ${sy} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${tx} ${ty}`;
+                // Crisp, laser-straight thread from card socket dot to mini card dot
+                const pathData = `M ${sx} ${sy} L ${tx} ${ty}`;
 
                 const isHighlighted =
                   matchedNodes.has(edge.target) ||
@@ -601,6 +647,15 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                       strokeWidth={1.2}
                       className="web-flow-line"
                       strokeOpacity={0.85}
+                    />
+                    {/* Origin connector dot on card border */}
+                    <circle
+                      cx={sx}
+                      cy={sy}
+                      r={5}
+                      fill={strokeColor}
+                      stroke={isDark ? "#0f172a" : "#ffffff"}
+                      strokeWidth={1.8}
                     />
                   </g>
                 );
@@ -776,6 +831,56 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
               />
             ))}
         </div>
+
+        {/* Top SVG Overlay for Card Connector Ports (renders directly on top of cards) */}
+        {viewMode === "group" && cardPorts.length > 0 && (
+          <svg
+            style={{
+              position: "absolute",
+              left: "-4000px",
+              top: "-4000px",
+              width: "8000px",
+              height: "8000px",
+              overflow: "visible",
+              pointerEvents: "none",
+              zIndex: 25,
+            }}
+          >
+            <g transform="translate(4000, 4000)">
+              {cardPorts.map((port) => (
+                <g key={`top-port-${port.key}`}>
+                  {/* Outer glowing halo */}
+                  <circle
+                    cx={port.x}
+                    cy={port.y}
+                    r={8}
+                    fill="none"
+                    stroke={port.color}
+                    strokeWidth={1.5}
+                    strokeOpacity={0.4}
+                  />
+                  {/* Main connector socket disc */}
+                  <circle
+                    cx={port.x}
+                    cy={port.y}
+                    r={5.5}
+                    fill={port.color}
+                    stroke={isDark ? "#0f172a" : "#ffffff"}
+                    strokeWidth={2}
+                  />
+                  {/* Center pin core highlight */}
+                  <circle
+                    cx={port.x}
+                    cy={port.y}
+                    r={2}
+                    fill="#ffffff"
+                    opacity={0.95}
+                  />
+                </g>
+              ))}
+            </g>
+          </svg>
+        )}
       </div>
     </div>
   );

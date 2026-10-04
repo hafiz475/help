@@ -84,16 +84,16 @@ export function calculateSpiderLayout(
     r2 = 500;
     r3 = 700;
   } else if (category === "node") {
-    r1 = 340;
-    r2 = 680;
-    r3 = 980;
+    r1 = 300;
+    r2 = 600;
+    r3 = 880;
   } else if (category === "all") {
     r1 = 440;
     r2 = 850;
     r3 = 1260;
   }
 
-  // Allocate angular sectors to Level 1 nodes
+  // Allocate angular sectors to Level 1 nodes (360 / l1Count)
   l1Children.forEach((l1, i) => {
     const angle = (2 * Math.PI * i) / l1Count - Math.PI / 2;
     const x1 = Math.round(Math.cos(angle) * r1);
@@ -181,7 +181,7 @@ export function calculateSpiderLayout(
 }
 
 /**
- * Calculates hierarchical Top-to-Bottom Tree layout with generous leaf spacing to prevent card collision.
+ * Calculates hierarchical Top-to-Bottom Tree layout.
  */
 export function calculateTreeLayout(
   nodes: SpiderNode[],
@@ -275,8 +275,9 @@ export function calculateTreeLayout(
 
 /**
  * Calculates Group / Codrin View:
- * STRICT RULE:
- * - Up to 3 children (<= 3): remain individual KEYWORD NODES (even for children & grandchildren).
+ * STRICT RULE APPLIED AT EVERY LEVEL (Root -> Children -> Grandchildren):
+ * - Exactly 3 main connections from the center parent circle (360° / 3 = 120°).
+ * - Up to 3 children (<= 3): remain individual KEYWORD NODES.
  * - More than 3 children (> 3): grouped into a single CARD STACK.
  * - From the right end of a card: sub-items (<= 3) branch out as individual keyword nodes via threads!
  */
@@ -333,7 +334,7 @@ export function calculateGroupLayout(
 
     subCats.forEach(({ cat, angle }) => {
       const subLayout = calculateGroupLayout(allNodes, cat);
-      const sectorDist = 820;
+      const sectorDist = 840;
       const secX = Math.round(Math.cos(angle) * sectorDist);
       const secY = Math.round(Math.sin(angle) * sectorDist);
 
@@ -380,31 +381,25 @@ export function calculateGroupLayout(
     };
   }
 
-  // Level 1 Pillars
+  // Exactly 3 Level 1 Pillars for each category (360° / 3 = 120°)
   let pillarIds: string[] = [];
   if (category === "v8") {
     pillarIds = ["v8-js-exec", "v8-memory", "v8-stack-pillar"];
   } else if (category === "scope") {
     pillarIds = ["scope-scope", "scope-lexical-env", "scope-closure"];
   } else if (category === "node") {
-    pillarIds = [
-      "node-apis-pillar",
-      "node-libuv-pillar",
-      "node-single-thread-pillar",
-      "node-eventloop-pillar",
-      "node-queues-pillar",
-      "node-phases-pillar",
-    ];
+    // Exactly 3 pillars from Node.js Runtime parent: APIs, libuv, Event Loop
+    pillarIds = ["node-apis-pillar", "node-libuv-pillar", "node-eventloop-pillar"];
   }
 
-  const pillarCount = pillarIds.length;
-  const r1 = category === "node" ? 280 : 250;
+  const pillarCount = pillarIds.length; // Always 3!
+  const r1 = 260;
 
   pillarIds.forEach((pId, i) => {
     const rawPillar = allNodes.find((n) => n.id === pId);
     if (!rawPillar) return;
 
-    // Distribute angles evenly around 360° (360 / count)
+    // Distribute angles evenly around 360° (360° / 3 = 120°): -90°, 30°, 150°
     const angle = (2 * Math.PI * i) / pillarCount - Math.PI / 2;
     const px = Math.round(Math.cos(angle) * r1);
     const py = Math.round(Math.sin(angle) * r1);
@@ -424,7 +419,7 @@ export function calculateGroupLayout(
       level: 1,
     });
 
-    // Check if this pillar has a Group Card (children > 3)
+    // Check if this Level 1 pillar has a Group Card (children > 3)
     const cardData = cardByPillar.get(pId);
     if (cardData) {
       // Group Card attached to this pillar
@@ -447,24 +442,26 @@ export function calculateGroupLayout(
       });
 
       // Branch out sub-items from the right end of the card!
-      // Up to 3 children: 1 to 3 threads branching out as single keyword nodes!
       const totalItems = cardData.items.length;
       cardData.items.forEach((item, itemIdx) => {
         const subCount = item.subItems?.length || 0;
         if (subCount > 0 && subCount <= 3) {
           const anchor = getCardItemAnchor(positionedCard, itemIdx, totalItems);
-          const dist = 140;
+          const lineLength = 110;
+          const leftEdgeX = anchor.x + lineLength;
 
           item.subItems!.forEach((sub, sIdx) => {
-            let nodeY = anchor.y;
-            let nodeX = anchor.x + dist;
+            const estimatedWidth =
+              46 +
+              Math.round(sub.label.length * 6.8) +
+              (sub.badge ? Math.round(sub.badge.length * 5.5 + 10) : 0);
+            const nodeX = Math.round(leftEdgeX + estimatedWidth / 2);
 
+            let nodeY = anchor.y;
             if (subCount === 2) {
-              nodeY = anchor.y + (sIdx === 0 ? -18 : 18);
-              nodeX = anchor.x + dist + (sIdx === 1 ? 15 : 0);
+              nodeY = anchor.y + (sIdx === 0 ? -20 : 20);
             } else if (subCount === 3) {
-              nodeY = anchor.y + (sIdx === 0 ? -30 : sIdx === 1 ? 0 : 30);
-              nodeX = anchor.x + (sIdx === 1 ? dist + 20 : dist);
+              nodeY = anchor.y + (sIdx === 0 ? -32 : sIdx === 1 ? 0 : 32);
             }
 
             const subKeywordNode: PositionedNode = {
@@ -499,7 +496,8 @@ export function calculateGroupLayout(
       const children = allNodes.filter((n) => n.parentId === pId);
       const m = children.length;
       if (m > 0) {
-        const spread = Math.min(((2 * Math.PI) / pillarCount) * 0.7, 0.7);
+        const hasChildCard = children.some((c) => cardByPillar.has(c.id));
+        const spread = hasChildCard ? 1.1 : 0.65;
         const startAngle = m === 1 ? angle : angle - spread / 2;
 
         children.forEach((child, j) => {
@@ -509,50 +507,125 @@ export function calculateGroupLayout(
           const c2x = Math.round(Math.cos(childAngle) * r2);
           const c2y = Math.round(Math.sin(childAngle) * r2);
 
-          const childNode: PositionedNode = {
-            ...child,
-            x: c2x,
-            y: c2y,
-            level: 2,
-          };
-          positionedNodes.push(childNode);
+          // Check if this child itself has a Group Card (> 3 items, e.g. Event Loop Phases)
+          const childCardData = cardByPillar.get(child.id);
+          if (childCardData) {
+            // Group Card represents this branch directly — connect pillarNode directly to the card!
+            const rChildCard = r1 + 380;
+            const cardX = Math.round(Math.cos(childAngle) * rChildCard);
+            const cardY = Math.round(Math.sin(childAngle) * rChildCard);
 
-          edges.push({
-            source: pillarNode.id,
-            target: childNode.id,
-            category: childNode.category,
-            level: 2,
-          });
+            const posChildCard: PositionedGroupCard = {
+              ...childCardData,
+              x: cardX,
+              y: cardY,
+            };
+            positionedCards.push(posChildCard);
 
-          // Check if this child has children of its own (Level 3, <= 3 items)
-          const subChildren = allNodes.filter((n) => n.parentId === child.id);
-          const k = subChildren.length;
-          if (k > 0) {
-            const subSpread = 0.35;
-            const subStartAngle = k === 1 ? childAngle : childAngle - subSpread / 2;
-
-            subChildren.forEach((sub, sIdx) => {
-              const subStep = k === 1 ? 0 : sIdx / (k - 1);
-              const subAngle = k === 1 ? childAngle : subStartAngle + subStep * subSpread;
-              const r3 = r2 + 160;
-              const c3x = Math.round(Math.cos(subAngle) * r3);
-              const c3y = Math.round(Math.sin(subAngle) * r3);
-
-              const subNode: PositionedNode = {
-                ...sub,
-                x: c3x,
-                y: c3y,
-                level: 3,
-              };
-              positionedNodes.push(subNode);
-
-              edges.push({
-                source: childNode.id,
-                target: subNode.id,
-                category: subNode.category,
-                level: 3,
-              });
+            edges.push({
+              source: pillarNode.id,
+              target: childCardData.id,
+              category: childCardData.category,
+              level: 2,
             });
+
+            // Branch out sub-items from this card's right edge
+            const totalChildItems = childCardData.items.length;
+            childCardData.items.forEach((item, itemIdx) => {
+              const subCount = item.subItems?.length || 0;
+              if (subCount > 0 && subCount <= 3) {
+                const anchor = getCardItemAnchor(posChildCard, itemIdx, totalChildItems);
+                const lineLength = 110;
+                const leftEdgeX = anchor.x + lineLength;
+
+                item.subItems!.forEach((sub, sIdx) => {
+                  const estimatedWidth =
+                    46 +
+                    Math.round(sub.label.length * 6.8) +
+                    (sub.badge ? Math.round(sub.badge.length * 5.5 + 10) : 0);
+                  const nodeX = Math.round(leftEdgeX + estimatedWidth / 2);
+
+                  let nodeY = anchor.y;
+                  if (subCount === 2) {
+                    nodeY = anchor.y + (sIdx === 0 ? -20 : 20);
+                  } else if (subCount === 3) {
+                    nodeY = anchor.y + (sIdx === 0 ? -32 : sIdx === 1 ? 0 : 32);
+                  }
+
+                  const subNode: PositionedNode = {
+                    id: sub.id,
+                    label: sub.label,
+                    category: childCardData.category,
+                    parentId: item.id,
+                    level: 3,
+                    badge: sub.badge,
+                    searchQuery: sub.searchQuery,
+                    color: childCardData.color,
+                    x: nodeX,
+                    y: nodeY,
+                    cardParentId: childCardData.id,
+                  };
+                  positionedNodes.push(subNode);
+
+                  edges.push({
+                    source: `${childCardData.id}:${item.id}`,
+                    target: sub.id,
+                    category: childCardData.category,
+                    level: 3,
+                    cardId: childCardData.id,
+                    itemIndex: itemIdx,
+                    totalItems: totalChildItems,
+                  });
+                });
+              }
+            });
+          } else {
+            // Regular child without card (e.g. Single-Threaded JS, Queues / Scheduling)
+            const childNode: PositionedNode = {
+              ...child,
+              x: c2x,
+              y: c2y,
+              level: 2,
+            };
+            positionedNodes.push(childNode);
+
+            edges.push({
+              source: pillarNode.id,
+              target: childNode.id,
+              category: childNode.category,
+              level: 2,
+            });
+
+            // Child has <= 3 children of its own (Level 3 keyword nodes)
+            const subChildren = allNodes.filter((n) => n.parentId === child.id);
+            const k = subChildren.length;
+            if (k > 0) {
+              const subSpread = 0.35;
+              const subStartAngle = k === 1 ? childAngle : childAngle - subSpread / 2;
+
+              subChildren.forEach((sub, sIdx) => {
+                const subStep = k === 1 ? 0 : sIdx / (k - 1);
+                const subAngle = k === 1 ? childAngle : subStartAngle + subStep * subSpread;
+                const r3 = r2 + 160;
+                const c3x = Math.round(Math.cos(subAngle) * r3);
+                const c3y = Math.round(Math.sin(subAngle) * r3);
+
+                const subNode: PositionedNode = {
+                  ...sub,
+                  x: c3x,
+                  y: c3y,
+                  level: 3,
+                };
+                positionedNodes.push(subNode);
+
+                edges.push({
+                  source: childNode.id,
+                  target: subNode.id,
+                  category: subNode.category,
+                  level: 3,
+                });
+              });
+            }
           }
         });
       }
