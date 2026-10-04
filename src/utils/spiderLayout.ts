@@ -8,6 +8,7 @@ export interface PositionedNode extends SpiderNode {
   y: number;
   vx?: number;
   vy?: number;
+  cardParentId?: string;
 }
 
 export interface PositionedGroupCard extends GroupCardData {
@@ -20,6 +21,24 @@ export interface Edge {
   target: string;
   category: string;
   level: number;
+  cardId?: string;
+  itemIndex?: number;
+  totalItems?: number;
+}
+
+/**
+ * Calculates anchor point on the right end of a Group Card for an item row.
+ */
+export function getCardItemAnchor(
+  card: PositionedGroupCard,
+  itemIndex: number,
+  totalItems: number
+): { x: number; y: number } {
+  const itemHeight = 36;
+  const startY = -(totalItems * itemHeight) / 2 + 18;
+  const itemY = Math.round(card.y + startY + itemIndex * itemHeight);
+  const anchorX = card.x + 160; // Right end of card (width 320px -> +160px from center)
+  return { x: anchorX, y: itemY };
 }
 
 /**
@@ -56,7 +75,6 @@ export function calculateSpiderLayout(
   const l1Children = childMap.get(rootNode.id) || [];
   const l1Count = l1Children.length;
 
-  // Base radii for spider rings
   let r1 = 280;
   let r2 = 560;
   let r3 = 840;
@@ -184,7 +202,6 @@ export function calculateTreeLayout(
   const positioned: Map<string, PositionedNode> = new Map();
   const edges: Edge[] = [];
 
-  // Vertical tier levels
   const yLevel0 = -320;
   const yLevel1 = -130;
   const yLevel2 = 90;
@@ -200,7 +217,6 @@ export function calculateTreeLayout(
     return sum;
   }
 
-  // Generous spacing so badges never overlap
   const leafSpacing = 240;
   const totalLeaves = countLeaves(rootNode.id);
   const totalWidth = totalLeaves * leafSpacing;
@@ -262,6 +278,7 @@ export function calculateTreeLayout(
  * STRICT RULE:
  * - Up to 3 children (<= 3): remain individual KEYWORD NODES (even for children & grandchildren).
  * - More than 3 children (> 3): grouped into a single CARD STACK.
+ * - From the right end of a card: sub-items (<= 3) branch out as individual keyword nodes via threads!
  */
 export function calculateGroupLayout(
   allNodes: SpiderNode[],
@@ -316,7 +333,7 @@ export function calculateGroupLayout(
 
     subCats.forEach(({ cat, angle }) => {
       const subLayout = calculateGroupLayout(allNodes, cat);
-      const sectorDist = 780;
+      const sectorDist = 820;
       const secX = Math.round(Math.cos(angle) * sectorDist);
       const secY = Math.round(Math.sin(angle) * sectorDist);
 
@@ -415,17 +432,67 @@ export function calculateGroupLayout(
       const cx = Math.round(Math.cos(angle) * rCard);
       const cy = Math.round(Math.sin(angle) * rCard);
 
-      positionedCards.push({
+      const positionedCard: PositionedGroupCard = {
         ...cardData,
         x: cx,
         y: cy,
-      });
+      };
+      positionedCards.push(positionedCard);
 
       edges.push({
         source: pillarNode.id,
         target: cardData.id,
         category: cardData.category,
         level: 2,
+      });
+
+      // Branch out sub-items from the right end of the card!
+      // Up to 3 children: 1 to 3 threads branching out as single keyword nodes!
+      const totalItems = cardData.items.length;
+      cardData.items.forEach((item, itemIdx) => {
+        const subCount = item.subItems?.length || 0;
+        if (subCount > 0 && subCount <= 3) {
+          const anchor = getCardItemAnchor(positionedCard, itemIdx, totalItems);
+          const dist = 140;
+
+          item.subItems!.forEach((sub, sIdx) => {
+            let nodeY = anchor.y;
+            let nodeX = anchor.x + dist;
+
+            if (subCount === 2) {
+              nodeY = anchor.y + (sIdx === 0 ? -18 : 18);
+              nodeX = anchor.x + dist + (sIdx === 1 ? 15 : 0);
+            } else if (subCount === 3) {
+              nodeY = anchor.y + (sIdx === 0 ? -30 : sIdx === 1 ? 0 : 30);
+              nodeX = anchor.x + (sIdx === 1 ? dist + 20 : dist);
+            }
+
+            const subKeywordNode: PositionedNode = {
+              id: sub.id,
+              label: sub.label,
+              category: cardData.category,
+              parentId: item.id,
+              level: 3,
+              badge: sub.badge,
+              searchQuery: sub.searchQuery,
+              color: cardData.color,
+              x: nodeX,
+              y: nodeY,
+              cardParentId: cardData.id,
+            };
+            positionedNodes.push(subKeywordNode);
+
+            edges.push({
+              source: `${cardData.id}:${item.id}`,
+              target: sub.id,
+              category: cardData.category,
+              level: 3,
+              cardId: cardData.id,
+              itemIndex: itemIdx,
+              totalItems,
+            });
+          });
+        }
       });
     } else {
       // Pillar has <= 3 children: Render them as individual keyword nodes!

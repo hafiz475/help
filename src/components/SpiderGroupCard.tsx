@@ -168,6 +168,7 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
               (item.badge && item.badge.toLowerCase().includes(queryLower)));
 
           const isItemHovered = hoveredItemId === item.id;
+          const hasChildren = item.subItems && item.subItems.length > 0;
 
           return (
             <div key={item.id} style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
@@ -210,7 +211,7 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: "7px", minWidth: 0 }}>
-                  {/* Step Number or Pill Icon */}
+                  {/* Step Number or Bullet Icon */}
                   {item.stepNumber ? (
                     <span
                       style={{
@@ -278,6 +279,28 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                       {item.badge}
                     </span>
                   )}
+
+                  {/* Branch indicator if child keywords connect out from the right */}
+                  {hasChildren && (
+                    <span
+                      style={{
+                        fontSize: "8.5px",
+                        fontWeight: 700,
+                        padding: "1px 4px",
+                        borderRadius: "4px",
+                        background: isDark ? `${card.color}25` : `${card.color}18`,
+                        color: card.color,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "2px",
+                      }}
+                      title={`${item.subItems!.length} keyword branch${item.subItems!.length > 1 ? "es" : ""} connected`}
+                    >
+                      <span>{item.subItems!.length}</span>
+                      <span style={{ fontSize: "9px" }}>→</span>
+                    </span>
+                  )}
+
                   <ExternalLink
                     size={10}
                     color={card.color}
@@ -288,130 +311,6 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                   />
                 </div>
               </div>
-
-              {/* Sub-items (Branches under this keyword) */}
-              {item.subItems && item.subItems.length > 0 && (
-                <div
-                  style={{
-                    marginLeft: "24px",
-                    paddingLeft: "8px",
-                    borderLeft: isDark
-                      ? `1.5px solid ${card.color}40`
-                      : `1.5px solid ${card.color}30`,
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "3px",
-                    marginBottom: "3px",
-                  }}
-                >
-                  {item.subItems.map((sub, sIdx) => {
-                    const isLast = sIdx === item.subItems!.length - 1;
-                    const subMatched =
-                      Boolean(queryLower) &&
-                      (sub.label.toLowerCase().includes(queryLower) ||
-                        (sub.badge && sub.badge.toLowerCase().includes(queryLower)));
-
-                    const isSubHovered = hoveredItemId === sub.id;
-
-                    return (
-                      <div
-                        key={sub.id}
-                        onMouseEnter={() => setHoveredItemId(sub.id)}
-                        onMouseLeave={() => setHoveredItemId(null)}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onKeywordClick(sub.searchQuery || `${sub.label} JavaScript Node.js`);
-                        }}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          padding: "3px 6px",
-                          borderRadius: "6px",
-                          cursor: "pointer",
-                          background: subMatched
-                            ? isDark
-                              ? "rgba(245, 158, 11, 0.2)"
-                              : "rgba(254, 243, 199, 0.8)"
-                            : isSubHovered
-                            ? isDark
-                              ? "rgba(255, 255, 255, 0.07)"
-                              : "rgba(0, 0, 0, 0.04)"
-                            : "transparent",
-                          transition: "background 0.15s",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "5px",
-                            minWidth: 0,
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontSize: "10px",
-                              color: isDark ? "rgba(255, 255, 255, 0.35)" : "#94a3b8",
-                            }}
-                          >
-                            {isLast ? "└─" : "├─"}
-                          </span>
-                          <span
-                            style={{
-                              fontSize: "11px",
-                              fontWeight: 600,
-                              color: isDark
-                                ? isSubHovered
-                                  ? "#ffffff"
-                                  : "#cbd5e1"
-                                : isSubHovered
-                                ? "#0f172a"
-                                : "#334155",
-                            }}
-                          >
-                            {sub.label}
-                          </span>
-                        </div>
-
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "4px",
-                            flexShrink: 0,
-                          }}
-                        >
-                          {sub.badge && (
-                            <span
-                              style={{
-                                fontSize: "8.5px",
-                                fontWeight: 500,
-                                padding: "1px 4px",
-                                borderRadius: "3px",
-                                background: isDark
-                                  ? "rgba(255, 255, 255, 0.05)"
-                                  : "rgba(0, 0, 0, 0.04)",
-                                color: isDark ? "rgba(255, 255, 255, 0.6)" : "#64748b",
-                              }}
-                            >
-                              {sub.badge}
-                            </span>
-                          )}
-                          <ExternalLink
-                            size={9}
-                            color={card.color}
-                            style={{
-                              opacity: isSubHovered ? 1 : 0.3,
-                              transition: "opacity 0.15s",
-                            }}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
             </div>
           );
         })}

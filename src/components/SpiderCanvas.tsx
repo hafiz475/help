@@ -10,6 +10,7 @@ import {
   calculateSpiderLayout,
   calculateTreeLayout,
   calculateGroupLayout,
+  getCardItemAnchor,
   getNodesForCategory,
 } from "@/utils/spiderLayout";
 import { SpiderNodeCard } from "./SpiderNodeCard";
@@ -65,6 +66,9 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   const dragPointerStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const dragNodeStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const dragCardStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const cardSubNodesStartRef = useRef<Map<string, { x: number; y: number }>>(
+    new Map()
+  );
   const hasMovedSignificantlyRef = useRef<boolean>(false);
 
   // Multi-touch Pinch to Zoom refs
@@ -272,6 +276,14 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     dragPointerStartRef.current = { x: e.clientX, y: e.clientY };
     dragCardStartRef.current = { x: card.x, y: card.y };
     hasMovedSignificantlyRef.current = false;
+
+    // Track initial positions of attached sub-nodes
+    cardSubNodesStartRef.current.clear();
+    nodes.forEach((n) => {
+      if (n.cardParentId === card.id) {
+        cardSubNodesStartRef.current.set(n.id, { x: n.x, y: n.y });
+      }
+    });
   };
 
   // Global Pointer Move
@@ -333,6 +345,23 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
           return c;
         })
       );
+
+      // Translate attached sub-nodes so the cluster moves together
+      setNodes((prev) =>
+        prev.map((n) => {
+          if (n.cardParentId === draggedCardId) {
+            const start = cardSubNodesStartRef.current.get(n.id);
+            if (start) {
+              return {
+                ...n,
+                x: Math.round(start.x + dx),
+                y: Math.round(start.y + dy),
+              };
+            }
+          }
+          return n;
+        })
+      );
     }
   };
 
@@ -340,6 +369,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     setIsPanning(false);
     setDraggedNodeId(null);
     setDraggedCardId(null);
+    cardSubNodesStartRef.current.clear();
   };
 
   // Mobile multi-touch gestures
@@ -421,9 +451,8 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     window.open(googleUrl, "_blank", "noopener,noreferrer");
   };
 
-  // Filter visible nodes based on Level 3 toggle
+  // Filter visible nodes based on Level 3 toggle (Spider/Tree view)
   const visibleNodes = nodes.filter((n) => (showLevel3 ? true : n.level < 3));
-  const visibleNodeIds = new Set(visibleNodes.map((n) => n.id));
 
   const nodeMap = new Map<string, PositionedNode>();
   nodes.forEach((n) => nodeMap.set(n.id, n));
@@ -516,8 +545,67 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
               </g>
             )}
 
-            {/* Connecting Edges (both node-to-node and node-to-card) */}
+            {/* Connecting Edges */}
             {edges.map((edge, idx) => {
+              // 0. Connection from Card Item to branched keyword node (e.g. Call Stack -> LIFO)
+              if (
+                edge.cardId &&
+                edge.itemIndex !== undefined &&
+                edge.totalItems !== undefined
+              ) {
+                const card = cardMap.get(edge.cardId);
+                const targetNode = nodeMap.get(edge.target);
+                if (!card || !targetNode) return null;
+
+                const anchor = getCardItemAnchor(card, edge.itemIndex, edge.totalItems);
+                const sx = anchor.x;
+                const sy = anchor.y;
+                const tx = targetNode.x;
+                const ty = targetNode.y;
+
+                const dx = tx - sx;
+                const dy = ty - sy;
+                const cx1 = Math.round(sx + dx * 0.45);
+                const cy1 = sy;
+                const cx2 = Math.round(sx + dx * 0.55);
+                const cy2 = ty;
+                const pathData = `M ${sx} ${sy} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${tx} ${ty}`;
+
+                const isHighlighted =
+                  matchedNodes.has(edge.target) ||
+                  Boolean(queryLower && card.title.toLowerCase().includes(queryLower));
+
+                const strokeColor = isHighlighted
+                  ? isDark
+                    ? "#f59e0b"
+                    : "#d97706"
+                  : isDark
+                  ? "#34d399"
+                  : "#059669";
+                const strokeWidth = isHighlighted ? 3 : 1.6;
+                const strokeOpacity = isHighlighted ? 1 : 0.75;
+
+                return (
+                  <g key={`edge-card-item-${edge.source}-${edge.target}-${idx}`}>
+                    <path
+                      d={pathData}
+                      fill="none"
+                      stroke={strokeColor}
+                      strokeWidth={strokeWidth}
+                      strokeOpacity={strokeOpacity}
+                    />
+                    <path
+                      d={pathData}
+                      fill="none"
+                      stroke={strokeColor}
+                      strokeWidth={1.2}
+                      className="web-flow-line"
+                      strokeOpacity={0.85}
+                    />
+                  </g>
+                );
+              }
+
               const sourceNode = nodeMap.get(edge.source);
               if (!sourceNode) return null;
 
@@ -584,7 +672,6 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
               // 2. Connection between Keyword Nodes (when child count <= 3)
               if (targetNode) {
-                // If level 3 is hidden in spider/tree mode
                 if (viewMode !== "group" && !showLevel3 && targetNode.level >= 3) {
                   return null;
                 }
@@ -661,7 +748,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
         {/* HTML Draggable Nodes & Group Cards */}
         <div style={{ pointerEvents: "auto" }}>
-          {/* Keyword Nodes: Root, Level 1 pillars, and Level 2/3 keyword nodes (<= 3 children) */}
+          {/* Keyword Nodes (including center circle, pillars, and branched sub-items) */}
           {(viewMode === "group" ? nodes : visibleNodes).map((node) => (
             <SpiderNodeCard
               key={node.id}
