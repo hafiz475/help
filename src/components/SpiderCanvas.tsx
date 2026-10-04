@@ -17,6 +17,7 @@ import {
 import { SpiderNodeCard } from "./SpiderNodeCard";
 import { SpiderGroupCard } from "./SpiderGroupCard";
 import { ConceptNotebookDrawer } from "./ConceptNotebookDrawer";
+import { X } from "lucide-react";
 
 interface SpiderCanvasProps {
   currentCategory: ConceptCategory;
@@ -1071,43 +1072,87 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
           setSelectedNodeIds([]);
           setIsNotebookOpen(false);
         }}
+        onClearAndClose={() => {
+          setSelectedNodeIds([]);
+          setIsNotebookOpen(false);
+        }}
       />
+
+      {/* Floating Canvas Close & Unblur Button (Top-Right, immediately visible on mobile & desktop when notebook is closed) */}
+      {isBranchActive && !isNotebookOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: "16px",
+            right: "16px",
+            zIndex: 48,
+          }}
+        >
+          <button
+            onClick={() => {
+              setSelectedNodeIds([]);
+              setIsNotebookOpen(false);
+            }}
+            title="Clear branch focus and unblur canvas"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              padding: "8px 14px",
+              borderRadius: "9999px",
+              backgroundColor: isDark ? "rgba(15, 23, 42, 0.96)" : "rgba(255, 255, 255, 0.98)",
+              border: isDark ? "1.5px solid rgba(244, 33, 46, 0.6)" : "1.5px solid rgba(244, 33, 46, 0.5)",
+              color: isDark ? "#ff6b6b" : "#e11d48",
+              fontSize: "12px",
+              fontWeight: 700,
+              cursor: "pointer",
+              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
+              backdropFilter: "blur(12px)",
+            }}
+          >
+            <X size={14} strokeWidth={2.4} />
+            <span>Clear Focus & Unblur</span>
+          </button>
+        </div>
+      )}
 
       {/* Floating Bottom Bar: Active Branch Status */}
       {isBranchActive && (
         <div
           style={{
             position: "fixed",
-            bottom: "24px",
+            bottom: "max(20px, env(safe-area-inset-bottom, 20px))",
             left: "50%",
             transform: "translateX(-50%)",
             zIndex: 45,
             display: "flex",
             alignItems: "center",
-            gap: "10px",
-            padding: "8px 16px",
+            gap: "8px",
+            padding: "8px 14px",
             borderRadius: "999px",
-            backgroundColor: isDark ? "rgba(15, 23, 42, 0.92)" : "rgba(255, 255, 255, 0.95)",
+            backgroundColor: isDark ? "rgba(15, 23, 42, 0.94)" : "rgba(255, 255, 255, 0.96)",
             border: isDark ? "1px solid rgba(245, 158, 11, 0.45)" : "1px solid rgba(217, 119, 6, 0.45)",
             boxShadow: "0 8px 30px rgba(0, 0, 0, 0.35)",
             backdropFilter: "blur(16px)",
+            maxWidth: "94vw",
           }}
         >
-          <span style={{ fontSize: "12px", fontWeight: 700, color: isDark ? "#ffffff" : "#0f172a" }}>
-            ⚡ {selectedNodeIds.length} {selectedNodeIds.length === 1 ? "Concept" : "Concepts"} in Focus
+          <span style={{ fontSize: "12px", fontWeight: 700, color: isDark ? "#ffffff" : "#0f172a", whiteSpace: "nowrap" }}>
+            ⚡ {selectedNodeIds.length} in Focus
           </span>
           {!isNotebookOpen && (
             <button
               onClick={() => setIsNotebookOpen(true)}
               style={{
                 padding: "4px 10px",
-                borderRadius: "6px",
+                borderRadius: "9999px",
                 backgroundColor: "#f59e0b",
                 color: "#000000",
                 fontSize: "11px",
                 fontWeight: 700,
                 border: "none",
                 cursor: "pointer",
+                whiteSpace: "nowrap",
               }}
             >
               Open Notebook 📖
@@ -1118,18 +1163,24 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
               setSelectedNodeIds([]);
               setIsNotebookOpen(false);
             }}
+            title="Clear all active focus and unblur canvas"
             style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
               padding: "4px 10px",
-              borderRadius: "6px",
-              backgroundColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)",
-              color: isDark ? "#cbd5e1" : "#475569",
+              borderRadius: "9999px",
+              backgroundColor: isDark ? "rgba(244, 33, 46, 0.15)" : "rgba(244, 33, 46, 0.08)",
+              border: "1px solid rgba(244, 33, 46, 0.35)",
+              color: isDark ? "#ff6b6b" : "#e11d48",
               fontSize: "11px",
-              fontWeight: 600,
-              border: "none",
+              fontWeight: 700,
               cursor: "pointer",
+              whiteSpace: "nowrap",
             }}
           >
-            Clear Highlighting
+            <X size={12} strokeWidth={2.4} />
+            <span>Clear Highlighting</span>
           </button>
         </div>
       )}
