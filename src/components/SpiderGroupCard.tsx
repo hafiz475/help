@@ -11,6 +11,8 @@ interface SpiderGroupCardProps {
   searchQuery: string;
   onPointerDown: (e: React.PointerEvent, card: PositionedGroupCard) => void;
   onKeywordClick: (query: string) => void;
+  isBranchActive?: boolean;
+  isBranchConnected?: boolean;
 }
 
 export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
@@ -20,6 +22,8 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
   searchQuery,
   onPointerDown,
   onKeywordClick,
+  isBranchActive = false,
+  isBranchConnected = false,
 }) => {
   const [hoveredItemId, setHoveredItemId] = useState<string | null>(null);
   const isDark = theme === "dark";
@@ -46,7 +50,12 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
     });
   }, [card.items, queryLower]);
 
-  const opacity = queryLower ? (hasCardMatches ? 1 : 0.22) : 1;
+  let opacity = 1;
+  if (queryLower) {
+    opacity = hasCardMatches ? 1 : 0.22;
+  } else if (isBranchActive) {
+    opacity = isBranchConnected ? 1 : 0.18;
+  }
 
   const cardBorder = hasCardMatches
     ? isDark

@@ -12,6 +12,9 @@ interface SpiderNodeCardProps {
   hasQuery: boolean;
   onPointerDown: (e: React.PointerEvent, node: PositionedNode) => void;
   onClick: (node: PositionedNode) => void;
+  isSelected?: boolean;
+  isBranchConnected?: boolean;
+  isBranchActive?: boolean;
 }
 
 export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
@@ -22,6 +25,9 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
   hasQuery,
   onPointerDown,
   onClick,
+  isSelected = false,
+  isBranchConnected = false,
+  isBranchActive = false,
 }) => {
   const [isHovered, setIsHovered] = React.useState(false);
 
@@ -57,7 +63,14 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
   };
 
   const accentColor = getColor();
-  const opacity = hasQuery ? (isMatched ? 1 : 0.2) : 1;
+
+  // Opacity: if query active -> match filter; if branch active -> connected filter
+  let opacity = 1;
+  if (hasQuery) {
+    opacity = isMatched ? 1 : 0.2;
+  } else if (isBranchActive) {
+    opacity = isBranchConnected ? 1 : 0.18;
+  }
 
   // -------------------------------------------------------------
   // SHAPE 1: "CIRCLE CIRCLES" (3 or more branches / root hubs)
@@ -75,9 +88,9 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           position: "absolute",
           left: `${node.x}px`,
           top: `${node.y}px`,
-          transform: `translate(-50%, -50%) scale(${isDragging ? 1.05 : isHovered ? 1.03 : 1})`,
+          transform: `translate(-50%, -50%) scale(${isDragging ? 1.05 : isSelected ? 1.05 : isHovered ? 1.03 : 1})`,
           cursor: isDragging ? "grabbing" : "pointer",
-          zIndex: isDragging ? 35 : isHovered ? 25 : isRoot ? 20 : 16,
+          zIndex: isDragging ? 35 : isSelected ? 30 : isHovered ? 25 : isRoot ? 20 : 16,
           opacity,
           transition: isDragging ? "none" : "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s",
         }}
@@ -88,7 +101,7 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
             position: "absolute",
             inset: isRoot ? "-20px" : "-16px",
             borderRadius: "50%",
-            border: `1.5px dashed ${accentColor}`,
+            border: `1.5px dashed ${isSelected ? "#f59e0b" : accentColor}`,
             opacity: isDark ? 0.35 : 0.25,
             pointerEvents: "none",
           }}
@@ -101,8 +114,8 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
             position: "absolute",
             inset: isRoot ? "-11px" : "-8px",
             borderRadius: "50%",
-            border: `2px solid ${accentColor}`,
-            opacity: isDark ? 0.45 : 0.35,
+            border: `2px solid ${isSelected ? "#f59e0b" : accentColor}`,
+            opacity: isDark ? 0.5 : 0.38,
             pointerEvents: "none",
           }}
         />
@@ -117,8 +130,12 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
             background: isDark
               ? "radial-gradient(circle at 50% 35%, #18223a 0%, #0c101d 100%)"
               : "#ffffff",
-            border: `2.5px solid ${isMatched ? (isDark ? "#f59e0b" : "#d97706") : accentColor}`,
-            boxShadow: isMatched
+            border: isSelected
+              ? "3px solid #f59e0b"
+              : `2.5px solid ${isMatched ? (isDark ? "#f59e0b" : "#d97706") : accentColor}`,
+            boxShadow: isSelected
+              ? `0 0 35px rgba(245, 158, 11, 0.75), 0 0 20px ${accentColor}`
+              : isMatched
               ? `0 0 35px rgba(245, 158, 11, 0.6), 0 0 20px ${accentColor}`
               : isDark
               ? `0 0 35px ${accentColor}40, 0 10px 25px rgba(0,0,0,0.6)`
@@ -139,7 +156,7 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
                 fontWeight: 700,
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
-                color: accentColor,
+                color: isSelected ? "#f59e0b" : accentColor,
                 marginBottom: "2px",
                 lineHeight: 1.1,
               }}
@@ -166,12 +183,13 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
               alignItems: "center",
               gap: "3.5px",
               fontSize: isRoot ? "10px" : "9.5px",
-              color: isDark ? "rgba(255,255,255,0.5)" : "var(--text-dim)",
-              fontWeight: 500,
+              color: isSelected
+                ? isDark ? "#fde047" : "#b45309"
+                : isDark ? "rgba(255,255,255,0.6)" : "var(--text-dim)",
+              fontWeight: isSelected ? 700 : 500,
             }}
           >
-            <span>Google search</span>
-            <ExternalLink size={isRoot ? 9.5 : 9} color={accentColor} />
+            <span>{isSelected ? "Active in Notes 📖" : "Story & Notes 📖"}</span>
           </div>
         </div>
       </div>
@@ -194,9 +212,9 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           position: "absolute",
           left: `${node.x}px`,
           top: `${node.y}px`,
-          transform: `translate(-50%, -50%) scale(${isDragging ? 1.05 : isHovered ? 1.03 : 1})`,
+          transform: `translate(-50%, -50%) scale(${isDragging ? 1.05 : isSelected ? 1.05 : isHovered ? 1.03 : 1})`,
           cursor: isDragging ? "grabbing" : "pointer",
-          zIndex: isDragging ? 35 : isHovered ? 25 : 16,
+          zIndex: isDragging ? 35 : isSelected ? 30 : isHovered ? 25 : 16,
           opacity,
           transition: isDragging ? "none" : "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s",
         }}
@@ -208,8 +226,8 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
             position: "absolute",
             inset: "-11px",
             borderRadius: "999px",
-            border: `2px solid ${accentColor}`,
-            opacity: isDark ? 0.45 : 0.35,
+            border: `2px solid ${isSelected ? "#f59e0b" : accentColor}`,
+            opacity: isDark ? 0.5 : 0.38,
             pointerEvents: "none",
           }}
         />
@@ -224,8 +242,12 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
             background: isDark
               ? "radial-gradient(circle at 50% 30%, #18223a 0%, #0c101d 100%)"
               : "#ffffff",
-            border: `2.5px solid ${isMatched ? (isDark ? "#f59e0b" : "#d97706") : accentColor}`,
-            boxShadow: isMatched
+            border: isSelected
+              ? "2.5px solid #f59e0b"
+              : `2.5px solid ${isMatched ? (isDark ? "#f59e0b" : "#d97706") : accentColor}`,
+            boxShadow: isSelected
+              ? `0 0 30px rgba(245, 158, 11, 0.7), 0 0 15px ${accentColor}`
+              : isMatched
               ? `0 0 35px rgba(245, 158, 11, 0.6), 0 0 20px ${accentColor}`
               : isDark
               ? `0 0 35px ${accentColor}40, 0 10px 25px rgba(0,0,0,0.6)`
@@ -244,7 +266,7 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
                 fontWeight: 700,
                 textTransform: "uppercase",
                 letterSpacing: "0.08em",
-                color: accentColor,
+                color: isSelected ? "#f59e0b" : accentColor,
                 marginBottom: "2px",
               }}
             >
@@ -268,12 +290,13 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
               alignItems: "center",
               gap: "4px",
               fontSize: "10px",
-              color: isDark ? "rgba(255,255,255,0.5)" : "var(--text-dim)",
-              fontWeight: 500,
+              color: isSelected
+                ? isDark ? "#fde047" : "#b45309"
+                : isDark ? "rgba(255,255,255,0.6)" : "var(--text-dim)",
+              fontWeight: isSelected ? 700 : 500,
             }}
           >
-            <span>Google search</span>
-            <ExternalLink size={9.5} color={accentColor} />
+            <span>{isSelected ? "Active in Notes 📖" : "Story & Notes 📖"}</span>
           </div>
         </div>
       </div>
@@ -298,9 +321,9 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           position: "absolute",
           left: `${node.x}px`,
           top: `${node.y}px`,
-          transform: `translate(-50%, -50%) scale(${isDragging ? 1.05 : isHovered ? 1.04 : 1})`,
+          transform: `translate(-50%, -50%) scale(${isDragging ? 1.05 : isSelected ? 1.06 : isHovered ? 1.04 : 1})`,
           cursor: isDragging ? "grabbing" : "pointer",
-          zIndex: isDragging ? 35 : isHovered ? 25 : 15,
+          zIndex: isDragging ? 35 : isSelected ? 30 : isHovered ? 25 : 15,
           opacity,
           transition: isDragging ? "none" : "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s",
         }}
@@ -315,8 +338,12 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
                 ? "#18223a"
                 : "#0c101d"
               : "#ffffff",
-            border: `1.5px solid ${isMatched ? (isDark ? "#f59e0b" : "#d97706") : isHovered ? accentColor : `${accentColor}80`}`,
-            boxShadow: isDark
+            border: isSelected
+              ? "2px solid #f59e0b"
+              : `1.5px solid ${isMatched ? (isDark ? "#f59e0b" : "#d97706") : isHovered ? accentColor : `${accentColor}80`}`,
+            boxShadow: isSelected
+              ? `0 0 25px rgba(245, 158, 11, 0.65), 0 0 15px ${accentColor}`
+              : isDark
               ? isHovered
                 ? `0 0 25px ${accentColor}35, 0 8px 20px rgba(0,0,0,0.5)`
                 : "0 4px 14px rgba(0,0,0,0.3)"
@@ -334,7 +361,7 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
               width: "8px",
               height: "8px",
               borderRadius: "50%",
-              background: accentColor,
+              background: isSelected ? "#f59e0b" : accentColor,
             }}
           />
           <span
@@ -355,20 +382,22 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
                 padding: "2px 6px",
                 borderRadius: "6px",
                 background: `${accentColor}18`,
-                color: accentColor,
+                color: isSelected ? "#f59e0b" : accentColor,
               }}
             >
               {node.badge}
             </span>
           )}
-          <ExternalLink
-            size={12}
-            color={accentColor}
+          <span
             style={{
-              opacity: isHovered ? 1 : 0.45,
-              transition: "opacity 0.2s",
+              fontSize: "10px",
+              color: isSelected ? "#f59e0b" : accentColor,
+              opacity: isSelected ? 1 : 0.6,
+              marginLeft: "2px",
             }}
-          />
+          >
+            📖
+          </span>
         </div>
       </div>
     );
@@ -386,9 +415,9 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
         position: "absolute",
         left: `${node.x}px`,
         top: `${node.y}px`,
-        transform: `translate(-50%, -50%) scale(${isDragging ? 1.08 : isHovered ? 1.05 : 1})`,
+        transform: `translate(-50%, -50%) scale(${isDragging ? 1.08 : isSelected ? 1.08 : isHovered ? 1.05 : 1})`,
         cursor: isDragging ? "grabbing" : "pointer",
-        zIndex: isDragging ? 35 : isHovered ? 25 : isL2 ? 10 : 8,
+        zIndex: isDragging ? 35 : isSelected ? 30 : isHovered ? 25 : isL2 ? 10 : 8,
         opacity,
         transition: isDragging ? "none" : "transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s",
       }}
@@ -405,16 +434,20 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
               ? "#0f1626"
               : "#0c101d"
             : "#ffffff",
-          border: `1.5px solid ${
-            isMatched
-              ? isDark ? "#f59e0b" : "#d97706"
-              : isHovered
-              ? accentColor
-              : isDark
-              ? `${accentColor}55`
-              : `${accentColor}40`
-          }`,
-          boxShadow: isMatched
+          border: isSelected
+            ? "2px solid #f59e0b"
+            : `1.5px solid ${
+                isMatched
+                  ? isDark ? "#f59e0b" : "#d97706"
+                  : isHovered
+                  ? accentColor
+                  : isDark
+                  ? `${accentColor}55`
+                  : `${accentColor}40`
+              }`,
+          boxShadow: isSelected
+            ? `0 0 20px rgba(245, 158, 11, 0.6), 0 0 10px ${accentColor}`
+            : isMatched
             ? isDark ? "0 0 16px rgba(245, 158, 11, 0.5)" : "0 0 14px rgba(217, 119, 6, 0.4)"
             : isHovered
             ? isDark ? `0 0 16px ${accentColor}30, 0 4px 12px rgba(0,0,0,0.4)` : `0 4px 14px rgba(0,0,0,0.08), 0 0 12px ${accentColor}25`
@@ -431,17 +464,17 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
             width: isL2 ? "6.5px" : "5.5px",
             height: isL2 ? "6.5px" : "5.5px",
             borderRadius: "50%",
-            background: accentColor,
+            background: isSelected ? "#f59e0b" : accentColor,
             flexShrink: 0,
           }}
         />
         <span
           style={{
             fontSize: isL2 ? "12px" : "11px",
-            fontWeight: isL2 ? 600 : 500,
+            fontWeight: isSelected ? 700 : isL2 ? 600 : 500,
             color: isDark
-              ? isHovered ? "#ffffff" : isL2 ? "#e2e8f0" : "var(--text-muted)"
-              : isHovered ? "#0f172a" : isL2 ? "#1e293b" : "#475569",
+              ? isSelected ? "#fde047" : isHovered ? "#ffffff" : isL2 ? "#e2e8f0" : "var(--text-muted)"
+              : isSelected ? "#b45309" : isHovered ? "#0f172a" : isL2 ? "#1e293b" : "#475569",
             letterSpacing: "-0.01em",
           }}
         >
@@ -454,21 +487,22 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
               padding: "1px 5px",
               borderRadius: "4px",
               background: `${accentColor}15`,
-              color: accentColor,
+              color: isSelected ? "#f59e0b" : accentColor,
               fontWeight: 600,
             }}
           >
             {node.badge}
           </span>
         )}
-        <ExternalLink
-          size={isL2 ? 10 : 9}
-          color={accentColor}
+        <span
           style={{
-            opacity: isHovered ? 1 : 0.35,
-            transition: "opacity 0.15s",
+            fontSize: "9px",
+            color: isSelected ? "#f59e0b" : accentColor,
+            opacity: isSelected ? 1 : 0.5,
           }}
-        />
+        >
+          📖
+        </span>
       </div>
     </div>
   );

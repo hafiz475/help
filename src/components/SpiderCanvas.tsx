@@ -16,6 +16,7 @@ import {
 } from "@/utils/spiderLayout";
 import { SpiderNodeCard } from "./SpiderNodeCard";
 import { SpiderGroupCard } from "./SpiderGroupCard";
+import { ConceptNotebookDrawer } from "./ConceptNotebookDrawer";
 
 interface SpiderCanvasProps {
   currentCategory: ConceptCategory;
@@ -57,6 +58,10 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   // Group View Cards state (only for groups with > 3 items)
   const [groupCards, setGroupCards] = useState<PositionedGroupCard[]>([]);
   const [groupRootNode, setGroupRootNode] = useState<PositionedNode | null>(null);
+
+  // Active selected nodes in the Concept Notebook
+  const [selectedNodeIds, setSelectedNodeIds] = useState<string[]>([]);
+  const [isNotebookOpen, setIsNotebookOpen] = useState(false);
 
   // Dragging states
   const [isPanning, setIsPanning] = useState(false);
@@ -433,23 +438,109 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
     }
   };
 
-  // Click on Node -> Open Google Search
+  // Reset active selection when category or view mode changes
+  useEffect(() => {
+    setSelectedNodeIds([]);
+    setIsNotebookOpen(false);
+  }, [currentCategory, viewMode]);
+
+  // Active selected nodes list for the notebook drawer
+  const selectedNodesList = React.useMemo(() => {
+    return selectedNodeIds
+      .map((id) => {
+        const found = nodes.find((n) => n.id === id);
+        if (found) return found;
+        const fromAll = ALL_NODES.find((n) => n.id === id);
+        if (fromAll) {
+          return {
+            ...fromAll,
+            x: 0,
+            y: 0,
+          } as PositionedNode;
+        }
+        return null;
+      })
+      .filter((n): n is PositionedNode => n !== null);
+  }, [selectedNodeIds, nodes]);
+
+  const isBranchActive = selectedNodeIds.length > 0;
+
+  // Set of node IDs that belong to the active highlighted branch:
+  // ONLY 1st stage parent + the selected node(s) + 1st stage children dots (NO parent siblings!)
+  const highlightedNodeIds = React.useMemo(() => {
+    if (selectedNodeIds.length === 0) return new Set<string>();
+
+    const set = new Set<string>();
+
+    selectedNodeIds.forEach((id) => {
+      set.add(id);
+
+      const current = nodes.find((n) => n.id === id);
+      if (current) {
+        // 1. 1st stage parent (ONLY direct parent, no parent siblings!)
+        if (current.parentId) {
+          set.add(current.parentId);
+        }
+
+        // 2. 1st stage children (all immediate children)
+        nodes.forEach((child) => {
+          if (child.parentId === id) {
+            set.add(child.id);
+          }
+        });
+      }
+
+      // Also attach connected card or target nodes via direct edges
+      edges.forEach((edge) => {
+        if (edge.source === id) {
+          set.add(edge.target);
+        }
+        if (edge.target === id) {
+          set.add(edge.source);
+        }
+      });
+    });
+
+    return set;
+  }, [selectedNodeIds, nodes, edges]);
+
+  // Check if an edge is part of the highlighted branch
+  const isEdgeHighlighted = useCallback(
+    (edge: Edge) => {
+      if (selectedNodeIds.length === 0) return false;
+      return selectedNodeIds.some((id) => edge.source === id || edge.target === id);
+    },
+    [selectedNodeIds]
+  );
+
+  // Click on Node -> Highlight branch and open Notebook!
   const handleNodeClick = (node: PositionedNode) => {
     if (hasMovedSignificantlyRef.current) {
       return;
     }
-    const query = node.searchQuery || `${node.label} JavaScript Node.js`;
-    const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-    window.open(googleUrl, "_blank", "noopener,noreferrer");
+    setSelectedNodeIds((prev) => {
+      if (prev.includes(node.id)) {
+        return prev;
+      }
+      return [...prev, node.id];
+    });
+    setIsNotebookOpen(true);
   };
 
-  // Click on Group Keyword -> Open Google Search
+  // Click on Group Keyword -> Attach to Notebook!
   const handleGroupKeywordClick = (query: string) => {
     if (hasMovedSignificantlyRef.current) {
       return;
     }
-    const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-    window.open(googleUrl, "_blank", "noopener,noreferrer");
+    const found = nodes.find(
+      (n) => n.label.toLowerCase() === query.toLowerCase() || n.id === query
+    );
+    if (found) {
+      handleNodeClick(found);
+    } else {
+      const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+      window.open(googleUrl, "_blank", "noopener,noreferrer");
+    }
   };
 
   // Filter visible nodes based on Level 3 toggle (Spider/Tree view)
@@ -728,29 +819,35 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                   isDark
                 );
 
-                const strokeColor = isCardMatched
+                const isCardHighlighted = isEdgeHighlighted(edge);
+                const edgeDimmed = isBranchActive && !isCardHighlighted;
+
+                const strokeColor = isCardMatched || isCardHighlighted
                   ? isDark
                     ? "#f59e0b"
                     : "#d97706"
                   : colorSpec.stroke;
-                const strokeWidth = isCardMatched ? 4.0 : 2.2;
+                const strokeWidth = isCardHighlighted ? 4.0 : isCardMatched ? 4.0 : 2.2;
+                const strokeOpacity = edgeDimmed ? 0.08 : isCardHighlighted ? 1 : isCardMatched ? 1 : 0.85;
 
                 return (
                   <g key={`edge-card-${edge.source}-${edge.target}-${idx}`}>
                     {/* Ambient Glow */}
-                    <path
-                      d={pathData}
-                      fill="none"
-                      stroke={colorSpec.glow}
-                      strokeWidth={strokeWidth + 3.2}
-                      strokeOpacity={0.28}
-                    />
+                    {(isCardHighlighted || !edgeDimmed) && (
+                      <path
+                        d={pathData}
+                        fill="none"
+                        stroke={isCardHighlighted ? (isDark ? "rgba(245, 158, 11, 0.6)" : "rgba(217, 119, 6, 0.4)") : colorSpec.glow}
+                        strokeWidth={strokeWidth + 3.2}
+                        strokeOpacity={isCardHighlighted ? 0.6 : 0.28}
+                      />
+                    )}
                     <path
                       d={pathData}
                       fill="none"
                       stroke={strokeColor}
                       strokeWidth={strokeWidth}
-                      strokeOpacity={isCardMatched ? 1 : 0.85}
+                      strokeOpacity={strokeOpacity}
                     />
                     <path
                       d={pathData}
@@ -758,7 +855,7 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                       stroke={strokeColor}
                       strokeWidth={1.6}
                       className="web-flow-line"
-                      strokeOpacity={0.9}
+                      strokeOpacity={edgeDimmed ? 0.05 : 0.9}
                     />
                   </g>
                 );
@@ -772,6 +869,8 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
                 const isHighlighted =
                   matchedNodes.has(edge.source) || matchedNodes.has(edge.target);
+                const isEdgeActive = isEdgeHighlighted(edge);
+                const edgeDimmed = isBranchActive && !isEdgeActive;
 
                 const colorSpec = getHierarchyThreadColor(
                   edge.branchIndex ?? targetNode.branchIndex ?? 0,
@@ -781,20 +880,20 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
                 let strokeColor = colorSpec.stroke;
                 let strokeWidth = 1.4;
-                let strokeOpacity = 0.7;
+                let strokeOpacity = edgeDimmed ? 0.08 : isEdgeActive ? 1.0 : 0.7;
 
                 if (edge.level === 1) {
-                  strokeWidth = isHighlighted ? 4.0 : 2.4;
-                  strokeOpacity = isHighlighted ? 1 : 0.88;
+                  strokeWidth = isEdgeActive ? 4.2 : isHighlighted ? 4.0 : 2.4;
+                  strokeOpacity = edgeDimmed ? 0.08 : isEdgeActive ? 1 : isHighlighted ? 1 : 0.88;
                 } else if (edge.level === 2) {
-                  strokeWidth = isHighlighted ? 3.0 : 1.8;
-                  strokeOpacity = isHighlighted ? 1 : 0.82;
+                  strokeWidth = isEdgeActive ? 3.4 : isHighlighted ? 3.0 : 1.8;
+                  strokeOpacity = edgeDimmed ? 0.08 : isEdgeActive ? 1 : isHighlighted ? 1 : 0.82;
                 } else {
-                  strokeWidth = isHighlighted ? 2.4 : 1.4;
-                  strokeOpacity = isHighlighted ? 1 : 0.72;
+                  strokeWidth = isEdgeActive ? 2.8 : isHighlighted ? 2.4 : 1.4;
+                  strokeOpacity = edgeDimmed ? 0.08 : isEdgeActive ? 1 : isHighlighted ? 1 : 0.72;
                 }
 
-                if (isHighlighted) {
+                if (isEdgeActive || isHighlighted) {
                   strokeColor = isDark ? "#f59e0b" : "#d97706";
                 }
 
@@ -816,14 +915,14 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
 
                 return (
                   <g key={`edge-node-${edge.source}-${edge.target}-${idx}`}>
-                    {/* Ambient Glow for L1/L2 threads */}
-                    {edge.level <= 2 && (
+                    {/* Ambient Glow for active or L1/L2 threads */}
+                    {(isEdgeActive || (edge.level <= 2 && !edgeDimmed)) && (
                       <path
                         d={pathData}
                         fill="none"
-                        stroke={colorSpec.glow}
+                        stroke={isEdgeActive ? (isDark ? "rgba(245, 158, 11, 0.6)" : "rgba(217, 119, 6, 0.4)") : colorSpec.glow}
                         strokeWidth={strokeWidth + 4}
-                        strokeOpacity={0.35}
+                        strokeOpacity={isEdgeActive ? 0.6 : 0.35}
                       />
                     )}
                     <path
@@ -834,14 +933,14 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                       strokeOpacity={strokeOpacity}
                     />
 
-                    {edge.level <= 2 && (
+                    {(isEdgeActive || edge.level <= 2) && (
                       <path
                         d={pathData}
                         fill="none"
                         stroke={strokeColor}
                         strokeWidth={edge.level === 1 ? 2.2 : 1.4}
                         className="web-flow-line"
-                        strokeOpacity={0.9}
+                        strokeOpacity={edgeDimmed ? 0.05 : 0.9}
                       />
                     )}
                   </g>
@@ -866,6 +965,9 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
               hasQuery={Boolean(queryLower)}
               onPointerDown={handleNodePointerDown}
               onClick={handleNodeClick}
+              isSelected={selectedNodeIds.includes(node.id)}
+              isBranchConnected={highlightedNodeIds.has(node.id)}
+              isBranchActive={isBranchActive}
             />
           ))}
 
@@ -880,6 +982,8 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
                 searchQuery={searchQuery}
                 onPointerDown={handleCardPointerDown}
                 onKeywordClick={handleGroupKeywordClick}
+                isBranchActive={isBranchActive}
+                isBranchConnected={highlightedNodeIds.has(card.id) || selectedNodeIds.includes(card.pillarId)}
               />
             ))}
         </div>
@@ -934,6 +1038,93 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
           </svg>
         )}
       </div>
+
+      {/* Active Concept Notebook Sidebar Drawer */}
+      <ConceptNotebookDrawer
+        selectedNodes={selectedNodesList}
+        allNodes={ALL_NODES}
+        theme={theme}
+        isOpen={isNotebookOpen}
+        onClose={() => setIsNotebookOpen(false)}
+        onSelectNode={(node) => {
+          setSelectedNodeIds((prev) => {
+            if (prev.includes(node.id)) return prev;
+            return [...prev, node.id];
+          });
+        }}
+        onRemoveNode={(nodeId) => {
+          setSelectedNodeIds((prev) => {
+            const next = prev.filter((id) => id !== nodeId);
+            if (next.length === 0) setIsNotebookOpen(false);
+            return next;
+          });
+        }}
+        onClearAll={() => {
+          setSelectedNodeIds([]);
+          setIsNotebookOpen(false);
+        }}
+      />
+
+      {/* Floating Bottom Bar: Active Branch Status */}
+      {isBranchActive && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: "24px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 45,
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            padding: "8px 16px",
+            borderRadius: "999px",
+            backgroundColor: isDark ? "rgba(15, 23, 42, 0.92)" : "rgba(255, 255, 255, 0.95)",
+            border: isDark ? "1px solid rgba(245, 158, 11, 0.45)" : "1px solid rgba(217, 119, 6, 0.45)",
+            boxShadow: "0 8px 30px rgba(0, 0, 0, 0.35)",
+            backdropFilter: "blur(16px)",
+          }}
+        >
+          <span style={{ fontSize: "12px", fontWeight: 700, color: isDark ? "#ffffff" : "#0f172a" }}>
+            ⚡ {selectedNodeIds.length} {selectedNodeIds.length === 1 ? "Concept" : "Concepts"} in Focus
+          </span>
+          {!isNotebookOpen && (
+            <button
+              onClick={() => setIsNotebookOpen(true)}
+              style={{
+                padding: "4px 10px",
+                borderRadius: "6px",
+                backgroundColor: "#f59e0b",
+                color: "#000000",
+                fontSize: "11px",
+                fontWeight: 700,
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Open Notebook 📖
+            </button>
+          )}
+          <button
+            onClick={() => {
+              setSelectedNodeIds([]);
+              setIsNotebookOpen(false);
+            }}
+            style={{
+              padding: "4px 10px",
+              borderRadius: "6px",
+              backgroundColor: isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)",
+              color: isDark ? "#cbd5e1" : "#475569",
+              fontSize: "11px",
+              fontWeight: 600,
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Clear Highlighting
+          </button>
+        </div>
+      )}
     </div>
   );
 };
