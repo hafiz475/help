@@ -161,13 +161,26 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           {node.badge && (
             <span
               style={{
-                fontSize: isRoot ? "10.5px" : "9.5px",
+                fontSize: isRoot ? "9.5px" : "9px",
                 fontWeight: 700,
                 textTransform: "uppercase",
-                letterSpacing: "0.08em",
+                letterSpacing: "0.06em",
                 color: isPrimarySelected ? "#ffffff" : accentColor,
-                marginBottom: "2px",
-                lineHeight: 1.1,
+                background: isPrimarySelected
+                  ? "rgba(255, 255, 255, 0.22)"
+                  : isDark
+                  ? `${accentColor}25`
+                  : `${accentColor}18`,
+                border: `1px solid ${isPrimarySelected ? "rgba(255, 255, 255, 0.45)" : `${accentColor}45`}`,
+                padding: "2px 8px",
+                borderRadius: "9999px",
+                marginBottom: "6px",
+                lineHeight: 1.15,
+                boxShadow: isPrimarySelected ? `0 0 10px ${accentColor}` : "none",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                whiteSpace: "nowrap",
               }}
             >
               {node.badge}
@@ -264,12 +277,26 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           {node.badge && (
             <span
               style={{
-                fontSize: "10px",
+                fontSize: "9px",
                 fontWeight: 700,
                 textTransform: "uppercase",
-                letterSpacing: "0.08em",
+                letterSpacing: "0.06em",
                 color: isPrimarySelected ? "#ffffff" : accentColor,
-                marginBottom: "2px",
+                background: isPrimarySelected
+                  ? "rgba(255, 255, 255, 0.22)"
+                  : isDark
+                  ? `${accentColor}25`
+                  : `${accentColor}18`,
+                border: `1px solid ${isPrimarySelected ? "rgba(255, 255, 255, 0.45)" : `${accentColor}45`}`,
+                padding: "1.5px 7.5px",
+                borderRadius: "9999px",
+                marginBottom: "5px",
+                lineHeight: 1.15,
+                boxShadow: isPrimarySelected ? `0 0 10px ${accentColor}` : "none",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                whiteSpace: "nowrap",
               }}
             >
               {node.badge}
@@ -380,12 +407,22 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           {node.badge && (
             <span
               style={{
-                fontSize: "10px",
-                fontWeight: 600,
-                padding: "2px 6px",
-                borderRadius: "6px",
-                background: `${accentColor}18`,
+                fontSize: "9.5px",
+                fontWeight: 700,
+                padding: "2px 7.5px",
+                borderRadius: "9999px",
+                background: isPrimarySelected
+                  ? "rgba(255, 255, 255, 0.22)"
+                  : isDark
+                  ? `${accentColor}25`
+                  : `${accentColor}18`,
+                border: `1px solid ${isPrimarySelected ? "rgba(255, 255, 255, 0.45)" : `${accentColor}45`}`,
                 color: isPrimarySelected ? "#ffffff" : accentColor,
+                letterSpacing: "0.03em",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                whiteSpace: "nowrap",
               }}
             >
               {node.badge}
@@ -498,11 +535,21 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           <span
             style={{
               fontSize: "9px",
-              padding: "1px 5px",
-              borderRadius: "4px",
-              background: `${accentColor}18`,
+              padding: "1.5px 7px",
+              borderRadius: "9999px",
+              background: isPrimarySelected
+                ? "rgba(255, 255, 255, 0.22)"
+                : isDark
+                ? `${accentColor}25`
+                : `${accentColor}18`,
+              border: `1px solid ${isPrimarySelected ? "rgba(255, 255, 255, 0.45)" : `${accentColor}45`}`,
               color: isPrimarySelected ? "#ffffff" : accentColor,
-              fontWeight: 600,
+              fontWeight: 700,
+              letterSpacing: "0.02em",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              whiteSpace: "nowrap",
             }}
           >
             {node.badge}
