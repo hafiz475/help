@@ -399,26 +399,6 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                     </span>
                   )}
 
-                  {item.badge && (
-                    <span
-                      title={item.badge}
-                      style={{
-                        fontSize: "9px",
-                        fontWeight: 600,
-                        padding: "1.5px 6.5px",
-                        borderRadius: "4px",
-                        background: isDark ? "rgba(255, 255, 255, 0.07)" : "rgba(0, 0, 0, 0.05)",
-                        color: isDark ? "rgba(255, 255, 255, 0.75)" : "#475569",
-                        maxWidth: "185px",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {item.badge}
-                    </span>
-                  )}
-
                   {/* Branch indicator if child keywords connect out from the right */}
                   {hasChildren && (
                     <span

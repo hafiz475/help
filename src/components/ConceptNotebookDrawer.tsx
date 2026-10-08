@@ -15,6 +15,98 @@ import {
   MessageSquare,
   Search,
 } from "lucide-react";
+import { getGroupCardsForCategory, GroupCardData, GroupItem } from "@/data/groupConcepts";
+
+const ALL_GROUP_CARDS: GroupCardData[] = getGroupCardsForCategory("all");
+
+interface KeywordBadgeItem {
+  badge: string;
+  label?: string;
+  isPrimary?: boolean;
+}
+
+function getNodeKeywords(
+  node: PositionedNode,
+  allGroupCards: GroupCardData[]
+): KeywordBadgeItem[] {
+  const result: KeywordBadgeItem[] = [];
+  const seen = new Set<string>();
+
+  const addBadge = (badge: string | undefined, label?: string, isPrimary = false) => {
+    if (!badge || !badge.trim()) return;
+    const clean = badge.trim();
+    if (clean.toLowerCase() === "concept") return;
+    const key = `${label || ""}:${clean}`.toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      result.push({ badge: clean, label, isPrimary });
+    }
+  };
+
+  // 1. Direct node badge (e.g. from card item row or node)
+  if (node.badge) {
+    addBadge(node.badge, undefined, true);
+  }
+
+  // 2. Search inside all group cards for matching item
+  let matchedItem: GroupItem | undefined;
+  for (const card of allGroupCards) {
+    const it = card.items.find((item) => item.id === node.id);
+    if (it) {
+      matchedItem = it;
+      if (it.badge) {
+        addBadge(it.badge, undefined, true);
+      }
+      if (it.subItems && it.subItems.length > 0) {
+        it.subItems.forEach((sub) => {
+          if (sub.badge) {
+            addBadge(sub.badge, sub.label);
+          } else {
+            addBadge(sub.label);
+          }
+        });
+      }
+      break;
+    }
+  }
+
+  // 3. If node is a GroupCard itself (e.g. node.id is card.id or card.pillarId)
+  if (!matchedItem) {
+    const cardMatch = allGroupCards.find(
+      (c) => c.id === node.id || c.pillarId === node.id
+    );
+    if (cardMatch) {
+      if (cardMatch.badge) {
+        addBadge(cardMatch.badge, undefined, true);
+      }
+      cardMatch.items.forEach((item) => {
+        if (item.badge) {
+          addBadge(item.badge, item.label);
+        }
+      });
+    }
+  }
+
+  // 4. Check if node is a subItem of any group card item
+  if (!matchedItem) {
+    for (const card of allGroupCards) {
+      for (const item of card.items) {
+        const sub = item.subItems?.find((s) => s.id === node.id);
+        if (sub) {
+          if (sub.badge) {
+            addBadge(sub.badge, undefined, true);
+          }
+          if (item.badge) {
+            addBadge(item.badge, item.label);
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  return result;
+}
 
 interface ConceptNotebookDrawerProps {
   selectedNodes: PositionedNode[];
@@ -378,6 +470,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
             const children = allNodes.filter((n) => n.parentId === node.id);
             const isLast = index === selectedNodes.length - 1;
             const isExpanded = expandedIds.has(node.id);
+            const nodeKeywords = getNodeKeywords(node, ALL_GROUP_CARDS);
 
             // Category monogram and color
             const catColor =
@@ -555,7 +648,7 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                               {node.label}
                             </span>
 
-                            {/* Category Badge */}
+                            {/* Domain Category Badge */}
                             <span
                               style={{
                                 fontSize: "10.5px",
@@ -566,7 +659,17 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                                 color: twitterBlue,
                               }}
                             >
-                              {conceptData.badge || "Concept"}
+                              {node.category === "v8"
+                                ? "V8 Engine"
+                                : node.category === "scope"
+                                ? "Scope & Closures"
+                                : node.category === "node"
+                                ? "Node.js"
+                                : node.category === "oop"
+                                ? "OOP"
+                                : node.category === "dsa"
+                                ? "DSA & Big O"
+                                : "Concept"}
                             </span>
 
                             <span
@@ -670,17 +773,97 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                       </div>
 
                       {/* -------------------------------------------------- */}
-                      {/* 2-SECTION BADGES: PARENT & CHILDREN                */}
+                      {/* 3-SECTION BADGES: KEY WORDS, PARENT & CHILDREN     */}
                       {/* -------------------------------------------------- */}
                       <div
                         style={{
                           marginTop: "8px",
                           display: "flex",
                           flexDirection: "column",
-                          gap: "5px",
+                          gap: "6px",
                         }}
                         onClick={(e) => e.stopPropagation()}
                       >
+                        {/* SECTION: KEY WORDS (Badges moved from cards) */}
+                        {nodeKeywords.length > 0 && (
+                          <div style={{ display: "flex", alignItems: "flex-start", gap: "6px", flexWrap: "wrap" }}>
+                            <span
+                              style={{
+                                fontSize: "11.5px",
+                                fontWeight: 700,
+                                color: textSecondary,
+                                paddingTop: "2px",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                gap: "3px",
+                              }}
+                            >
+                              <span>🏷️</span>
+                              <span>Key Words:</span>
+                            </span>
+
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: "4px", flex: 1 }}>
+                              {nodeKeywords.map((kw, kwIdx) => (
+                                <button
+                                  key={kwIdx}
+                                  onClick={() =>
+                                    handleGoogleSearchPrompt(
+                                      `${node.label} ${kw.label ? kw.label + " " : ""}${kw.badge}`
+                                    )
+                                  }
+                                  title={`Search Google for "${node.label} - ${kw.label ? kw.label + ": " : ""}${kw.badge}"`}
+                                  style={{
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: "4px",
+                                    padding: "2px 8px",
+                                    borderRadius: "6px",
+                                    backgroundColor: kw.isPrimary
+                                      ? isDark
+                                        ? "rgba(56, 189, 248, 0.16)"
+                                        : "rgba(2, 132, 199, 0.1)"
+                                      : pillBg,
+                                    border: kw.isPrimary
+                                      ? isDark
+                                        ? "1px solid rgba(56, 189, 248, 0.35)"
+                                        : "1px solid rgba(2, 132, 199, 0.28)"
+                                      : `1px solid ${borderPill}`,
+                                    color: kw.isPrimary
+                                      ? isDark
+                                        ? "#7dd3fc"
+                                        : "#0284c7"
+                                      : textPrimary,
+                                    fontSize: "11px",
+                                    fontWeight: 600,
+                                    cursor: "pointer",
+                                    transition: "all 0.15s ease",
+                                    lineHeight: 1.3,
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = "translateY(-1px)";
+                                    e.currentTarget.style.borderColor = twitterBlue;
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = "none";
+                                    e.currentTarget.style.borderColor = kw.isPrimary
+                                      ? isDark
+                                        ? "rgba(56, 189, 248, 0.35)"
+                                        : "rgba(2, 132, 199, 0.28)"
+                                      : borderPill;
+                                  }}
+                                >
+                                  {kw.label && (
+                                    <span style={{ color: textSecondary, fontWeight: 500, fontSize: "10.5px" }}>
+                                      {kw.label} ·
+                                    </span>
+                                  )}
+                                  <span>{kw.badge}</span>
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
                         {/* SECTION 1: PARENT BADGE with 🗿 / 🗼 */}
                         <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
                           <span style={{ fontSize: "11.5px", fontWeight: 600, color: textSecondary }}>
