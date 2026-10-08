@@ -9,7 +9,6 @@ import {
   RotateCcw,
   Crosshair,
   Layers,
-  HelpCircle,
   ExternalLink,
   Search,
   X,
@@ -58,7 +57,6 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
   showLevel3,
   onToggleLevel3,
 }) => {
-  const [showHelp, setShowHelp] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const isDark = theme === "dark";
@@ -643,105 +641,7 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           <RotateCcw size={12} />
           <span>Reset</span>
         </button>
-
-        <button
-          id="btn-toggle-details"
-          onClick={onToggleLevel3}
-          title={showLevel3 ? "Hide Sub-details" : "Show Sub-details"}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "3px",
-            padding: "0 7px",
-            height: "30px",
-            borderRadius: "6px",
-            background: showLevel3 ? (isDark ? "rgba(56, 189, 248, 0.2)" : "#e0f2fe") : "transparent",
-            color: showLevel3 ? (isDark ? "#38bdf8" : "#0284c7") : "var(--text-muted)",
-            fontSize: "11px",
-            fontWeight: 600,
-          }}
-        >
-          <Layers size={12} />
-          <span className="hide-on-mobile">Details</span>
-        </button>
-
-        <button
-          onClick={() => setShowHelp(!showHelp)}
-          title="Help & Shortcuts"
-          style={{
-            width: "30px",
-            height: "30px",
-            borderRadius: "6px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: showHelp ? "var(--toggle-bg)" : "transparent",
-            color: "var(--text-dim)",
-          }}
-        >
-          <HelpCircle size={14} />
-        </button>
       </div>
-
-      {/* Floating Help Modal */}
-      {showHelp && (
-        <div
-          className="glass-panel"
-          style={{
-            position: "fixed",
-            bottom: "74px",
-            right: "12px",
-            width: "min(320px, calc(100vw - 24px))",
-            borderRadius: "12px",
-            padding: "16px",
-            zIndex: 60,
-            color: "var(--text-main)",
-            fontSize: "12px",
-            lineHeight: 1.6,
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: "8px",
-              fontWeight: 700,
-              fontSize: "13px",
-              color: isDark ? "#38bdf8" : "#0284c7",
-            }}
-          >
-            <span>Touch & Navigation</span>
-            <button
-              onClick={() => setShowHelp(false)}
-              style={{
-                background: "transparent",
-                color: "var(--text-dim)",
-                fontSize: "14px",
-              }}
-            >
-              ✕
-            </button>
-          </div>
-          <ul style={{ paddingLeft: "16px", display: "flex", flexDirection: "column", gap: "6px" }}>
-            <li>
-              <strong>Pinch with 2 fingers:</strong> Zoom in and out smoothly on mobile.
-            </li>
-            <li>
-              <strong>Drag with 1 finger:</strong> Pan around the 2D canvas.
-            </li>
-            <li>
-              <strong>Tap any keyword:</strong> Opens Google Search for that exact term immediately.
-            </li>
-            <li>
-              <strong>Drag any node or card:</strong> Move it anywhere in the 2D space.
-            </li>
-            <li>
-              <strong>Spider / Tree / Group:</strong> Switch between radial spider web, hierarchical tree, and Codrin card group view.
-            </li>
-          </ul>
-        </div>
-      )}
     </>
   );
 };
