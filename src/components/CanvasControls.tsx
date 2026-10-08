@@ -725,22 +725,6 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           </div>
           <ul style={{ paddingLeft: "16px", display: "flex", flexDirection: "column", gap: "6px" }}>
             <li>
-              <strong>8-Layer Snooker Point Progression:</strong>
-              <div style={{ marginTop: "5px", display: "flex", flexWrap: "wrap", gap: "6px", fontSize: "11px" }}>
-                <span style={{ color: isDark ? "#ff6b6b" : "#ff5252", fontWeight: 700 }}>● Tomato Red (1 pt)</span>
-                <span style={{ color: isDark ? "#fde047" : "#eab308", fontWeight: 700 }}>● Canary Yellow (2 pts)</span>
-                <span style={{ color: isDark ? "#34d399" : "#10b981", fontWeight: 700 }}>● Mint Green (3 pts)</span>
-                <span style={{ color: isDark ? "#fb923c" : "#f97316", fontWeight: 700 }}>● Cinnamon (4 pts)</span>
-                <span style={{ color: isDark ? "#38bdf8" : "#0284c7", fontWeight: 700 }}>● Sky Blue (5 pts)</span>
-                <span style={{ color: isDark ? "#f472b6" : "#ec4899", fontWeight: 700 }}>● Rose Pink (6 pts)</span>
-                <span style={{ color: isDark ? "#e2e8f0" : "#64748b", fontWeight: 700 }}>● Obsidian Pearl (7 pts)</span>
-                <span style={{ color: isDark ? "#fde047" : "#eab308", fontWeight: 700 }}>● Gold (8 pts)</span>
-              </div>
-              <p style={{ marginTop: "4px", fontSize: "10.5px", color: "var(--text-dim)", lineHeight: 1.4 }}>
-                Parent emits 3 primary branches: Tomato Red (1 pt), Yellow (2 pts), Green (3 pts). Each tier spans 2 layers (glowing base → light tint), then jumps +3 points (Cinnamon 4, Sky Blue 5, Rose Pink 6), culminating in Obsidian Pearl (7 pts) and Diamond White / Gold (8 pts).
-              </p>
-            </li>
-            <li>
               <strong>Pinch with 2 fingers:</strong> Zoom in and out smoothly on mobile.
             </li>
             <li>
@@ -758,60 +742,6 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           </ul>
         </div>
       )}
-
-      {/* Floating Bottom Left Hierarchy Color Legend */}
-      <div
-        className="glass-panel hide-on-mobile"
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          left: "60px",
-          zIndex: 40,
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-          padding: "6px 14px",
-          borderRadius: "10px",
-          fontSize: "11px",
-          fontWeight: 600,
-        }}
-      >
-        <span style={{ color: "var(--text-dim)", textTransform: "uppercase", fontSize: "10px", letterSpacing: "0.06em", fontWeight: 700 }}>
-          Points:
-        </span>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#ff6b6b" : "#ff5252" }} title="Spoke 0: Tomato Red (1 pt)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#ff6b6b" : "#ff5252", boxShadow: "0 0 6px rgba(255, 107, 107, 0.6)" }} />
-          <span>Tomato (1)</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#fde047" : "#eab308" }} title="Spoke 1: Canary Yellow (2 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#fde047" : "#eab308", boxShadow: "0 0 6px rgba(253, 224, 71, 0.6)" }} />
-          <span>Yellow (2)</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#34d399" : "#10b981" }} title="Spoke 2: Mint Green (3 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#34d399" : "#10b981", boxShadow: "0 0 6px rgba(52, 211, 153, 0.6)" }} />
-          <span>Green (3)</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#fb923c" : "#f97316" }} title="Tier 2 (Red +3): Cinnamon Amber (4 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#fb923c" : "#f97316" }} />
-          <span>Cinnamon (4)</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#38bdf8" : "#0284c7" }} title="Tier 2 (Yellow +3): Sky Blue (5 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#38bdf8" : "#0284c7" }} />
-          <span>Blue (5)</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#f472b6" : "#ec4899" }} title="Tier 2 (Green +3): Rose Pink (6 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#f472b6" : "#ec4899" }} />
-          <span>Pink (6)</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#e2e8f0" : "#64748b" }} title="Tier 3: Luminous Obsidian Pearl (7 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#e2e8f0" : "#64748b" }} />
-          <span>Pearl (7)</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", color: isDark ? "#fde047" : "#eab308" }} title="Tier 4: Diamond White / Royal Gold (8 pts)">
-          <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: isDark ? "#fde047" : "#eab308", boxShadow: "0 0 6px rgba(253, 224, 71, 0.6)" }} />
-          <span>Gold (8)</span>
-        </div>
-      </div>
     </>
   );
 };
