@@ -70,6 +70,16 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
   // Active selected nodes in the Concept Notebook
   const [selectedNodeIds, setSelectedNodeIds] = useState<string[]>([]);
   const [isNotebookOpen, setIsNotebookOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(typeof window !== "undefined" && window.innerWidth <= 640);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Dragging states
   const [isPanning, setIsPanning] = useState(false);
@@ -1241,17 +1251,18 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
         }}
       />
 
-      {/* Floating Canvas Close & Unblur Button (Top-Right, immediately visible on mobile & desktop when notebook is closed) */}
+      {/* Floating Canvas Close & Unblur Button (Positioned below the top-right header controls to prevent overlap) */}
       {isBranchActive && !isNotebookOpen && (
         <div
           style={{
             position: "fixed",
-            top: "16px",
-            right: "16px",
-            zIndex: 48,
+            top: isMobile ? "68px" : "70px",
+            right: isMobile ? "10px" : "20px",
+            zIndex: 45,
           }}
         >
           <button
+            id="btn-clear-focus-unblur"
             onClick={() => {
               setSelectedNodeIds([]);
               setIsNotebookOpen(false);
@@ -1261,16 +1272,28 @@ export const SpiderCanvas: React.FC<SpiderCanvasProps> = ({
               display: "flex",
               alignItems: "center",
               gap: "6px",
-              padding: "8px 14px",
+              padding: "7px 14px",
               borderRadius: "9999px",
-              backgroundColor: isDark ? "rgba(15, 23, 42, 0.96)" : "rgba(255, 255, 255, 0.98)",
-              border: isDark ? "1.5px solid rgba(244, 33, 46, 0.6)" : "1.5px solid rgba(244, 33, 46, 0.5)",
-              color: isDark ? "#ff6b6b" : "#e11d48",
+              backgroundColor: isDark ? "rgba(15, 23, 42, 0.94)" : "rgba(255, 255, 255, 0.96)",
+              border: isDark ? "1.5px solid rgba(244, 63, 94, 0.6)" : "1.5px solid rgba(225, 29, 72, 0.45)",
+              color: isDark ? "#fda4af" : "#e11d48",
               fontSize: "12px",
               fontWeight: 700,
               cursor: "pointer",
-              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
-              backdropFilter: "blur(12px)",
+              boxShadow: isDark
+                ? "0 4px 20px rgba(0, 0, 0, 0.5), 0 0 12px rgba(244, 63, 94, 0.2)"
+                : "0 4px 16px rgba(225, 29, 72, 0.15), 0 2px 6px rgba(0, 0, 0, 0.08)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-1px) scale(1.02)";
+              e.currentTarget.style.borderColor = isDark ? "#fb7185" : "#be123c";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "none";
+              e.currentTarget.style.borderColor = isDark ? "rgba(244, 63, 94, 0.6)" : "rgba(225, 29, 72, 0.45)";
             }}
           >
             <X size={14} strokeWidth={2.4} />
