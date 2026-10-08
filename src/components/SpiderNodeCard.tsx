@@ -185,29 +185,6 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           >
             {node.label}
           </span>
-          <div
-            style={{
-              marginTop: "4px",
-              display: "flex",
-              alignItems: "center",
-              gap: "3.5px",
-              fontSize: isRoot ? "10px" : "9.5px",
-              color: isPrimarySelected
-                ? isDark ? "#ffffff" : "#0284c7"
-                : isSelected
-                ? accentColor
-                : isDark ? "rgba(255,255,255,0.6)" : "var(--text-dim)",
-              fontWeight: isPrimarySelected || isSelected ? 700 : 500,
-            }}
-          >
-            <span>
-              {isPrimarySelected
-                ? "⚡ Focus in Notes 📖"
-                : isSelected
-                ? "In Notebook 📖"
-                : "Story & Notes 📖"}
-            </span>
-          </div>
         </div>
       </div>
     );
@@ -308,29 +285,6 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
           >
             {node.label}
           </span>
-          <div
-            style={{
-              marginTop: "3px",
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-              fontSize: "10px",
-              color: isPrimarySelected
-                ? isDark ? "#ffffff" : "#0284c7"
-                : isSelected
-                ? accentColor
-                : isDark ? "rgba(255,255,255,0.6)" : "var(--text-dim)",
-              fontWeight: isPrimarySelected || isSelected ? 700 : 500,
-            }}
-          >
-            <span>
-              {isPrimarySelected
-                ? "⚡ Focus in Notes 📖"
-                : isSelected
-                ? "In Notebook 📖"
-                : "Story & Notes 📖"}
-            </span>
-          </div>
         </div>
       </div>
     );
@@ -437,16 +391,17 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
               {node.badge}
             </span>
           )}
-          <span
-            style={{
-              fontSize: "10px",
-              color: isPrimarySelected ? "#ffffff" : accentColor,
-              opacity: isPrimarySelected || isSelected ? 1 : 0.6,
-              marginLeft: "2px",
-            }}
-          >
-            {isPrimarySelected ? "⚡" : "📖"}
-          </span>
+          {isPrimarySelected && (
+            <span
+              style={{
+                fontSize: "10px",
+                color: "#ffffff",
+                marginLeft: "2px",
+              }}
+            >
+              ⚡
+            </span>
+          )}
         </div>
       </div>
     );
@@ -553,15 +508,16 @@ export const SpiderNodeCard: React.FC<SpiderNodeCardProps> = ({
             {node.badge}
           </span>
         )}
-        <span
-          style={{
-            fontSize: "9px",
-            color: isPrimarySelected ? "#ffffff" : accentColor,
-            opacity: isPrimarySelected || isSelected ? 1 : 0.5,
-          }}
-        >
-          {isPrimarySelected ? "⚡" : "📖"}
-        </span>
+        {isPrimarySelected && (
+          <span
+            style={{
+              fontSize: "9px",
+              color: "#ffffff",
+            }}
+          >
+            ⚡
+          </span>
+        )}
       </div>
     </div>
   );
