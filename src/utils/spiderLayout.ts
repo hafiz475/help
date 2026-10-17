@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
     r1 = 260;
     r2 = 520;
     r3 = 740;
-  } else if (category === "dsa") {
+  } else if (category === "dsa" || category === "bigo") {
     r1 = 300;
     r2 = 600;
     r3 = 880;
@@ -946,12 +946,14 @@ export function calculateGroupLayout(
         : category === "oop"
         ? "OOP (4 Pillars)"
         : category === "dsa"
-        ? "DSA & Big O"
+        ? "Data Structures"
+        : category === "bigo"
+        ? "Big O Complexity"
         : "Node.js + JavaScript",
     category: category === "all" ? "root" : category,
     level: 0,
-    badge: "Core Hub",
-    color: "#f59e0b",
+    badge: category === "bigo" ? "Complexity Tiers" : "Core Hub",
+    color: category === "bigo" ? "#f59e0b" : "#3b82f6",
   };
 
   const rootNode: PositionedNode = {
@@ -1453,7 +1455,7 @@ export function calculateGroupLayout(
       label: "CS Foundations",
       category: "root",
       level: 1,
-      badge: "OOP & DSA",
+      badge: "OOP, DSA & Big O",
       color: "#10b981",
       searchQuery: "Computer Science Foundations OOP Data Structures Algorithms Big O",
       x: csFoundX,
@@ -1528,7 +1530,7 @@ export function calculateGroupLayout(
       edges.push({
         source: csFoundNode.id,
         target: bigOCard.id,
-        category: "dsa",
+        category: "bigo",
         level: 2,
         branchIndex: 2,
       });
@@ -1570,7 +1572,9 @@ export function calculateGroupLayout(
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
-    pillarIds = ["dsa-structures-pillar", "dsa-big-o-pillar"];
+    pillarIds = ["dsa-structures-pillar"];
+  } else if (category === "bigo") {
+    pillarIds = ["dsa-big-o-pillar"];
   }
 
   const pillarCount = pillarIds.length || 1;
@@ -1816,6 +1820,11 @@ export function getNodesForCategory(
       parentId: "root-cs-foundations",
       level: 2,
     };
+    const bigoRoot = {
+      ...allNodes.find((n) => n.id === "root-bigo")!,
+      parentId: "root-cs-foundations",
+      level: 2,
+    };
 
     const remaining = allNodes.filter(
       (n) =>
@@ -1826,11 +1835,12 @@ export function getNodesForCategory(
         n.id !== "root-scope" &&
         n.id !== "root-node" &&
         n.id !== "root-oop" &&
-        n.id !== "root-dsa"
+        n.id !== "root-dsa" &&
+        n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, oopRoot, dsaRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

@@ -758,21 +758,21 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
   // ==========================================
   "root-dsa": {
     id: "root-dsa",
-    title: "DSA & Big O",
+    title: "Data Structures",
     badge: "CS Foundations",
-    tagline: "Fundamental storage structures and asymptotic runtime complexity tiers",
+    tagline: "Fundamental storage structures: sequential lists, stacks, queues, trees, and associative maps",
     takeaways: [
       {
         id: "dsa-root-1",
-        text: "Data structures determine memory layout; Big O measures how runtime scales with data size.",
-        searchPrompt: "data structures and algorithms Big O notation JavaScript",
+        text: "Data structures determine memory layout and provide specialized access patterns for optimal lookups.",
+        searchPrompt: "data structures JavaScript real world analogies explained",
         emoji: "🔥",
         reactionCount: "4.8k",
         commentCount: 350,
       },
       {
         id: "dsa-root-2",
-        text: "Pick structures to match access patterns: O(1) hash maps for lookups, trees for hierarchy.",
+        text: "Pick structures to match access needs: O(1) hash maps for keys, arrays for indexes, trees for hierarchy.",
         searchPrompt: "choosing the right data structure for performance JavaScript",
         emoji: "💡",
         reactionCount: "3.1k",
@@ -780,11 +780,44 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
       },
       {
         id: "dsa-root-3",
-        text: "Complexity tiers rank best to worst: O(1) constant down to O(n!) factorial blowout.",
-        searchPrompt: "Big O time complexity chart best to worst order",
+        text: "Understanding data organization turns chaotic data access into clean, cache-friendly code.",
+        searchPrompt: "data structures best practices and use cases JavaScript",
         emoji: "🚀",
         reactionCount: "2.4k",
         commentCount: 155,
+      },
+    ],
+  },
+
+  "root-bigo": {
+    id: "root-bigo",
+    title: "Big O Complexity",
+    badge: "Runtime Efficiency",
+    tagline: "Asymptotic scaling tiers measuring time and space efficiency from O(1) instant to O(n!) explosion",
+    takeaways: [
+      {
+        id: "bigo-root-1",
+        text: "Big O measures how algorithm runtime or memory scales as input size (n) grows toward infinity.",
+        searchPrompt: "Big O notation asymptotic complexity explained JavaScript",
+        emoji: "⏱️",
+        reactionCount: "5.2k",
+        commentCount: 380,
+      },
+      {
+        id: "bigo-root-2",
+        text: "Complexity tiers rank best to worst: O(1) constant down to O(n!) factorial permutation blowout.",
+        searchPrompt: "Big O time complexity chart best to worst order tiers",
+        emoji: "🚀",
+        reactionCount: "3.7k",
+        commentCount: 240,
+      },
+      {
+        id: "bigo-root-3",
+        text: "Keep core algorithms in green zones: eliminate accidental nested loops and redundant recursive branches.",
+        searchPrompt: "how to optimize high Big O complexity algorithms",
+        emoji: "🔥",
+        reactionCount: "2.9k",
+        commentCount: 180,
       },
     ],
   },
@@ -1646,7 +1679,9 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"
-      ? "DSA & Big O"
+      ? "Data Structures"
+      : node.category === "bigo"
+      ? "Big O Complexity"
       : "Full Stack JavaScript";
 
   return {

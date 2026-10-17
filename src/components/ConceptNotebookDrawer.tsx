@@ -483,6 +483,8 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                 : node.category === "oop"
                 ? "#ec4899"
                 : node.category === "dsa"
+                ? "#3b82f6"
+                : node.category === "bigo"
                 ? "#f59e0b"
                 : twitterBlue;
 
@@ -497,6 +499,8 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                 ? "OOP"
                 : node.category === "dsa"
                 ? "DSA"
+                : node.category === "bigo"
+                ? "O(n)"
                 : "JS";
 
             return (
@@ -668,7 +672,9 @@ export const ConceptNotebookDrawer: React.FC<ConceptNotebookDrawerProps> = ({
                                 : node.category === "oop"
                                 ? "OOP"
                                 : node.category === "dsa"
-                                ? "DSA & Big O"
+                                ? "DSA"
+                                : node.category === "bigo"
+                                ? "Big O"
                                 : "Concept"}
                             </span>
 

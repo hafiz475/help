@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "node" | "root" | "oop" | "dsa";
+  category: "v8" | "scope" | "node" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "node" | "oop" | "dsa";
+export type ConceptCategory = "all" | "v8" | "scope" | "node" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -61,12 +61,21 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "5. DSA & Big O",
-    title: "Data Structures & Big O Time Complexity",
-    description: "Parking Lots, Pancake Plates, Coffee Lines, Phonebooks & Big O tiers O(1) to O(n!)",
-    color: "#f59e0b", // Amber
+    name: "5. DSA",
+    title: "Data Structures & Real-World Analogies",
+    description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
+    color: "#3b82f6", // Blue
     icon: "Layers",
-    count: 16,
+    count: 8,
+  },
+  {
+    id: "bigo",
+    name: "6. Big O",
+    title: "Big O Time Complexity & Asymptotics",
+    description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
+    color: "#f59e0b", // Amber
+    icon: "Gauge",
+    count: 8,
   },
   {
     id: "all",
@@ -130,11 +139,20 @@ export const ALL_NODES: SpiderNode[] = [
   },
   {
     id: "root-dsa",
-    label: "DSA & Big O",
+    label: "Data Structures",
     category: "dsa",
     level: 0,
-    searchQuery: "Data Structures Algorithms Big O complexity JavaScript",
+    searchQuery: "Data Structures JavaScript real world analogies",
     badge: "CS Foundations",
+    color: "#3b82f6",
+  },
+  {
+    id: "root-bigo",
+    label: "Big O Complexity",
+    category: "bigo",
+    level: 0,
+    searchQuery: "Big O time complexity asymptotic analysis JavaScript",
+    badge: "Runtime Efficiency",
     color: "#f59e0b",
   },
   {
@@ -955,9 +973,9 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 5. DATA STRUCTURES & BIG O (DSA)
+  // 5. DATA STRUCTURES (DSA)
   // ==========================================
-  // Level 1 Major Pillars
+  // Level 1 Major Pillar
   {
     id: "dsa-structures-pillar",
     label: "Data Structures",
@@ -967,16 +985,6 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Data Structures JavaScript real world analogies",
     badge: "7 Core Structures",
     color: "#3b82f6",
-  },
-  {
-    id: "dsa-big-o-pillar",
-    label: "Big O Time Complexity",
-    category: "dsa",
-    parentId: "root-dsa",
-    level: 1,
-    searchQuery: "Big O time complexity best to worst JavaScript",
-    badge: "Best to Worst Tiers",
-    color: "#f59e0b",
   },
 
   // Level 2: Data Structures
@@ -1044,11 +1052,26 @@ export const ALL_NODES: SpiderNode[] = [
     badge: "📖 Phonebook (Direct Key)",
   },
 
+  // ==========================================
+  // 6. BIG O TIME COMPLEXITY
+  // ==========================================
+  // Level 1 Major Pillar
+  {
+    id: "dsa-big-o-pillar",
+    label: "Big O Time Complexity",
+    category: "bigo",
+    parentId: "root-bigo",
+    level: 1,
+    searchQuery: "Big O time complexity best to worst JavaScript",
+    badge: "Best to Worst Tiers",
+    color: "#f59e0b",
+  },
+
   // Level 2: Big O Complexity Tiers (Best to Worst)
   {
     id: "big-o-1",
     label: "O(1) Constant",
-    category: "dsa",
+    category: "bigo",
     parentId: "dsa-big-o-pillar",
     level: 2,
     searchQuery: "Big O O(1) constant time phonebook lookup JavaScript",
@@ -1057,7 +1080,7 @@ export const ALL_NODES: SpiderNode[] = [
   {
     id: "big-o-logn",
     label: "O(log n) Logarithmic",
-    category: "dsa",
+    category: "bigo",
     parentId: "dsa-big-o-pillar",
     level: 2,
     searchQuery: "Big O O(log n) logarithmic binary search guessing game",
@@ -1066,7 +1089,7 @@ export const ALL_NODES: SpiderNode[] = [
   {
     id: "big-o-n",
     label: "O(n) Linear",
-    category: "dsa",
+    category: "bigo",
     parentId: "dsa-big-o-pillar",
     level: 2,
     searchQuery: "Big O O(n) linear search scan list once",
@@ -1075,7 +1098,7 @@ export const ALL_NODES: SpiderNode[] = [
   {
     id: "big-o-nlogn",
     label: "O(n log n) Linearithmic",
-    category: "dsa",
+    category: "bigo",
     parentId: "dsa-big-o-pillar",
     level: 2,
     searchQuery: "Big O O(n log n) merge sort quick sort divide conquer",
@@ -1084,7 +1107,7 @@ export const ALL_NODES: SpiderNode[] = [
   {
     id: "big-o-n2",
     label: "O(n²) Quadratic",
-    category: "dsa",
+    category: "bigo",
     parentId: "dsa-big-o-pillar",
     level: 2,
     searchQuery: "Big O O(n^2) quadratic bubble sort nested loops",
@@ -1093,7 +1116,7 @@ export const ALL_NODES: SpiderNode[] = [
   {
     id: "big-o-2n",
     label: "O(2ⁿ) Exponential",
-    category: "dsa",
+    category: "bigo",
     parentId: "dsa-big-o-pillar",
     level: 2,
     searchQuery: "Big O O(2^n) exponential power set all subsets",
@@ -1102,7 +1125,7 @@ export const ALL_NODES: SpiderNode[] = [
   {
     id: "big-o-nfact",
     label: "O(n!) Factorial",
-    category: "dsa",
+    category: "bigo",
     parentId: "dsa-big-o-pillar",
     level: 2,
     searchQuery: "Big O O(n!) factorial traveling salesperson permutations",

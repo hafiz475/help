@@ -13,6 +13,7 @@ import {
   Sparkles,
   Box,
   Layers,
+  Gauge,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -44,6 +45,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Box size={16} />;
       case "dsa":
         return <Layers size={16} />;
+      case "bigo":
+        return <Gauge size={16} />;
       case "all":
         return <Compass size={16} />;
     }

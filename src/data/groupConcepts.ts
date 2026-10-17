@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "node" | "oop" | "dsa";
+  category: "v8" | "scope" | "node" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -515,11 +515,14 @@ export const DSA_GROUP_CARDS: GroupCardData[] = [
       },
     ],
   },
+];
+
+export const BIGO_GROUP_CARDS: GroupCardData[] = [
   {
     id: "group-big-o-tiers",
     pillarId: "dsa-big-o-pillar",
     title: "Big O Time Complexity (Best → Worst)",
-    category: "dsa",
+    category: "bigo",
     badge: "7 Complexity Tiers",
     color: "#f59e0b",
     isPipeline: true,
@@ -577,11 +580,12 @@ export const DSA_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "node" | "oop" | "dsa"): GroupCardData[] {
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "node" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "node") return NODE_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...NODE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS];
+  if (category === "bigo") return BIGO_GROUP_CARDS;
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...NODE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }
