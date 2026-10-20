@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "node" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "node" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -201,9 +201,12 @@ export const V8_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-// Scope Groups: ALL groups have <= 3 items (Scope & Lookup has 3, Lexical Env has 1, Closure has 1)
+// Scope Groups: ALL groups have <= 3 items (Scope & Lookup has 3, Lexical Env has 1)
 // Therefore, Scope has ZERO cards and renders completely as individual keyword nodes!
 export const SCOPE_GROUP_CARDS: GroupCardData[] = [];
+
+// Closures Groups: ALL groups have <= 3 items (Closure Core, Backpack, 5 Sentences)
+export const CLOSURE_GROUP_CARDS: GroupCardData[] = [];
 
 // Node.js Groups with > 3 children:
 // 1. Node.js Built-in APIs (4 items > 3)
@@ -580,12 +583,13 @@ export const BIGO_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "node" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "node" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
+  if (category === "closure") return CLOSURE_GROUP_CARDS;
   if (category === "node") return NODE_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...NODE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...NODE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

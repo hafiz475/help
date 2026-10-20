@@ -188,9 +188,9 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
 
   "root-scope": {
     id: "root-scope",
-    title: "Scope & Closures",
-    badge: "Language Core",
-    tagline: "Lexical scope hierarchies and function closure variable preservation",
+    title: "Scope",
+    badge: "Lexical Boundary",
+    tagline: "Lexical scope hierarchies, lookup chains, and environment records in JavaScript",
     takeaways: [
       {
         id: "scope-1",
@@ -202,9 +202,9 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
       },
       {
         id: "scope-2",
-        text: "Closures preserve references to outer variables even after the parent function exits.",
-        searchPrompt: "JavaScript closures how inner functions retain outer scope variables",
-        emoji: "🤯",
+        text: "Scope Chain lookup: engine searches Current Scope → Outer Scope → Global Scope.",
+        searchPrompt: "JavaScript scope chain lookup order current outer global",
+        emoji: "🔍",
         reactionCount: "2.7k",
         commentCount: 189,
       },
@@ -215,6 +215,39 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
         emoji: "💡",
         reactionCount: "1.5k",
         commentCount: 84,
+      },
+    ],
+  },
+
+  "root-closure": {
+    id: "root-closure",
+    title: "Closures",
+    badge: "Persistent Memory",
+    tagline: "Functions retaining access to outer lexical environment and persistent heap state",
+    takeaways: [
+      {
+        id: "cl-root-1",
+        text: "A closure is created when an inner function references variables from its outer lexical scope.",
+        searchPrompt: "JavaScript closure definition how closures retain variables",
+        emoji: "🔥",
+        reactionCount: "4.6k",
+        commentCount: 310,
+      },
+      {
+        id: "cl-root-2",
+        text: "The Backpack Story: Functions pack outer variables and carry them into the heap forever.",
+        searchPrompt: "JavaScript closure backpack analogy heap memory",
+        emoji: "🎒",
+        reactionCount: "3.5k",
+        commentCount: 230,
+      },
+      {
+        id: "cl-root-3",
+        text: "Essential for data privacy, currying, event listeners, and maintaining state across calls.",
+        searchPrompt: "JavaScript closure practical use cases data privacy currying",
+        emoji: "💡",
+        reactionCount: "2.3k",
+        commentCount: 160,
       },
     ],
   },
@@ -1706,7 +1739,9 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
     node.category === "v8"
       ? "Google V8 Engine"
       : node.category === "scope"
-      ? "Scope & Closures"
+      ? "Scope"
+      : node.category === "closure"
+      ? "Closures"
       : node.category === "node"
       ? "Node.js Runtime"
       : node.category === "oop"

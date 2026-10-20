@@ -39,6 +39,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Cpu size={16} />;
       case "scope":
         return <GitFork size={16} />;
+      case "closure":
+        return <Sparkles size={16} />;
       case "node":
         return <Network size={16} />;
       case "oop":

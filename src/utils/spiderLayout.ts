@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope") {
+  if (category === "scope" || category === "closure") {
     r1 = 260;
     r2 = 500;
     r3 = 700;
@@ -952,7 +952,9 @@ export function calculateGroupLayout(
       category === "v8"
         ? "V8 Engine"
         : category === "scope"
-        ? "Scope & Closures"
+        ? "Scope"
+        : category === "closure"
+        ? "Closures"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -964,8 +966,22 @@ export function calculateGroupLayout(
         : "Node.js + JavaScript",
     category: category === "all" ? "root" : category,
     level: 0,
-    badge: category === "bigo" ? "Complexity Tiers" : "Core Hub",
-    color: category === "bigo" ? "#f59e0b" : "#3b82f6",
+    badge:
+      category === "bigo"
+        ? "Complexity Tiers"
+        : category === "closure"
+        ? "Persistent Scope"
+        : category === "scope"
+        ? "Lexical Boundary"
+        : "Core Hub",
+    color:
+      category === "bigo"
+        ? "#f59e0b"
+        : category === "closure"
+        ? "#e879f9"
+        : category === "scope"
+        ? "#a855f7"
+        : "#3b82f6",
   };
 
   const rootNode: PositionedNode = {
@@ -1129,9 +1145,9 @@ export function calculateGroupLayout(
       layoutCardSubItems(posCard, positionedNodes, edges, 4, 0);
     }
 
-    // Sub-Branch 0B: Scope & Closures Hub (placed down-left)
+    // Sub-Branch 0B: Scope Hub (placed down-left)
     const scopeHubX = -1450;
-    const scopeHubY = 400;
+    const scopeHubY = 150;
     const scopeHubNode: PositionedNode = {
       ...allNodes.find((n) => n.id === "root-scope")!,
       x: scopeHubX,
@@ -1148,11 +1164,11 @@ export function calculateGroupLayout(
       branchIndex: 0,
     });
 
-    // Scope Node 1: Scope & Scope Chain
+    // Scope Node 1: Scope Boundaries
     const scopeNodeRaw = allNodes.find((n) => n.id === "scope-scope");
     if (scopeNodeRaw) {
       const scX = -2100;
-      const scY = 160;
+      const scY = 0;
       const scNode: PositionedNode = {
         ...scopeNodeRaw,
         x: scX,
@@ -1174,7 +1190,7 @@ export function calculateGroupLayout(
         positionedNodes.push({
           ...lexRaw,
           x: scX - 320,
-          y: scY - 50,
+          y: scY - 30,
           level: 4,
           branchIndex: 0,
         });
@@ -1187,50 +1203,88 @@ export function calculateGroupLayout(
         });
       }
 
-      const chainRaw = allNodes.find((n) => n.id === "scope-chain");
-      if (chainRaw) {
-        const chX = scX - 320;
-        const chY = scY + 50;
+      const typesRaw = allNodes.find((n) => n.id === "scope-types");
+      if (typesRaw) {
         positionedNodes.push({
-          ...chainRaw,
-          x: chX,
-          y: chY,
+          ...typesRaw,
+          x: scX - 320,
+          y: scY + 30,
           level: 4,
           branchIndex: 0,
         });
         edges.push({
           source: scNode.id,
-          target: chainRaw.id,
+          target: typesRaw.id,
           category: "scope",
           level: 4,
           branchIndex: 0,
         });
-
-        const orderRaw = allNodes.find((n) => n.id === "scope-chain-order");
-        if (orderRaw) {
-          positionedNodes.push({
-            ...orderRaw,
-            x: chX - 320,
-            y: chY,
-            level: 5,
-            branchIndex: 0,
-          });
-          edges.push({
-            source: chainRaw.id,
-            target: orderRaw.id,
-            category: "scope",
-            level: 5,
-            branchIndex: 0,
-          });
-        }
       }
     }
 
-    // Scope Node 2: Lexical Environment
+    // Scope Node 2: Scope Chain
+    const chainRaw = allNodes.find((n) => n.id === "scope-chain");
+    if (chainRaw) {
+      const chX = -2100;
+      const chY = 150;
+      const chNode: PositionedNode = {
+        ...chainRaw,
+        x: chX,
+        y: chY,
+        level: 3,
+        branchIndex: 0,
+      };
+      positionedNodes.push(chNode);
+      edges.push({
+        source: scopeHubNode.id,
+        target: chNode.id,
+        category: "scope",
+        level: 3,
+        branchIndex: 0,
+      });
+
+      const orderRaw = allNodes.find((n) => n.id === "scope-chain-order");
+      if (orderRaw) {
+        positionedNodes.push({
+          ...orderRaw,
+          x: chX - 320,
+          y: chY - 30,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: chNode.id,
+          target: orderRaw.id,
+          category: "scope",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+
+      const shadowRaw = allNodes.find((n) => n.id === "scope-shadowing");
+      if (shadowRaw) {
+        positionedNodes.push({
+          ...shadowRaw,
+          x: chX - 320,
+          y: chY + 30,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: chNode.id,
+          target: shadowRaw.id,
+          category: "scope",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+    }
+
+    // Scope Node 3: Lexical Environment
     const lexEnvRaw = allNodes.find((n) => n.id === "scope-lexical-env");
     if (lexEnvRaw) {
       const leX = -2100;
-      const leY = 400;
+      const leY = 300;
       const leNode: PositionedNode = {
         ...lexEnvRaw,
         x: leX,
@@ -1246,15 +1300,70 @@ export function calculateGroupLayout(
         level: 3,
         branchIndex: 0,
       });
+
+      const envRecRaw = allNodes.find((n) => n.id === "scope-env-record");
+      if (envRecRaw) {
+        positionedNodes.push({
+          ...envRecRaw,
+          x: leX - 320,
+          y: leY - 30,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: leNode.id,
+          target: envRecRaw.id,
+          category: "scope",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+
+      const outRefRaw = allNodes.find((n) => n.id === "scope-outer-ref");
+      if (outRefRaw) {
+        positionedNodes.push({
+          ...outRefRaw,
+          x: leX - 320,
+          y: leY + 30,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: leNode.id,
+          target: outRefRaw.id,
+          category: "scope",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
     }
 
-    // Scope Node 3: Closure
-    const closureRaw = allNodes.find((n) => n.id === "scope-closure");
-    if (closureRaw) {
+    // Sub-Branch 0C: Closures Hub (placed down-left)
+    const closureHubX = -1450;
+    const closureHubY = 680;
+    const closureHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-closure")!,
+      x: closureHubX,
+      y: closureHubY,
+      level: 2,
+      branchIndex: 0,
+    };
+    positionedNodes.push(closureHubNode);
+    edges.push({
+      source: jsCoreNode.id,
+      target: closureHubNode.id,
+      category: "closure",
+      level: 2,
+      branchIndex: 0,
+    });
+
+    // Closure Node 1: Closure Core
+    const closureCoreRaw = allNodes.find((n) => n.id === "closure-core");
+    if (closureCoreRaw) {
       const clX = -2100;
-      const clY = 640;
+      const clY = 550;
       const clNode: PositionedNode = {
-        ...closureRaw,
+        ...closureCoreRaw,
         x: clX,
         y: clY,
         level: 3,
@@ -1262,9 +1371,9 @@ export function calculateGroupLayout(
       };
       positionedNodes.push(clNode);
       edges.push({
-        source: scopeHubNode.id,
+        source: closureHubNode.id,
         target: clNode.id,
-        category: "scope",
+        category: "closure",
         level: 3,
         branchIndex: 0,
       });
@@ -1274,50 +1383,130 @@ export function calculateGroupLayout(
         positionedNodes.push({
           ...detailRaw,
           x: clX - 320,
-          y: clY - 60,
+          y: clY - 30,
           level: 4,
           branchIndex: 0,
         });
         edges.push({
           source: clNode.id,
           target: detailRaw.id,
-          category: "scope",
+          category: "closure",
           level: 4,
           branchIndex: 0,
         });
       }
 
-      const backpackRaw = allNodes.find((n) => n.id === "scope-backpack");
-      if (backpackRaw) {
+      const heapRaw = allNodes.find((n) => n.id === "closure-heap-retention");
+      if (heapRaw) {
         positionedNodes.push({
-          ...backpackRaw,
+          ...heapRaw,
           x: clX - 320,
-          y: clY,
+          y: clY + 30,
           level: 4,
           branchIndex: 0,
         });
         edges.push({
           source: clNode.id,
-          target: backpackRaw.id,
-          category: "scope",
+          target: heapRaw.id,
+          category: "closure",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+    }
+
+    // Closure Node 2: The Backpack Story
+    const backpackRaw = allNodes.find((n) => n.id === "scope-backpack");
+    if (backpackRaw) {
+      const bpX = -2100;
+      const bpY = 680;
+      const bpNode: PositionedNode = {
+        ...backpackRaw,
+        x: bpX,
+        y: bpY,
+        level: 3,
+        branchIndex: 0,
+      };
+      positionedNodes.push(bpNode);
+      edges.push({
+        source: closureHubNode.id,
+        target: bpNode.id,
+        category: "closure",
+        level: 3,
+        branchIndex: 0,
+      });
+
+      const bpVarRaw = allNodes.find((n) => n.id === "backpack-variables");
+      if (bpVarRaw) {
+        positionedNodes.push({
+          ...bpVarRaw,
+          x: bpX - 320,
+          y: bpY - 30,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: bpNode.id,
+          target: bpVarRaw.id,
+          category: "closure",
           level: 4,
           branchIndex: 0,
         });
       }
 
-      const sentRaw = allNodes.find((n) => n.id === "scope-5-sentences");
-      if (sentRaw) {
+      const bpLifeRaw = allNodes.find((n) => n.id === "backpack-lifetime");
+      if (bpLifeRaw) {
         positionedNodes.push({
-          ...sentRaw,
-          x: clX - 320,
-          y: clY + 60,
+          ...bpLifeRaw,
+          x: bpX - 320,
+          y: bpY + 30,
           level: 4,
           branchIndex: 0,
         });
         edges.push({
-          source: clNode.id,
-          target: sentRaw.id,
-          category: "scope",
+          source: bpNode.id,
+          target: bpLifeRaw.id,
+          category: "closure",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+    }
+
+    // Closure Node 3: 5 Sentences to Remember
+    const sentRaw = allNodes.find((n) => n.id === "scope-5-sentences");
+    if (sentRaw) {
+      const s5X = -2100;
+      const s5Y = 810;
+      const s5Node: PositionedNode = {
+        ...sentRaw,
+        x: s5X,
+        y: s5Y,
+        level: 3,
+        branchIndex: 0,
+      };
+      positionedNodes.push(s5Node);
+      edges.push({
+        source: closureHubNode.id,
+        target: s5Node.id,
+        category: "closure",
+        level: 3,
+        branchIndex: 0,
+      });
+
+      const ruleRaw = allNodes.find((n) => n.id === "sentences-interview-rule");
+      if (ruleRaw) {
+        positionedNodes.push({
+          ...ruleRaw,
+          x: s5X - 320,
+          y: s5Y,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: s5Node.id,
+          target: ruleRaw.id,
+          category: "closure",
           level: 4,
           branchIndex: 0,
         });
@@ -1602,7 +1791,9 @@ export function calculateGroupLayout(
   if (category === "v8") {
     pillarIds = ["v8-js-exec", "v8-memory", "v8-stack-pillar"];
   } else if (category === "scope") {
-    pillarIds = ["scope-scope", "scope-lexical-env", "scope-closure"];
+    pillarIds = ["scope-scope", "scope-chain", "scope-lexical-env"];
+  } else if (category === "closure") {
+    pillarIds = ["closure-core", "scope-backpack", "scope-5-sentences"];
   } else if (category === "node") {
     pillarIds = ["node-restaurant-pillar", "node-apis-pillar", "node-libuv-pillar"];
   } else if (category === "oop") {
@@ -1873,6 +2064,11 @@ export function getNodesForCategory(
       parentId: "root-js-core",
       level: 2,
     };
+    const closureRoot = {
+      ...allNodes.find((n) => n.id === "root-closure")!,
+      parentId: "root-js-core",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -1896,6 +2092,7 @@ export function getNodesForCategory(
         n.id !== "root-cs-foundations" &&
         n.id !== "root-v8" &&
         n.id !== "root-scope" &&
+        n.id !== "root-closure" &&
         n.id !== "root-node" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
@@ -1903,7 +2100,7 @@ export function getNodesForCategory(
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

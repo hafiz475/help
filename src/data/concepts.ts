@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "node" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "node" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "node" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "node" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -34,16 +34,25 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "scope",
-    name: "2. Scope & Closures",
-    title: "JavaScript Scope, Closures & The Backpack",
-    description: "Lexical Scope, Scope Chain, The Backpack Story, Lexical Environment & 5 Core Rules",
+    name: "2. Scope",
+    title: "JavaScript Scope & Lexical Environment",
+    description: "Scope Boundaries, Lexical Scope, Scope Chain Current → Outer → Global & Environment Record",
     color: "#a855f7", // Purple / Violet
     icon: "GitFork",
-    count: 10,
+    count: 9,
+  },
+  {
+    id: "closure",
+    name: "3. Closures",
+    title: "JavaScript Closures & The Backpack",
+    description: "Persistent Memory, Access to Outer Lexical Env, The Backpack Story & 5 Interview Rules",
+    color: "#e879f9", // Fuchsia / Magenta
+    icon: "Sparkles",
+    count: 8,
   },
   {
     id: "node",
-    name: "3. Node.js & Restaurant",
+    name: "4. Node.js & Restaurant",
     title: "Node.js Runtime & The Restaurant Cast",
     description: "The Chef, Waiter, Back Kitchen, Thread Pool Helpers, VIP Notes & 5 Loop Phases",
     color: "#22c55e", // Node green
@@ -52,7 +61,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "oop",
-    name: "4. OOP (4 Pillars)",
+    name: "5. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -61,7 +70,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "5. DSA",
+    name: "6. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -70,7 +79,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "6. Big O",
+    name: "7. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -84,7 +93,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 94,
+    count: 98,
   },
 ];
 
@@ -112,12 +121,21 @@ export const ALL_NODES: SpiderNode[] = [
   },
   {
     id: "root-scope",
-    label: "Scope & Closures",
+    label: "Scope",
     category: "scope",
     level: 0,
-    searchQuery: "JavaScript Scope and Closures explained",
-    badge: "Language Core",
-    color: "#c084fc",
+    searchQuery: "JavaScript Scope Lexical Scope Chain explained",
+    badge: "Lexical Boundary",
+    color: "#a855f7",
+  },
+  {
+    id: "root-closure",
+    label: "Closures",
+    category: "closure",
+    level: 0,
+    searchQuery: "JavaScript Closures explained backpack story",
+    badge: "Persistent Memory",
+    color: "#e879f9",
   },
   {
     id: "root-node",
@@ -432,11 +450,11 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 2. JAVASCRIPT SCOPE & CLOSURES
+  // 2. JAVASCRIPT SCOPE
   // ==========================================
   {
     id: "scope-scope",
-    label: "Scope",
+    label: "Scope Boundaries",
     category: "scope",
     parentId: "root-scope",
     level: 1,
@@ -455,23 +473,44 @@ export const ALL_NODES: SpiderNode[] = [
     color: "#9333ea",
   },
   {
-    id: "scope-chain",
-    label: "Scope Chain",
+    id: "scope-types",
+    label: "Block & Function Scope",
     category: "scope",
     parentId: "scope-scope",
     level: 2,
+    searchQuery: "let const block scope vs var function scope JavaScript difference",
+    badge: "let/const vs var",
+    color: "#7e22ce",
+  },
+  {
+    id: "scope-chain",
+    label: "Scope Chain",
+    category: "scope",
+    parentId: "root-scope",
+    level: 1,
     searchQuery: "JavaScript Scope Chain lookup",
     badge: "Lookup Chain",
-    color: "#7e22ce",
+    color: "#8b5cf6",
   },
   {
     id: "scope-chain-order",
     label: "Current → Outer → Global",
     category: "scope",
     parentId: "scope-chain",
-    level: 3,
+    level: 2,
     searchQuery: "JavaScript Scope Chain Current Outer Global resolution",
     badge: "Resolution Order",
+    color: "#a78bfa",
+  },
+  {
+    id: "scope-shadowing",
+    label: "Variable Shadowing",
+    category: "scope",
+    parentId: "scope-chain",
+    level: 2,
+    searchQuery: "JavaScript variable shadowing scope chain",
+    badge: "Name Masking",
+    color: "#c4b5fd",
   },
   {
     id: "scope-lexical-env",
@@ -484,10 +523,34 @@ export const ALL_NODES: SpiderNode[] = [
     color: "#c084fc",
   },
   {
-    id: "scope-closure",
-    label: "Closure",
+    id: "scope-env-record",
+    label: "Environment Record",
     category: "scope",
-    parentId: "root-scope",
+    parentId: "scope-lexical-env",
+    level: 2,
+    searchQuery: "JavaScript Environment Record identifier bindings",
+    badge: "Binding Storage",
+    color: "#d8b4fe",
+  },
+  {
+    id: "scope-outer-ref",
+    label: "Outer Reference Pointer",
+    category: "scope",
+    parentId: "scope-lexical-env",
+    level: 2,
+    searchQuery: "JavaScript Lexical Environment outer reference pointer",
+    badge: "Pointer Chain",
+    color: "#e9d5ff",
+  },
+
+  // ==========================================
+  // 3. JAVASCRIPT CLOSURES
+  // ==========================================
+  {
+    id: "closure-core",
+    label: "Closure Core",
+    category: "closure",
+    parentId: "root-closure",
     level: 1,
     searchQuery: "JavaScript Closure retain access outer environment",
     badge: "Core Feature",
@@ -496,34 +559,76 @@ export const ALL_NODES: SpiderNode[] = [
   {
     id: "scope-closure-detail",
     label: "Access to Outer Lexical Env",
-    category: "scope",
-    parentId: "scope-closure",
+    category: "closure",
+    parentId: "closure-core",
     level: 2,
     searchQuery: "Closure retains access to outer lexical environment JavaScript",
     badge: "Persistent Memory",
+    color: "#f0abfc",
+  },
+  {
+    id: "closure-heap-retention",
+    label: "Heap Memory Retention",
+    category: "closure",
+    parentId: "closure-core",
+    level: 2,
+    searchQuery: "JavaScript closures heap memory retention call stack pop",
+    badge: "Escapes Stack",
+    color: "#f5d0fe",
   },
   {
     id: "scope-backpack",
     label: "🎒 The Backpack Story",
-    category: "scope",
-    parentId: "scope-closure",
-    level: 2,
+    category: "closure",
+    parentId: "root-closure",
+    level: 1,
     searchQuery: "JavaScript Closure backpack story analogy",
     badge: "Packs Scope Forever",
+    color: "#d946ef",
+  },
+  {
+    id: "backpack-variables",
+    label: "Packed Live Variables",
+    category: "closure",
+    parentId: "scope-backpack",
+    level: 2,
+    searchQuery: "closure backpack packed live variables JavaScript",
+    badge: "Live Reference",
+    color: "#e879f9",
+  },
+  {
+    id: "backpack-lifetime",
+    label: "Outlives Outer Function",
+    category: "closure",
+    parentId: "scope-backpack",
+    level: 2,
+    searchQuery: "how closure outlives parent function execution",
+    badge: "Long-lived",
+    color: "#f0abfc",
   },
   {
     id: "scope-5-sentences",
     label: "🧠 5 Sentences to Remember",
-    category: "scope",
-    parentId: "scope-closure",
-    level: 2,
+    category: "closure",
+    parentId: "root-closure",
+    level: 1,
     searchQuery: "V8 Call Stack Execution Context Scope Chain Closure",
     badge: "Interview Core",
     color: "#f43f5e",
   },
+  {
+    id: "sentences-interview-rule",
+    label: "Golden Interview Rules",
+    category: "closure",
+    parentId: "scope-5-sentences",
+    level: 2,
+    searchQuery: "JavaScript engine interview cheat sheet V8 Call Stack Closure",
+    badge: "Interview Cheat Sheet",
+    color: "#fb7185",
+  },
 
   // ==========================================
-  // 3. NODE.JS RUNTIME
+  // 4. NODE.JS RUNTIME
   // ==========================================
   // Level 1: Major Pillars (Exactly 3)
   {
