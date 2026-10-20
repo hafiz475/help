@@ -254,21 +254,33 @@ export function getHierarchyThreadColor(
 }
 
 /**
- * Standard width for grouped concept cards (up to 50 characters of text per item row)
+ * Standard dimensions for grouped concept cards
  */
 export const GROUP_CARD_WIDTH = 500;
+export const GROUP_CARD_HEADER_HEIGHT = 46;
+export const GROUP_CARD_FOOTER_HEIGHT = 28;
+export const GROUP_CARD_ROW_HEIGHT = 34;
+export const GROUP_CARD_ROW_GAP = 6;
+export const GROUP_CARD_CONTAINER_PADDING = 10;
 
 /**
  * Calculates anchor point on the right end of a Group Card for an item row.
+ * Precisely aligned with the vertical center of the specific row item.
  */
 export function getCardItemAnchor(
   card: PositionedGroupCard,
   itemIndex: number,
   totalItems: number
 ): { x: number; y: number } {
-  const itemHeight = 36;
-  const startY = -(totalItems * itemHeight) / 2 + 18;
-  const itemY = Math.round(card.y + startY + itemIndex * itemHeight);
+  // Height and vertical positioning matches SpiderGroupCard exact layout:
+  // - Header: 46px
+  // - Items Container padding top/bottom: 10px each
+  // - Item row: 34px, gap: 6px
+  // - Footer: 28px
+  // Total card height: 40 * totalItems + 88px
+  // Top of card: card.y - 20 * totalItems - 44px
+  // Center of row i: card.y + (itemIndex - totalItems / 2) * 40 + 29px
+  const itemY = Math.round(card.y + (itemIndex - totalItems / 2) * 40 + 29);
   const anchorX = card.x + Math.round(GROUP_CARD_WIDTH / 2); // Right end of card (width 500px -> +250px from center)
   return { x: anchorX, y: itemY };
 }

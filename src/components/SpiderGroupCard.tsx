@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { PositionedGroupCard, getHierarchyThreadColor, GROUP_CARD_WIDTH } from "@/utils/spiderLayout";
+import {
+  PositionedGroupCard,
+  getHierarchyThreadColor,
+  GROUP_CARD_WIDTH,
+  GROUP_CARD_HEADER_HEIGHT,
+  GROUP_CARD_FOOTER_HEIGHT,
+  GROUP_CARD_ROW_HEIGHT,
+  GROUP_CARD_ROW_GAP,
+  GROUP_CARD_CONTAINER_PADDING,
+} from "@/utils/spiderLayout";
 import { GroupItem } from "@/data/groupConcepts";
 import { ExternalLink, GripVertical } from "lucide-react";
 
@@ -156,7 +165,9 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
         }}
         title="Click card to open in Concept Notebook"
         style={{
-          padding: "12px 14px",
+          height: `${GROUP_CARD_HEADER_HEIGHT}px`,
+          boxSizing: "border-box",
+          padding: "0 14px",
           borderBottom: isDark
             ? "1px solid rgba(255, 255, 255, 0.08)"
             : "1px solid rgba(0, 0, 0, 0.06)",
@@ -249,11 +260,12 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
       <div
         onWheel={(e) => e.stopPropagation()}
         style={{
-          padding: "10px 12px",
+          boxSizing: "border-box",
+          padding: `${GROUP_CARD_CONTAINER_PADDING}px 12px`,
           display: "flex",
           flexDirection: "column",
-          gap: "6px",
-          maxHeight: "440px",
+          gap: `${GROUP_CARD_ROW_GAP}px`,
+          maxHeight: "520px",
           overflowY: "auto",
           overscrollBehavior: "contain",
         }}
@@ -270,7 +282,7 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
           const hasChildren = item.subItems && item.subItems.length > 0;
 
           return (
-            <div key={item.id} style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+            <div key={item.id} style={{ display: "flex", flexDirection: "column" }}>
               {/* Item Row - Click to open notebook drawer for this child! */}
               <div
                 onMouseEnter={() => setHoveredItemId(item.id)}
@@ -281,10 +293,12 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
                 }}
                 title={`Click to open "${item.label}" in Concept Notebook`}
                 style={{
+                  height: `${GROUP_CARD_ROW_HEIGHT}px`,
+                  boxSizing: "border-box",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "6px 8px",
+                  padding: "0 8px",
                   borderRadius: "8px",
                   cursor: "pointer",
                   background: isItemSelected
@@ -474,7 +488,9 @@ export const SpiderGroupCard: React.FC<SpiderGroupCardProps> = ({
         }}
         title="Click card to open in Concept Notebook"
         style={{
-          padding: "6px 14px",
+          height: `${GROUP_CARD_FOOTER_HEIGHT}px`,
+          boxSizing: "border-box",
+          padding: "0 14px",
           borderTop: isDark
             ? "1px solid rgba(255, 255, 255, 0.05)"
             : "1px solid rgba(0, 0, 0, 0.05)",
