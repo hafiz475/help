@@ -269,8 +269,8 @@ export const NODE_GROUP_CARDS: GroupCardData[] = [
   },
   {
     id: "group-node-libuv",
-    pillarId: "node-libuv-pillar",
-    title: "libuv Infrastructure",
+    pillarId: "node-libuv-infra",
+    title: "libuv Thread Pool & OS I/O",
     category: "node",
     badge: "Async Engine",
     color: "#14b8a6",

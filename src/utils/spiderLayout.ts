@@ -1377,35 +1377,35 @@ export function calculateGroupLayout(
       layoutCardSubItems(posCard, positionedNodes, edges, 3, 1);
     }
 
-    // 3. Event Loop & libuv (Engine Hub Keyword Node) -> Down-Right
-    const elHubX = 1400;
-    const elHubY = 450;
-    const elHubNode: PositionedNode = {
-      id: "node-eventloop-pillar",
-      label: "Event Loop & libuv",
+    // 3. libuv (C Async Engine Keyword Node) -> Down-Right
+    const libuvHubX = 1380;
+    const libuvHubY = 400;
+    const libuvHubNode: PositionedNode = {
+      id: "node-libuv-pillar",
+      label: "libuv",
       category: "node",
       level: 2,
-      badge: "Coordinator",
-      color: "#22c55e",
-      searchQuery: "Node.js Event Loop explained coordinator libuv",
-      x: elHubX,
-      y: elHubY,
+      badge: "C Async Engine",
+      color: "#14b8a6",
+      searchQuery: "Node.js libuv architecture C library async IO event loop threadpool",
+      x: libuvHubX,
+      y: libuvHubY,
       branchIndex: 1,
     };
-    positionedNodes.push(elHubNode);
+    positionedNodes.push(libuvHubNode);
     edges.push({
       source: nodeHubNode.id,
-      target: elHubNode.id,
+      target: libuvHubNode.id,
       category: "node",
       level: 2,
       branchIndex: 1,
     });
 
-    // libuv Infrastructure Card -> placed at x = 2250, y = 280
-    const libuvCard = cardByPillar.get("node-libuv-pillar");
+    // 3a. libuv Thread Pool & OS I/O Card -> placed at x = 2250, y = 200
+    const libuvCard = cardByPillar.get("node-libuv-infra");
     if (libuvCard) {
       const cardX = 2250;
-      const cardY = 280;
+      const cardY = 200;
       const posCard: PositionedGroupCard = {
         ...libuvCard,
         x: cardX,
@@ -1414,7 +1414,7 @@ export function calculateGroupLayout(
       };
       positionedCards.push(posCard);
       edges.push({
-        source: elHubNode.id,
+        source: libuvHubNode.id,
         target: libuvCard.id,
         category: "node",
         level: 3,
@@ -1423,11 +1423,35 @@ export function calculateGroupLayout(
       layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
     }
 
-    // Event Loop 5 Phases Card -> placed at x = 2250, y = 850
+    // 3b. Event Loop Keyword Node -> placed at x = 1800, y = 780
+    const elHubX = 1800;
+    const elHubY = 780;
+    const elHubNode: PositionedNode = {
+      id: "node-eventloop-pillar",
+      label: "Event Loop",
+      category: "node",
+      level: 3,
+      badge: "Coordinator",
+      color: "#22c55e",
+      searchQuery: "Node.js Event Loop explained coordinator tick cycle",
+      x: elHubX,
+      y: elHubY,
+      branchIndex: 1,
+    };
+    positionedNodes.push(elHubNode);
+    edges.push({
+      source: libuvHubNode.id,
+      target: elHubNode.id,
+      category: "node",
+      level: 3,
+      branchIndex: 1,
+    });
+
+    // 3c. Event Loop 5 Phases Card -> placed at x = 2450, y = 780
     const phasesCard = cardByPillar.get("node-phases-pillar");
     if (phasesCard) {
-      const cardX = 2250;
-      const cardY = 850;
+      const cardX = 2450;
+      const cardY = 780;
       const posCard: PositionedGroupCard = {
         ...phasesCard,
         x: cardX,
@@ -1439,10 +1463,10 @@ export function calculateGroupLayout(
         source: elHubNode.id,
         target: phasesCard.id,
         category: "node",
-        level: 3,
+        level: 4,
         branchIndex: 1,
       });
-      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+      layoutCardSubItems(posCard, positionedNodes, edges, 5, 1);
     }
 
     // ==========================================
@@ -1568,7 +1592,7 @@ export function calculateGroupLayout(
   } else if (category === "scope") {
     pillarIds = ["scope-scope", "scope-lexical-env", "scope-closure"];
   } else if (category === "node") {
-    pillarIds = ["node-restaurant-pillar", "node-apis-pillar", "node-eventloop-pillar"];
+    pillarIds = ["node-restaurant-pillar", "node-apis-pillar", "node-libuv-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -1697,7 +1721,7 @@ export function calculateGroupLayout(
               branchIndex,
             });
 
-            // Child has <= 3 children of its own (Level 3 keyword nodes)
+            // Child has children of its own (Level 3 keyword nodes or Group Cards)
             const subChildren = allNodes.filter((n) => n.parentId === child.id);
             const k = subChildren.length;
             if (k > 0) {
@@ -1707,26 +1731,53 @@ export function calculateGroupLayout(
               subChildren.forEach((sub, sIdx) => {
                 const subStep = k === 1 ? 0 : sIdx / (k - 1);
                 const subAngle = k === 1 ? childAngle : subStartAngle + subStep * subSpread;
-                const r3 = r2 + 200;
-                const c3x = Math.round(Math.cos(subAngle) * r3);
-                const c3y = Math.round(Math.sin(subAngle) * r3);
 
-                const subNode: PositionedNode = {
-                  ...sub,
-                  x: c3x,
-                  y: c3y,
-                  level: l3,
-                  branchIndex,
-                };
-                positionedNodes.push(subNode);
+                // Check if this subChild itself has a Group Card (e.g. Event Loop 5 Phases)
+                const subCardData = cardByPillar.get(sub.id);
+                if (subCardData) {
+                  const rSubCard = r2 + 480;
+                  const cardX = Math.round(Math.cos(subAngle) * rSubCard);
+                  const cardY = Math.round(Math.sin(subAngle) * rSubCard);
 
-                edges.push({
-                  source: childNode.id,
-                  target: subNode.id,
-                  category: subNode.category,
-                  level: l3,
-                  branchIndex,
-                });
+                  const posSubCard: PositionedGroupCard = {
+                    ...subCardData,
+                    x: cardX,
+                    y: cardY,
+                    branchIndex,
+                  };
+                  positionedCards.push(posSubCard);
+
+                  edges.push({
+                    source: childNode.id,
+                    target: subCardData.id,
+                    category: subCardData.category,
+                    level: l3,
+                    branchIndex,
+                  });
+
+                  layoutCardSubItems(posSubCard, positionedNodes, edges, l3 + 1, branchIndex);
+                } else {
+                  const r3 = r2 + 200;
+                  const c3x = Math.round(Math.cos(subAngle) * r3);
+                  const c3y = Math.round(Math.sin(subAngle) * r3);
+
+                  const subNode: PositionedNode = {
+                    ...sub,
+                    x: c3x,
+                    y: c3y,
+                    level: l3,
+                    branchIndex,
+                  };
+                  positionedNodes.push(subNode);
+
+                  edges.push({
+                    source: childNode.id,
+                    target: subNode.id,
+                    category: subNode.category,
+                    level: l3,
+                    branchIndex,
+                  });
+                }
               });
             }
           }
