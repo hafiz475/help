@@ -16,7 +16,9 @@ import {
   Moon,
   Share2,
   GitBranch,
+  FolderTree,
 } from "lucide-react";
+import { CSTreeModal } from "./CSTreeModal";
 
 interface CanvasControlsProps {
   currentCategory: ConceptCategory;
@@ -59,7 +61,9 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
 }) => {
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTreeModalOpen, setIsTreeModalOpen] = useState(false);
   const isDark = theme === "dark";
+  const currentTab = CONCEPT_TABS.find((t) => t.id === currentCategory);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -101,34 +105,66 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
             }}
           >
             {/* Concept Dropdown */}
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <select
-                id="category-select"
-                value={currentCategory}
-                onChange={(e) => onSelectCategory(e.target.value as ConceptCategory)}
+            {/* Mobile CS Tree Trigger Button (replaces select box) */}
+            <button
+              id="btn-open-cs-tree-mobile"
+              onClick={() => setIsTreeModalOpen(true)}
+              title="Open Computer Science Tree & Roadmap Modal"
+              style={{
+                flex: 1,
+                minWidth: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "6px",
+                padding: "6px 10px",
+                borderRadius: "8px",
+                background: "var(--select-bg)",
+                border: "1px solid var(--border-subtle)",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                cursor: "pointer",
+              }}
+            >
+              <div
                 style={{
-                  width: "100%",
-                  padding: "6px 8px",
-                  borderRadius: "8px",
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  color: "var(--text-main)",
-                  background: "var(--select-bg)",
-                  border: "1px solid var(--border-subtle)",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-                  cursor: "pointer",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  minWidth: 0,
                   overflow: "hidden",
                 }}
               >
-                {CONCEPT_TABS.map((tab) => (
-                  <option key={tab.id} value={tab.id}>
-                    {tab.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <FolderTree
+                  size={13}
+                  color={currentTab?.color || (isDark ? "#38bdf8" : "#0284c7")}
+                />
+                <span
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    color: currentTab?.color || "var(--text-main)",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {currentTab?.name || currentCategory}
+                </span>
+              </div>
+              <span
+                style={{
+                  fontSize: "9.5px",
+                  fontWeight: 800,
+                  padding: "1px 5px",
+                  borderRadius: "4px",
+                  background: isDark ? "rgba(56, 189, 248, 0.2)" : "#dbeafe",
+                  color: isDark ? "#38bdf8" : "#1d4ed8",
+                  flexShrink: 0,
+                }}
+              >
+                CS Tree ▾
+              </span>
+            </button>
 
             {/* Spider / Tree / Group View Toggle Button */}
             <button
@@ -367,41 +403,69 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
               borderRadius: "12px",
             }}
           >
-            <label
-              htmlFor="category-select-desktop"
+            {/* Desktop: Computer Science Knowledge Tree Modal Trigger Button */}
+            <button
+              id="btn-open-cs-tree"
+              onClick={() => setIsTreeModalOpen(true)}
+              title="Open Complete Computer Science Tree & Roadmap Modal"
               style={{
-                fontSize: "11px",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
-                color: "var(--text-dim)",
-                paddingLeft: "4px",
-              }}
-            >
-              CONCEPT:
-            </label>
-            <select
-              id="category-select-desktop"
-              value={currentCategory}
-              onChange={(e) => onSelectCategory(e.target.value as ConceptCategory)}
-              style={{
-                padding: "5px 10px",
-                borderRadius: "8px",
-                fontSize: "12.5px",
-                fontWeight: 600,
-                color: "var(--text-main)",
-                background: "var(--select-bg)",
-                border: "1px solid var(--border-subtle)",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+                display: "flex",
+                alignItems: "center",
+                gap: "7px",
+                padding: "6px 12px",
+                borderRadius: "9px",
+                background: isDark
+                  ? "linear-gradient(135deg, rgba(56, 189, 248, 0.16) 0%, rgba(14, 165, 233, 0.08) 100%)"
+                  : "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
+                border: isDark
+                  ? "1px solid rgba(56, 189, 248, 0.35)"
+                  : "1px solid rgba(2, 132, 199, 0.3)",
+                boxShadow: isDark
+                  ? "0 0 14px rgba(56, 189, 248, 0.16)"
+                  : "0 1px 4px rgba(2, 132, 199, 0.12)",
+                color: isDark ? "#ffffff" : "#0f172a",
                 cursor: "pointer",
+                transition: "all 0.15s ease",
               }}
             >
-              {CONCEPT_TABS.map((tab) => (
-                <option key={tab.id} value={tab.id}>
-                  {tab.name}
-                </option>
-              ))}
-            </select>
+              <FolderTree
+                size={14}
+                color={currentTab?.color || (isDark ? "#38bdf8" : "#0284c7")}
+              />
+              <span
+                style={{
+                  fontSize: "10.5px",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.04em",
+                  color: "var(--text-dim)",
+                }}
+              >
+                CS TREE:
+              </span>
+              <span
+                style={{
+                  fontSize: "12.5px",
+                  fontWeight: 800,
+                  color: currentTab?.color || (isDark ? "#38bdf8" : "#0284c7"),
+                }}
+              >
+                {currentTab?.name || currentCategory}
+              </span>
+              <span
+                style={{
+                  fontSize: "9.5px",
+                  fontWeight: 800,
+                  padding: "1.5px 6px",
+                  borderRadius: "5px",
+                  background: isDark ? "rgba(56, 189, 248, 0.22)" : "#dbeafe",
+                  color: isDark ? "#38bdf8" : "#1d4ed8",
+                  marginLeft: "2px",
+                }}
+              >
+                Tree ▾
+              </span>
+            </button>
 
             <div
               style={{
@@ -642,6 +706,15 @@ export const CanvasControls: React.FC<CanvasControlsProps> = ({
           <span>Reset</span>
         </button>
       </div>
+
+      {/* Computer Science Knowledge Universe Modal */}
+      <CSTreeModal
+        isOpen={isTreeModalOpen}
+        onClose={() => setIsTreeModalOpen(false)}
+        currentCategory={currentCategory}
+        onSelectCategory={onSelectCategory}
+        theme={theme}
+      />
     </>
   );
 };
