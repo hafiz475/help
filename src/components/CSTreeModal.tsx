@@ -67,6 +67,20 @@ export const CSTreeModal: React.FC<CSTreeModalProps> = ({
 
   const queryLower = searchQuery.trim().toLowerCase();
 
+  const { activeCount, totalTopicsCount } = useMemo(() => {
+    let active = 0;
+    let total = 0;
+    CS_KNOWLEDGE_TREE.forEach((layer) => {
+      layer.subcategories.forEach((subcat) => {
+        subcat.topics.forEach((topic) => {
+          total++;
+          if (topic.isAvailable) active++;
+        });
+      });
+    });
+    return { activeCount: active, totalTopicsCount: total };
+  }, []);
+
   // Filter layers and topics based on search query and active tab
   const filteredLayers = useMemo(() => {
     return CS_KNOWLEDGE_TREE.map((layer) => {
@@ -421,7 +435,7 @@ export const CSTreeModal: React.FC<CSTreeModalProps> = ({
           >
             {[
               { id: "all", label: "All Layers" },
-              { id: "active", label: "★ Interactive Only (7)" },
+              { id: "active", label: `★ Interactive Only (${activeCount})` },
               { id: "layer-1-theory", label: "1. Theory" },
               { id: "layer-2-programming", label: "2. Programming" },
               { id: "layer-3-systems", label: "3. Systems" },
@@ -932,11 +946,11 @@ export const CSTreeModal: React.FC<CSTreeModalProps> = ({
                   display: "inline-block",
                 }}
               />
-              <strong style={{ color: isDark ? "#f1f5f9" : "#0f172a" }}>7 Interactive Webs</strong> Available
+              <strong style={{ color: isDark ? "#f1f5f9" : "#0f172a" }}>{activeCount} Interactive Webs</strong> Available
             </span>
             <span>•</span>
             <span>
-              <strong style={{ color: isDark ? "#f1f5f9" : "#0f172a" }}>80+</strong> Topics Planned in Roadmap
+              <strong style={{ color: isDark ? "#f1f5f9" : "#0f172a" }}>{totalTopicsCount}</strong> Topics in Roadmap
             </span>
           </div>
 

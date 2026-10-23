@@ -252,6 +252,402 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  "root-async": {
+    id: "root-async",
+    title: "Async JS",
+    badge: "Event Scheduling",
+    tagline: "Non-blocking concurrency, Promise state lifecycles, and microtask VIP queue scheduling",
+    takeaways: [
+      {
+        id: "async-root-1",
+        text: "JavaScript is single-threaded; asynchronous operations hand tasks to the runtime without blocking the call stack.",
+        searchPrompt: "single threaded JavaScript non blocking asynchronous execution",
+        emoji: "⚡",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+      {
+        id: "async-root-2",
+        text: "The Restaurant Buzzer: A Promise gives you a pager ticket so you don't freeze the line waiting for food.",
+        searchPrompt: "JavaScript Promise restaurant pager buzzer analogy",
+        emoji: "🎟️",
+        reactionCount: "3.7k",
+        commentCount: 250,
+      },
+      {
+        id: "async-root-3",
+        text: "Microtasks (Promise.then) have VIP priority and completely drain before the event loop advances to macrotasks.",
+        searchPrompt: "microtask queue priority over macrotasks setTimeout event loop",
+        emoji: "🚀",
+        reactionCount: "2.9k",
+        commentCount: 190,
+      },
+    ],
+  },
+
+  "async-callbacks": {
+    id: "async-callbacks",
+    title: "Callbacks & Flow",
+    badge: "Foundation",
+    tagline: "The foundational pattern for deferring execution until asynchronous tasks complete",
+    takeaways: [
+      {
+        id: "acb-1",
+        text: "Callbacks pass a function to be executed once an asynchronous operation completes.",
+        searchPrompt: "JavaScript asynchronous callback functions explained",
+        emoji: "⚡",
+        reactionCount: "3.4k",
+        commentCount: 210,
+      },
+      {
+        id: "acb-2",
+        text: "Inversion of control: you hand execution authority over to third-party code.",
+        searchPrompt: "inversion of control JavaScript callbacks trust problem",
+        emoji: "🤯",
+        reactionCount: "2.5k",
+        commentCount: 160,
+      },
+      {
+        id: "acb-3",
+        text: "Core foundation that enabled Node.js non-blocking I/O before ES6 Promises.",
+        searchPrompt: "Node.js asynchronous non blocking IO callback history",
+        emoji: "💡",
+        reactionCount: "1.9k",
+        commentCount: 115,
+      },
+    ],
+  },
+
+  "async-callback-hell": {
+    id: "async-callback-hell",
+    title: "Pyramid of Doom",
+    badge: "Inversion of Control",
+    tagline: "Excessive nesting of asynchronous callbacks causing maintenance bottlenecks",
+    takeaways: [
+      {
+        id: "ach-1",
+        text: "Deeply nested callbacks create the Pyramid of Doom, crippling code readability.",
+        searchPrompt: "callback hell pyramid of doom solutions JavaScript",
+        emoji: "🔥",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+      {
+        id: "ach-2",
+        text: "Causes inversion of control issues, fragile error handling, and unmaintainable flow.",
+        searchPrompt: "inversion of control callback hell maintainability issues",
+        emoji: "⚠️",
+        reactionCount: "2.8k",
+        commentCount: 180,
+      },
+      {
+        id: "ach-3",
+        text: "Solved by flattening logic using Promise chaining and modern async/await syntax.",
+        searchPrompt: "refactoring callback hell into async await promises",
+        emoji: "🚀",
+        reactionCount: "2.1k",
+        commentCount: 140,
+      },
+    ],
+  },
+
+  "async-error-first": {
+    id: "async-error-first",
+    title: "Error-First Pattern",
+    badge: "(err, data) Convention",
+    tagline: "The universal Node.js convention placing errors as the first parameter",
+    takeaways: [
+      {
+        id: "aef-1",
+        text: "Node convention: callbacks receive (err, data) with error as the first argument.",
+        searchPrompt: "Node.js error first callback convention err data",
+        emoji: "🛡️",
+        reactionCount: "3.8k",
+        commentCount: 240,
+      },
+      {
+        id: "aef-2",
+        text: "If err is null or undefined, the operation succeeded and data can be processed.",
+        searchPrompt: "handling error first callback pattern correctly Node.js",
+        emoji: "✅",
+        reactionCount: "2.6k",
+        commentCount: 155,
+      },
+      {
+        id: "aef-3",
+        text: "Always return early after handling error to prevent duplicate execution.",
+        searchPrompt: "return early if err Node.js callback error handling",
+        emoji: "💡",
+        reactionCount: "1.8k",
+        commentCount: 95,
+      },
+    ],
+  },
+
+  "async-promises": {
+    id: "async-promises",
+    title: "Promises & Microtasks",
+    badge: "ES6 Core",
+    tagline: "Composable future values with guaranteed state immutability and VIP queuing",
+    takeaways: [
+      {
+        id: "apr-1",
+        text: "A Promise is a placeholder token for a value that will resolve in the future.",
+        searchPrompt: "JavaScript Promise architecture future value token",
+        emoji: "🎟️",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+      {
+        id: "apr-2",
+        text: "Guarantees immutable state: once settled (fulfilled or rejected), it cannot change.",
+        searchPrompt: "Promise immutability settled fulfilled rejected guarantee",
+        emoji: "🔒",
+        reactionCount: "3.1k",
+        commentCount: 195,
+      },
+      {
+        id: "apr-3",
+        text: "Replaces nested callbacks with clean chainable .then(), .catch(), and .finally().",
+        searchPrompt: "Promise chaining then catch finally best practices",
+        emoji: "✨",
+        reactionCount: "2.4k",
+        commentCount: 160,
+      },
+    ],
+  },
+
+  "async-promise-states": {
+    id: "async-promise-states",
+    title: "Pending → Settled",
+    badge: "Fulfilled / Rejected",
+    tagline: "The lifecycle of a Promise transitioning from pending to resolved or rejected",
+    takeaways: [
+      {
+        id: "aps-1",
+        text: "Promises have 3 mutually exclusive states: Pending, Fulfilled, and Rejected.",
+        searchPrompt: "JavaScript Promise three states pending fulfilled rejected",
+        emoji: "🔄",
+        reactionCount: "3.5k",
+        commentCount: 215,
+      },
+      {
+        id: "aps-2",
+        text: "Pending transforms to Settled once resolved with a value or rejected with a reason.",
+        searchPrompt: "how promises settle fulfilled vs rejected reason",
+        emoji: "🎯",
+        reactionCount: "2.7k",
+        commentCount: 170,
+      },
+      {
+        id: "aps-3",
+        text: "State transition is irreversible; settled callbacks execute asynchronously.",
+        searchPrompt: "Promise state transition is irreversible asynchronous reaction",
+        emoji: "💡",
+        reactionCount: "1.9k",
+        commentCount: 110,
+      },
+    ],
+  },
+
+  "async-microtask-vip": {
+    id: "async-microtask-vip",
+    title: "🎟️ Microtask VIP Queue",
+    badge: "Priority Drain",
+    tagline: "High-priority queue emptied completely before every macrotask turn",
+    takeaways: [
+      {
+        id: "amv-1",
+        text: "Promise reactions (.then/.catch) enqueue into the VIP Microtask Queue.",
+        searchPrompt: "Promise then microtask queue vs macrotask event loop",
+        emoji: "🎟️",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+      {
+        id: "amv-2",
+        text: "Microtask queue completely empties before the Event Loop picks any macrotask.",
+        searchPrompt: "microtask queue drain before macrotask setTimeout event loop",
+        emoji: "⚡",
+        reactionCount: "3.6k",
+        commentCount: 260,
+      },
+      {
+        id: "amv-3",
+        text: "Process.nextTick and Promise microtasks can starve the macrotask queue if looped.",
+        searchPrompt: "microtask starvation event loop process nextTick starving io",
+        emoji: "⚠️",
+        reactionCount: "2.8k",
+        commentCount: 190,
+      },
+    ],
+  },
+
+  "async-combinators": {
+    id: "async-combinators",
+    title: "Promise Combinators",
+    badge: "all, race, any, settled",
+    tagline: "Parallel orchestration tools: all, allSettled, race, and any",
+    takeaways: [
+      {
+        id: "aco-1",
+        text: "Promise.all fails fast on first rejection; waits for all promises to resolve.",
+        searchPrompt: "Promise.all fail fast behavior when to use",
+        emoji: "🤝",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+      {
+        id: "aco-2",
+        text: "Promise.allSettled waits for all promises regardless of success or failure.",
+        searchPrompt: "Promise.allSettled vs Promise.all differences and use cases",
+        emoji: "🛡️",
+        reactionCount: "3.2k",
+        commentCount: 205,
+      },
+      {
+        id: "aco-3",
+        text: "Promise.race resolves/rejects with the fastest; Promise.any ignores rejections.",
+        searchPrompt: "Promise.race vs Promise.any difference explained",
+        emoji: "🏁",
+        reactionCount: "2.3k",
+        commentCount: 145,
+      },
+    ],
+  },
+
+  "async-await": {
+    id: "async-await",
+    title: "Async / Await Flow",
+    badge: "Modern Concurrency",
+    tagline: "Synchronous appearance with true non-blocking event loop execution",
+    takeaways: [
+      {
+        id: "aaw-1",
+        text: "Async/await provides synchronous-looking syntax on top of native JavaScript Promises.",
+        searchPrompt: "JavaScript async await syntax sugar over Promises",
+        emoji: "✨",
+        reactionCount: "4.7k",
+        commentCount: 350,
+      },
+      {
+        id: "aaw-2",
+        text: "An async function always implicitly wraps its returned value into a Promise.",
+        searchPrompt: "async function return value wraps in promise automatically",
+        emoji: "🎁",
+        reactionCount: "3.4k",
+        commentCount: 225,
+      },
+      {
+        id: "aaw-3",
+        text: "The await keyword pauses async function execution until the promise settles.",
+        searchPrompt: "how await pauses async function execution without blocking thread",
+        emoji: "⏸️",
+        reactionCount: "2.9k",
+        commentCount: 180,
+      },
+    ],
+  },
+
+  "async-sugar-generators": {
+    id: "async-sugar-generators",
+    title: "Promise Sugar",
+    badge: "Linear Readability",
+    tagline: "How async/await compiles into generators and promise resolution under the hood",
+    takeaways: [
+      {
+        id: "asg-1",
+        text: "Async/await is syntactic sugar over Promises combined with ES6 Generator coroutines.",
+        searchPrompt: "async await syntactic sugar generators coroutines Babel transform",
+        emoji: "🍬",
+        reactionCount: "3.6k",
+        commentCount: 230,
+      },
+      {
+        id: "asg-2",
+        text: "V8 yields function execution context at await and resumes when microtask drains.",
+        searchPrompt: "how V8 engine executes async await yield resume microtask",
+        emoji: "⚙️",
+        reactionCount: "2.7k",
+        commentCount: 165,
+      },
+      {
+        id: "asg-3",
+        text: "Eliminates callback spaghetti while retaining 100% non-blocking event loop behavior.",
+        searchPrompt: "benefits of async await over callbacks readability non blocking",
+        emoji: "🚀",
+        reactionCount: "2.0k",
+        commentCount: 120,
+      },
+    ],
+  },
+
+  "async-concurrent-await": {
+    id: "async-concurrent-await",
+    title: "Sequential vs Concurrent",
+    badge: "Promise.all Concurrency",
+    tagline: "Avoiding sequential await waterfalls by initiating concurrent promises",
+    takeaways: [
+      {
+        id: "aca-1",
+        text: "Awaiting in a loop runs tasks sequentially, creating massive latency bottlenecks.",
+        searchPrompt: "await in for loop sequential bottleneck vs concurrent execution",
+        emoji: "🐢",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+      {
+        id: "aca-2",
+        text: "Use Promise.all([task1(), task2()]) to trigger concurrent background operations.",
+        searchPrompt: "Promise.all concurrent async await pattern optimization",
+        emoji: "⚡",
+        reactionCount: "3.7k",
+        commentCount: 250,
+      },
+      {
+        id: "aca-3",
+        text: "Saves massive roundtrip time across independent HTTP requests or database calls.",
+        searchPrompt: "optimizing async operations concurrency database queries API",
+        emoji: "⏱️",
+        reactionCount: "2.6k",
+        commentCount: 165,
+      },
+    ],
+  },
+
+  "async-try-catch": {
+    id: "async-try-catch",
+    title: "Async Error Boundaries",
+    badge: "try / catch / finally",
+    tagline: "Unified error handling across synchronous logic and asynchronous rejections",
+    takeaways: [
+      {
+        id: "atc-1",
+        text: "Synchronous try/catch blocks handle both synchronous errors and awaited rejections.",
+        searchPrompt: "try catch with async await error handling JavaScript",
+        emoji: "🛡️",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+      {
+        id: "atc-2",
+        text: "Always add try/catch around await calls to avoid unhandled promise rejections.",
+        searchPrompt: "unhandledPromiseRejection prevention try catch async await",
+        emoji: "⚠️",
+        reactionCount: "3.2k",
+        commentCount: 215,
+      },
+      {
+        id: "atc-3",
+        text: "Finally block runs reliably for cleanup regardless of success or caught errors.",
+        searchPrompt: "async await finally block resource cleanup pattern",
+        emoji: "🧹",
+        reactionCount: "2.1k",
+        commentCount: 135,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -1742,6 +2138,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Scope"
       : node.category === "closure"
       ? "Closures"
+      : node.category === "async"
+      ? "Asynchronous JavaScript"
       : node.category === "node"
       ? "Node.js Runtime"
       : node.category === "oop"

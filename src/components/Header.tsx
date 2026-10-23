@@ -14,6 +14,7 @@ import {
   Box,
   Layers,
   Gauge,
+  Zap,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -41,6 +42,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <GitFork size={16} />;
       case "closure":
         return <Sparkles size={16} />;
+      case "async":
+        return <Zap size={16} />;
       case "node":
         return <Network size={16} />;
       case "oop":

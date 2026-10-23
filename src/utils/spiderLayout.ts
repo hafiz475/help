@@ -323,10 +323,10 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure") {
-    r1 = 260;
-    r2 = 500;
-    r3 = 700;
+  if (category === "scope" || category === "closure" || category === "async") {
+    r1 = 280;
+    r2 = 540;
+    r3 = 780;
   } else if (category === "node") {
     r1 = 300;
     r2 = 600;
@@ -955,6 +955,8 @@ export function calculateGroupLayout(
         ? "Scope"
         : category === "closure"
         ? "Closures"
+        : category === "async"
+        ? "Async JavaScript"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -971,6 +973,8 @@ export function calculateGroupLayout(
         ? "Complexity Tiers"
         : category === "closure"
         ? "Persistent Scope"
+        : category === "async"
+        ? "Event Scheduling"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -979,6 +983,8 @@ export function calculateGroupLayout(
         ? "#f59e0b"
         : category === "closure"
         ? "#e879f9"
+        : category === "async"
+        ? "#06b6d4"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -1010,7 +1016,7 @@ export function calculateGroupLayout(
       level: 1,
       badge: "Language & Engine",
       color: "#ff6b6b",
-      searchQuery: "JavaScript language core V8 engine scope closures",
+      searchQuery: "JavaScript language core V8 engine scope closures async",
       x: jsCoreX,
       y: jsCoreY,
       branchIndex: 0,
@@ -1513,6 +1519,235 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 0D: Async JS Hub (placed down-left)
+    const asyncHubX = -1450;
+    const asyncHubY = 1050;
+    const asyncHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-async")!,
+      x: asyncHubX,
+      y: asyncHubY,
+      level: 2,
+      branchIndex: 0,
+    };
+    positionedNodes.push(asyncHubNode);
+    edges.push({
+      source: jsCoreNode.id,
+      target: asyncHubNode.id,
+      category: "async",
+      level: 2,
+      branchIndex: 0,
+    });
+
+    // Async Node 1: Callbacks & Flow
+    const cbRaw = allNodes.find((n) => n.id === "async-callbacks");
+    if (cbRaw) {
+      const cbX = -2100;
+      const cbY = 860;
+      const cbNode: PositionedNode = {
+        ...cbRaw,
+        x: cbX,
+        y: cbY,
+        level: 3,
+        branchIndex: 0,
+      };
+      positionedNodes.push(cbNode);
+      edges.push({
+        source: asyncHubNode.id,
+        target: cbNode.id,
+        category: "async",
+        level: 3,
+        branchIndex: 0,
+      });
+
+      const hellRaw = allNodes.find((n) => n.id === "async-callback-hell");
+      if (hellRaw) {
+        positionedNodes.push({
+          ...hellRaw,
+          x: cbX - 320,
+          y: cbY - 30,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: cbNode.id,
+          target: hellRaw.id,
+          category: "async",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+
+      const errFirstRaw = allNodes.find((n) => n.id === "async-error-first");
+      if (errFirstRaw) {
+        positionedNodes.push({
+          ...errFirstRaw,
+          x: cbX - 320,
+          y: cbY + 30,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: cbNode.id,
+          target: errFirstRaw.id,
+          category: "async",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+    }
+
+    // Async Node 2: Promises & Microtasks
+    const promRaw = allNodes.find((n) => n.id === "async-promises");
+    if (promRaw) {
+      const prX = -2100;
+      const prY = 1050;
+      const prNode: PositionedNode = {
+        ...promRaw,
+        x: prX,
+        y: prY,
+        level: 3,
+        branchIndex: 0,
+      };
+      positionedNodes.push(prNode);
+      edges.push({
+        source: asyncHubNode.id,
+        target: prNode.id,
+        category: "async",
+        level: 3,
+        branchIndex: 0,
+      });
+
+      const statesRaw = allNodes.find((n) => n.id === "async-promise-states");
+      if (statesRaw) {
+        positionedNodes.push({
+          ...statesRaw,
+          x: prX - 320,
+          y: prY - 45,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: prNode.id,
+          target: statesRaw.id,
+          category: "async",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+
+      const vipRaw = allNodes.find((n) => n.id === "async-microtask-vip");
+      if (vipRaw) {
+        positionedNodes.push({
+          ...vipRaw,
+          x: prX - 320,
+          y: prY,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: prNode.id,
+          target: vipRaw.id,
+          category: "async",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+
+      const combRaw = allNodes.find((n) => n.id === "async-combinators");
+      if (combRaw) {
+        positionedNodes.push({
+          ...combRaw,
+          x: prX - 320,
+          y: prY + 45,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: prNode.id,
+          target: combRaw.id,
+          category: "async",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+    }
+
+    // Async Node 3: Async / Await Flow
+    const awaitRaw = allNodes.find((n) => n.id === "async-await");
+    if (awaitRaw) {
+      const awX = -2100;
+      const awY = 1240;
+      const awNode: PositionedNode = {
+        ...awaitRaw,
+        x: awX,
+        y: awY,
+        level: 3,
+        branchIndex: 0,
+      };
+      positionedNodes.push(awNode);
+      edges.push({
+        source: asyncHubNode.id,
+        target: awNode.id,
+        category: "async",
+        level: 3,
+        branchIndex: 0,
+      });
+
+      const sugarRaw = allNodes.find((n) => n.id === "async-sugar-generators");
+      if (sugarRaw) {
+        positionedNodes.push({
+          ...sugarRaw,
+          x: awX - 320,
+          y: awY - 45,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: awNode.id,
+          target: sugarRaw.id,
+          category: "async",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+
+      const concRaw = allNodes.find((n) => n.id === "async-concurrent-await");
+      if (concRaw) {
+        positionedNodes.push({
+          ...concRaw,
+          x: awX - 320,
+          y: awY,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: awNode.id,
+          target: concRaw.id,
+          category: "async",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+
+      const tryCatchRaw = allNodes.find((n) => n.id === "async-try-catch");
+      if (tryCatchRaw) {
+        positionedNodes.push({
+          ...tryCatchRaw,
+          x: awX - 320,
+          y: awY + 45,
+          level: 4,
+          branchIndex: 0,
+        });
+        edges.push({
+          source: awNode.id,
+          target: tryCatchRaw.id,
+          category: "async",
+          level: 4,
+          branchIndex: 0,
+        });
+      }
+    }
+
     // ==========================================
     // BRANCH 1: NODE.JS RUNTIME (Yellow, branch 1)
     // ==========================================
@@ -1794,6 +2029,8 @@ export function calculateGroupLayout(
     pillarIds = ["scope-scope", "scope-chain", "scope-lexical-env"];
   } else if (category === "closure") {
     pillarIds = ["closure-core", "scope-backpack", "scope-5-sentences"];
+  } else if (category === "async") {
+    pillarIds = ["async-callbacks", "async-promises", "async-await"];
   } else if (category === "node") {
     pillarIds = ["node-restaurant-pillar", "node-apis-pillar", "node-libuv-pillar"];
   } else if (category === "oop") {
@@ -2028,7 +2265,7 @@ export function getNodesForCategory(
         label: "JavaScript & V8 Core",
         category: "root" as const,
         level: 1,
-        searchQuery: "JavaScript language core V8 engine scope closures",
+        searchQuery: "JavaScript language core V8 engine scope closures async",
         badge: "Language & Engine",
         color: "#ff6b6b",
       }),
@@ -2069,6 +2306,11 @@ export function getNodesForCategory(
       parentId: "root-js-core",
       level: 2,
     };
+    const asyncRoot = {
+      ...allNodes.find((n) => n.id === "root-async")!,
+      parentId: "root-js-core",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -2093,6 +2335,7 @@ export function getNodesForCategory(
         n.id !== "root-v8" &&
         n.id !== "root-scope" &&
         n.id !== "root-closure" &&
+        n.id !== "root-async" &&
         n.id !== "root-node" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
@@ -2100,7 +2343,7 @@ export function getNodesForCategory(
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

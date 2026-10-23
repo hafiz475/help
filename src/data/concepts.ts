@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "node" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "node" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -51,8 +51,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 8,
   },
   {
+    id: "async",
+    name: "4. Async JS",
+    title: "Asynchronous JavaScript & Event Scheduling",
+    description: "Callbacks, Promises, Microtask VIP Queue, Async/Await Concurrency & Event Loop",
+    color: "#06b6d4", // Cyan
+    icon: "Zap",
+    count: 11,
+  },
+  {
     id: "node",
-    name: "4. Node.js & Restaurant",
+    name: "5. Node.js & Restaurant",
     title: "Node.js Runtime & The Restaurant Cast",
     description: "The Chef, Waiter, Back Kitchen, Thread Pool Helpers, VIP Notes & 5 Loop Phases",
     color: "#22c55e", // Node green
@@ -61,7 +70,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "oop",
-    name: "5. OOP (4 Pillars)",
+    name: "6. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -70,7 +79,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "6. DSA",
+    name: "7. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -79,7 +88,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "7. Big O",
+    name: "8. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -93,7 +102,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 98,
+    count: 109,
   },
 ];
 
@@ -138,6 +147,15 @@ export const ALL_NODES: SpiderNode[] = [
     color: "#e879f9",
   },
   {
+    id: "root-async",
+    label: "Async JS",
+    category: "async",
+    level: 0,
+    searchQuery: "Asynchronous JavaScript Event Loop Promises async await",
+    badge: "Event Scheduling",
+    color: "#06b6d4",
+  },
+  {
     id: "root-node",
     label: "Node.js Runtime",
     category: "node",
@@ -178,7 +196,7 @@ export const ALL_NODES: SpiderNode[] = [
     label: "JavaScript & V8 Core",
     category: "root",
     level: 1,
-    searchQuery: "JavaScript language core V8 engine scope closures",
+    searchQuery: "JavaScript language core V8 engine scope closures async promises",
     badge: "Language & Engine",
     color: "#ff6b6b",
   },
@@ -628,7 +646,126 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 4. NODE.JS RUNTIME
+  // 4. ASYNCHRONOUS JAVASCRIPT
+  // ==========================================
+  // Pillar 1: Callbacks & Flow
+  {
+    id: "async-callbacks",
+    label: "Callbacks & Flow",
+    category: "async",
+    parentId: "root-async",
+    level: 1,
+    searchQuery: "JavaScript asynchronous callbacks error first pattern",
+    badge: "Foundation",
+    color: "#0891b2",
+  },
+  {
+    id: "async-callback-hell",
+    label: "Pyramid of Doom",
+    category: "async",
+    parentId: "async-callbacks",
+    level: 2,
+    searchQuery: "callback hell JavaScript pyramid of doom inversion of control",
+    badge: "Inversion of Control",
+    color: "#06b6d4",
+  },
+  {
+    id: "async-error-first",
+    label: "Error-First Pattern",
+    category: "async",
+    parentId: "async-callbacks",
+    level: 2,
+    searchQuery: "Node.js error first callback convention pattern",
+    badge: "(err, data) Convention",
+    color: "#22d3ee",
+  },
+
+  // Pillar 2: Promises & Microtasks
+  {
+    id: "async-promises",
+    label: "Promises & Microtasks",
+    category: "async",
+    parentId: "root-async",
+    level: 1,
+    searchQuery: "JavaScript Promises states microtask queue priority",
+    badge: "ES6 Core",
+    color: "#0284c7",
+  },
+  {
+    id: "async-promise-states",
+    label: "Pending → Settled",
+    category: "async",
+    parentId: "async-promises",
+    level: 2,
+    searchQuery: "JavaScript Promise states pending fulfilled rejected lifecycle",
+    badge: "Fulfilled / Rejected",
+    color: "#38bdf8",
+  },
+  {
+    id: "async-microtask-vip",
+    label: "🎟️ Microtask VIP Queue",
+    category: "async",
+    parentId: "async-promises",
+    level: 2,
+    searchQuery: "Promise microtask queue vs macrotask event loop priority",
+    badge: "Priority Drain",
+    color: "#7dd3fc",
+  },
+  {
+    id: "async-combinators",
+    label: "Promise Combinators",
+    category: "async",
+    parentId: "async-promises",
+    level: 2,
+    searchQuery: "Promise.all Promise.race Promise.allSettled Promise.any differences",
+    badge: "all, race, any, settled",
+    color: "#bae6fd",
+  },
+
+  // Pillar 3: Async / Await Flow
+  {
+    id: "async-await",
+    label: "Async / Await Flow",
+    category: "async",
+    parentId: "root-async",
+    level: 1,
+    searchQuery: "JavaScript async await syntactic sugar try catch concurrency",
+    badge: "Modern Concurrency",
+    color: "#0ea5e9",
+  },
+  {
+    id: "async-sugar-generators",
+    label: "Promise Sugar",
+    category: "async",
+    parentId: "async-await",
+    level: 2,
+    searchQuery: "async await syntactic sugar over Promises generators JavaScript",
+    badge: "Linear Readability",
+    color: "#38bdf8",
+  },
+  {
+    id: "async-concurrent-await",
+    label: "Sequential vs Concurrent",
+    category: "async",
+    parentId: "async-await",
+    level: 2,
+    searchQuery: "sequential await bottleneck vs concurrent Promise.all execution",
+    badge: "Promise.all Concurrency",
+    color: "#67e8f9",
+  },
+  {
+    id: "async-try-catch",
+    label: "Async Error Boundaries",
+    category: "async",
+    parentId: "async-await",
+    level: 2,
+    searchQuery: "async await error handling try catch unhandledrejection",
+    badge: "try / catch / finally",
+    color: "#a5f3fc",
+  },
+
+  // ==========================================
+  // 5. NODE.JS RUNTIME
   // ==========================================
   // Level 1: Major Pillars (Exactly 3)
   {
