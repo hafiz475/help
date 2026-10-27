@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -96,8 +96,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "scaling",
+    name: "9. Scaling & Balancing",
+    title: "System Scaling, Load Balancers & Reverse Proxies",
+    description: "NGINX Reverse Proxies, 9-Stage Balancing Pipeline, Horizontal Scale & Health Checks",
+    color: "#14b8a6", // Teal
+    icon: "Split",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "9. OOP (4 Pillars)",
+    name: "10. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -106,7 +115,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "10. DSA",
+    name: "11. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -115,7 +124,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "11. Big O",
+    name: "12. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -129,7 +138,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 139,
+    count: 149,
   },
 ];
 
@@ -217,6 +226,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Node.js message queues BullMQ Redis background worker jobs asynchronous processing",
     badge: "Async Task Processing",
     color: "#f97316",
+  },
+  {
+    id: "root-scaling",
+    label: "Scaling & Balancing",
+    category: "scaling",
+    level: 0,
+    searchQuery: "system scaling load balancing NGINX reverse proxy horizontal scale",
+    badge: "Traffic Distribution",
+    color: "#14b8a6",
   },
   {
     id: "root-oop",
@@ -1517,7 +1535,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 9. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 9. SCALING & LOAD BALANCING (NGINX & REVERSE PROXIES)
+  // ==========================================
+  // Pillar 1: Routing Policies & Algorithms
+  {
+    id: "scaling-algorithms",
+    label: "Balancing Algorithms",
+    category: "scaling",
+    parentId: "root-scaling",
+    level: 1,
+    searchQuery: "load balancing algorithms round robin least connections ip hash weighted",
+    badge: "Routing Policies",
+    color: "#0f766e",
+  },
+  {
+    id: "scaling-round-robin",
+    label: "Round Robin & Weighted",
+    category: "scaling",
+    parentId: "scaling-algorithms",
+    level: 2,
+    searchQuery: "weighted round robin load balancing algorithm server capacity",
+    badge: "Weighted Cycle",
+    color: "#0d9488",
+  },
+  {
+    id: "scaling-least-connections",
+    label: "Least Connections & Latency",
+    category: "scaling",
+    parentId: "scaling-algorithms",
+    level: 2,
+    searchQuery: "least connections algorithm least response time dynamic load balancing",
+    badge: "Active Conns",
+    color: "#14b8a6",
+  },
+  {
+    id: "scaling-ip-hash",
+    label: "IP Hash & Sticky Sessions",
+    category: "scaling",
+    parentId: "scaling-algorithms",
+    level: 2,
+    searchQuery: "ip_hash sticky sessions session affinity cookie load balancer",
+    badge: "Session Affinity",
+    color: "#2dd4bf",
+  },
+
+  // Pillar 2: NGINX Reverse Proxy Pipeline (Group Card)
+  {
+    id: "scaling-nginx-pipeline",
+    label: "Reverse Proxy Pipeline",
+    category: "scaling",
+    parentId: "root-scaling",
+    level: 1,
+    searchQuery: "NGINX reverse proxy upstream proxy_pass SSL termination load balancing",
+    badge: "9 Sequential Stages",
+    color: "#115e59",
+  },
+
+  // Pillar 3: Horizontal Scaling & Auto-Scaling
+  {
+    id: "scaling-horizontal-scale",
+    label: "Horizontal & Elastic Scale",
+    category: "scaling",
+    parentId: "root-scaling",
+    level: 1,
+    searchQuery: "horizontal scaling auto scaling stateless architecture CDN edge caching",
+    badge: "Elastic Scale",
+    color: "#134e4a",
+  },
+  {
+    id: "scaling-stateless-workers",
+    label: "Stateless App Architecture",
+    category: "scaling",
+    parentId: "scaling-horizontal-scale",
+    level: 2,
+    searchQuery: "stateless application architecture externalized session Redis database scaling",
+    badge: "Shared State",
+    color: "#0d9488",
+  },
+  {
+    id: "scaling-auto-scaling-groups",
+    label: "Horizontal Auto-Scaling (HPA)",
+    category: "scaling",
+    parentId: "scaling-horizontal-scale",
+    level: 2,
+    searchQuery: "Kubernetes Horizontal Pod Autoscaler HPA CPU memory target scaling group",
+    badge: "CPU / Mem Target",
+    color: "#14b8a6",
+  },
+  {
+    id: "scaling-global-cdn-anycast",
+    label: "Anycast DNS & Global CDN",
+    category: "scaling",
+    parentId: "scaling-horizontal-scale",
+    level: 2,
+    searchQuery: "Anycast DNS global CDN Cloudflare edge caching static asset offload",
+    badge: "Edge / Anycast",
+    color: "#2dd4bf",
+  },
+
+  // ==========================================
+  // 10. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

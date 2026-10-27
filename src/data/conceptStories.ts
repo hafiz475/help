@@ -2710,6 +2710,705 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // SCALING & LOAD BALANCING (NGINX) STORIES
+  // ==========================================
+  "root-scaling": {
+    id: "root-scaling",
+    title: "Scaling & Balancing",
+    badge: "Traffic Distribution",
+    tagline: "Distributing client requests across horizontally replicated clusters for infinite elasticity",
+    takeaways: [
+      {
+        id: "sc-r1",
+        text: "Load balancers distribute millions of user requests across redundant backend servers.",
+        searchPrompt: "how load balancers work reverse proxy architecture scaling",
+        emoji: "⚖️",
+        reactionCount: "4.8k",
+        commentCount: 370,
+      },
+      {
+        id: "sc-r2",
+        text: "Eliminates single points of failure by automatically evicting crashed or unhealthy nodes.",
+        searchPrompt: "high availability zero downtime failover load balancing",
+        emoji: "🛡️",
+        reactionCount: "3.9k",
+        commentCount: 285,
+      },
+      {
+        id: "sc-r3",
+        text: "Acts as an edge guardian handling TLS encryption, rate limits, and DDoS mitigation.",
+        searchPrompt: "NGINX reverse proxy edge security SSL offloading DDoS",
+        emoji: "🚀",
+        reactionCount: "3.3k",
+        commentCount: 220,
+      },
+    ],
+  },
+
+  "scaling-algorithms": {
+    id: "scaling-algorithms",
+    title: "Balancing Algorithms",
+    badge: "Routing Policies",
+    tagline: "Mathematical policies governing which upstream server receives the next client request",
+    takeaways: [
+      {
+        id: "sca-1",
+        text: "Round Robin cyclically routes requests to identical nodes in predictable sequential order.",
+        searchPrompt: "round robin load balancing algorithm pros cons",
+        emoji: "🔄",
+        reactionCount: "4.0k",
+        commentCount: 280,
+      },
+      {
+        id: "sca-2",
+        text: "Least Connections inspects active TCP counts and routes to the least busy server.",
+        searchPrompt: "least connections algorithm long lived requests WebSocket load balancing",
+        emoji: "⚡",
+        reactionCount: "3.5k",
+        commentCount: 240,
+      },
+      {
+        id: "sca-3",
+        text: "IP Hash computes client IP hashes to ensure users stick to the same backend node.",
+        searchPrompt: "ip_hash load balancing session affinity stateful application",
+        emoji: "🎯",
+        reactionCount: "2.8k",
+        commentCount: 185,
+      },
+    ],
+  },
+
+  "scaling-round-robin": {
+    id: "scaling-round-robin",
+    title: "Round Robin & Weighted",
+    badge: "Weighted Cycle",
+    tagline: "Simple circular distribution with optional capacity weights for unequal hardware",
+    takeaways: [
+      {
+        id: "scrr-1",
+        text: "Perfect when backend servers have identical CPU/RAM hardware specifications.",
+        searchPrompt: "when to use round robin load balancing homogeneous servers",
+        emoji: "🔁",
+        reactionCount: "3.7k",
+        commentCount: 250,
+      },
+      {
+        id: "scrr-2",
+        text: "weight=3 directs 3x more requests to powerful high-memory bare-metal instances.",
+        searchPrompt: "NGINX weighted round robin server weight configuration",
+        emoji: "🏋️",
+        reactionCount: "3.1k",
+        commentCount: 205,
+      },
+      {
+        id: "scrr-3",
+        text: "Fails to account for long-lived WebSocket or report generation requests tying up workers.",
+        searchPrompt: "round robin limitations long running requests queue buildup",
+        emoji: "⚠️",
+        reactionCount: "2.4k",
+        commentCount: 155,
+      },
+    ],
+  },
+
+  "scaling-least-connections": {
+    id: "scaling-least-connections",
+    title: "Least Connections & Latency",
+    badge: "Active Conns",
+    tagline: "Dynamic routing targeting the backend instance currently handling the fewest active sockets",
+    takeaways: [
+      {
+        id: "sclc-1",
+        text: "Dynamically tracks active client TCP connections per server in shared memory.",
+        searchPrompt: "least_conn NGINX directive dynamic traffic routing",
+        emoji: "📊",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+      {
+        id: "sclc-2",
+        text: "Ideal for heterogeneous workloads with varying request execution times and WebSockets.",
+        searchPrompt: "least connections vs round robin WebSocket long polling",
+        emoji: "⚡",
+        reactionCount: "3.3k",
+        commentCount: 225,
+      },
+      {
+        id: "sclc-3",
+        text: "Least response time algorithms factor in latency to route to the fastest responding node.",
+        searchPrompt: "least response time load balancing latency optimization",
+        emoji: "⏱️",
+        reactionCount: "2.7k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "scaling-ip-hash": {
+    id: "scaling-ip-hash",
+    title: "IP Hash & Sticky Sessions",
+    badge: "Session Affinity",
+    tagline: "Hashing client source IP or setting session cookies to bind users to specific servers",
+    takeaways: [
+      {
+        id: "scip-1",
+        text: "Hashes client IPv4/IPv6 addresses to deterministically map them to an upstream index.",
+        searchPrompt: "NGINX ip_hash algorithm client IP hashing",
+        emoji: "🧮",
+        reactionCount: "3.9k",
+        commentCount: 275,
+      },
+      {
+        id: "scip-2",
+        text: "Cookie-based sticky sessions inject a balancer cookie to bypass NAT proxy clustering.",
+        searchPrompt: "sticky cookie session affinity vs ip hash differences",
+        emoji: "🍪",
+        reactionCount: "3.4k",
+        commentCount: 230,
+      },
+      {
+        id: "scip-3",
+        text: "Essential when legacy applications store in-memory user sessions or WebSocket handshakes.",
+        searchPrompt: "why sticky sessions are needed Socket.io in memory sessions",
+        emoji: "🔐",
+        reactionCount: "2.6k",
+        commentCount: 170,
+      },
+    ],
+  },
+
+  "scaling-nginx-pipeline": {
+    id: "scaling-nginx-pipeline",
+    title: "Reverse Proxy Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "The high-performance C event loop pipeline terminating SSL and balancing upstreams",
+    takeaways: [
+      {
+        id: "scnp-1",
+        text: "NGINX utilizes an asynchronous event-driven worker architecture capable of 100k+ conns.",
+        searchPrompt: "NGINX architecture master worker process epoll event loop",
+        emoji: "⚙️",
+        reactionCount: "4.6k",
+        commentCount: 350,
+      },
+      {
+        id: "scnp-2",
+        text: "Terminates HTTPS certificates at edge, forwarding plain HTTP over high-speed private VPC.",
+        searchPrompt: "SSL termination reverse proxy benefits CPU offload",
+        emoji: "🔒",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+      {
+        id: "scnp-3",
+        text: "Micro-caching caches dynamic API responses for 1 second to withstand viral traffic spikes.",
+        searchPrompt: "NGINX microcaching dynamic API 1 second cache",
+        emoji: "⚡",
+        reactionCount: "3.1k",
+        commentCount: 200,
+      },
+    ],
+  },
+
+  "scaling-horizontal-scale": {
+    id: "scaling-horizontal-scale",
+    title: "Horizontal & Elastic Scale",
+    badge: "Elastic Scale",
+    tagline: "Scaling out by adding commodity nodes rather than scaling up with giant expensive servers",
+    takeaways: [
+      {
+        id: "schs-1",
+        text: "Scale out (horizontal) adds more server copies; Scale up (vertical) buys bigger CPUs.",
+        searchPrompt: "horizontal vs vertical scaling distributed systems tradeoffs",
+        emoji: "📈",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+      {
+        id: "schs-2",
+        text: "Requires 100% stateless app servers: all state externalized to Redis or PostgreSQL.",
+        searchPrompt: "stateless application architecture horizontal scaling requirement",
+        emoji: "🧱",
+        reactionCount: "3.8k",
+        commentCount: 270,
+      },
+      {
+        id: "schs-3",
+        text: "Horizontal Pod Autoscalers (HPA) spin up Kubernetes pods automatically on CPU surges.",
+        searchPrompt: "Kubernetes Horizontal Pod Autoscaler HPA metric thresholds",
+        emoji: "🚀",
+        reactionCount: "3.2k",
+        commentCount: 215,
+      },
+    ],
+  },
+
+  "scaling-stateless-workers": {
+    id: "scaling-stateless-workers",
+    title: "Stateless App Architecture",
+    badge: "Shared State",
+    tagline: "Zero local disk or memory state: any server can handle any incoming request",
+    takeaways: [
+      {
+        id: "scsw-1",
+        text: "Node.js apps never store user sessions or uploaded files on local container disks.",
+        searchPrompt: "12 factor app stateless processes external backing services",
+        emoji: "📦",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+      {
+        id: "scsw-2",
+        text: "Shared Redis stores session tokens; AWS S3/Cloudflare R2 stores media uploads.",
+        searchPrompt: "session management in distributed systems Redis JWT",
+        emoji: "🗄️",
+        reactionCount: "3.6k",
+        commentCount: 250,
+      },
+      {
+        id: "scsw-3",
+        text: "Allows instances to be destroyed, restarted, or auto-scaled at any second with zero disruption.",
+        searchPrompt: "ephemeral containers auto scaling graceful shutdown",
+        emoji: "♻️",
+        reactionCount: "2.9k",
+        commentCount: 190,
+      },
+    ],
+  },
+
+  "scaling-auto-scaling-groups": {
+    id: "scaling-auto-scaling-groups",
+    title: "Horizontal Auto-Scaling (HPA)",
+    badge: "CPU / Mem Target",
+    tagline: "Elastic compute provisioning triggered dynamically by CPU, memory, or request counts",
+    takeaways: [
+      {
+        id: "scas-1",
+        text: "Autoscalers observe target metrics like 70% CPU or 1000 requests/sec per replica.",
+        searchPrompt: "auto scaling group metric alarms target tracking scaling",
+        emoji: "🎯",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+      {
+        id: "scas-2",
+        text: "Cooldown periods prevent flapping where servers are repeatedly launched and destroyed.",
+        searchPrompt: "auto scaling cooldown period scale in scale out stabilization",
+        emoji: "❄️",
+        reactionCount: "3.2k",
+        commentCount: 220,
+      },
+      {
+        id: "scas-3",
+        text: "Saves massive cloud infrastructure costs by spinning down to minimum capacity at night.",
+        searchPrompt: "cloud cost optimization auto scaling scheduled scaling",
+        emoji: "💰",
+        reactionCount: "2.7k",
+        commentCount: 180,
+      },
+    ],
+  },
+
+  "scaling-global-cdn-anycast": {
+    id: "scaling-global-cdn-anycast",
+    title: "Anycast DNS & Global CDN",
+    badge: "Edge / Anycast",
+    tagline: "Routing global visitors to the physically nearest edge data center across 300+ cities",
+    takeaways: [
+      {
+        id: "scgc-1",
+        text: "Anycast announces one IP worldwide; BGP routes packets to the topologically closest edge.",
+        searchPrompt: "Anycast BGP routing explained global CDN edge network",
+        emoji: "🌐",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "scgc-2",
+        text: "Cloudflare/Fastly caches JS bundles, images, and HTML at the edge with <20ms latency.",
+        searchPrompt: "CDN edge caching static assets latency reduction",
+        emoji: "⚡",
+        reactionCount: "3.8k",
+        commentCount: 275,
+      },
+      {
+        id: "scgc-3",
+        text: "Absorbs multi-terabit volumetric DDoS attacks before traffic ever reaches origin servers.",
+        searchPrompt: "DDoS mitigation edge network volumetric attack absorption",
+        emoji: "🛡️",
+        reactionCount: "3.1k",
+        commentCount: 205,
+      },
+    ],
+  },
+
+  // ------------------------------------------
+  // NGINX 9-Stage Pipeline Group Card Items
+  // ------------------------------------------
+  "sc-tls-term": {
+    id: "sc-tls-term",
+    title: "Client TLS Termination",
+    badge: "SSL / HTTP/2 / HTTP/3",
+    tagline: "Offloading cryptographic SSL handshakes and negotiating HTTP/2 or HTTP/3 QUIC",
+    takeaways: [
+      {
+        id: "sct-1",
+        text: "Terminates HTTPS certificates using optimized OpenSSL assembly, freeing worker CPU.",
+        searchPrompt: "NGINX SSL termination TLS handshake CPU optimization",
+        emoji: "🔑",
+        reactionCount: "3.6k",
+        commentCount: 245,
+      },
+      {
+        id: "sct-2",
+        text: "Negotiates modern multiplexed protocols like HTTP/2 and HTTP/3 QUIC over UDP.",
+        searchPrompt: "NGINX HTTP/3 QUIC configuration performance benefits",
+        emoji: "⚡",
+        reactionCount: "3.1k",
+        commentCount: 200,
+      },
+      {
+        id: "sct-3",
+        text: "Enables OCSP stapling and TLS 1.3 session tickets for sub-millisecond return visits.",
+        searchPrompt: "OCSP stapling TLS 1.3 0-RTT session resumption NGINX",
+        emoji: "🚀",
+        reactionCount: "2.5k",
+        commentCount: 160,
+      },
+    ],
+  },
+
+  "sc-route-match": {
+    id: "sc-route-match",
+    title: "Upstream Route Matching",
+    badge: "proxy_pass http://cluster",
+    tagline: "Inspecting request URI prefixes to route traffic to the appropriate backend server pool",
+    takeaways: [
+      {
+        id: "scrm-1",
+        text: "location /api/ matches route prefixes and proxies to defined upstream { } clusters.",
+        searchPrompt: "NGINX location block upstream proxy_pass configuration",
+        emoji: "🚏",
+        reactionCount: "3.8k",
+        commentCount: 265,
+      },
+      {
+        id: "scrm-2",
+        text: "Enables path-based microservice routing: /auth → Auth Service, /orders → Orders Service.",
+        searchPrompt: "API gateway path based routing NGINX microservices",
+        emoji: "🧩",
+        reactionCount: "3.3k",
+        commentCount: 220,
+      },
+      {
+        id: "scrm-3",
+        text: "Strips or rewrites URL path prefixes before forwarding via rewrite ^/api/(.*) /$1 break.",
+        searchPrompt: "NGINX rewrite directive path strip proxy_pass",
+        emoji: "✂️",
+        reactionCount: "2.6k",
+        commentCount: 170,
+      },
+    ],
+  },
+
+  "sc-health-probe": {
+    id: "sc-health-probe",
+    title: "Health Check Probe",
+    badge: "interval=5s fails=3",
+    tagline: "Probing upstream server availability to prevent routing to dead or degraded nodes",
+    takeaways: [
+      {
+        id: "schp-1",
+        text: "Periodically sends HTTP GET /healthz probes to every upstream node in the pool.",
+        searchPrompt: "NGINX active health checks health_check interval uri",
+        emoji: "🩺",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+      {
+        id: "schp-2",
+        text: "Unhealthy nodes failing 3 consecutive probes are marked down and evicted instantly.",
+        searchPrompt: "health check fails passes threshold server down NGINX",
+        emoji: "❌",
+        reactionCount: "3.4k",
+        commentCount: 235,
+      },
+      {
+        id: "schp-3",
+        text: "Once recovery probes pass, server is smoothly phased back into rotation.",
+        searchPrompt: "automatic recovery upstream server health check NGINX",
+        emoji: "✅",
+        reactionCount: "2.8k",
+        commentCount: 180,
+      },
+    ],
+  },
+
+  "sc-passive-probe": {
+    id: "sc-passive-probe",
+    title: "Passive & Active Probes",
+    badge: "max_fails / /healthz",
+    tagline: "Combining passive real-request monitoring with synthetic background heartbeat pings",
+    takeaways: [
+      {
+        id: "scpp-1",
+        text: "Passive checks track real user traffic failures: max_fails=3 fail_timeout=30s.",
+        searchPrompt: "NGINX passive health checks max_fails fail_timeout",
+        emoji: "👁️",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+      {
+        id: "scpp-2",
+        text: "Active checks continuously ping synthetic endpoints regardless of user traffic levels.",
+        searchPrompt: "active vs passive health checks load balancer comparison",
+        emoji: "📡",
+        reactionCount: "3.0k",
+        commentCount: 200,
+      },
+      {
+        id: "scpp-3",
+        text: "Guarantees cold or restarted nodes are healthy before real users hit them.",
+        searchPrompt: "warm up new backend instances health checks deployment",
+        emoji: "🛡️",
+        reactionCount: "2.4k",
+        commentCount: 155,
+      },
+    ],
+  },
+
+  "sc-balancer-select": {
+    id: "sc-balancer-select",
+    title: "Routing Policy Execution",
+    badge: "least_conn / round_robin",
+    tagline: "Applying selected load balancing algorithm to pick the single optimal backend server",
+    takeaways: [
+      {
+        id: "scbs-1",
+        text: "Executes in sub-microsecond time in C memory using atomic server state indexes.",
+        searchPrompt: "NGINX load balancing algorithm execution performance C code",
+        emoji: "⚡",
+        reactionCount: "3.9k",
+        commentCount: 280,
+      },
+      {
+        id: "scbs-2",
+        text: "Supports backup keyword: designated disaster recovery node only used if all primary fail.",
+        searchPrompt: "NGINX upstream backup server disaster recovery fallback",
+        emoji: "🛟",
+        reactionCount: "3.2k",
+        commentCount: 215,
+      },
+      {
+        id: "scbs-3",
+        text: "Can route canary deployments: server backend-canary weight=5 alongside weight=95.",
+        searchPrompt: "canary deployment load balancing weights NGINX",
+        emoji: "🐤",
+        reactionCount: "2.6k",
+        commentCount: 170,
+      },
+    ],
+  },
+
+  "sc-sticky-session": {
+    id: "sc-sticky-session",
+    title: "Sticky Session Hash",
+    badge: "ip_hash / cookie srv_id",
+    tagline: "Ensuring return visits from the same client session land on the exact same backend node",
+    takeaways: [
+      {
+        id: "scss-1",
+        text: "sticky cookie srv_id inserts a signed cookie tracking the allocated backend server ID.",
+        searchPrompt: "NGINX sticky cookie name expires domain session affinity",
+        emoji: "🍪",
+        reactionCount: "3.8k",
+        commentCount: 270,
+      },
+      {
+        id: "scss-2",
+        text: "Bypasses IP hash flaws where corporate proxies funnel 10,000 employees through 1 IP.",
+        searchPrompt: "why cookie sticky session is superior to ip_hash corporate NAT",
+        emoji: "🏢",
+        reactionCount: "3.1k",
+        commentCount: 210,
+      },
+      {
+        id: "scss-3",
+        text: "If assigned node dies, balancer transparently re-routes to a live node without crashing.",
+        searchPrompt: "sticky session failover dead node re-assignment",
+        emoji: "🔄",
+        reactionCount: "2.5k",
+        commentCount: 160,
+      },
+    ],
+  },
+
+  "sc-conn-pooling": {
+    id: "sc-conn-pooling",
+    title: "Connection Pooling Reuse",
+    badge: "keepalive 64 pool",
+    tagline: "Reusing persistent TCP sockets to backends to avoid three-way handshake latency",
+    takeaways: [
+      {
+        id: "sccp-1",
+        text: "keepalive 64 maintains an idle pool of 64 pre-opened TCP sockets to each upstream.",
+        searchPrompt: "NGINX upstream keepalive directive performance TCP handshake",
+        emoji: "🏊",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+      {
+        id: "sccp-2",
+        text: "Eliminates TCP 3-way handshakes and TIME_WAIT socket exhaustion under high loads.",
+        searchPrompt: "avoiding TIME_WAIT socket exhaustion NGINX keepalive",
+        emoji: "⏱️",
+        reactionCount: "3.3k",
+        commentCount: 225,
+      },
+      {
+        id: "sccp-3",
+        text: "proxy_http_version 1.1 and proxy_set_header Connection '' are required to enable pooling.",
+        searchPrompt: "NGINX proxy_http_version 1.1 Connection empty keepalive requirement",
+        emoji: "🔧",
+        reactionCount: "2.7k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "sc-upstream-forward": {
+    id: "sc-upstream-forward",
+    title: "Upstream Request Forwarding",
+    badge: "proxy_set_header",
+    tagline: "Decorating headers with client IP, trace IDs, and forwarding payloads to upstream",
+    takeaways: [
+      {
+        id: "scuf-1",
+        text: "Injects X-Forwarded-For: $proxy_add_x_forwarded_for so apps see real client IPs.",
+        searchPrompt: "NGINX X-Forwarded-For X-Real-IP proxy_set_header configuration",
+        emoji: "🏷️",
+        reactionCount: "4.4k",
+        commentCount: 320,
+      },
+      {
+        id: "scuf-2",
+        text: "Passes X-Request-ID for end-to-end distributed tracing across microservices.",
+        searchPrompt: "distributed tracing request id correlation header NGINX",
+        emoji: "🔍",
+        reactionCount: "3.4k",
+        commentCount: 235,
+      },
+      {
+        id: "scuf-3",
+        text: "Buffers slow client uploads in NGINX RAM/disk before forwarding fast to Node.js backend.",
+        searchPrompt: "NGINX request buffering slow client protection backend worker",
+        emoji: "🛡️",
+        reactionCount: "2.8k",
+        commentCount: 180,
+      },
+    ],
+  },
+
+  "sc-failover-circuit": {
+    id: "sc-failover-circuit",
+    title: "Circuit Breaker & Failover",
+    badge: "proxy_next_upstream",
+    tagline: "Instantly re-routing failed requests to neighboring nodes before user ever sees an error",
+    takeaways: [
+      {
+        id: "scfc-1",
+        text: "proxy_next_upstream error timeout http_502 retries request on the next server.",
+        searchPrompt: "NGINX proxy_next_upstream automatic failover 502 503 error",
+        emoji: "🔀",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+      {
+        id: "scfc-2",
+        text: "User experiences zero downtime even if an individual backend worker crashes mid-request.",
+        searchPrompt: "transparent backend failover zero downtime user experience",
+        emoji: "✨",
+        reactionCount: "3.5k",
+        commentCount: 240,
+      },
+      {
+        id: "scfc-3",
+        text: "proxy_next_upstream_tries limits failover attempts to avoid cascade loops.",
+        searchPrompt: "proxy_next_upstream_tries timeout prevent cascading failures",
+        emoji: "🛑",
+        reactionCount: "2.7k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "sc-circuit-breaker": {
+    id: "sc-circuit-breaker",
+    title: "Instant Node Eviction",
+    badge: "502/503 Evict",
+    tagline: "Tripping the circuit breaker on unhealthy servers to prevent cascade failure storms",
+    takeaways: [
+      {
+        id: "sccb-1",
+        text: "Trips circuit when error rate exceeds threshold, temporarily blacklisting the node.",
+        searchPrompt: "circuit breaker pattern load balancing error threshold eviction",
+        emoji: "⚡",
+        reactionCount: "3.9k",
+        commentCount: 280,
+      },
+      {
+        id: "sccb-2",
+        text: "Protects struggling backend nodes with CPU overload from being flooded further.",
+        searchPrompt: "preventing cascading failure backend server overload circuit breaker",
+        emoji: "🛑",
+        reactionCount: "3.1k",
+        commentCount: 215,
+      },
+      {
+        id: "sccb-3",
+        text: "Half-open state tests recovery with canary requests before restoring full traffic.",
+        searchPrompt: "circuit breaker states closed open half-open recovery",
+        emoji: "🚪",
+        reactionCount: "2.6k",
+        commentCount: 165,
+      },
+    ],
+  },
+
+  "sc-cache-compress": {
+    id: "sc-cache-compress",
+    title: "Caching & Gzip Streaming",
+    badge: "proxy_cache / gzip",
+    tagline: "Compressing responses on the fly and caching static or micro-cached responses in RAM",
+    takeaways: [
+      {
+        id: "sccc-1",
+        text: "proxy_cache serves repeated identical requests directly from NGINX without hitting Node.",
+        searchPrompt: "NGINX proxy_cache_path proxy_cache_valid configuration",
+        emoji: "⚡",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+      {
+        id: "sccc-2",
+        text: "gzip on compresses text, JSON, and SVG payloads by up to 80% to save bandwidth.",
+        searchPrompt: "NGINX gzip compression types gzip_min_length bandwidth savings",
+        emoji: "🗜️",
+        reactionCount: "3.3k",
+        commentCount: 225,
+      },
+      {
+        id: "sccc-3",
+        text: "Supports stale-while-revalidate: serving cached data while asynchronously updating cache.",
+        searchPrompt: "proxy_cache_use_stale updating stale-while-revalidate NGINX",
+        emoji: "🔄",
+        reactionCount: "2.7k",
+        commentCount: 180,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -4210,6 +4909,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Real-Time & Sockets"
       : node.category === "queues"
       ? "Queues & Background Jobs"
+      : node.category === "scaling"
+      ? "Scaling & Load Balancing"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

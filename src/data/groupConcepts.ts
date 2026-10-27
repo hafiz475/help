@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -503,6 +503,101 @@ export const QUEUES_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
+// Scaling Groups with > 3 children:
+// 1. NGINX 9-Stage Reverse Proxy & Balancing Pipeline (9 items > 3)
+export const SCALING_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-scaling-nginx",
+    pillarId: "scaling-nginx-pipeline",
+    title: "NGINX 9-Stage Reverse Proxy Pipeline",
+    category: "scaling",
+    badge: "9 Sequential Stages",
+    color: "#14b8a6",
+    isPipeline: true,
+    items: [
+      {
+        id: "sc-tls-term",
+        stepNumber: 1,
+        label: "Client TLS Termination",
+        badge: "SSL / HTTP/2 / HTTP/3",
+        searchQuery: "NGINX SSL termination TLS handshake offloading HTTPS certificates",
+      },
+      {
+        id: "sc-route-match",
+        stepNumber: 2,
+        label: "Upstream Route Matching",
+        badge: "proxy_pass http://cluster",
+        searchQuery: "NGINX upstream block proxy_pass location matching URL rewrite",
+      },
+      {
+        id: "sc-health-probe",
+        stepNumber: 3,
+        label: "Health Check Probe",
+        badge: "interval=5s fails=3",
+        searchQuery: "NGINX active health checks probe interval fails uri healthz",
+        subItems: [
+          {
+            id: "sc-passive-probe",
+            label: "Passive & Active Probes",
+            badge: "max_fails / /healthz",
+            searchQuery: "NGINX max_fails fail_timeout active health check differences",
+          },
+        ],
+      },
+      {
+        id: "sc-balancer-select",
+        stepNumber: 4,
+        label: "Routing Policy Execution",
+        badge: "least_conn / round_robin",
+        searchQuery: "NGINX load balancing directive least_conn round_robin weight",
+      },
+      {
+        id: "sc-sticky-session",
+        stepNumber: 5,
+        label: "Sticky Session Hash",
+        badge: "ip_hash / cookie srv_id",
+        searchQuery: "NGINX ip_hash sticky cookie session persistence stateful",
+      },
+      {
+        id: "sc-conn-pooling",
+        stepNumber: 6,
+        label: "Connection Pooling Reuse",
+        badge: "keepalive 64 pool",
+        searchQuery: "NGINX upstream keepalive connection pooling TCP reuse latency",
+      },
+      {
+        id: "sc-upstream-forward",
+        stepNumber: 7,
+        label: "Upstream Request Forwarding",
+        badge: "proxy_set_header",
+        searchQuery: "NGINX proxy_set_header X-Forwarded-For X-Real-IP Host proxy_next_upstream",
+      },
+      {
+        id: "sc-failover-circuit",
+        stepNumber: 8,
+        label: "Circuit Breaker & Failover",
+        badge: "proxy_next_upstream",
+        searchQuery: "NGINX proxy_next_upstream error timeout http_502 http_503 circuit breaker",
+        subItems: [
+          {
+            id: "sc-circuit-breaker",
+            label: "Instant Node Eviction",
+            badge: "502/503 Evict",
+            searchQuery: "circuit breaker pattern load balancer server eviction failover",
+          },
+        ],
+      },
+      {
+        id: "sc-cache-compress",
+        stepNumber: 9,
+        label: "Caching & Gzip Streaming",
+        badge: "proxy_cache / gzip",
+        searchQuery: "NGINX proxy_cache microcaching gzip compression response streaming",
+      },
+    ],
+  },
+];
+
 // Node.js Groups with > 3 children:
 // 1. Node.js Built-in APIs (4 items > 3)
 // 2. libuv Infrastructure (4 items > 3)
@@ -878,7 +973,7 @@ export const BIGO_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -887,8 +982,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "backend") return BACKEND_GROUP_CARDS;
   if (category === "realtime") return REALTIME_GROUP_CARDS;
   if (category === "queues") return QUEUES_GROUP_CARDS;
+  if (category === "scaling") return SCALING_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

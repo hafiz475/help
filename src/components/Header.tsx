@@ -18,6 +18,7 @@ import {
   Server,
   Radio,
   Workflow,
+  Split,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -55,6 +56,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Radio size={16} />;
       case "queues":
         return <Workflow size={16} />;
+      case "scaling":
+        return <Split size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

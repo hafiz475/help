@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -963,6 +963,8 @@ export function calculateGroupLayout(
         ? "Real-Time & Sockets"
         : category === "queues"
         ? "Queues & Background Jobs"
+        : category === "scaling"
+        ? "Scaling & Load Balancing"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -987,6 +989,8 @@ export function calculateGroupLayout(
         ? "Bi-Directional Streams"
         : category === "queues"
         ? "Async Task Processing"
+        : category === "scaling"
+        ? "Traffic Distribution"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1003,6 +1007,8 @@ export function calculateGroupLayout(
         ? "#0ea5e9"
         : category === "queues"
         ? "#f97316"
+        : category === "scaling"
+        ? "#14b8a6"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -2388,6 +2394,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1E: Scaling & Load Balancing Hub (placed top-right above queues at y = -3150)
+    const scalingHubX = 1300;
+    const scalingHubY = -3150;
+    const scalingHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-scaling")!,
+      x: scalingHubX,
+      y: scalingHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(scalingHubNode);
+    edges.push({
+      source: nodeHubNode.id,
+      target: scalingHubNode.id,
+      category: "scaling",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Scaling Node 1: Balancing Algorithms
+    const sAlgoRaw = allNodes.find((n) => n.id === "scaling-algorithms");
+    if (sAlgoRaw) {
+      const sAlgoX = 1950;
+      const sAlgoY = -3350;
+      const sAlgoNode: PositionedNode = {
+        ...sAlgoRaw,
+        x: sAlgoX,
+        y: sAlgoY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(sAlgoNode);
+      edges.push({
+        source: scalingHubNode.id,
+        target: sAlgoNode.id,
+        category: "scaling",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const rrRaw = allNodes.find((n) => n.id === "scaling-round-robin");
+      if (rrRaw) {
+        positionedNodes.push({
+          ...rrRaw,
+          x: sAlgoX + 320,
+          y: sAlgoY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sAlgoNode.id,
+          target: rrRaw.id,
+          category: "scaling",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const lcRaw = allNodes.find((n) => n.id === "scaling-least-connections");
+      if (lcRaw) {
+        positionedNodes.push({
+          ...lcRaw,
+          x: sAlgoX + 320,
+          y: sAlgoY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sAlgoNode.id,
+          target: lcRaw.id,
+          category: "scaling",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const ipRaw = allNodes.find((n) => n.id === "scaling-ip-hash");
+      if (ipRaw) {
+        positionedNodes.push({
+          ...ipRaw,
+          x: sAlgoX + 320,
+          y: sAlgoY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sAlgoNode.id,
+          target: ipRaw.id,
+          category: "scaling",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Scaling Node 2: NGINX 9-Stage Reverse Proxy Pipeline (Group Card)
+    const sCard = cardByPillar.get("scaling-nginx-pipeline");
+    if (sCard) {
+      const cardX = 2100;
+      const cardY = -3150;
+      const posCard: PositionedGroupCard = {
+        ...sCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: scalingHubNode.id,
+        target: sCard.id,
+        category: "scaling",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Scaling Node 3: Horizontal & Elastic Scale
+    const sScaleRaw = allNodes.find((n) => n.id === "scaling-horizontal-scale");
+    if (sScaleRaw) {
+      const sScaleX = 1950;
+      const sScaleY = -2950;
+      const sScaleNode: PositionedNode = {
+        ...sScaleRaw,
+        x: sScaleX,
+        y: sScaleY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(sScaleNode);
+      edges.push({
+        source: scalingHubNode.id,
+        target: sScaleNode.id,
+        category: "scaling",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const workersRaw = allNodes.find((n) => n.id === "scaling-stateless-workers");
+      if (workersRaw) {
+        positionedNodes.push({
+          ...workersRaw,
+          x: sScaleX + 320,
+          y: sScaleY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sScaleNode.id,
+          target: workersRaw.id,
+          category: "scaling",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const asgRaw = allNodes.find((n) => n.id === "scaling-auto-scaling-groups");
+      if (asgRaw) {
+        positionedNodes.push({
+          ...asgRaw,
+          x: sScaleX + 320,
+          y: sScaleY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sScaleNode.id,
+          target: asgRaw.id,
+          category: "scaling",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const cdnRaw = allNodes.find((n) => n.id === "scaling-global-cdn-anycast");
+      if (cdnRaw) {
+        positionedNodes.push({
+          ...cdnRaw,
+          x: sScaleX + 320,
+          y: sScaleY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sScaleNode.id,
+          target: cdnRaw.id,
+          category: "scaling",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -2636,6 +2835,8 @@ export function calculateGroupLayout(
     pillarIds = ["realtime-protocols", "realtime-socketio-lifecycle", "realtime-rooms-presence"];
   } else if (category === "queues") {
     pillarIds = ["queues-architecture", "queues-bullmq-lifecycle", "queues-workers-resilience"];
+  } else if (category === "scaling") {
+    pillarIds = ["scaling-algorithms", "scaling-nginx-pipeline", "scaling-horizontal-scale"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -2929,6 +3130,11 @@ export function getNodesForCategory(
       parentId: "root-node",
       level: 2,
     };
+    const scalingRoot = {
+      ...allNodes.find((n) => n.id === "root-scaling")!,
+      parentId: "root-node",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -2958,13 +3164,14 @@ export function getNodesForCategory(
         n.id !== "root-backend" &&
         n.id !== "root-realtime" &&
         n.id !== "root-queues" &&
+        n.id !== "root-scaling" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }
