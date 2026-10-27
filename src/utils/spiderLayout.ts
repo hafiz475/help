@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -957,6 +957,8 @@ export function calculateGroupLayout(
         ? "Closures"
         : category === "async"
         ? "Async JavaScript"
+        : category === "backend"
+        ? "Backend & APIs"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -975,6 +977,8 @@ export function calculateGroupLayout(
         ? "Persistent Scope"
         : category === "async"
         ? "Event Scheduling"
+        : category === "backend"
+        ? "Server Architecture"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -985,6 +989,8 @@ export function calculateGroupLayout(
         ? "#e879f9"
         : category === "async"
         ? "#06b6d4"
+        : category === "backend"
+        ? "#10b981"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -1791,6 +1797,199 @@ export function calculateGroupLayout(
       layoutCardSubItems(posCard, positionedNodes, edges, 3, 1);
     }
 
+    // Sub-Branch 1B: Backend & APIs Hub (placed top-right above restaurant)
+    const backendHubX = 1300;
+    const backendHubY = -1350;
+    const backendHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-backend")!,
+      x: backendHubX,
+      y: backendHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(backendHubNode);
+    edges.push({
+      source: nodeHubNode.id,
+      target: backendHubNode.id,
+      category: "backend",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Backend Node 1: REST & HTTP Architecture
+    const restRaw = allNodes.find((n) => n.id === "backend-rest-http");
+    if (restRaw) {
+      const restX = 1950;
+      const restY = -1550;
+      const restNode: PositionedNode = {
+        ...restRaw,
+        x: restX,
+        y: restY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(restNode);
+      edges.push({
+        source: backendHubNode.id,
+        target: restNode.id,
+        category: "backend",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const methodsRaw = allNodes.find((n) => n.id === "backend-http-methods");
+      if (methodsRaw) {
+        positionedNodes.push({
+          ...methodsRaw,
+          x: restX + 320,
+          y: restY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: restNode.id,
+          target: methodsRaw.id,
+          category: "backend",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const statusRaw = allNodes.find((n) => n.id === "backend-status-codes");
+      if (statusRaw) {
+        positionedNodes.push({
+          ...statusRaw,
+          x: restX + 320,
+          y: restY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: restNode.id,
+          target: statusRaw.id,
+          category: "backend",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const crudRaw = allNodes.find((n) => n.id === "backend-stateless-crud");
+      if (crudRaw) {
+        positionedNodes.push({
+          ...crudRaw,
+          x: restX + 320,
+          y: restY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: restNode.id,
+          target: crudRaw.id,
+          category: "backend",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Backend Node 2: Express Middleware Pipeline (10-Stage Pipeline Card)
+    const mwCard = cardByPillar.get("backend-middleware-pipeline");
+    if (mwCard) {
+      const cardX = 2100;
+      const cardY = -1350;
+      const posCard: PositionedGroupCard = {
+        ...mwCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: backendHubNode.id,
+        target: mwCard.id,
+        category: "backend",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Backend Node 3: Production Guards & Security
+    const guardsRaw = allNodes.find((n) => n.id === "backend-production-guards");
+    if (guardsRaw) {
+      const guardX = 1950;
+      const guardY = -1150;
+      const guardNode: PositionedNode = {
+        ...guardsRaw,
+        x: guardX,
+        y: guardY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(guardNode);
+      edges.push({
+        source: backendHubNode.id,
+        target: guardNode.id,
+        category: "backend",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const jwtRaw = allNodes.find((n) => n.id === "backend-auth-jwt");
+      if (jwtRaw) {
+        positionedNodes.push({
+          ...jwtRaw,
+          x: guardX + 320,
+          y: guardY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: guardNode.id,
+          target: jwtRaw.id,
+          category: "backend",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const corsRaw = allNodes.find((n) => n.id === "backend-cors-headers");
+      if (corsRaw) {
+        positionedNodes.push({
+          ...corsRaw,
+          x: guardX + 320,
+          y: guardY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: guardNode.id,
+          target: corsRaw.id,
+          category: "backend",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const rateRaw = allNodes.find((n) => n.id === "backend-rate-limiting");
+      if (rateRaw) {
+        positionedNodes.push({
+          ...rateRaw,
+          x: guardX + 320,
+          y: guardY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: guardNode.id,
+          target: rateRaw.id,
+          category: "backend",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -2033,6 +2232,8 @@ export function calculateGroupLayout(
     pillarIds = ["async-callbacks", "async-promises", "async-await"];
   } else if (category === "node") {
     pillarIds = ["node-restaurant-pillar", "node-apis-pillar", "node-libuv-pillar"];
+  } else if (category === "backend") {
+    pillarIds = ["backend-rest-http", "backend-middleware-pipeline", "backend-production-guards"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -2311,6 +2512,11 @@ export function getNodesForCategory(
       parentId: "root-js-core",
       level: 2,
     };
+    const backendRoot = {
+      ...allNodes.find((n) => n.id === "root-backend")!,
+      parentId: "root-node",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -2337,13 +2543,14 @@ export function getNodesForCategory(
         n.id !== "root-closure" &&
         n.id !== "root-async" &&
         n.id !== "root-node" &&
+        n.id !== "root-backend" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

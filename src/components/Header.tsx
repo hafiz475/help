@@ -15,6 +15,7 @@ import {
   Layers,
   Gauge,
   Zap,
+  Server,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -46,6 +47,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Zap size={16} />;
       case "node":
         return <Network size={16} />;
+      case "backend":
+        return <Server size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

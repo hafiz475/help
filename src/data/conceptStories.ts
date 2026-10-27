@@ -648,6 +648,670 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // BACKEND & API DESIGN STORIES
+  // ==========================================
+  "root-backend": {
+    id: "root-backend",
+    title: "Backend & APIs",
+    badge: "Server Architecture",
+    tagline: "API design patterns, Express middleware pipeline lifecycle, JWT auth, and production security",
+    takeaways: [
+      {
+        id: "be-root-1",
+        text: "Express builds on Node HTTP servers, routing requests through a composable middleware chain.",
+        searchPrompt: "Express.js architecture Node.js HTTP server middleware pipeline",
+        emoji: "⚡",
+        reactionCount: "4.7k",
+        commentCount: 330,
+      },
+      {
+        id: "be-root-2",
+        text: "RESTful architecture decouples client and server using stateless URIs and standard HTTP verbs.",
+        searchPrompt: "RESTful API design best practices HTTP verbs client server",
+        emoji: "🌐",
+        reactionCount: "3.9k",
+        commentCount: 265,
+      },
+      {
+        id: "be-root-3",
+        text: "A robust backend guards routes with authentication, validation schemas, and rate limiting.",
+        searchPrompt: "production backend API security architecture Express guards",
+        emoji: "🛡️",
+        reactionCount: "2.8k",
+        commentCount: 180,
+      },
+    ],
+  },
+
+  "backend-rest-http": {
+    id: "backend-rest-http",
+    title: "REST & HTTP Architecture",
+    badge: "Protocol & Verbs",
+    tagline: "The foundational web communication protocol and REST architectural constraints",
+    takeaways: [
+      {
+        id: "brh-1",
+        text: "Representational State Transfer (REST) models servers as stateless collections of resources.",
+        searchPrompt: "what is RESTful API architecture constraints explained",
+        emoji: "🏛️",
+        reactionCount: "3.6k",
+        commentCount: 220,
+      },
+      {
+        id: "brh-2",
+        text: "HTTP headers carry essential metadata like Content-Type, Authorization, and Cache-Control.",
+        searchPrompt: "HTTP headers REST API Content-Type Authorization Cache-Control",
+        emoji: "📜",
+        reactionCount: "2.7k",
+        commentCount: 165,
+      },
+      {
+        id: "brh-3",
+        text: "Statelessness means every request contains all context needed to process independently.",
+        searchPrompt: "stateless HTTP request architecture advantages backend",
+        emoji: "💡",
+        reactionCount: "2.1k",
+        commentCount: 130,
+      },
+    ],
+  },
+
+  "backend-http-methods": {
+    id: "backend-http-methods",
+    title: "HTTP Verbs & Semantics",
+    badge: "Idempotent Verbs",
+    tagline: "Appropriate verb usage and idempotency guarantees across CRUD operations",
+    takeaways: [
+      {
+        id: "bhm-1",
+        text: "GET reads resources idempotently without modifying state or database records.",
+        searchPrompt: "HTTP GET idempotent safe method RESTful API",
+        emoji: "🔍",
+        reactionCount: "3.4k",
+        commentCount: 210,
+      },
+      {
+        id: "bhm-2",
+        text: "POST creates new resources; PUT replaces them entirely; PATCH applies partial updates.",
+        searchPrompt: "difference between POST PUT and PATCH REST API",
+        emoji: "✏️",
+        reactionCount: "4.2k",
+        commentCount: 295,
+      },
+      {
+        id: "bhm-3",
+        text: "Idempotency guarantees that executing an operation multiple times yields the same result.",
+        searchPrompt: "HTTP idempotency explained PUT DELETE GET vs POST",
+        emoji: "🔒",
+        reactionCount: "2.8k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "backend-status-codes": {
+    id: "backend-status-codes",
+    title: "Status Code Hierarchy",
+    badge: "2xx, 4xx, 5xx Tiers",
+    tagline: "Standardized 3-digit responses informing clients about outcome semantics",
+    takeaways: [
+      {
+        id: "bsc-1",
+        text: "2xx signals success: 200 OK for reads/updates, 201 Created for newly inserted resources.",
+        searchPrompt: "HTTP 200 vs 201 status codes REST API best practices",
+        emoji: "✅",
+        reactionCount: "3.8k",
+        commentCount: 240,
+      },
+      {
+        id: "bsc-2",
+        text: "4xx flags client errors: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found.",
+        searchPrompt: "401 Unauthorized vs 403 Forbidden HTTP client error codes",
+        emoji: "⚠️",
+        reactionCount: "4.5k",
+        commentCount: 310,
+      },
+      {
+        id: "bsc-3",
+        text: "5xx indicates server failure: 500 Internal Error, 502 Bad Gateway, 503 Service Unavailable.",
+        searchPrompt: "500 vs 502 vs 503 HTTP server error troubleshooting",
+        emoji: "🔥",
+        reactionCount: "2.6k",
+        commentCount: 155,
+      },
+    ],
+  },
+
+  "backend-stateless-crud": {
+    id: "backend-stateless-crud",
+    title: "Stateless REST & CRUD",
+    badge: "Decoupled Resources",
+    tagline: "Resource-oriented routing and decoupling client state from server memory",
+    takeaways: [
+      {
+        id: "bsr-1",
+        text: "CRUD maps cleanly to HTTP: Create (POST), Read (GET), Update (PUT/PATCH), Delete (DELETE).",
+        searchPrompt: "CRUD mapping to HTTP verbs REST endpoints",
+        emoji: "🔄",
+        reactionCount: "3.5k",
+        commentCount: 215,
+      },
+      {
+        id: "bsr-2",
+        text: "Resource URIs should be plural nouns (/api/users, /api/orders) rather than verbs.",
+        searchPrompt: "REST API naming conventions plural nouns resource URIs",
+        emoji: "🏷️",
+        reactionCount: "2.9k",
+        commentCount: 185,
+      },
+      {
+        id: "bsr-3",
+        text: "Client-server decoupling allows mobile apps and web SPAs to consume the exact same API.",
+        searchPrompt: "client server separation decoupled architecture REST API",
+        emoji: "🚀",
+        reactionCount: "2.2k",
+        commentCount: 140,
+      },
+    ],
+  },
+
+  "backend-middleware-pipeline": {
+    id: "backend-middleware-pipeline",
+    title: "Middleware Pipeline",
+    badge: "Request Onion Flow",
+    tagline: "Sequential composable request filtering before hitting controller handlers",
+    takeaways: [
+      {
+        id: "bmp-1",
+        text: "Express executes middleware functions sequentially like layers of an onion before routes.",
+        searchPrompt: "Express middleware onion pattern request response cycle",
+        emoji: "🧅",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+      {
+        id: "bmp-2",
+        text: "Calling next() forwards control to the next middleware; omitting it leaves requests hanging.",
+        searchPrompt: "how next function works Express middleware flow control",
+        emoji: "➡️",
+        reactionCount: "3.7k",
+        commentCount: 255,
+      },
+      {
+        id: "bmp-3",
+        text: "Calling next(err) bypasses regular middleware directly into the global error handler.",
+        searchPrompt: "Express next with error argument global error handler skip",
+        emoji: "🔀",
+        reactionCount: "2.8k",
+        commentCount: 190,
+      },
+    ],
+  },
+
+  "backend-production-guards": {
+    id: "backend-production-guards",
+    title: "Production Guards",
+    badge: "Hardening & Flow",
+    tagline: "Defensive middleware safeguarding backend infrastructure against abuse and attacks",
+    takeaways: [
+      {
+        id: "bpg-1",
+        text: "Production backends require defense-in-depth: rate limiting, auth tokens, and CORS policies.",
+        searchPrompt: "defense in depth API security Express Node.js backend",
+        emoji: "🛡️",
+        reactionCount: "4.1k",
+        commentCount: 285,
+      },
+      {
+        id: "bpg-2",
+        text: "Input validation fails fast on malicious payloads before database queries execute.",
+        searchPrompt: "fail fast input validation security API injection prevention",
+        emoji: "⛔",
+        reactionCount: "3.2k",
+        commentCount: 205,
+      },
+      {
+        id: "bpg-3",
+        text: "Security headers like Helmet protect APIs from clickjacking, MIME sniffing, and XSS.",
+        searchPrompt: "Helmet security headers Express CSP HSTS XSS protection",
+        emoji: "⛑️",
+        reactionCount: "2.5k",
+        commentCount: 160,
+      },
+    ],
+  },
+
+  "backend-auth-jwt": {
+    id: "backend-auth-jwt",
+    title: "Auth & JWT Tokens",
+    badge: "Bearer / Claims",
+    tagline: "Cryptographically signed JSON web tokens enabling stateless authentication",
+    takeaways: [
+      {
+        id: "baj-1",
+        text: "JSON Web Tokens (JWT) sign JSON payloads cryptographically using HMAC or RSA keys.",
+        searchPrompt: "JWT token structure header payload signature HMAC RSA",
+        emoji: "🔑",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+      {
+        id: "baj-2",
+        text: "Clients transmit JWTs in the Authorization header using the 'Bearer <token>' schema.",
+        searchPrompt: "Authorization Bearer token header HTTP authentication",
+        emoji: "🎫",
+        reactionCount: "3.5k",
+        commentCount: 230,
+      },
+      {
+        id: "baj-3",
+        text: "Stateless verification avoids database lookups for session state on every incoming request.",
+        searchPrompt: "stateless JWT authentication vs session database lookups",
+        emoji: "⚡",
+        reactionCount: "2.9k",
+        commentCount: 185,
+      },
+    ],
+  },
+
+  "backend-cors-headers": {
+    id: "backend-cors-headers",
+    title: "CORS & Security Headers",
+    badge: "Origin / Helmet",
+    tagline: "Cross-Origin Resource Sharing rules and browser sandbox enforcement",
+    takeaways: [
+      {
+        id: "bch-1",
+        text: "Cross-Origin Resource Sharing (CORS) enforces browser security against unauthorized domains.",
+        searchPrompt: "what is CORS Cross Origin Resource Sharing browser security",
+        emoji: "🌐",
+        reactionCount: "4.3k",
+        commentCount: 315,
+      },
+      {
+        id: "bch-2",
+        text: "Browsers dispatch an HTTP OPTIONS preflight request before non-simple cross-origin calls.",
+        searchPrompt: "HTTP OPTIONS preflight request CORS preflight check",
+        emoji: "🛫",
+        reactionCount: "3.6k",
+        commentCount: 245,
+      },
+      {
+        id: "bch-3",
+        text: "Access-Control-Allow-Origin headers explicitly whitelist permitted client domain origins.",
+        searchPrompt: "Access-Control-Allow-Origin header configuration Express",
+        emoji: "📋",
+        reactionCount: "2.4k",
+        commentCount: 150,
+      },
+    ],
+  },
+
+  "backend-rate-limiting": {
+    id: "backend-rate-limiting",
+    title: "Rate Limiting & Validation",
+    badge: "429 / Zod Guard",
+    tagline: "Throttling traffic bursts and strictly validating input types and boundaries",
+    takeaways: [
+      {
+        id: "brl-1",
+        text: "Rate limiters cap requests per IP using token-bucket or sliding-window algorithms.",
+        searchPrompt: "token bucket algorithm rate limiting API sliding window",
+        emoji: "⏱️",
+        reactionCount: "3.9k",
+        commentCount: 270,
+      },
+      {
+        id: "brl-2",
+        text: "Exceeding quotas triggers HTTP 429 Too Many Requests with a Retry-After header.",
+        searchPrompt: "HTTP 429 Too Many Requests status code Retry-After header",
+        emoji: "🛑",
+        reactionCount: "3.1k",
+        commentCount: 195,
+      },
+      {
+        id: "brl-3",
+        text: "Defends APIs against denial-of-service (DDoS), credential stuffing, and scraper bots.",
+        searchPrompt: "preventing DDoS credential stuffing API rate limiting",
+        emoji: "🛡️",
+        reactionCount: "2.5k",
+        commentCount: 160,
+      },
+    ],
+  },
+
+  // 10-STAGE MIDDLEWARE PIPELINE STORIES
+  "mw-incoming": {
+    id: "mw-incoming",
+    title: "Incoming HTTP Request",
+    badge: "Raw TCP Stream",
+    tagline: "Raw socket handshake, IP extraction, and initial stream parsing",
+    takeaways: [
+      {
+        id: "mwi-1",
+        text: "Node's http.createServer emits request events when raw TCP sockets receive data.",
+        searchPrompt: "Node.js http createServer raw TCP stream request event",
+        emoji: "🔌",
+        reactionCount: "3.2k",
+        commentCount: 200,
+      },
+      {
+        id: "mwi-2",
+        text: "IncomingMessage parses the HTTP start line (METHOD /path HTTP/1.1) and header key-values.",
+        searchPrompt: "http.IncomingMessage Node.js request line headers parsing",
+        emoji: "📨",
+        reactionCount: "2.4k",
+        commentCount: 155,
+      },
+      {
+        id: "mwi-3",
+        text: "Serves as the entry point into Express application middleware pipelines.",
+        searchPrompt: "how Express routes incoming Node.js HTTP request stream",
+        emoji: "🚪",
+        reactionCount: "1.8k",
+        commentCount: 110,
+      },
+    ],
+  },
+
+  "mw-cors": {
+    id: "mw-cors",
+    title: "CORS Preflight (OPTIONS)",
+    badge: "Origin Whitelist",
+    tagline: "Verifying origin permissions and resolving OPTIONS preflight checks",
+    takeaways: [
+      {
+        id: "mwc-1",
+        text: "CORS middleware inspects Origin headers against allowed client domain whitelists.",
+        searchPrompt: "express cors middleware origin whitelist configuration",
+        emoji: "🌐",
+        reactionCount: "3.7k",
+        commentCount: 250,
+      },
+      {
+        id: "mwc-2",
+        text: "Instantly terminates OPTIONS preflight calls with allowed headers and methods.",
+        searchPrompt: "handling CORS OPTIONS preflight response in Express",
+        emoji: "⚡",
+        reactionCount: "2.8k",
+        commentCount: 180,
+      },
+      {
+        id: "mwc-3",
+        text: "Prevents untrusted websites from issuing authenticated AJAX requests on behalf of users.",
+        searchPrompt: "why CORS is essential browser security AJAX prevention",
+        emoji: "🛡️",
+        reactionCount: "2.1k",
+        commentCount: 135,
+      },
+    ],
+  },
+
+  "mw-body-parser": {
+    id: "mw-body-parser",
+    title: "Body Parser (JSON)",
+    badge: "Stream Deserialization",
+    tagline: "Buffering request streams and deserializing JSON payloads into req.body",
+    takeaways: [
+      {
+        id: "mwb-1",
+        text: "Reads chunks from the readable request stream and deserializes JSON into req.body.",
+        searchPrompt: "express.json body parser how it reads request stream",
+        emoji: "📦",
+        reactionCount: "3.9k",
+        commentCount: 260,
+      },
+      {
+        id: "mwb-2",
+        text: "Enforces payload size limits (e.g. 10mb) to prevent memory exhaustion DoS attacks.",
+        searchPrompt: "express body-parser limit option memory leak prevention",
+        emoji: "🛑",
+        reactionCount: "2.9k",
+        commentCount: 190,
+      },
+      {
+        id: "mwb-3",
+        text: "Requires express.json() middleware before any route handlers access request bodies.",
+        searchPrompt: "req.body is undefined Express express.json missing",
+        emoji: "💡",
+        reactionCount: "2.3k",
+        commentCount: 145,
+      },
+    ],
+  },
+
+  "mw-logger": {
+    id: "mw-logger",
+    title: "Request Logger & Trace ID",
+    badge: "Correlation ID",
+    tagline: "Attaching correlation IDs and logging execution metadata for distributed tracing",
+    takeaways: [
+      {
+        id: "mwl-1",
+        text: "Generates or extracts a unique X-Request-ID trace header for request observability.",
+        searchPrompt: "X-Request-ID correlation ID Express middleware distributed tracing",
+        emoji: "🆔",
+        reactionCount: "3.5k",
+        commentCount: 225,
+      },
+      {
+        id: "mwl-2",
+        text: "Logs incoming verb, route path, client IP, response status, and millisecond latency.",
+        searchPrompt: "Morgan Winston request logger formatting latency status",
+        emoji: "📊",
+        reactionCount: "2.6k",
+        commentCount: 165,
+      },
+      {
+        id: "mwl-3",
+        text: "Enables distributed tracing across microservices and structured log aggregators.",
+        searchPrompt: "structured logging JSON Datadog OpenTelemetry Express",
+        emoji: "🔭",
+        reactionCount: "1.9k",
+        commentCount: 120,
+      },
+    ],
+  },
+
+  "mw-auth": {
+    id: "mw-auth",
+    title: "JWT Bearer Verification",
+    badge: "req.user Injection",
+    tagline: "Extracting authorization bearer tokens and populating authenticated user context",
+    takeaways: [
+      {
+        id: "mwa-1",
+        text: "Extracts Bearer token from req.headers.authorization and validates signature.",
+        searchPrompt: "extract Bearer token from req headers authorization Express",
+        emoji: "🔑",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+      {
+        id: "mwa-2",
+        text: "Attaches decoded user claims to req.user for downstream controllers to access.",
+        searchPrompt: "attaching req.user in Express auth middleware TypeScript",
+        emoji: "👤",
+        reactionCount: "3.3k",
+        commentCount: 215,
+      },
+      {
+        id: "mwa-3",
+        text: "Returns 401 Unauthorized immediately if token is missing, expired, or corrupted.",
+        searchPrompt: "jwt.verify TokenExpiredError JsonWebTokenError 401 response",
+        emoji: "⛔",
+        reactionCount: "2.7k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "mw-rate-limit": {
+    id: "mw-rate-limit",
+    title: "Rate Limiter Guard",
+    badge: "Token Bucket / 429",
+    tagline: "Enforcing per-IP request budgets to block scrapers and flood attacks",
+    takeaways: [
+      {
+        id: "mwr-1",
+        text: "Tracks request counts per IP in memory or Redis backends across a sliding window.",
+        searchPrompt: "express-rate-limit rate-limit-redis distributed rate limiting",
+        emoji: "⏱️",
+        reactionCount: "3.6k",
+        commentCount: 240,
+      },
+      {
+        id: "mwr-2",
+        text: "Adds standard RateLimit-Limit, RateLimit-Remaining, and RateLimit-Reset headers.",
+        searchPrompt: "standard rate limit HTTP response headers IETF draft",
+        emoji: "📋",
+        reactionCount: "2.5k",
+        commentCount: 160,
+      },
+      {
+        id: "mwr-3",
+        text: "Halts request flood attacks before expensive database queries or CPU tasks run.",
+        searchPrompt: "protecting backend database from query flooding rate limit",
+        emoji: "🛡️",
+        reactionCount: "2.0k",
+        commentCount: 130,
+      },
+    ],
+  },
+
+  "mw-validator": {
+    id: "mw-validator",
+    title: "Zod Schema Validation",
+    badge: "Fail-Fast 400",
+    tagline: "Declarative runtime schema validation safeguarding route inputs",
+    takeaways: [
+      {
+        id: "mwv-1",
+        text: "Validates req.body, req.query, and req.params against Zod or Joi strict schemas.",
+        searchPrompt: "Zod validation middleware Express req body query params",
+        emoji: "📐",
+        reactionCount: "4.5k",
+        commentCount: 325,
+      },
+      {
+        id: "mwv-2",
+        text: "Strips unpermitted keys and coerces data types safely before hitting controllers.",
+        searchPrompt: "Zod safeParse strip unknown keys sanitization Express",
+        emoji: "🧹",
+        reactionCount: "3.2k",
+        commentCount: 210,
+      },
+      {
+        id: "mwv-3",
+        text: "Responds with 400 Bad Request and descriptive validation errors on invalid inputs.",
+        searchPrompt: "ZodError formatting 400 Bad Request JSON response",
+        emoji: "⚠️",
+        reactionCount: "2.6k",
+        commentCount: 170,
+      },
+    ],
+  },
+
+  "mw-controller": {
+    id: "mw-controller",
+    title: "Route Controller (CRUD)",
+    badge: "Business Logic",
+    tagline: "Executing core application logic and interacting with database models",
+    takeaways: [
+      {
+        id: "mwt-1",
+        text: "Executes business logic, invokes database models (Mongoose/Prisma), and formats data.",
+        searchPrompt: "Express controller pattern separating business logic from routes",
+        emoji: "🎮",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+      {
+        id: "mwt-2",
+        text: "Wraps async database queries with try/catch or async handler wrappers.",
+        searchPrompt: "express async handler wrapper avoiding try catch boilerplate",
+        emoji: "🧰",
+        reactionCount: "3.1k",
+        commentCount: 200,
+      },
+      {
+        id: "mwt-3",
+        text: "Isolates core business logic cleanly from HTTP serialization and routing details.",
+        searchPrompt: "clean architecture controller service repository pattern Node.js",
+        emoji: "🏗️",
+        reactionCount: "2.4k",
+        commentCount: 150,
+      },
+    ],
+  },
+
+  "mw-error-handler": {
+    id: "mw-error-handler",
+    title: "Global Error Boundary",
+    badge: "(err, req, res, next)",
+    tagline: "Centralized exception handling preventing process crashes and data leaks",
+    takeaways: [
+      {
+        id: "mwe-1",
+        text: "Express identifies error handlers by their 4 parameters: (err, req, res, next).",
+        searchPrompt: "Express 4 argument error handling middleware signature",
+        emoji: "🛡️",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "mwe-2",
+        text: "Catches uncaught exceptions and rejected promises forwarded by next(err) calls.",
+        searchPrompt: "centralized error handling Express custom AppError class",
+        emoji: "🪤",
+        reactionCount: "3.4k",
+        commentCount: 230,
+      },
+      {
+        id: "mwe-3",
+        text: "Hides internal stack traces in production to prevent leaking sensitive system paths.",
+        searchPrompt: "hiding stack trace in production error response Express",
+        emoji: "🔒",
+        reactionCount: "2.7k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "mw-response": {
+    id: "mw-response",
+    title: "Response Termination",
+    badge: "res.status().json()",
+    tagline: "Serializing JSON, setting headers, and flushing the socket back to the client",
+    takeaways: [
+      {
+        id: "mwp-1",
+        text: "Sets Content-Type to application/json and serializes the response payload.",
+        searchPrompt: "res.json vs res.send serialization Content-Type Express",
+        emoji: "📄",
+        reactionCount: "3.3k",
+        commentCount: 215,
+      },
+      {
+        id: "mwp-2",
+        text: "Writes the HTTP response status code (e.g. 200, 201) and flushes the socket.",
+        searchPrompt: "res.status res.json chaining response termination",
+        emoji: "🚀",
+        reactionCount: "2.5k",
+        commentCount: 160,
+      },
+      {
+        id: "mwp-3",
+        text: "Marks the end of the Express request-response lifecycle, freeing worker memory.",
+        searchPrompt: "Express request response lifecycle completion socket drain",
+        emoji: "🏁",
+        reactionCount: "1.9k",
+        commentCount: 120,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -2142,6 +2806,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Asynchronous JavaScript"
       : node.category === "node"
       ? "Node.js Runtime"
+      : node.category === "backend"
+      ? "Backend & APIs"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

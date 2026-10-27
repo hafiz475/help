@@ -771,10 +771,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-api-design-middleware",
-            name: "API Design & Middleware",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "RESTful endpoints, error-handling middleware, request validation, and rate limiting",
+            name: "API Design & Middleware ★",
+            categoryId: "backend",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "RESTful endpoints, Express 10-stage middleware lifecycle, JWT auth, and CORS guards",
+            color: "#10b981",
           },
           {
             id: "topic-realtime-sockets",

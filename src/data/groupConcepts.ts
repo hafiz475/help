@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -210,6 +210,108 @@ export const CLOSURE_GROUP_CARDS: GroupCardData[] = [];
 
 // Async JS Groups: ALL groups have <= 3 items (Callbacks, Promises, Async/Await)
 export const ASYNC_GROUP_CARDS: GroupCardData[] = [];
+
+// Backend Groups with > 3 children:
+// 1. Express 10-Stage Middleware Lifecycle Pipeline (10 items > 3)
+export const BACKEND_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-backend-middleware",
+    pillarId: "backend-middleware-pipeline",
+    title: "Express 10-Stage Middleware Pipeline",
+    category: "backend",
+    badge: "10 Sequential Stages",
+    color: "#10b981",
+    isPipeline: true,
+    items: [
+      {
+        id: "mw-incoming",
+        stepNumber: 1,
+        label: "Incoming HTTP Request",
+        badge: "Raw TCP Stream",
+        searchQuery: "Node.js http createServer incoming message stream socket",
+      },
+      {
+        id: "mw-cors",
+        stepNumber: 2,
+        label: "CORS Preflight (OPTIONS)",
+        badge: "Origin Whitelist",
+        searchQuery: "CORS preflight OPTIONS Access-Control-Allow-Origin header Express",
+      },
+      {
+        id: "mw-body-parser",
+        stepNumber: 3,
+        label: "Body Parser (JSON)",
+        badge: "Stream Deserialization",
+        searchQuery: "express.json body-parser stream buffer parsing",
+      },
+      {
+        id: "mw-logger",
+        stepNumber: 4,
+        label: "Request Logger & Trace ID",
+        badge: "Correlation ID",
+        searchQuery: "Morgan winston request logging correlation trace ID Express",
+      },
+      {
+        id: "mw-auth",
+        stepNumber: 5,
+        label: "JWT Bearer Verification",
+        badge: "req.user Injection",
+        searchQuery: "JWT verification middleware Bearer token express req.user",
+        subItems: [
+          {
+            id: "mw-jwt-verify",
+            label: "jwt.verify(token, secret)",
+            badge: "Signature Check",
+            searchQuery: "jsonwebtoken jwt.verify signature expiration claims",
+          },
+        ],
+      },
+      {
+        id: "mw-rate-limit",
+        stepNumber: 6,
+        label: "Rate Limiter Guard",
+        badge: "Token Bucket / 429",
+        searchQuery: "express-rate-limit Redis token bucket 429 Too Many Requests",
+      },
+      {
+        id: "mw-validator",
+        stepNumber: 7,
+        label: "Zod Schema Validation",
+        badge: "Fail-Fast 400",
+        searchQuery: "Zod request schema validation middleware Express req.body",
+      },
+      {
+        id: "mw-controller",
+        stepNumber: 8,
+        label: "Route Controller (CRUD)",
+        badge: "Business Logic",
+        searchQuery: "Express router controller database query Mongoose async await",
+        subItems: [
+          {
+            id: "mw-db-query",
+            label: "Model.find() / Save",
+            badge: "Database Query",
+            searchQuery: "Mongoose Model query async await CRUD Express",
+          },
+        ],
+      },
+      {
+        id: "mw-error-handler",
+        stepNumber: 9,
+        label: "Global Error Boundary",
+        badge: "(err, req, res, next)",
+        searchQuery: "Express global error handling middleware 4 arguments next(err)",
+      },
+      {
+        id: "mw-response",
+        stepNumber: 10,
+        label: "Response Termination",
+        badge: "res.status().json()",
+        searchQuery: "res.status res.json response termination Express socket flush",
+      },
+    ],
+  },
+];
 
 // Node.js Groups with > 3 children:
 // 1. Node.js Built-in APIs (4 items > 3)
@@ -586,14 +688,15 @@ export const BIGO_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
   if (category === "async") return ASYNC_GROUP_CARDS;
   if (category === "node") return NODE_GROUP_CARDS;
+  if (category === "backend") return BACKEND_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

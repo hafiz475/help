@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -69,8 +69,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 38,
   },
   {
+    id: "backend",
+    name: "6. Backend & APIs",
+    title: "API Design, Express & Middleware Architecture",
+    description: "RESTful Endpoints, HTTP Semantics, 10-Stage Middleware Pipeline, Auth & Security",
+    color: "#10b981", // Emerald
+    icon: "Server",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "6. OOP (4 Pillars)",
+    name: "7. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -79,7 +88,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "7. DSA",
+    name: "8. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -88,7 +97,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "8. Big O",
+    name: "9. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -102,7 +111,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 109,
+    count: 119,
   },
 ];
 
@@ -163,6 +172,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Node.js Runtime architecture libuv event loop",
     badge: "System Runtime",
     color: "#22c55e",
+  },
+  {
+    id: "root-backend",
+    label: "Backend & APIs",
+    category: "backend",
+    level: 0,
+    searchQuery: "Node.js Express backend API design middleware architecture",
+    badge: "Server Architecture",
+    color: "#10b981",
   },
   {
     id: "root-oop",
@@ -1166,7 +1184,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 4. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 6. BACKEND & API DESIGN (EXPRESS & MIDDLEWARE)
+  // ==========================================
+  // Pillar 1: REST & HTTP Architecture
+  {
+    id: "backend-rest-http",
+    label: "REST & HTTP Architecture",
+    category: "backend",
+    parentId: "root-backend",
+    level: 1,
+    searchQuery: "RESTful API design HTTP protocol methods status codes",
+    badge: "Protocol & Verbs",
+    color: "#059669",
+  },
+  {
+    id: "backend-http-methods",
+    label: "HTTP Verbs & Semantics",
+    category: "backend",
+    parentId: "backend-rest-http",
+    level: 2,
+    searchQuery: "GET POST PUT PATCH DELETE idempotency RESTful API",
+    badge: "Idempotent Verbs",
+    color: "#10b981",
+  },
+  {
+    id: "backend-status-codes",
+    label: "Status Code Hierarchy",
+    category: "backend",
+    parentId: "backend-rest-http",
+    level: 2,
+    searchQuery: "HTTP status codes 200 201 400 401 403 404 500 REST API",
+    badge: "2xx, 4xx, 5xx Tiers",
+    color: "#34d399",
+  },
+  {
+    id: "backend-stateless-crud",
+    label: "Stateless REST & CRUD",
+    category: "backend",
+    parentId: "backend-rest-http",
+    level: 2,
+    searchQuery: "stateless RESTful client server decoupling CRUD endpoints resource URIs",
+    badge: "Decoupled Resources",
+    color: "#6ee7b7",
+  },
+
+  // Pillar 2: Express Middleware Pipeline (Has 10-step Group Card)
+  {
+    id: "backend-middleware-pipeline",
+    label: "Middleware Pipeline",
+    category: "backend",
+    parentId: "root-backend",
+    level: 1,
+    searchQuery: "Express.js middleware lifecycle pipeline next function req res",
+    badge: "Request Onion Flow",
+    color: "#047857",
+  },
+
+  // Pillar 3: Production Guards & Security
+  {
+    id: "backend-production-guards",
+    label: "Production Guards",
+    category: "backend",
+    parentId: "root-backend",
+    level: 1,
+    searchQuery: "Express API production security guards JWT CORS rate limit",
+    badge: "Hardening & Flow",
+    color: "#065f46",
+  },
+  {
+    id: "backend-auth-jwt",
+    label: "Auth & JWT Tokens",
+    category: "backend",
+    parentId: "backend-production-guards",
+    level: 2,
+    searchQuery: "JWT authentication Bearer token authorization header Express middleware",
+    badge: "Bearer / Claims",
+    color: "#10b981",
+  },
+  {
+    id: "backend-cors-headers",
+    label: "CORS & Security Headers",
+    category: "backend",
+    parentId: "backend-production-guards",
+    level: 2,
+    searchQuery: "CORS preflight OPTIONS origin helmet CSP security headers Express",
+    badge: "Origin / Helmet",
+    color: "#34d399",
+  },
+  {
+    id: "backend-rate-limiting",
+    label: "Rate Limiting & Validation",
+    category: "backend",
+    parentId: "backend-production-guards",
+    level: 2,
+    searchQuery: "Express rate limit token bucket DDoS prevention Zod Joi request validation",
+    badge: "429 / Zod Guard",
+    color: "#6ee7b7",
+  },
+
+  // ==========================================
+  // 7. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
