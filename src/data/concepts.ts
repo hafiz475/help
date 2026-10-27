@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -87,8 +87,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "queues",
+    name: "8. Queues & Jobs",
+    title: "Asynchronous Message Queues, Workers & BullMQ",
+    description: "Redis Streams, BullMQ 9-Stage Job Pipeline, Retry Backoff, DLQ & Concurrency",
+    color: "#f97316", // Bright Orange
+    icon: "Workflow",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "8. OOP (4 Pillars)",
+    name: "9. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -97,7 +106,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "9. DSA",
+    name: "10. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -106,7 +115,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "10. Big O",
+    name: "11. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -120,7 +129,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 129,
+    count: 139,
   },
 ];
 
@@ -199,6 +208,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "WebSockets Socket.io real-time architecture Node.js bi-directional streaming",
     badge: "Bi-Directional Streams",
     color: "#0ea5e9",
+  },
+  {
+    id: "root-queues",
+    label: "Queues & Workers",
+    category: "queues",
+    level: 0,
+    searchQuery: "Node.js message queues BullMQ Redis background worker jobs asynchronous processing",
+    badge: "Async Task Processing",
+    color: "#f97316",
   },
   {
     id: "root-oop",
@@ -1400,7 +1418,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 8. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 8. QUEUES & BACKGROUND JOBS (BULLMQ & REDIS)
+  // ==========================================
+  // Pillar 1: Queue Architecture & Redis
+  {
+    id: "queues-architecture",
+    label: "Queue Architecture",
+    category: "queues",
+    parentId: "root-queues",
+    level: 1,
+    searchQuery: "message queue architecture producer consumer Redis streams delayed jobs",
+    badge: "Message Broker",
+    color: "#c2410c",
+  },
+  {
+    id: "queues-redis-streams",
+    label: "Redis Streams & Lists",
+    category: "queues",
+    parentId: "queues-architecture",
+    level: 2,
+    searchQuery: "Redis Streams consumer groups LPUSH BRPOP atomic queue operations",
+    badge: "LPUSH / BRPOP",
+    color: "#ea580c",
+  },
+  {
+    id: "queues-job-producers",
+    label: "Job Producers & Payloads",
+    category: "queues",
+    parentId: "queues-architecture",
+    level: 2,
+    searchQuery: "BullMQ queue.add job producer serialization payload priority",
+    badge: "queue.add()",
+    color: "#f97316",
+  },
+  {
+    id: "queues-delayed-scheduled",
+    label: "Delayed & Cron Scheduling",
+    category: "queues",
+    parentId: "queues-architecture",
+    level: 2,
+    searchQuery: "delayed jobs BullMQ repeat cron schedule delayed queue Redis sorted set",
+    badge: "Delay / Repeat",
+    color: "#fb923c",
+  },
+
+  // Pillar 2: BullMQ 9-Stage Job Lifecycle Pipeline (Group Card)
+  {
+    id: "queues-bullmq-lifecycle",
+    label: "Job Lifecycle Pipeline",
+    category: "queues",
+    parentId: "root-queues",
+    level: 1,
+    searchQuery: "BullMQ job lifecycle states waiting active completed failed delayed stalled",
+    badge: "9 Sequential Stages",
+    color: "#9a3412",
+  },
+
+  // Pillar 3: Workers & Resiliency
+  {
+    id: "queues-workers-resilience",
+    label: "Workers & Resiliency",
+    category: "queues",
+    parentId: "root-queues",
+    level: 1,
+    searchQuery: "BullMQ worker threads concurrency exponential backoff dead letter queue idempotency",
+    badge: "Fault Tolerance",
+    color: "#7c2d12",
+  },
+  {
+    id: "queues-worker-threads",
+    label: "Worker Concurrency & Sandboxing",
+    category: "queues",
+    parentId: "queues-workers-resilience",
+    level: 2,
+    searchQuery: "BullMQ Worker concurrency sandbox worker threads isolated process CPU intensive",
+    badge: "Pool Concurrency",
+    color: "#ea580c",
+  },
+  {
+    id: "queues-dlq-quarantine",
+    label: "Dead-Letter Queue (DLQ)",
+    category: "queues",
+    parentId: "queues-workers-resilience",
+    level: 2,
+    searchQuery: "Dead letter queue DLQ failed jobs quarantine inspection retry policy",
+    badge: "Quarantine / DLQ",
+    color: "#f97316",
+  },
+  {
+    id: "queues-idempotency",
+    label: "Idempotent Processing",
+    category: "queues",
+    parentId: "queues-workers-resilience",
+    level: 2,
+    searchQuery: "idempotent consumer pattern at least once delivery deduplication job ID",
+    badge: "At-Least-Once",
+    color: "#fb923c",
+  },
+
+  // ==========================================
+  // 9. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -961,6 +961,8 @@ export function calculateGroupLayout(
         ? "Backend & APIs"
         : category === "realtime"
         ? "Real-Time & Sockets"
+        : category === "queues"
+        ? "Queues & Background Jobs"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -983,6 +985,8 @@ export function calculateGroupLayout(
         ? "Server Architecture"
         : category === "realtime"
         ? "Bi-Directional Streams"
+        : category === "queues"
+        ? "Async Task Processing"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -997,6 +1001,8 @@ export function calculateGroupLayout(
         ? "#10b981"
         : category === "realtime"
         ? "#0ea5e9"
+        : category === "queues"
+        ? "#f97316"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -2189,6 +2195,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1D: Queues & Background Jobs Hub (placed top-right above realtime at y = -2550)
+    const queuesHubX = 1300;
+    const queuesHubY = -2550;
+    const queuesHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-queues")!,
+      x: queuesHubX,
+      y: queuesHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(queuesHubNode);
+    edges.push({
+      source: nodeHubNode.id,
+      target: queuesHubNode.id,
+      category: "queues",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Queues Node 1: Queue Architecture & Redis
+    const qArchRaw = allNodes.find((n) => n.id === "queues-architecture");
+    if (qArchRaw) {
+      const qArchX = 1950;
+      const qArchY = -2750;
+      const qArchNode: PositionedNode = {
+        ...qArchRaw,
+        x: qArchX,
+        y: qArchY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(qArchNode);
+      edges.push({
+        source: queuesHubNode.id,
+        target: qArchNode.id,
+        category: "queues",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const streamsRaw = allNodes.find((n) => n.id === "queues-redis-streams");
+      if (streamsRaw) {
+        positionedNodes.push({
+          ...streamsRaw,
+          x: qArchX + 320,
+          y: qArchY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: qArchNode.id,
+          target: streamsRaw.id,
+          category: "queues",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const prodRaw = allNodes.find((n) => n.id === "queues-job-producers");
+      if (prodRaw) {
+        positionedNodes.push({
+          ...prodRaw,
+          x: qArchX + 320,
+          y: qArchY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: qArchNode.id,
+          target: prodRaw.id,
+          category: "queues",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const schedRaw = allNodes.find((n) => n.id === "queues-delayed-scheduled");
+      if (schedRaw) {
+        positionedNodes.push({
+          ...schedRaw,
+          x: qArchX + 320,
+          y: qArchY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: qArchNode.id,
+          target: schedRaw.id,
+          category: "queues",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Queues Node 2: BullMQ 9-Stage Job Lifecycle (Group Card)
+    const qCard = cardByPillar.get("queues-bullmq-lifecycle");
+    if (qCard) {
+      const cardX = 2100;
+      const cardY = -2550;
+      const posCard: PositionedGroupCard = {
+        ...qCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: queuesHubNode.id,
+        target: qCard.id,
+        category: "queues",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Queues Node 3: Workers & Resiliency
+    const qResilRaw = allNodes.find((n) => n.id === "queues-workers-resilience");
+    if (qResilRaw) {
+      const qResilX = 1950;
+      const qResilY = -2350;
+      const qResilNode: PositionedNode = {
+        ...qResilRaw,
+        x: qResilX,
+        y: qResilY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(qResilNode);
+      edges.push({
+        source: queuesHubNode.id,
+        target: qResilNode.id,
+        category: "queues",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const workerRaw = allNodes.find((n) => n.id === "queues-worker-threads");
+      if (workerRaw) {
+        positionedNodes.push({
+          ...workerRaw,
+          x: qResilX + 320,
+          y: qResilY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: qResilNode.id,
+          target: workerRaw.id,
+          category: "queues",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const dlqRaw = allNodes.find((n) => n.id === "queues-dlq-quarantine");
+      if (dlqRaw) {
+        positionedNodes.push({
+          ...dlqRaw,
+          x: qResilX + 320,
+          y: qResilY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: qResilNode.id,
+          target: dlqRaw.id,
+          category: "queues",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const idempRaw = allNodes.find((n) => n.id === "queues-idempotency");
+      if (idempRaw) {
+        positionedNodes.push({
+          ...idempRaw,
+          x: qResilX + 320,
+          y: qResilY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: qResilNode.id,
+          target: idempRaw.id,
+          category: "queues",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -2435,6 +2634,8 @@ export function calculateGroupLayout(
     pillarIds = ["backend-rest-http", "backend-middleware-pipeline", "backend-production-guards"];
   } else if (category === "realtime") {
     pillarIds = ["realtime-protocols", "realtime-socketio-lifecycle", "realtime-rooms-presence"];
+  } else if (category === "queues") {
+    pillarIds = ["queues-architecture", "queues-bullmq-lifecycle", "queues-workers-resilience"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -2723,6 +2924,11 @@ export function getNodesForCategory(
       parentId: "root-node",
       level: 2,
     };
+    const queuesRoot = {
+      ...allNodes.find((n) => n.id === "root-queues")!,
+      parentId: "root-node",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -2751,13 +2957,14 @@ export function getNodesForCategory(
         n.id !== "root-node" &&
         n.id !== "root-backend" &&
         n.id !== "root-realtime" &&
+        n.id !== "root-queues" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

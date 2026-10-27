@@ -2011,6 +2011,705 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // QUEUES & BACKGROUND JOBS (BULLMQ) STORIES
+  // ==========================================
+  "root-queues": {
+    id: "root-queues",
+    title: "Queues & Workers",
+    badge: "Async Task Processing",
+    tagline: "Offloading intensive tasks to background worker pools to keep web requests instant",
+    takeaways: [
+      {
+        id: "q-r1",
+        text: "Offloads heavy tasks like emails, video transcoding, and AI generation off the HTTP thread.",
+        searchPrompt: "why use message queues in web applications architecture",
+        emoji: "📦",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "q-r2",
+        text: "Buffers unpredictable traffic spikes so downstream databases never crash from connection exhaustion.",
+        searchPrompt: "queue load leveling traffic spikes database protection",
+        emoji: "🛡️",
+        reactionCount: "3.8k",
+        commentCount: 275,
+      },
+      {
+        id: "q-r3",
+        text: "Guarantees reliable at-least-once delivery with persistent Redis data storage.",
+        searchPrompt: "Redis persistent queue at least once delivery BullMQ",
+        emoji: "⚡",
+        reactionCount: "3.2k",
+        commentCount: 210,
+      },
+    ],
+  },
+
+  "queues-architecture": {
+    id: "queues-architecture",
+    title: "Queue Architecture",
+    badge: "Message Broker",
+    tagline: "Decoupling producers that enqueue tasks from distributed consumers that process them",
+    takeaways: [
+      {
+        id: "qa-1",
+        text: "Producers enqueue jobs in milliseconds and return 202 Accepted to clients instantly.",
+        searchPrompt: "HTTP 202 Accepted asynchronous processing message queue",
+        emoji: "🚀",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+      {
+        id: "qa-2",
+        text: "Redis serves as the high-throughput, low-latency in-memory state engine for queue lists.",
+        searchPrompt: "Redis as message broker advantages throughput latency",
+        emoji: "⚡",
+        reactionCount: "3.4k",
+        commentCount: 230,
+      },
+      {
+        id: "qa-3",
+        text: "Workers pull tasks independently and can scale horizontally across multiple servers.",
+        searchPrompt: "competing consumers pattern message queue horizontal scaling",
+        emoji: "👥",
+        reactionCount: "2.7k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "queues-redis-streams": {
+    id: "queues-redis-streams",
+    title: "Redis Streams & Lists",
+    badge: "LPUSH / BRPOP",
+    tagline: "Atomic queue primitives and append-only stream logs with consumer groups",
+    takeaways: [
+      {
+        id: "qrs-1",
+        text: "Redis Lists provide atomic LPUSH and blocking BRPOP operations with zero polling lag.",
+        searchPrompt: "Redis LPUSH BRPOP blocking queue operations atomic",
+        emoji: "📥",
+        reactionCount: "3.6k",
+        commentCount: 245,
+      },
+      {
+        id: "qrs-2",
+        text: "Redis Streams support consumer groups for multi-worker fan-out with message acks.",
+        searchPrompt: "Redis Streams consumer groups XADD XREADGROUP XACK",
+        emoji: "🌊",
+        reactionCount: "4.2k",
+        commentCount: 315,
+      },
+      {
+        id: "qrs-3",
+        text: "In-memory speed ensures queue operations complete in sub-millisecond execution times.",
+        searchPrompt: "Redis benchmark operations per second queue latency",
+        emoji: "🏎️",
+        reactionCount: "2.9k",
+        commentCount: 185,
+      },
+    ],
+  },
+
+  "queues-job-producers": {
+    id: "queues-job-producers",
+    title: "Job Producers & Payloads",
+    badge: "queue.add()",
+    tagline: "Serializing structured task metadata, priorities, and unique deduplication keys",
+    takeaways: [
+      {
+        id: "qjp-1",
+        text: "queue.add('renderVideo', payload, options) stores parameters safely in Redis.",
+        searchPrompt: "BullMQ queue.add job options payload serialization",
+        emoji: "📝",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+      {
+        id: "qjp-2",
+        text: "Custom job IDs (jobId) prevent duplicate tasks from being enqueued during network retries.",
+        searchPrompt: "BullMQ deduplication jobId idempotent producer",
+        emoji: "🔒",
+        reactionCount: "3.3k",
+        commentCount: 220,
+      },
+      {
+        id: "qjp-3",
+        text: "Priority numbers allow VIP tasks to skip ahead of low-priority bulk background jobs.",
+        searchPrompt: "BullMQ priority queue jobs ordering Redis zset",
+        emoji: "⭐",
+        reactionCount: "2.6k",
+        commentCount: 165,
+      },
+    ],
+  },
+
+  "queues-delayed-scheduled": {
+    id: "queues-delayed-scheduled",
+    title: "Delayed & Cron Scheduling",
+    badge: "Delay / Repeat",
+    tagline: "Scheduling future tasks, drip campaigns, and recurring cron jobs via Redis Sorted Sets",
+    takeaways: [
+      {
+        id: "qds-1",
+        text: "Delayed jobs are parked in a Redis Sorted Set with execution timestamps as scores.",
+        searchPrompt: "how delayed jobs work Redis sorted set zset timestamp",
+        emoji: "⏰",
+        reactionCount: "4.0k",
+        commentCount: 285,
+      },
+      {
+        id: "qds-2",
+        text: "repeat: { pattern: '* * * * *' } schedules recurring cron tasks with zero cron daemons.",
+        searchPrompt: "BullMQ repeatable jobs cron pattern scheduling",
+        emoji: "🔁",
+        reactionCount: "3.5k",
+        commentCount: 235,
+      },
+      {
+        id: "qds-3",
+        text: "Ideal for payment retry timers, onboarding email drip sequences, and nightly report generation.",
+        searchPrompt: "delayed job use cases transactional email drip campaigns",
+        emoji: "📅",
+        reactionCount: "2.8k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "queues-bullmq-lifecycle": {
+    id: "queues-bullmq-lifecycle",
+    title: "Job Lifecycle Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "The resilient state machine advancing tasks from producer to worker to resolution",
+    takeaways: [
+      {
+        id: "qbl-1",
+        text: "Jobs transition deterministically: waiting → active → completed or failed/delayed.",
+        searchPrompt: "BullMQ job lifecycle states state machine transition",
+        emoji: "🔄",
+        reactionCount: "4.3k",
+        commentCount: 320,
+      },
+      {
+        id: "qbl-2",
+        text: "Heartbeat locks detect worker process crashes and automatically reassign orphaned jobs.",
+        searchPrompt: "BullMQ stalled jobs detection lock renewal lockDuration",
+        emoji: "💓",
+        reactionCount: "3.6k",
+        commentCount: 250,
+      },
+      {
+        id: "qbl-3",
+        text: "Emits real-time progress events over Redis Pub/Sub for live frontend dashboard updates.",
+        searchPrompt: "BullMQ QueueEvents progress completed failed event listeners",
+        emoji: "📊",
+        reactionCount: "2.9k",
+        commentCount: 190,
+      },
+    ],
+  },
+
+  "queues-workers-resilience": {
+    id: "queues-workers-resilience",
+    title: "Workers & Resiliency",
+    badge: "Fault Tolerance",
+    tagline: "Bulletproofing consumers with concurrency, backoff retries, and quarantine DLQs",
+    takeaways: [
+      {
+        id: "qwr-1",
+        text: "Worker instances pull and process jobs concurrently without blocking web server I/O.",
+        searchPrompt: "BullMQ Worker architecture concurrency thread pool",
+        emoji: "⚙️",
+        reactionCount: "4.1k",
+        commentCount: 300,
+      },
+      {
+        id: "qwr-2",
+        text: "Exponential backoff delays retries progressively to let overloaded external APIs recover.",
+        searchPrompt: "exponential backoff jitter retry strategy API rate limit",
+        emoji: "📈",
+        reactionCount: "3.4k",
+        commentCount: 230,
+      },
+      {
+        id: "qwr-3",
+        text: "Exhausted failures land in Dead-Letter Queues for post-mortem debugging and manual replay.",
+        searchPrompt: "dead letter queue DLQ monitoring manual retry BullMQ",
+        emoji: "🪦",
+        reactionCount: "2.7k",
+        commentCount: 180,
+      },
+    ],
+  },
+
+  "queues-worker-threads": {
+    id: "queues-worker-threads",
+    title: "Worker Concurrency & Sandboxing",
+    badge: "Pool Concurrency",
+    tagline: "Isolating CPU-heavy tasks into sandbox threads or multi-process worker pools",
+    takeaways: [
+      {
+        id: "qwt-1",
+        text: "concurrency: 10 processes up to 10 jobs in parallel on a single Worker instance.",
+        searchPrompt: "BullMQ Worker concurrency setting performance optimization",
+        emoji: "🎛️",
+        reactionCount: "3.8k",
+        commentCount: 270,
+      },
+      {
+        id: "qwt-2",
+        text: "Sandboxed processors run in separate Node.js worker threads to prevent event loop freezes.",
+        searchPrompt: "BullMQ sandboxed processor child process worker threads",
+        emoji: "🏖️",
+        reactionCount: "3.2k",
+        commentCount: 215,
+      },
+      {
+        id: "qwt-3",
+        text: "If a sandboxed task crashes or runs out of memory, the main server stays alive.",
+        searchPrompt: "Node.js out of memory worker thread crash protection",
+        emoji: "🛡️",
+        reactionCount: "2.5k",
+        commentCount: 160,
+      },
+    ],
+  },
+
+  "queues-dlq-quarantine": {
+    id: "queues-dlq-quarantine",
+    title: "Dead-Letter Queue (DLQ)",
+    badge: "Quarantine / DLQ",
+    tagline: "Isolating poisoned jobs and catastrophic errors for inspection and zero-loss recovery",
+    takeaways: [
+      {
+        id: "qdlq-1",
+        text: "When all retry attempts fail, jobs are quarantined in failed state with stack traces.",
+        searchPrompt: "BullMQ failed jobs inspection stack trace error handling",
+        emoji: "☣️",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+      {
+        id: "qdlq-2",
+        text: "Prevents poisoned jobs with malformed payloads from infinitely jamming the queue loop.",
+        searchPrompt: "poison pill message pattern queue deadlock prevention",
+        emoji: "🚫",
+        reactionCount: "3.3k",
+        commentCount: 225,
+      },
+      {
+        id: "qdlq-3",
+        text: "Developers can patch bugs and replay quarantined jobs via job.retry() without data loss.",
+        searchPrompt: "BullMQ job.retry replay failed jobs CLI Bull-Board",
+        emoji: "🔁",
+        reactionCount: "2.9k",
+        commentCount: 190,
+      },
+    ],
+  },
+
+  "queues-idempotency": {
+    id: "queues-idempotency",
+    title: "Idempotent Processing",
+    badge: "At-Least-Once",
+    tagline: "Engineering worker logic so re-running a job multiple times yields the exact same outcome",
+    takeaways: [
+      {
+        id: "qid-1",
+        text: "Distributed queues guarantee at-least-once delivery; jobs may execute more than once.",
+        searchPrompt: "at least once delivery message queue idempotency requirement",
+        emoji: "🎯",
+        reactionCount: "4.5k",
+        commentCount: 340,
+      },
+      {
+        id: "qid-2",
+        text: "Check if the invoice or email was already sent before executing destructive actions.",
+        searchPrompt: "how to implement idempotent consumer pattern distributed systems",
+        emoji: "🧾",
+        reactionCount: "3.6k",
+        commentCount: 250,
+      },
+      {
+        id: "qid-3",
+        text: "Store processed transaction keys in Redis with SETNX to guarantee single execution.",
+        searchPrompt: "Redis SETNX idempotency key pattern distributed lock",
+        emoji: "🔐",
+        reactionCount: "3.0k",
+        commentCount: 200,
+      },
+    ],
+  },
+
+  // ------------------------------------------
+  // BullMQ 9-Stage Pipeline Group Card Items
+  // ------------------------------------------
+  "q-job-add": {
+    id: "q-job-add",
+    title: "Job Produced & Enqueued",
+    badge: "queue.add(name, data)",
+    tagline: "Producer adds task with payload, priority, and retry options to Redis queue",
+    takeaways: [
+      {
+        id: "qja-1",
+        text: "Serializes job payload to JSON string and pushes into Redis queue structures.",
+        searchPrompt: "BullMQ queue.add serialization JSON string Redis",
+        emoji: "📤",
+        reactionCount: "3.4k",
+        commentCount: 220,
+      },
+      {
+        id: "qja-2",
+        text: "Assigns auto-incremented or custom job ID with creation timestamp metadata.",
+        searchPrompt: "BullMQ jobId timestamp creation metadata",
+        emoji: "🏷️",
+        reactionCount: "2.8k",
+        commentCount: 175,
+      },
+      {
+        id: "qja-3",
+        text: "HTTP route returns immediately to client, keeping latency under 10 milliseconds.",
+        searchPrompt: "fast HTTP response time with background queue producer",
+        emoji: "⚡",
+        reactionCount: "2.2k",
+        commentCount: 135,
+      },
+    ],
+  },
+
+  "q-waiting-queue": {
+    id: "q-waiting-queue",
+    title: "Waiting State (FIFO/LIFO)",
+    badge: "bull:queue:wait",
+    tagline: "Job sits in Redis wait list or sorted set waiting for available worker capacity",
+    takeaways: [
+      {
+        id: "qws-1",
+        text: "Jobs wait in Redis lists (FIFO) or sorted sets (if prioritized or delayed).",
+        searchPrompt: "BullMQ waiting state Redis data structure wait list",
+        emoji: "⏳",
+        reactionCount: "3.5k",
+        commentCount: 230,
+      },
+      {
+        id: "qws-2",
+        text: "Atomic Redis operations ensure multiple workers cannot pop the same job twice.",
+        searchPrompt: "Redis atomic pop operations queue concurrency safety",
+        emoji: "🔒",
+        reactionCount: "3.0k",
+        commentCount: 190,
+      },
+      {
+        id: "qws-3",
+        text: "Queue depth monitoring alerts engineers if jobs accumulate faster than processing rate.",
+        searchPrompt: "monitoring queue depth lag BullMQ Prometheus Grafana",
+        emoji: "📈",
+        reactionCount: "2.4k",
+        commentCount: 150,
+      },
+    ],
+  },
+
+  "q-lock-acquire": {
+    id: "q-lock-acquire",
+    title: "Worker Lock Acquisition",
+    badge: "Atomic Redlock",
+    tagline: "Worker locks job via atomic token so no other consumer attempts duplicate work",
+    takeaways: [
+      {
+        id: "qla-1",
+        text: "Worker grabs job atomically, setting a lock token with lockDuration (e.g. 30s).",
+        searchPrompt: "BullMQ lockDuration token atomic lock worker acquisition",
+        emoji: "🔐",
+        reactionCount: "3.7k",
+        commentCount: 250,
+      },
+      {
+        id: "qla-2",
+        text: "Periodically renews the lock while the task is executing to avoid premature timeouts.",
+        searchPrompt: "BullMQ automatic lock renewal stalled job prevention",
+        emoji: "🔄",
+        reactionCount: "2.9k",
+        commentCount: 180,
+      },
+      {
+        id: "qla-3",
+        text: "If worker process crashes, lock expires and job is rescued back into waiting queue.",
+        searchPrompt: "recovering stalled jobs expired locks distributed queue",
+        emoji: "🚑",
+        reactionCount: "2.3k",
+        commentCount: 140,
+      },
+    ],
+  },
+
+  "q-active-process": {
+    id: "q-active-process",
+    title: "Active Processing State",
+    badge: "worker.process()",
+    tagline: "Worker executes asynchronous task logic, DB updates, or external API calls",
+    takeaways: [
+      {
+        id: "qap-1",
+        text: "Worker calls processor function: new Worker(queueName, async (job) => ...).",
+        searchPrompt: "BullMQ Worker processor definition async function",
+        emoji: "⚙️",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+      {
+        id: "qap-2",
+        text: "Wraps execution in try/catch to capture errors and forward to retry mechanisms.",
+        searchPrompt: "handling errors in BullMQ worker process function",
+        emoji: "🪤",
+        reactionCount: "3.2k",
+        commentCount: 210,
+      },
+      {
+        id: "qap-3",
+        text: "Worker can receive abort signals to gracefully finish on SIGTERM shutdown.",
+        searchPrompt: "graceful shutdown BullMQ worker SIGTERM close",
+        emoji: "🛑",
+        reactionCount: "2.6k",
+        commentCount: 165,
+      },
+    ],
+  },
+
+  "q-worker-concurrency": {
+    id: "q-worker-concurrency",
+    title: "Worker Concurrency Pool",
+    badge: "Parallel Jobs",
+    tagline: "Tuning parallel execution thresholds to match CPU cores and I/O limits",
+    takeaways: [
+      {
+        id: "qwc-1",
+        text: "Worker(name, fn, { concurrency: 25 }) executes 25 concurrent I/O jobs simultaneously.",
+        searchPrompt: "BullMQ worker concurrency configuration tuning guidelines",
+        emoji: "🏊",
+        reactionCount: "3.9k",
+        commentCount: 275,
+      },
+      {
+        id: "qwc-2",
+        text: "For CPU-bound tasks, limit concurrency to available physical CPU cores (os.cpus().length).",
+        searchPrompt: "CPU bound jobs worker concurrency match cores",
+        emoji: "💻",
+        reactionCount: "3.1k",
+        commentCount: 200,
+      },
+      {
+        id: "qwc-3",
+        text: "Prevents memory exhaustion by throttling task consumption to worker processing speed.",
+        searchPrompt: "preventing out of memory queue backpressure concurrency",
+        emoji: "🛡️",
+        reactionCount: "2.4k",
+        commentCount: 155,
+      },
+    ],
+  },
+
+  "q-progress-heartbeat": {
+    id: "q-progress-heartbeat",
+    title: "Progress & Heartbeat Update",
+    badge: "job.updateProgress(n%)",
+    tagline: "Broadcasting percentage progress steps to live progress bars on frontend",
+    takeaways: [
+      {
+        id: "qph-1",
+        text: "await job.updateProgress(45) publishes current percentage state to Redis Pub/Sub.",
+        searchPrompt: "BullMQ job updateProgress percentage live updates",
+        emoji: "📊",
+        reactionCount: "3.6k",
+        commentCount: 245,
+      },
+      {
+        id: "qph-2",
+        text: "Can store structured progress objects like { stage: 'encoding', percent: 80 }.",
+        searchPrompt: "BullMQ progress object custom metadata tracking",
+        emoji: "📦",
+        reactionCount: "2.8k",
+        commentCount: 180,
+      },
+      {
+        id: "qph-3",
+        text: "Also serves as an activity heartbeat confirming long-running jobs are progressing.",
+        searchPrompt: "long running background jobs heartbeat progress update",
+        emoji: "💓",
+        reactionCount: "2.2k",
+        commentCount: 140,
+      },
+    ],
+  },
+
+  "q-job-completed": {
+    id: "q-job-completed",
+    title: "Success & Completion",
+    badge: "moveToCompleted()",
+    tagline: "Task finishes cleanly, storing result return values and triggering success hooks",
+    takeaways: [
+      {
+        id: "qjc-1",
+        text: "Job resolves return value, storing output in Redis and moving to completed set.",
+        searchPrompt: "BullMQ job completed return value storage",
+        emoji: "🎉",
+        reactionCount: "4.0k",
+        commentCount: 280,
+      },
+      {
+        id: "qjc-2",
+        text: "worker.on('completed', (job, result) => ...) notifies downstream workflow pipelines.",
+        searchPrompt: "BullMQ worker on completed event listener chaining jobs",
+        emoji: "🔗",
+        reactionCount: "3.2k",
+        commentCount: 215,
+      },
+      {
+        id: "qjc-3",
+        text: "Enables Parent-Child job flow where child job completion unblocks parent workflows.",
+        searchPrompt: "BullMQ FlowProducer parent child job dependencies",
+        emoji: "🌳",
+        reactionCount: "2.6k",
+        commentCount: 165,
+      },
+    ],
+  },
+
+  "q-retry-backoff": {
+    id: "q-retry-backoff",
+    title: "Retry on Failure",
+    badge: "attempts / backoff",
+    tagline: "Handling transient failures with configurable retry counts and backoff delays",
+    takeaways: [
+      {
+        id: "qrb-1",
+        text: "Configured via attempts: 5, backoff: { type: 'exponential', delay: 1000 }.",
+        searchPrompt: "BullMQ attempts backoff configuration exponential fixed",
+        emoji: "🔁",
+        reactionCount: "4.4k",
+        commentCount: 320,
+      },
+      {
+        id: "qrb-2",
+        text: "Transient network timeouts or 503 server errors auto-recover on subsequent attempts.",
+        searchPrompt: "handling transient network errors with message queue retries",
+        emoji: "🩹",
+        reactionCount: "3.4k",
+        commentCount: 230,
+      },
+      {
+        id: "qrb-3",
+        text: "Stores job.attemptsMade counter so processor knows which attempt is running.",
+        searchPrompt: "BullMQ job attemptsMade inspect attempt count",
+        emoji: "🔢",
+        reactionCount: "2.7k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "q-exp-backoff": {
+    id: "q-exp-backoff",
+    title: "Exponential Backoff",
+    badge: "delay * 2^attempt",
+    tagline: "Progressively spacing retries (1s, 2s, 4s, 8s, 16s) to prevent thundering herds",
+    takeaways: [
+      {
+        id: "qeb-1",
+        text: "Each retry doubles the wait time: delay * 2^(attemptsMade - 1).",
+        searchPrompt: "exponential backoff formula distributed systems retry",
+        emoji: "📈",
+        reactionCount: "3.8k",
+        commentCount: 265,
+      },
+      {
+        id: "qeb-2",
+        text: "Prevents thundering herd problem where 1000 failed jobs simultaneously hit recovering API.",
+        searchPrompt: "thundering herd problem retry storm backoff solution",
+        emoji: "🦬",
+        reactionCount: "3.1k",
+        commentCount: 205,
+      },
+      {
+        id: "qeb-3",
+        text: "Adding jitter introduces randomized delays to desynchronize retry spikes perfectly.",
+        searchPrompt: "full jitter exponential backoff AWS architecture",
+        emoji: "🎲",
+        reactionCount: "2.5k",
+        commentCount: 160,
+      },
+    ],
+  },
+
+  "q-dlq-failed": {
+    id: "q-dlq-failed",
+    title: "Dead-Letter Quarantine",
+    badge: "moveToFailed() / DLQ",
+    tagline: "Terminal failures land in quarantined failed set with stack trace and root cause",
+    takeaways: [
+      {
+        id: "qdf-1",
+        text: "When attempts exceed limit, job moves to failed state with failedReason and stack trace.",
+        searchPrompt: "BullMQ job failedReason stacktrace inspection",
+        emoji: "🪦",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+      {
+        id: "qdf-2",
+        text: "Triggers worker.on('failed', (job, err)) to send alerts to Slack, PagerDuty, or Sentry.",
+        searchPrompt: "BullMQ worker on failed alert Sentry Slack integration",
+        emoji: "🚨",
+        reactionCount: "3.3k",
+        commentCount: 220,
+      },
+      {
+        id: "qdf-3",
+        text: "Jobs remain securely in Redis without blocking active pipeline until reviewed.",
+        searchPrompt: "quarantine failed jobs manual review retry CLI",
+        emoji: "🔍",
+        reactionCount: "2.6k",
+        commentCount: 170,
+      },
+    ],
+  },
+
+  "q-evict-cleanup": {
+    id: "q-evict-cleanup",
+    title: "Retention & Eviction",
+    badge: "removeOnComplete / Fail",
+    tagline: "Automatically pruning ancient completed jobs to keep Redis memory footprint minimal",
+    takeaways: [
+      {
+        id: "qec-1",
+        text: "removeOnComplete: { count: 1000 } keeps only the latest 1000 completed jobs.",
+        searchPrompt: "BullMQ removeOnComplete count age retention policy",
+        emoji: "🧹",
+        reactionCount: "3.6k",
+        commentCount: 245,
+      },
+      {
+        id: "qec-2",
+        text: "removeOnFail: { age: 24 * 3600 } automatically discards failed jobs older than 24 hours.",
+        searchPrompt: "BullMQ removeOnFail age cleanup Redis memory",
+        emoji: "🗑️",
+        reactionCount: "2.9k",
+        commentCount: 185,
+      },
+      {
+        id: "qec-3",
+        text: "Crucial for high-throughput queues processing millions of jobs daily without RAM leaks.",
+        searchPrompt: "Redis memory optimization high throughput queues BullMQ",
+        emoji: "💾",
+        reactionCount: "2.3k",
+        commentCount: 145,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -3509,6 +4208,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Backend & APIs"
       : node.category === "realtime"
       ? "Real-Time & Sockets"
+      : node.category === "queues"
+      ? "Queues & Background Jobs"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

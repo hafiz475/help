@@ -17,6 +17,7 @@ import {
   Zap,
   Server,
   Radio,
+  Workflow,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -52,6 +53,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Server size={16} />;
       case "realtime":
         return <Radio size={16} />;
+      case "queues":
+        return <Workflow size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

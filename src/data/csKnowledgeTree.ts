@@ -791,10 +791,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-queues-background",
-            name: "Queues & Background Jobs",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "BullMQ, Celery, delayed task processing, worker threads, and dead-letter queues",
+            name: "Queues & Background Jobs ★",
+            categoryId: "queues",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "BullMQ, Redis streams, 9-stage task lifecycle, worker threads, and dead-letter queues",
+            color: "#f97316",
           },
           {
             id: "topic-scaling-load-balancing",

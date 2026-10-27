@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -408,6 +408,101 @@ export const REALTIME_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
+// Queues Groups with > 3 children:
+// 1. BullMQ 9-Stage Job Lifecycle Pipeline (9 items > 3)
+export const QUEUES_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-queues-lifecycle",
+    pillarId: "queues-bullmq-lifecycle",
+    title: "BullMQ 9-Stage Job Lifecycle Pipeline",
+    category: "queues",
+    badge: "9 Sequential Stages",
+    color: "#f97316",
+    isPipeline: true,
+    items: [
+      {
+        id: "q-job-add",
+        stepNumber: 1,
+        label: "Job Produced & Enqueued",
+        badge: "queue.add(name, data)",
+        searchQuery: "BullMQ queue.add job producer serialization payload priority",
+      },
+      {
+        id: "q-waiting-queue",
+        stepNumber: 2,
+        label: "Waiting State (FIFO/LIFO)",
+        badge: "bull:queue:wait",
+        searchQuery: "BullMQ waiting jobs list Redis atomic push priority order",
+      },
+      {
+        id: "q-lock-acquire",
+        stepNumber: 3,
+        label: "Worker Lock Acquisition",
+        badge: "Atomic Redlock",
+        searchQuery: "BullMQ job lock renewal lockDuration worker stall prevention",
+      },
+      {
+        id: "q-active-process",
+        stepNumber: 4,
+        label: "Active Processing State",
+        badge: "worker.process()",
+        searchQuery: "BullMQ Worker processor async function concurrency sandboxed",
+        subItems: [
+          {
+            id: "q-worker-concurrency",
+            label: "Worker Concurrency Pool",
+            badge: "Parallel Jobs",
+            searchQuery: "BullMQ Worker concurrency parallel jobs event loop",
+          },
+        ],
+      },
+      {
+        id: "q-progress-heartbeat",
+        stepNumber: 5,
+        label: "Progress & Heartbeat Update",
+        badge: "job.updateProgress(n%)",
+        searchQuery: "BullMQ job.updateProgress real time job tracking Redis pub sub",
+      },
+      {
+        id: "q-job-completed",
+        stepNumber: 6,
+        label: "Success & Completion",
+        badge: "moveToCompleted()",
+        searchQuery: "BullMQ completed jobs return value event emitter on completed",
+      },
+      {
+        id: "q-retry-backoff",
+        stepNumber: 7,
+        label: "Retry on Failure",
+        badge: "attempts / backoff",
+        searchQuery: "BullMQ retry backoff exponential strategy attempts configuration",
+        subItems: [
+          {
+            id: "q-exp-backoff",
+            label: "Exponential Backoff",
+            badge: "delay * 2^attempt",
+            searchQuery: "exponential backoff formula job retry queue",
+          },
+        ],
+      },
+      {
+        id: "q-dlq-failed",
+        stepNumber: 8,
+        label: "Dead-Letter Quarantine",
+        badge: "moveToFailed() / DLQ",
+        searchQuery: "BullMQ failed jobs inspection stack trace dead letter queue",
+      },
+      {
+        id: "q-evict-cleanup",
+        stepNumber: 9,
+        label: "Retention & Eviction",
+        badge: "removeOnComplete / Fail",
+        searchQuery: "BullMQ job retention removeOnComplete removeOnFail count max age",
+      },
+    ],
+  },
+];
+
 // Node.js Groups with > 3 children:
 // 1. Node.js Built-in APIs (4 items > 3)
 // 2. libuv Infrastructure (4 items > 3)
@@ -783,7 +878,7 @@ export const BIGO_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -791,8 +886,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "node") return NODE_GROUP_CARDS;
   if (category === "backend") return BACKEND_GROUP_CARDS;
   if (category === "realtime") return REALTIME_GROUP_CARDS;
+  if (category === "queues") return QUEUES_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }
