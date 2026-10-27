@@ -781,10 +781,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-realtime-sockets",
-            name: "Real-Time (Sockets)",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "WebSocket servers, presence tracking, broadcast rooms, and SSE streams",
+            name: "Real-Time (Sockets) ★",
+            categoryId: "realtime",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "WebSockets, 101 Upgrade, Socket.io 9-stage lifecycle, Rooms, Presence & Redis Pub/Sub",
+            color: "#0ea5e9",
           },
           {
             id: "topic-queues-background",

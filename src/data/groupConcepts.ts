@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -308,6 +308,101 @@ export const BACKEND_GROUP_CARDS: GroupCardData[] = [
         label: "Response Termination",
         badge: "res.status().json()",
         searchQuery: "res.status res.json response termination Express socket flush",
+      },
+    ],
+  },
+];
+
+// Real-Time Groups with > 3 children:
+// 1. Socket.io 9-Stage Connection Lifecycle Pipeline (9 items > 3)
+export const REALTIME_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-realtime-lifecycle",
+    pillarId: "realtime-socketio-lifecycle",
+    title: "Socket.io 9-Stage Connection Pipeline",
+    category: "realtime",
+    badge: "9 Sequential Stages",
+    color: "#0ea5e9",
+    isPipeline: true,
+    items: [
+      {
+        id: "rt-handshake-req",
+        stepNumber: 1,
+        label: "Client Handshake Request",
+        badge: "GET /socket.io/?EIO=4",
+        searchQuery: "Socket.io Engine.IO client handshake query params HTTP GET transport",
+      },
+      {
+        id: "rt-protocol-upgrade",
+        stepNumber: 2,
+        label: "HTTP 101 Protocol Upgrade",
+        badge: "TCP Socket Hijack",
+        searchQuery: "HTTP 101 Switching Protocols websocket upgrade Sec-WebSocket-Accept",
+      },
+      {
+        id: "rt-auth-middleware",
+        stepNumber: 3,
+        label: "Socket Auth Middleware",
+        badge: "io.use((socket, next))",
+        searchQuery: "Socket.io authentication middleware io.use JWT socket.handshake.auth",
+        subItems: [
+          {
+            id: "rt-jwt-handshake",
+            label: "socket.handshake.auth",
+            badge: "JWT Extraction",
+            searchQuery: "socket.handshake.auth token verification Socket.io",
+          },
+        ],
+      },
+      {
+        id: "rt-conn-established",
+        stepNumber: 4,
+        label: "Connection Established",
+        badge: "io.on('connection')",
+        searchQuery: "io.on connection Socket.io server instance unique socket id",
+      },
+      {
+        id: "rt-room-subscription",
+        stepNumber: 5,
+        label: "Room & Channel Join",
+        badge: "socket.join(roomId)",
+        searchQuery: "socket.join Socket.io rooms multi-tenant isolation channels",
+      },
+      {
+        id: "rt-duplex-event",
+        stepNumber: 6,
+        label: "Bi-Directional Emit & Ack",
+        badge: "socket.emit(event, data, ack)",
+        searchQuery: "Socket.io acknowledgement callbacks request response over websocket",
+        subItems: [
+          {
+            id: "rt-ack-callback",
+            label: "Ack Callback Function",
+            badge: "Rpc-style Ack",
+            searchQuery: "Socket.io acknowledgement callback client server reply",
+          },
+        ],
+      },
+      {
+        id: "rt-heartbeat",
+        stepNumber: 7,
+        label: "Heartbeat Ping / Pong",
+        badge: "pingInterval / pingTimeout",
+        searchQuery: "Socket.io pingInterval pingTimeout heartbeat keep alive dead connection detection",
+      },
+      {
+        id: "rt-broadcast-emit",
+        stepNumber: 8,
+        label: "Room Broadcast Event",
+        badge: "io.to(room).emit()",
+        searchQuery: "io.to room emit socket.broadcast.to Redis adapter distribution",
+      },
+      {
+        id: "rt-disconnect-cleanup",
+        stepNumber: 9,
+        label: "Graceful Disconnect & Eviction",
+        badge: "socket.on('disconnect')",
+        searchQuery: "socket.on disconnect reasons transport close ping timeout room auto leave",
       },
     ],
   },
@@ -688,15 +783,16 @@ export const BIGO_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
   if (category === "async") return ASYNC_GROUP_CARDS;
   if (category === "node") return NODE_GROUP_CARDS;
   if (category === "backend") return BACKEND_GROUP_CARDS;
+  if (category === "realtime") return REALTIME_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

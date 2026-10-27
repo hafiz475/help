@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -78,8 +78,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "realtime",
+    name: "7. Real-Time & Sockets",
+    title: "WebSockets, Socket.io & Event-Driven Streaming",
+    description: "HTTP 101 Upgrade, 9-Stage Connection Lifecycle, Rooms, Presence & Redis Pub/Sub",
+    color: "#0ea5e9", // Sky Blue
+    icon: "Radio",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "7. OOP (4 Pillars)",
+    name: "8. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -88,7 +97,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "8. DSA",
+    name: "9. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -97,7 +106,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "9. Big O",
+    name: "10. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -111,7 +120,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 119,
+    count: 129,
   },
 ];
 
@@ -181,6 +190,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Node.js Express backend API design middleware architecture",
     badge: "Server Architecture",
     color: "#10b981",
+  },
+  {
+    id: "root-realtime",
+    label: "Real-Time & Sockets",
+    category: "realtime",
+    level: 0,
+    searchQuery: "WebSockets Socket.io real-time architecture Node.js bi-directional streaming",
+    badge: "Bi-Directional Streams",
+    color: "#0ea5e9",
   },
   {
     id: "root-oop",
@@ -1283,7 +1301,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 7. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 7. REAL-TIME & WEBSOCKETS (SOCKET.IO & STREAMING)
+  // ==========================================
+  // Pillar 1: Protocols & Transport Handshake
+  {
+    id: "realtime-protocols",
+    label: "Transport & Handshake",
+    category: "realtime",
+    parentId: "root-realtime",
+    level: 1,
+    searchQuery: "WebSocket protocol HTTP upgrade handshake bi-directional TCP full-duplex",
+    badge: "Transport Layer",
+    color: "#0284c7",
+  },
+  {
+    id: "realtime-ws-handshake",
+    label: "HTTP Upgrade & 101 Handshake",
+    category: "realtime",
+    parentId: "realtime-protocols",
+    level: 2,
+    searchQuery: "HTTP 101 Switching Protocols Upgrade websocket Sec-WebSocket-Key handshake",
+    badge: "101 Switching",
+    color: "#0ea5e9",
+  },
+  {
+    id: "realtime-sse-streams",
+    label: "Server-Sent Events (SSE)",
+    category: "realtime",
+    parentId: "realtime-protocols",
+    level: 2,
+    searchQuery: "Server-Sent Events SSE text/event-stream EventSource unidirectional HTTP streaming",
+    badge: "text/event-stream",
+    color: "#38bdf8",
+  },
+  {
+    id: "realtime-polling-fallback",
+    label: "Long Polling & Fallbacks",
+    category: "realtime",
+    parentId: "realtime-protocols",
+    level: 2,
+    searchQuery: "HTTP long polling Comet transport negotiation firewall traversal Engine.IO",
+    badge: "Comet / Fallback",
+    color: "#7dd3fc",
+  },
+
+  // Pillar 2: Socket.io 9-Stage Connection Lifecycle (Group Card)
+  {
+    id: "realtime-socketio-lifecycle",
+    label: "Socket Lifecycle",
+    category: "realtime",
+    parentId: "root-realtime",
+    level: 1,
+    searchQuery: "Socket.io connection lifecycle events ack callbacks heartbeat ping pong",
+    badge: "9 Connection Stages",
+    color: "#0369a1",
+  },
+
+  // Pillar 3: Rooms, Namespaces & State
+  {
+    id: "realtime-rooms-presence",
+    label: "Rooms & Horizontal Scale",
+    category: "realtime",
+    parentId: "root-realtime",
+    level: 1,
+    searchQuery: "Socket.io rooms namespaces broadcasting presence Redis pub sub adapter",
+    badge: "Topology & State",
+    color: "#075985",
+  },
+  {
+    id: "realtime-rooms-broadcast",
+    label: "Rooms & Broadcasting",
+    category: "realtime",
+    parentId: "realtime-rooms-presence",
+    level: 2,
+    searchQuery: "socket.join socket.to room emit broadcast Socket.io channels",
+    badge: "socket.to(room).emit",
+    color: "#0ea5e9",
+  },
+  {
+    id: "realtime-presence-state",
+    label: "Presence & Heartbeats",
+    category: "realtime",
+    parentId: "realtime-rooms-presence",
+    level: 2,
+    searchQuery: "user online presence ping pong heartbeat 25s timeout disconnect detection",
+    badge: "Ping / Pong (25s)",
+    color: "#38bdf8",
+  },
+  {
+    id: "realtime-redis-adapter",
+    label: "Redis Pub/Sub Adapter",
+    category: "realtime",
+    parentId: "realtime-rooms-presence",
+    level: 2,
+    searchQuery: "@socket.io/redis-adapter multi-server horizontal scaling inter-node broadcasting",
+    badge: "Multi-Node Mesh",
+    color: "#7dd3fc",
+  },
+
+  // ==========================================
+  // 8. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

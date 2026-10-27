@@ -1312,6 +1312,705 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // REAL-TIME & WEBSOCKETS (SOCKET.IO) STORIES
+  // ==========================================
+  "root-realtime": {
+    id: "root-realtime",
+    title: "Real-Time & Sockets",
+    badge: "Bi-Directional Streams",
+    tagline: "Persistent full-duplex communication channels between client and server",
+    takeaways: [
+      {
+        id: "rt-r1",
+        text: "WebSockets replace periodic HTTP polling with persistent, bi-directional TCP connections.",
+        searchPrompt: "WebSocket vs HTTP polling architecture differences real-time",
+        emoji: "⚡",
+        reactionCount: "4.8k",
+        commentCount: 380,
+      },
+      {
+        id: "rt-r2",
+        text: "Allows the server to push events to clients immediately without waiting for client requests.",
+        searchPrompt: "how server push works in WebSockets event-driven streaming",
+        emoji: "📡",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+      {
+        id: "rt-r3",
+        text: "Sub-millisecond frame headers (2-10 bytes) eliminate heavy HTTP header overhead (500+ bytes).",
+        searchPrompt: "WebSocket frame overhead vs HTTP request header size comparison",
+        emoji: "🚀",
+        reactionCount: "3.1k",
+        commentCount: 190,
+      },
+    ],
+  },
+
+  "realtime-protocols": {
+    id: "realtime-protocols",
+    title: "Transport & Handshake",
+    badge: "Transport Layer",
+    tagline: "Upgrading standard HTTP connections into persistent bi-directional streams",
+    takeaways: [
+      {
+        id: "rt-p1",
+        text: "Begins as a standard HTTP/1.1 GET request featuring Upgrade: websocket and Connection headers.",
+        searchPrompt: "WebSocket handshake HTTP Upgrade request headers RFC 6455",
+        emoji: "🤝",
+        reactionCount: "3.9k",
+        commentCount: 290,
+      },
+      {
+        id: "rt-p2",
+        text: "Server validates Sec-WebSocket-Key and responds with HTTP 101 Switching Protocols.",
+        searchPrompt: "HTTP 101 Switching Protocols Sec-WebSocket-Accept computation SHA1",
+        emoji: "🔑",
+        reactionCount: "3.2k",
+        commentCount: 210,
+      },
+      {
+        id: "rt-p3",
+        text: "Once upgraded, the underlying TCP socket remains open for arbitrary binary and text frames.",
+        searchPrompt: "TCP socket upgrade full duplex data framing WebSockets",
+        emoji: "🔌",
+        reactionCount: "2.4k",
+        commentCount: 155,
+      },
+    ],
+  },
+
+  "realtime-ws-handshake": {
+    id: "realtime-ws-handshake",
+    title: "HTTP Upgrade & 101 Handshake",
+    badge: "101 Switching",
+    tagline: "The cryptographic handshake that upgrades plain HTTP into a raw TCP WebSocket",
+    takeaways: [
+      {
+        id: "rt-h1",
+        text: "Client sends base64 Sec-WebSocket-Key to prove the connection request is intentional.",
+        searchPrompt: "Sec-WebSocket-Key client nonce handshake verification",
+        emoji: "🎲",
+        reactionCount: "3.4k",
+        commentCount: 230,
+      },
+      {
+        id: "rt-h2",
+        text: "Server hashes the key with the magic GUID 258EAFA5-E914-47DA-95CA-C5AB0DC85B11.",
+        searchPrompt: "WebSocket magic GUID SHA-1 Sec-WebSocket-Accept RFC 6455",
+        emoji: "🧙",
+        reactionCount: "4.1k",
+        commentCount: 310,
+      },
+      {
+        id: "rt-h3",
+        text: "Status 101 acknowledges protocol switch, handing control over to WebSocket frame parser.",
+        searchPrompt: "HTTP status 101 protocol switch TCP stream takeover",
+        emoji: "🔄",
+        reactionCount: "2.7k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "realtime-sse-streams": {
+    id: "realtime-sse-streams",
+    title: "Server-Sent Events (SSE)",
+    badge: "text/event-stream",
+    tagline: "Lightweight unidirectional streaming over standard HTTP for live updates",
+    takeaways: [
+      {
+        id: "rt-s1",
+        text: "Delivers live unidirectional text streams using text/event-stream Content-Type.",
+        searchPrompt: "Server-Sent Events SSE text/event-stream EventSource API",
+        emoji: "📻",
+        reactionCount: "3.8k",
+        commentCount: 270,
+      },
+      {
+        id: "rt-s2",
+        text: "Browsers natively reconnect and track message IDs with EventSource API automatically.",
+        searchPrompt: "EventSource automatic reconnection Last-Event-ID header",
+        emoji: "🔁",
+        reactionCount: "3.0k",
+        commentCount: 195,
+      },
+      {
+        id: "rt-s3",
+        text: "Ideal for stock tickers, AI chat streaming, and live score feeds without WebSocket complexity.",
+        searchPrompt: "SSE vs WebSockets when to use Server-Sent Events",
+        emoji: "🎯",
+        reactionCount: "2.6k",
+        commentCount: 160,
+      },
+    ],
+  },
+
+  "realtime-polling-fallback": {
+    id: "realtime-polling-fallback",
+    title: "Long Polling & Fallbacks",
+    badge: "Comet / Fallback",
+    tagline: "Fallback transport ensuring connectivity behind restrictive corporate firewalls",
+    takeaways: [
+      {
+        id: "rt-f1",
+        text: "Server holds HTTP requests open until data becomes available or timeout triggers.",
+        searchPrompt: "HTTP long polling Comet technique explained",
+        emoji: "⏳",
+        reactionCount: "3.1k",
+        commentCount: 200,
+      },
+      {
+        id: "rt-f2",
+        text: "Engine.IO starts with long-polling before upgrading to WebSocket for max compatibility.",
+        searchPrompt: "Socket.io Engine.IO transport negotiation long-polling to websocket",
+        emoji: "🪜",
+        reactionCount: "3.6k",
+        commentCount: 245,
+      },
+      {
+        id: "rt-f3",
+        text: "Bypasses proxies and corporate firewalls that prematurely terminate WebSocket connections.",
+        searchPrompt: "corporate firewall WebSocket blocking HTTP polling workaround",
+        emoji: "🛡️",
+        reactionCount: "2.3k",
+        commentCount: 140,
+      },
+    ],
+  },
+
+  "realtime-socketio-lifecycle": {
+    id: "realtime-socketio-lifecycle",
+    title: "Socket Lifecycle",
+    badge: "9 Connection Stages",
+    tagline: "The end-to-end event-driven state machine governing client-server lifecycles",
+    takeaways: [
+      {
+        id: "rt-l1",
+        text: "Engine.IO handles low-level transport; Socket.io layer adds rooms, acks, and events.",
+        searchPrompt: "Engine.IO vs Socket.io architecture transport vs application layer",
+        emoji: "⚙️",
+        reactionCount: "4.3k",
+        commentCount: 320,
+      },
+      {
+        id: "rt-l2",
+        text: "Heartbeat ping/pong frames continuously verify connection health every 25 seconds.",
+        searchPrompt: "Socket.io pingInterval pingTimeout heartbeat detection",
+        emoji: "💓",
+        reactionCount: "3.5k",
+        commentCount: 230,
+      },
+      {
+        id: "rt-l3",
+        text: "Automatically tears down subscriptions and emits disconnect events on socket close.",
+        searchPrompt: "Socket.io disconnect reasons client namespace cleanup",
+        emoji: "🧹",
+        reactionCount: "2.8k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "realtime-rooms-presence": {
+    id: "realtime-rooms-presence",
+    title: "Rooms & Horizontal Scale",
+    badge: "Topology & State",
+    tagline: "Grouping sockets into channels and scaling real-time clusters across multi-nodes",
+    takeaways: [
+      {
+        id: "rt-rp1",
+        text: "Rooms allow targeted multicasting to subsets of sockets without broadcast floods.",
+        searchPrompt: "Socket.io rooms multi-tenant chat channels targeted emit",
+        emoji: "👥",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+      {
+        id: "rt-rp2",
+        text: "Presence tracking maps online users by listening to connect and disconnect lifecycle hooks.",
+        searchPrompt: "user presence online offline status tracking Socket.io",
+        emoji: "🟢",
+        reactionCount: "3.3k",
+        commentCount: 225,
+      },
+      {
+        id: "rt-rp3",
+        text: "Redis Pub/Sub adapter routes messages between separate server instances in a cluster.",
+        searchPrompt: "scaling Socket.io horizontally Redis adapter sticky sessions",
+        emoji: "🌐",
+        reactionCount: "3.9k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  "realtime-rooms-broadcast": {
+    id: "realtime-rooms-broadcast",
+    title: "Rooms & Broadcasting",
+    badge: "socket.to(room).emit",
+    tagline: "Scoped messaging patterns isolating events to specific groups or excluding senders",
+    takeaways: [
+      {
+        id: "rt-rb1",
+        text: "socket.to(room).emit() broadcasts to all room members except the original sender.",
+        searchPrompt: "socket.to room emit vs io.to room emit difference",
+        emoji: "📣",
+        reactionCount: "4.0k",
+        commentCount: 295,
+      },
+      {
+        id: "rt-rb2",
+        text: "Sockets can join multiple rooms simultaneously for granular topic subscriptions.",
+        searchPrompt: "joining multiple rooms Socket.io user private room channel room",
+        emoji: "🏷️",
+        reactionCount: "2.9k",
+        commentCount: 180,
+      },
+      {
+        id: "rt-rb3",
+        text: "Rooms are server-side only constructs; client sockets never know which rooms exist.",
+        searchPrompt: "are Socket.io rooms visible to client security boundary",
+        emoji: "🔒",
+        reactionCount: "2.4k",
+        commentCount: 150,
+      },
+    ],
+  },
+
+  "realtime-presence-state": {
+    id: "realtime-presence-state",
+    title: "Presence & Heartbeats",
+    badge: "Ping / Pong (25s)",
+    tagline: "Detecting ghost connections, battery-saving sleep modes, and sudden network loss",
+    takeaways: [
+      {
+        id: "rt-ps1",
+        text: "Dead TCP sockets linger indefinitely if clients abruptly lose Wi-Fi or crash.",
+        searchPrompt: "why TCP keep-alive is not enough for WebSocket dead connections",
+        emoji: "👻",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+      {
+        id: "rt-ps2",
+        text: "Engine.IO sends ping packet every 25s; if pong is not returned within 20s, socket is killed.",
+        searchPrompt: "Engine.IO ping pong timeout handling dead socket eviction",
+        emoji: "⏱️",
+        reactionCount: "3.1k",
+        commentCount: 205,
+      },
+      {
+        id: "rt-ps3",
+        text: "Maintains accurate active online user lists in memory or Redis hashes across disconnects.",
+        searchPrompt: "tracking online users Redis hash Socket.io heartbeat",
+        emoji: "📊",
+        reactionCount: "2.6k",
+        commentCount: 165,
+      },
+    ],
+  },
+
+  "realtime-redis-adapter": {
+    id: "realtime-redis-adapter",
+    title: "Redis Pub/Sub Adapter",
+    badge: "Multi-Node Mesh",
+    tagline: "Connecting distributed WebSocket servers into a unified real-time messaging fabric",
+    takeaways: [
+      {
+        id: "rt-ra1",
+        text: "In multi-instance clusters, sockets in the same room may connect to different servers.",
+        searchPrompt: "the multi server WebSocket problem horizontal scaling explained",
+        emoji: "🧩",
+        reactionCount: "4.4k",
+        commentCount: 330,
+      },
+      {
+        id: "rt-ra2",
+        text: "@socket.io/redis-adapter publishes events to Redis channel to sync across all nodes.",
+        searchPrompt: "how socket.io redis-adapter works pub sub inter-process communication",
+        emoji: "🔄",
+        reactionCount: "3.6k",
+        commentCount: 250,
+      },
+      {
+        id: "rt-ra3",
+        text: "Load balancers must use sticky sessions (cookie based) during initial HTTP handshakes.",
+        searchPrompt: "why sticky sessions are required for Socket.io load balancing NGINX",
+        emoji: "🍯",
+        reactionCount: "3.0k",
+        commentCount: 190,
+      },
+    ],
+  },
+
+  // ------------------------------------------
+  // Socket.io 9-Stage Pipeline Group Card Items
+  // ------------------------------------------
+  "rt-handshake-req": {
+    id: "rt-handshake-req",
+    title: "Client Handshake Request",
+    badge: "GET /socket.io/?EIO=4",
+    tagline: "Client initiates connection with Engine.IO protocol version and query parameters",
+    takeaways: [
+      {
+        id: "rth-1",
+        text: "Issues GET request to /socket.io/?EIO=4&transport=polling with client query tokens.",
+        searchPrompt: "Socket.io handshake query parameters EIO transport sid",
+        emoji: "📨",
+        reactionCount: "3.5k",
+        commentCount: 220,
+      },
+      {
+        id: "rth-2",
+        text: "Server creates session ID (sid) and returns pingInterval, pingTimeout, and supported transports.",
+        searchPrompt: "Engine.IO handshake packet sid pingInterval pingTimeout",
+        emoji: "🎫",
+        reactionCount: "2.9k",
+        commentCount: 180,
+      },
+      {
+        id: "rth-3",
+        text: "Enables fallback to long-polling immediately if WebSockets are blocked by proxies.",
+        searchPrompt: "Socket.io graceful degradation polling to websocket",
+        emoji: "🛡️",
+        reactionCount: "2.3k",
+        commentCount: 140,
+      },
+    ],
+  },
+
+  "rt-protocol-upgrade": {
+    id: "rt-protocol-upgrade",
+    title: "HTTP 101 Protocol Upgrade",
+    badge: "TCP Socket Hijack",
+    tagline: "Switching from polling HTTP request-response to raw persistent WebSocket frames",
+    takeaways: [
+      {
+        id: "rtu-1",
+        text: "Engine.IO sends upgrade probe to test if WebSocket transport functions smoothly.",
+        searchPrompt: "Socket.io upgrade probe packet 2probe 3probe handshake",
+        emoji: "🧪",
+        reactionCount: "3.6k",
+        commentCount: 240,
+      },
+      {
+        id: "rtu-2",
+        text: "Upon probe confirmation, server hijacks the raw TCP socket and closes polling loop.",
+        searchPrompt: "Node.js http server upgrade event socket hijack",
+        emoji: "🔌",
+        reactionCount: "3.1k",
+        commentCount: 195,
+      },
+      {
+        id: "rtu-3",
+        text: "Drastically lowers latency and CPU overhead for high-frequency interactive events.",
+        searchPrompt: "WebSocket vs polling latency CPU utilization benchmark",
+        emoji: "⚡",
+        reactionCount: "2.5k",
+        commentCount: 150,
+      },
+    ],
+  },
+
+  "rt-auth-middleware": {
+    id: "rt-auth-middleware",
+    title: "Socket Auth Middleware",
+    badge: "io.use((socket, next))",
+    tagline: "Authenticating connections with JWTs before socket connection is accepted",
+    takeaways: [
+      {
+        id: "rta-1",
+        text: "Runs io.use((socket, next)) middleware before connection event is emitted.",
+        searchPrompt: "Socket.io auth middleware io.use JWT verification example",
+        emoji: "🔑",
+        reactionCount: "4.6k",
+        commentCount: 350,
+      },
+      {
+        id: "rta-2",
+        text: "Extracts Bearer token or cookie from socket.handshake.auth or socket.handshake.headers.",
+        searchPrompt: "socket.handshake.auth vs headers token passing client",
+        emoji: "🛡️",
+        reactionCount: "3.4k",
+        commentCount: 235,
+      },
+      {
+        id: "rta-3",
+        text: "Calling next(new Error('unauthorized')) aborts handshake without establishing socket.",
+        searchPrompt: "Socket.io reject connection middleware next error",
+        emoji: "⛔",
+        reactionCount: "2.7k",
+        commentCount: 170,
+      },
+    ],
+  },
+
+  "rt-jwt-handshake": {
+    id: "rt-jwt-handshake",
+    title: "socket.handshake.auth",
+    badge: "JWT Extraction",
+    tagline: "Attaching validated user identity and claims directly to the socket instance",
+    takeaways: [
+      {
+        id: "rtj-1",
+        text: "jwt.verify decodes user payload and binds claims to socket.data.user.",
+        searchPrompt: "attaching authenticated user to socket.data in Socket.io",
+        emoji: "👤",
+        reactionCount: "3.8k",
+        commentCount: 270,
+      },
+      {
+        id: "rtj-2",
+        text: "Client configures auth payload: io({ auth: { token: 'jwt_here' } }).",
+        searchPrompt: "socket.io-client auth option passing JWT on connect",
+        emoji: "📦",
+        reactionCount: "2.9k",
+        commentCount: 185,
+      },
+      {
+        id: "rtj-3",
+        text: "Guarantees all downstream socket event handlers have verified identity context.",
+        searchPrompt: "securing WebSocket event handlers with socket.data context",
+        emoji: "🔒",
+        reactionCount: "2.3k",
+        commentCount: 145,
+      },
+    ],
+  },
+
+  "rt-conn-established": {
+    id: "rt-conn-established",
+    title: "Connection Established",
+    badge: "io.on('connection')",
+    tagline: "Allocating unique 20-character socket ID and initializing event listeners",
+    takeaways: [
+      {
+        id: "rtc-1",
+        text: "Server triggers io.on('connection', (socket) => ...) with a unique socket.id.",
+        searchPrompt: "io.on connection socket id lifecycle initialization",
+        emoji: "🎉",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+      {
+        id: "rtc-2",
+        text: "Each socket automatically joins a private room matching its own socket.id.",
+        searchPrompt: "socket private room default socket.id room Socket.io",
+        emoji: "🏠",
+        reactionCount: "3.2k",
+        commentCount: 210,
+      },
+      {
+        id: "rtc-3",
+        text: "Attaches domain-specific event handlers (chat, game input, collaborative edit).",
+        searchPrompt: "structuring Socket.io event listeners clean architecture",
+        emoji: "🧰",
+        reactionCount: "2.5k",
+        commentCount: 160,
+      },
+    ],
+  },
+
+  "rt-room-subscription": {
+    id: "rt-room-subscription",
+    title: "Room & Channel Join",
+    badge: "socket.join(roomId)",
+    tagline: "Joining chat rooms, game lobbies, and tenant-scoped real-time channels",
+    takeaways: [
+      {
+        id: "rtr-1",
+        text: "socket.join('room-name') adds the socket ID to the server-side room Set.",
+        searchPrompt: "socket.join room rooms Map Set internal data structure",
+        emoji: "🚪",
+        reactionCount: "3.9k",
+        commentCount: 280,
+      },
+      {
+        id: "rtr-2",
+        text: "Enables instant multi-tenant isolation so events only reach authorized participants.",
+        searchPrompt: "multi tenant room isolation Socket.io security patterns",
+        emoji: "🏘️",
+        reactionCount: "3.1k",
+        commentCount: 200,
+      },
+      {
+        id: "rtr-3",
+        text: "Can join asynchronously and leave dynamically with socket.leave(roomId).",
+        searchPrompt: "socket.leave dynamic room membership Socket.io",
+        emoji: "🚶",
+        reactionCount: "2.4k",
+        commentCount: 150,
+      },
+    ],
+  },
+
+  "rt-duplex-event": {
+    id: "rt-duplex-event",
+    title: "Bi-Directional Emit & Ack",
+    badge: "socket.emit(event, data, ack)",
+    tagline: "Sending custom JSON payloads with optional RPC-style acknowledgement callbacks",
+    takeaways: [
+      {
+        id: "rtd-1",
+        text: "socket.emit('event', payload) pushes arbitrary JSON or binary buffers.",
+        searchPrompt: "Socket.io emit custom event names data payload binary",
+        emoji: "💬",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+      {
+        id: "rtd-2",
+        text: "Acknowledgement callbacks enable request-response patterns over WebSockets.",
+        searchPrompt: "Socket.io acknowledgement callback request response pattern",
+        emoji: "📬",
+        reactionCount: "3.5k",
+        commentCount: 230,
+      },
+      {
+        id: "rtd-3",
+        text: "Supports timeout guarantees using socket.timeout(5000).emit() for resilient RPC.",
+        searchPrompt: "socket.timeout emit Promise ack callback Socket.io v4",
+        emoji: "⏱️",
+        reactionCount: "2.8k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "rt-ack-callback": {
+    id: "rt-ack-callback",
+    title: "Ack Callback Function",
+    badge: "Rpc-style Ack",
+    tagline: "Client receives confirmation or return values once server finishes handling event",
+    takeaways: [
+      {
+        id: "rtac-1",
+        text: "The receiver invokes the callback with results, routed back using unique packet IDs.",
+        searchPrompt: "how Socket.io ack packet IDs route callback responses",
+        emoji: "🎯",
+        reactionCount: "3.3k",
+        commentCount: 220,
+      },
+      {
+        id: "rtac-2",
+        text: "Eliminates need for separate response event listeners like chat:received.",
+        searchPrompt: "avoiding response event listener explosion with acks Socket.io",
+        emoji: "🧹",
+        reactionCount: "2.6k",
+        commentCount: 165,
+      },
+      {
+        id: "rtac-3",
+        text: "Can be awaited as a Promise using socket.emitWithAck() in modern TypeScript.",
+        searchPrompt: "socket.emitWithAck async await TypeScript Socket.io",
+        emoji: "✨",
+        reactionCount: "3.0k",
+        commentCount: 195,
+      },
+    ],
+  },
+
+  "rt-heartbeat": {
+    id: "rt-heartbeat",
+    title: "Heartbeat Ping / Pong",
+    badge: "pingInterval / pingTimeout",
+    tagline: "Lightweight 1-byte periodic frames guaranteeing transport health and connectivity",
+    takeaways: [
+      {
+        id: "rthb-1",
+        text: "Server sends ping packet '2'; client responds with pong packet '3' immediately.",
+        searchPrompt: "Engine.IO packet types 2 ping 3 pong frame protocol",
+        emoji: "💓",
+        reactionCount: "3.7k",
+        commentCount: 250,
+      },
+      {
+        id: "rthb-2",
+        text: "Resets the socket timeout counter to keep NAT router port forwarding active.",
+        searchPrompt: "NAT router timeout WebSocket keep alive ping interval",
+        emoji: "🔄",
+        reactionCount: "2.8k",
+        commentCount: 175,
+      },
+      {
+        id: "rthb-3",
+        text: "Triggers transport close if client fails to answer within pingTimeout threshold.",
+        searchPrompt: "ping timeout disconnect reason transport close Engine.IO",
+        emoji: "✂️",
+        reactionCount: "2.3k",
+        commentCount: 140,
+      },
+    ],
+  },
+
+  "rt-broadcast-emit": {
+    id: "rt-broadcast-emit",
+    title: "Room Broadcast Event",
+    badge: "io.to(room).emit()",
+    tagline: "Fan-out event delivery to every subscribed client in a specific channel or global server",
+    takeaways: [
+      {
+        id: "rtbe-1",
+        text: "io.to('room-123').emit('new-msg', data) multicasts to all room members.",
+        searchPrompt: "io.to room emit fan out multicasting Socket.io",
+        emoji: "📢",
+        reactionCount: "4.3k",
+        commentCount: 320,
+      },
+      {
+        id: "rtbe-2",
+        text: "Serialized once into JSON buffer and multiplexed across all client TCP sockets.",
+        searchPrompt: "performance optimization single serialization broadcasting Socket.io",
+        emoji: "⚡",
+        reactionCount: "3.2k",
+        commentCount: 215,
+      },
+      {
+        id: "rtbe-3",
+        text: "Broadcasts scale across multiple processes seamlessly via Redis Pub/Sub backplane.",
+        searchPrompt: "Redis broadcast multi node Socket.io cluster",
+        emoji: "🌐",
+        reactionCount: "2.7k",
+        commentCount: 170,
+      },
+    ],
+  },
+
+  "rt-disconnect-cleanup": {
+    id: "rt-disconnect-cleanup",
+    title: "Graceful Disconnect & Eviction",
+    badge: "socket.on('disconnect')",
+    tagline: "Evicting dead sockets, freeing memory buffers, and notifying remaining peers",
+    takeaways: [
+      {
+        id: "rtdc-1",
+        text: "socket.on('disconnect', (reason) => ...) provides exact reason for closure.",
+        searchPrompt: "Socket.io disconnect reasons client namespace disconnect ping timeout",
+        emoji: "🏁",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+      {
+        id: "rtdc-2",
+        text: "Socket automatically leaves all joined rooms without requiring manual cleanup.",
+        searchPrompt: "does Socket.io automatically leave rooms on disconnect",
+        emoji: "🚪",
+        reactionCount: "3.3k",
+        commentCount: 220,
+      },
+      {
+        id: "rtdc-3",
+        text: "Notifies room peers: socket.to(roomId).emit('user-left', { id: socket.id }).",
+        searchPrompt: "notifying room peers on user disconnect event Socket.io",
+        emoji: "👋",
+        reactionCount: "2.8k",
+        commentCount: 180,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -2808,6 +3507,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Node.js Runtime"
       : node.category === "backend"
       ? "Backend & APIs"
+      : node.category === "realtime"
+      ? "Real-Time & Sockets"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

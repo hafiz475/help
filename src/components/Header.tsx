@@ -16,6 +16,7 @@ import {
   Gauge,
   Zap,
   Server,
+  Radio,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -49,6 +50,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Network size={16} />;
       case "backend":
         return <Server size={16} />;
+      case "realtime":
+        return <Radio size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

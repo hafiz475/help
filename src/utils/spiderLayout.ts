@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -959,6 +959,8 @@ export function calculateGroupLayout(
         ? "Async JavaScript"
         : category === "backend"
         ? "Backend & APIs"
+        : category === "realtime"
+        ? "Real-Time & Sockets"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -979,6 +981,8 @@ export function calculateGroupLayout(
         ? "Event Scheduling"
         : category === "backend"
         ? "Server Architecture"
+        : category === "realtime"
+        ? "Bi-Directional Streams"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -991,6 +995,8 @@ export function calculateGroupLayout(
         ? "#06b6d4"
         : category === "backend"
         ? "#10b981"
+        : category === "realtime"
+        ? "#0ea5e9"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -1990,6 +1996,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1C: Real-Time & Sockets Hub (placed top-right above backend at y = -1950)
+    const realtimeHubX = 1300;
+    const realtimeHubY = -1950;
+    const realtimeHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-realtime")!,
+      x: realtimeHubX,
+      y: realtimeHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(realtimeHubNode);
+    edges.push({
+      source: nodeHubNode.id,
+      target: realtimeHubNode.id,
+      category: "realtime",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Real-Time Node 1: Transport & Handshake
+    const protoRaw = allNodes.find((n) => n.id === "realtime-protocols");
+    if (protoRaw) {
+      const protoX = 1950;
+      const protoY = -2150;
+      const protoNode: PositionedNode = {
+        ...protoRaw,
+        x: protoX,
+        y: protoY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(protoNode);
+      edges.push({
+        source: realtimeHubNode.id,
+        target: protoNode.id,
+        category: "realtime",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const wsRaw = allNodes.find((n) => n.id === "realtime-ws-handshake");
+      if (wsRaw) {
+        positionedNodes.push({
+          ...wsRaw,
+          x: protoX + 320,
+          y: protoY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: protoNode.id,
+          target: wsRaw.id,
+          category: "realtime",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const sseRaw = allNodes.find((n) => n.id === "realtime-sse-streams");
+      if (sseRaw) {
+        positionedNodes.push({
+          ...sseRaw,
+          x: protoX + 320,
+          y: protoY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: protoNode.id,
+          target: sseRaw.id,
+          category: "realtime",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const pollRaw = allNodes.find((n) => n.id === "realtime-polling-fallback");
+      if (pollRaw) {
+        positionedNodes.push({
+          ...pollRaw,
+          x: protoX + 320,
+          y: protoY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: protoNode.id,
+          target: pollRaw.id,
+          category: "realtime",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Real-Time Node 2: Socket.io 9-Stage Lifecycle (Group Card)
+    const rtCard = cardByPillar.get("realtime-socketio-lifecycle");
+    if (rtCard) {
+      const cardX = 2100;
+      const cardY = -1950;
+      const posCard: PositionedGroupCard = {
+        ...rtCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: realtimeHubNode.id,
+        target: rtCard.id,
+        category: "realtime",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Real-Time Node 3: Rooms, Namespaces & State
+    const roomsRaw = allNodes.find((n) => n.id === "realtime-rooms-presence");
+    if (roomsRaw) {
+      const roomX = 1950;
+      const roomY = -1750;
+      const roomNode: PositionedNode = {
+        ...roomsRaw,
+        x: roomX,
+        y: roomY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(roomNode);
+      edges.push({
+        source: realtimeHubNode.id,
+        target: roomNode.id,
+        category: "realtime",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const broadRaw = allNodes.find((n) => n.id === "realtime-rooms-broadcast");
+      if (broadRaw) {
+        positionedNodes.push({
+          ...broadRaw,
+          x: roomX + 320,
+          y: roomY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: roomNode.id,
+          target: broadRaw.id,
+          category: "realtime",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const presRaw = allNodes.find((n) => n.id === "realtime-presence-state");
+      if (presRaw) {
+        positionedNodes.push({
+          ...presRaw,
+          x: roomX + 320,
+          y: roomY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: roomNode.id,
+          target: presRaw.id,
+          category: "realtime",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const redisRaw = allNodes.find((n) => n.id === "realtime-redis-adapter");
+      if (redisRaw) {
+        positionedNodes.push({
+          ...redisRaw,
+          x: roomX + 320,
+          y: roomY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: roomNode.id,
+          target: redisRaw.id,
+          category: "realtime",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -2234,6 +2433,8 @@ export function calculateGroupLayout(
     pillarIds = ["node-restaurant-pillar", "node-apis-pillar", "node-libuv-pillar"];
   } else if (category === "backend") {
     pillarIds = ["backend-rest-http", "backend-middleware-pipeline", "backend-production-guards"];
+  } else if (category === "realtime") {
+    pillarIds = ["realtime-protocols", "realtime-socketio-lifecycle", "realtime-rooms-presence"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -2517,6 +2718,11 @@ export function getNodesForCategory(
       parentId: "root-node",
       level: 2,
     };
+    const realtimeRoot = {
+      ...allNodes.find((n) => n.id === "root-realtime")!,
+      parentId: "root-node",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -2544,13 +2750,14 @@ export function getNodesForCategory(
         n.id !== "root-async" &&
         n.id !== "root-node" &&
         n.id !== "root-backend" &&
+        n.id !== "root-realtime" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }
