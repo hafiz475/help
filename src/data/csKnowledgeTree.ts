@@ -817,10 +817,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
         topics: [
           {
             id: "topic-web-platform",
-            name: "Platform Fundamentals (HTML/CSS/DOM)",
-            isAvailable: false,
-            badge: "Roadmap",
+            name: "Platform Fundamentals (HTML/CSS/DOM) ★",
+            categoryId: "platform",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
             description: "Semantic markup, CSS box model, layout engines (Flex/Grid), and DOM tree manipulation",
+            color: "#6366f1",
           },
           {
             id: "topic-browser-rendering",

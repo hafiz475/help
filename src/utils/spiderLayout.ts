@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -965,6 +965,8 @@ export function calculateGroupLayout(
         ? "Queues & Background Jobs"
         : category === "scaling"
         ? "Scaling & Load Balancing"
+        : category === "platform"
+        ? "Web Platform & DOM"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -991,6 +993,8 @@ export function calculateGroupLayout(
         ? "Async Task Processing"
         : category === "scaling"
         ? "Traffic Distribution"
+        : category === "platform"
+        ? "Browser Platform"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1009,6 +1013,8 @@ export function calculateGroupLayout(
         ? "#f97316"
         : category === "scaling"
         ? "#14b8a6"
+        : category === "platform"
+        ? "#6366f1"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -2587,6 +2593,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1F: Web Platform & DOM Hub (placed top-right above scaling at y = -3750)
+    const platformHubX = 1300;
+    const platformHubY = -3750;
+    const platformHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-platform")!,
+      x: platformHubX,
+      y: platformHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(platformHubNode);
+    edges.push({
+      source: nodeHubNode.id,
+      target: platformHubNode.id,
+      category: "platform",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Platform Node 1: Semantic HTML & DOM Tree
+    const pSemRaw = allNodes.find((n) => n.id === "platform-semantic-dom");
+    if (pSemRaw) {
+      const pSemX = 1950;
+      const pSemY = -3950;
+      const pSemNode: PositionedNode = {
+        ...pSemRaw,
+        x: pSemX,
+        y: pSemY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(pSemNode);
+      edges.push({
+        source: platformHubNode.id,
+        target: pSemNode.id,
+        category: "platform",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const nodesRaw = allNodes.find((n) => n.id === "platform-dom-nodes");
+      if (nodesRaw) {
+        positionedNodes.push({
+          ...nodesRaw,
+          x: pSemX + 320,
+          y: pSemY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pSemNode.id,
+          target: nodesRaw.id,
+          category: "platform",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const bubbleRaw = allNodes.find((n) => n.id === "platform-event-bubbling");
+      if (bubbleRaw) {
+        positionedNodes.push({
+          ...bubbleRaw,
+          x: pSemX + 320,
+          y: pSemY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pSemNode.id,
+          target: bubbleRaw.id,
+          category: "platform",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const mutRaw = allNodes.find((n) => n.id === "platform-mutation-observer");
+      if (mutRaw) {
+        positionedNodes.push({
+          ...mutRaw,
+          x: pSemX + 320,
+          y: pSemY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pSemNode.id,
+          target: mutRaw.id,
+          category: "platform",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Platform Node 2: CSS Layout & Box Model (Group Card)
+    const pCard = cardByPillar.get("platform-css-pipeline");
+    if (pCard) {
+      const cardX = 2100;
+      const cardY = -3750;
+      const posCard: PositionedGroupCard = {
+        ...pCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: platformHubNode.id,
+        target: pCard.id,
+        category: "platform",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Platform Node 3: Modern Native Web & DOM APIs
+    const pApisRaw = allNodes.find((n) => n.id === "platform-dom-apis");
+    if (pApisRaw) {
+      const pApisX = 1950;
+      const pApisY = -3550;
+      const pApisNode: PositionedNode = {
+        ...pApisRaw,
+        x: pApisX,
+        y: pApisY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(pApisNode);
+      edges.push({
+        source: platformHubNode.id,
+        target: pApisNode.id,
+        category: "platform",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const shadowRaw = allNodes.find((n) => n.id === "platform-shadow-dom");
+      if (shadowRaw) {
+        positionedNodes.push({
+          ...shadowRaw,
+          x: pApisX + 320,
+          y: pApisY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pApisNode.id,
+          target: shadowRaw.id,
+          category: "platform",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const obsRaw = allNodes.find((n) => n.id === "platform-intersection-observer");
+      if (obsRaw) {
+        positionedNodes.push({
+          ...obsRaw,
+          x: pApisX + 320,
+          y: pApisY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pApisNode.id,
+          target: obsRaw.id,
+          category: "platform",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const canvasRaw = allNodes.find((n) => n.id === "platform-canvas-webgl");
+      if (canvasRaw) {
+        positionedNodes.push({
+          ...canvasRaw,
+          x: pApisX + 320,
+          y: pApisY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pApisNode.id,
+          target: canvasRaw.id,
+          category: "platform",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -2837,6 +3036,8 @@ export function calculateGroupLayout(
     pillarIds = ["queues-architecture", "queues-bullmq-lifecycle", "queues-workers-resilience"];
   } else if (category === "scaling") {
     pillarIds = ["scaling-algorithms", "scaling-nginx-pipeline", "scaling-horizontal-scale"];
+  } else if (category === "platform") {
+    pillarIds = ["platform-semantic-dom", "platform-css-pipeline", "platform-dom-apis"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -3135,6 +3336,11 @@ export function getNodesForCategory(
       parentId: "root-node",
       level: 2,
     };
+    const platformRoot = {
+      ...allNodes.find((n) => n.id === "root-platform")!,
+      parentId: "root-node",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -3165,13 +3371,14 @@ export function getNodesForCategory(
         n.id !== "root-realtime" &&
         n.id !== "root-queues" &&
         n.id !== "root-scaling" &&
+        n.id !== "root-platform" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

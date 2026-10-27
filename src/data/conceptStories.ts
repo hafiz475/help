@@ -3409,6 +3409,639 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // WEB PLATFORM & DOM STORIES
+  // ==========================================
+  "root-platform": {
+    id: "root-platform",
+    title: "Web Platform & DOM",
+    badge: "Browser Platform",
+    tagline: "The standards-based runtime environment powering client-side web applications and user interfaces",
+    takeaways: [
+      {
+        id: "rpf-1",
+        text: "The Web Platform unites HTML semantic parsing, CSS cascade layout engines, and the JavaScript DOM API.",
+        searchPrompt: "web platform architecture DOM CSSOM critical rendering path HTML5",
+        emoji: "🌐",
+        reactionCount: "4.8k",
+        commentCount: 380,
+      },
+      {
+        id: "rpf-2",
+        text: "Live DOM trees bridge declarative HTML document structure with imperative programmatic JavaScript manipulation.",
+        searchPrompt: "DOM tree representation node hierarchy live objects browser memory",
+        emoji: "🌳",
+        reactionCount: "3.9k",
+        commentCount: 290,
+      },
+      {
+        id: "rpf-3",
+        text: "CSS layout engines transform cascading declarations into spatial pixel geometry rendered at 60 to 120 FPS.",
+        searchPrompt: "browser layout engine geometry calculation composite paint 60fps",
+        emoji: "⚡",
+        reactionCount: "3.2k",
+        commentCount: 215,
+      },
+    ],
+  },
+
+  "platform-semantic-dom": {
+    id: "platform-semantic-dom",
+    title: "Semantic HTML & DOM",
+    badge: "DOM Tree Structure",
+    tagline: "Constructing accessible document trees with meaningful markup, event propagation, and live mutation tracking",
+    takeaways: [
+      {
+        id: "pfsd-1",
+        text: "Semantic tags (<main>, <article>, <nav>, <section>) construct the Accessibility Tree (AOM) automatically.",
+        searchPrompt: "semantic HTML5 tags accessibility tree AOM screen readers",
+        emoji: "🏷️",
+        reactionCount: "4.5k",
+        commentCount: 340,
+      },
+      {
+        id: "pfsd-2",
+        text: "HTML parser constructs a hierarchical tree of Node objects where every tag, text, and comment has an identity.",
+        searchPrompt: "HTML parser tokenization tree construction DOM nodes",
+        emoji: "🌿",
+        reactionCount: "3.6k",
+        commentCount: 250,
+      },
+      {
+        id: "pfsd-3",
+        text: "Custom data attributes (data-*) allow storing custom data without hacking presentation classes.",
+        searchPrompt: "HTML5 dataset custom data attributes best practices",
+        emoji: "📊",
+        reactionCount: "2.8k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "platform-dom-nodes": {
+    id: "platform-dom-nodes",
+    title: "Node vs Element Hierarchy",
+    badge: "Node vs Element",
+    tagline: "Distinguishing between abstract Node interfaces and specialized HTML Element subclasses",
+    takeaways: [
+      {
+        id: "pfdn-1",
+        text: "Every Element is a Node, but Nodes also include Text nodes, Comments, and DocumentFragments.",
+        searchPrompt: "difference between Node and Element JavaScript DOM nodeType",
+        emoji: "🔍",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "pfdn-2",
+        text: "childNodes includes whitespace text nodes; children only returns HTML element tags.",
+        searchPrompt: "childNodes vs children property DOM JavaScript gotcha",
+        emoji: "⚠️",
+        reactionCount: "3.8k",
+        commentCount: 275,
+      },
+      {
+        id: "pfdn-3",
+        text: "DocumentFragment acts as a lightweight in-memory container to batch DOM inserts with zero extra reflows.",
+        searchPrompt: "DocumentFragment performance DOM manipulation batch append",
+        emoji: "🚀",
+        reactionCount: "3.1k",
+        commentCount: 195,
+      },
+    ],
+  },
+
+  "platform-event-bubbling": {
+    id: "platform-event-bubbling",
+    title: "Event Bubbling & Capturing",
+    badge: "Event Dispatch",
+    tagline: "The 3-phase DOM event propagation model: Capturing (Trickle Down), Target, and Bubbling (Float Up)",
+    takeaways: [
+      {
+        id: "pfeb-1",
+        text: "Events travel down from Window to Target in Capture phase, then bubble up to Window in Bubble phase.",
+        searchPrompt: "DOM event propagation 3 phases capturing target bubbling explained",
+        emoji: "🌊",
+        reactionCount: "4.9k",
+        commentCount: 410,
+      },
+      {
+        id: "pfeb-2",
+        text: "Event Delegation attaches a single listener on a parent instead of hundreds of listeners on children.",
+        searchPrompt: "event delegation JavaScript pattern performance memory reduction",
+        emoji: "🎯",
+        reactionCount: "4.2k",
+        commentCount: 320,
+      },
+      {
+        id: "pfeb-3",
+        text: "e.stopPropagation() halts traversal; e.stopImmediatePropagation() also stops sibling listeners on current node.",
+        searchPrompt: "stopPropagation vs stopImmediatePropagation difference JavaScript",
+        emoji: "🛑",
+        reactionCount: "3.4k",
+        commentCount: 230,
+      },
+    ],
+  },
+
+  "platform-mutation-observer": {
+    id: "platform-mutation-observer",
+    title: "MutationObserver & Batched DOM",
+    badge: "Batch Observers",
+    tagline: "Asynchronously tracking DOM modifications via microtask queues without blocking the UI main thread",
+    takeaways: [
+      {
+        id: "pfmo-1",
+        text: "Replaces deprecated, synchronous Mutation Events with high-performance asynchronous microtask batching.",
+        searchPrompt: "MutationObserver vs MutationEvents performance microtask queue",
+        emoji: "👁️",
+        reactionCount: "4.1k",
+        commentCount: 285,
+      },
+      {
+        id: "pfmo-2",
+        text: "Can observe childList, attributes, and characterData changes recursively across subtrees.",
+        searchPrompt: "MutationObserver config childList subtree attributeFilter",
+        emoji: "⚙️",
+        reactionCount: "3.3k",
+        commentCount: 210,
+      },
+      {
+        id: "pfmo-3",
+        text: "Always call observer.disconnect() when components unmount to prevent severe memory leaks.",
+        searchPrompt: "MutationObserver memory leak cleanup disconnect",
+        emoji: "🧹",
+        reactionCount: "2.9k",
+        commentCount: 165,
+      },
+    ],
+  },
+
+  "platform-css-pipeline": {
+    id: "platform-css-pipeline",
+    title: "CSS Layout & Box Model Engine",
+    badge: "9 Sequential Stages",
+    tagline: "The browser pipeline translating CSS rules into exact physical geometry, formatting boxes, and pixel matrices",
+    takeaways: [
+      {
+        id: "pfcp-1",
+        text: "Calculates cascade specificity, resolves relative units into computed pixels, and builds layout boxes.",
+        searchPrompt: "browser CSS layout engine cascade specificity box model pipeline",
+        emoji: "📐",
+        reactionCount: "4.6k",
+        commentCount: 350,
+      },
+      {
+        id: "pfcp-2",
+        text: "Modern layout engines support Flexbox 1D linear flows and CSS Grid 2D dimensional track matrices.",
+        searchPrompt: "Flexbox vs CSS Grid when to use layout engines comparison",
+        emoji: "▦",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+      {
+        id: "pfcp-3",
+        text: "Changes to layout properties (width, margin) trigger full reflow; transforms only trigger GPU compositing.",
+        searchPrompt: "CSS reflow repaint compositing cheap animations transform opacity",
+        emoji: "⚡",
+        reactionCount: "3.4k",
+        commentCount: 240,
+      },
+    ],
+  },
+
+  "platform-dom-apis": {
+    id: "platform-dom-apis",
+    title: "Modern Web & Native APIs",
+    badge: "Native APIs",
+    tagline: "High-performance browser platform capabilities: Shadow DOM, Viewport Observers, and Offscreen Canvas",
+    takeaways: [
+      {
+        id: "pfda-1",
+        text: "Native browser APIs provide direct OS-level acceleration for rendering, scrolling, and geometry checks.",
+        searchPrompt: "modern HTML5 Web APIs native browser capabilities performance",
+        emoji: "🛠️",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+      {
+        id: "pfda-2",
+        text: "Encapsulates styles and DOM subtrees inside Web Components without CSS global namespace collisions.",
+        searchPrompt: "Web Components custom elements Shadow DOM style encapsulation",
+        emoji: "📦",
+        reactionCount: "3.5k",
+        commentCount: 235,
+      },
+      {
+        id: "pfda-3",
+        text: "Offloads graphics and intensive pixel computations to background Web Workers via OffscreenCanvas.",
+        searchPrompt: "OffscreenCanvas web worker multi-threaded rendering",
+        emoji: "🎨",
+        reactionCount: "2.8k",
+        commentCount: 180,
+      },
+    ],
+  },
+
+  "platform-shadow-dom": {
+    id: "platform-shadow-dom",
+    title: "Shadow DOM & Custom Elements",
+    badge: "Encapsulation",
+    tagline: "Scoped subtree encapsulation keeping component styles, markup, and event boundaries isolated",
+    takeaways: [
+      {
+        id: "pfsd-1",
+        text: "Creates a hidden DOM tree attached to an element: styles inside cannot leak out, and global styles cannot bleed in.",
+        searchPrompt: "Shadow DOM open vs closed mode encapsulation CSS scoping",
+        emoji: "🛡️",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+      {
+        id: "pfsd-2",
+        text: "Slots (<slot>) provide named projection points for light DOM children to render inside shadow templates.",
+        searchPrompt: "Web Components slot projection named slots content distribution",
+        emoji: "📥",
+        reactionCount: "3.4k",
+        commentCount: 220,
+      },
+      {
+        id: "pfsd-3",
+        text: "Events retarget across the shadow boundary so external listeners see the custom element as the target.",
+        searchPrompt: "Shadow DOM event retargeting composed Path composed flag",
+        emoji: "🔄",
+        reactionCount: "2.9k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "platform-intersection-observer": {
+    id: "platform-intersection-observer",
+    title: "Intersection & Resize Observers",
+    badge: "Viewport Watcher",
+    tagline: "Asynchronously tracking viewport visibility and element dimension changes without scroll jank",
+    takeaways: [
+      {
+        id: "pfio-1",
+        text: "Detects element visibility relative to the viewport asynchronously without expensive getBoundingClientRect() polling.",
+        searchPrompt: "IntersectionObserver lazy loading images infinite scroll performance",
+        emoji: "👀",
+        reactionCount: "4.8k",
+        commentCount: 390,
+      },
+      {
+        id: "pfio-2",
+        text: "ResizeObserver notifies JS when contentRect changes, enabling true element queries and container layouts.",
+        searchPrompt: "ResizeObserver container queries responsive components JavaScript",
+        emoji: "📏",
+        reactionCount: "3.6k",
+        commentCount: 245,
+      },
+      {
+        id: "pfio-3",
+        text: "Threshold arrays ([0, 0.25, 0.5, 0.75, 1.0]) trigger granular updates for interactive scroll animations.",
+        searchPrompt: "IntersectionObserver threshold array scroll animation triggers",
+        emoji: "🎬",
+        reactionCount: "3.0k",
+        commentCount: 190,
+      },
+    ],
+  },
+
+  "platform-canvas-webgl": {
+    id: "platform-canvas-webgl",
+    title: "Canvas & OffscreenCanvas",
+    badge: "Pixel Buffers",
+    tagline: "Direct 2D bitmap manipulation and hardware-accelerated rendering inside dedicated worker threads",
+    takeaways: [
+      {
+        id: "pfcw-1",
+        text: "Canvas 2D context renders immediate-mode graphics directly into an underlying pixel buffer array.",
+        searchPrompt: "HTML5 Canvas 2D context drawImage putImageData performance",
+        emoji: "🖌️",
+        reactionCount: "4.2k",
+        commentCount: 280,
+      },
+      {
+        id: "pfcw-2",
+        text: "OffscreenCanvas decouples drawing from the DOM, allowing web workers to render frames without blocking UI.",
+        searchPrompt: "OffscreenCanvas transferControlToOffscreen worker rendering 60fps",
+        emoji: "⚡",
+        reactionCount: "3.5k",
+        commentCount: 230,
+      },
+      {
+        id: "pfcw-3",
+        text: "WebGL and WebGPU provide direct programmable shader pipelines to the device GPU hardware.",
+        searchPrompt: "WebGL WebGPU canvas hardware acceleration shaders",
+        emoji: "🎮",
+        reactionCount: "2.9k",
+        commentCount: 185,
+      },
+    ],
+  },
+
+  // ------------------------------------------
+  // CSS Layout 9-Stage Pipeline Group Card Items
+  // ------------------------------------------
+  "pf-token-parse": {
+    id: "pf-token-parse",
+    title: "HTML/CSS Tokenizer",
+    badge: "🔤 Byte Stream → Tokens",
+    tagline: "Parsing raw network bytes into characters, lexical tokens, and structured DOM/CSSOM trees",
+    takeaways: [
+      {
+        id: "pftp-1",
+        text: "Decodes binary bytes using specified charset (UTF-8), emitting start tag, end tag, and text tokens.",
+        searchPrompt: "HTML5 tokenization state machine character stream to tokens",
+        emoji: "🔤",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+      {
+        id: "pftp-2",
+        text: "CSS parser consumes stylesheet rules, building the CSSOM (CSS Object Model) tree in parallel.",
+        searchPrompt: "CSSOM construction style rule parser stylesheet tree",
+        emoji: "📜",
+        reactionCount: "3.3k",
+        commentCount: 215,
+      },
+      {
+        id: "pftp-3",
+        text: "Script tags block the parser unless marked with async or defer attributes.",
+        searchPrompt: "script async vs defer parser blocking scripts DOMContentLoaded",
+        emoji: "⏳",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+    ],
+  },
+
+  "pf-cascade-resolve": {
+    id: "pf-cascade-resolve",
+    title: "Cascade & Specificity",
+    badge: "⚖️ @layer & Specificity",
+    tagline: "Resolving competing CSS rules via origins, cascade layers, selector specificity, and source order",
+    takeaways: [
+      {
+        id: "pfcr-1",
+        text: "Cascade priority: User Agent < User < Author normal < @layer < Author !important < User Agent !important.",
+        searchPrompt: "CSS cascade order origin layers importance specificity calculation",
+        emoji: "⚖️",
+        reactionCount: "4.7k",
+        commentCount: 370,
+      },
+      {
+        id: "pfcr-2",
+        text: "Specificity tuple: (Inline, ID, Class/Attribute/Pseudo-class, Element/Pseudo-element).",
+        searchPrompt: "CSS specificity hierarchy tuple calculation (0,1,0,0)",
+        emoji: "🔢",
+        reactionCount: "3.9k",
+        commentCount: 280,
+      },
+      {
+        id: "pfcr-3",
+        text: "CSS @layer allows explicit ordering of design systems, third-party libraries, and app overrides.",
+        searchPrompt: "CSS cascade layers @layer rule specificity override management",
+        emoji: "📚",
+        reactionCount: "3.2k",
+        commentCount: 210,
+      },
+    ],
+  },
+
+  "pf-computed-style": {
+    id: "pf-computed-style",
+    title: "Computed Values",
+    badge: "📐 Relative → Pixels",
+    tagline: "Translating percentages, ems, rems, vh/vw, and keywords into absolute, concrete pixel values",
+    takeaways: [
+      {
+        id: "pfcs-1",
+        text: "Converts relative units (rem relative to root font-size, em relative to parent font-size) into exact px.",
+        searchPrompt: "CSS computed value calculation relative to absolute pixel conversion",
+        emoji: "📐",
+        reactionCount: "4.3k",
+        commentCount: 305,
+      },
+      {
+        id: "pfcs-2",
+        text: "window.getComputedStyle(element) returns the live resolved styles computed by the browser layout engine.",
+        searchPrompt: "window.getComputedStyle JavaScript resolved values performance",
+        emoji: "🔬",
+        reactionCount: "3.5k",
+        commentCount: 230,
+      },
+      {
+        id: "pfcs-3",
+        text: "Inheritable properties (color, font, line-height) cascade down to child nodes automatically.",
+        searchPrompt: "CSS inherited vs non-inherited properties default values",
+        emoji: "🧬",
+        reactionCount: "2.8k",
+        commentCount: 175,
+      },
+    ],
+  },
+
+  "pf-box-sizing": {
+    id: "pf-box-sizing",
+    title: "Box Model Geometry",
+    badge: "📦 Border-Box & Margin Collapse",
+    tagline: "Defining content, padding, border, and margin boundaries, including vertical margin collapsing",
+    takeaways: [
+      {
+        id: "pfbs-1",
+        text: "box-sizing: border-box includes padding and border inside width, preventing layout breakage.",
+        searchPrompt: "box-sizing border-box vs content-box universal reset",
+        emoji: "📦",
+        reactionCount: "4.9k",
+        commentCount: 420,
+      },
+      {
+        id: "pfbs-2",
+        text: "Adjacent vertical margins collapse into a single margin equal to the maximum of the two.",
+        searchPrompt: "CSS margin collapsing rules adjacent siblings parent child",
+        emoji: "🤝",
+        reactionCount: "3.8k",
+        commentCount: 270,
+      },
+      {
+        id: "pfbs-3",
+        text: "Creating a Block Formatting Context (BFC) on a container stops margins from collapsing outside.",
+        searchPrompt: "prevent margin collapse BFC overflow hidden display flow-root",
+        emoji: "🛡️",
+        reactionCount: "3.1k",
+        commentCount: 205,
+      },
+    ],
+  },
+
+  "pf-bformatting-context": {
+    id: "pf-bformatting-context",
+    title: "Formatting Contexts",
+    badge: "🧱 Block & Inline Formatting (BFC)",
+    tagline: "Independent layout islands governing how child boxes align, contain floats, and isolate boundaries",
+    takeaways: [
+      {
+        id: "pfbfc-1",
+        text: "A Block Formatting Context (BFC) isolates its internal layout from outside elements completely.",
+        searchPrompt: "Block Formatting Context BFC creation display flow-root",
+        emoji: "🧱",
+        reactionCount: "4.4k",
+        commentCount: 325,
+      },
+      {
+        id: "pfbfc-2",
+        text: "display: flow-root is the modern standards-based way to create a clean BFC without overflow side-effects.",
+        searchPrompt: "display flow-root clearfix replacement modern CSS",
+        emoji: "🌱",
+        reactionCount: "3.6k",
+        commentCount: 240,
+      },
+      {
+        id: "pfbfc-3",
+        text: "BFCs contain internal floats and prevent sibling block elements from wrapping underneath floated elements.",
+        searchPrompt: "clearing floats BFC margin collapse isolation",
+        emoji: "🛑",
+        reactionCount: "2.9k",
+        commentCount: 185,
+      },
+    ],
+  },
+
+  "pf-flex-layout": {
+    id: "pf-flex-layout",
+    title: "Flexbox Flow Engine",
+    badge: "↔️ Main & Cross Axis",
+    tagline: "One-dimensional flexible layout engine distributing space and aligning items along main and cross axes",
+    takeaways: [
+      {
+        id: "pffl-1",
+        text: "flex-direction determines main axis (row or column); cross axis runs perpendicular.",
+        searchPrompt: "CSS Flexbox main axis cross axis justify-content align-items",
+        emoji: "↔️",
+        reactionCount: "4.8k",
+        commentCount: 385,
+      },
+      {
+        id: "pffl-2",
+        text: "flex: 1 1 auto specifies flex-grow (absorb surplus), flex-shrink (shrink on overflow), and flex-basis (base size).",
+        searchPrompt: "CSS flex shorthand flex-grow flex-shrink flex-basis explained",
+        emoji: "📐",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+      {
+        id: "pffl-3",
+        text: "gap property provides clean, margin-free spacing between flex items without nth-child hacks.",
+        searchPrompt: "flexbox gap property row-gap column-gap modern CSS",
+        emoji: "✨",
+        reactionCount: "3.5k",
+        commentCount: 220,
+      },
+    ],
+  },
+
+  "pf-grid-layout": {
+    id: "pf-grid-layout",
+    title: "CSS Grid Track Matrix",
+    badge: "▦ 2D Explicit/Implicit Tracks",
+    tagline: "Two-dimensional layout grid dividing containers into rows, columns, fractional tracks, and named areas",
+    takeaways: [
+      {
+        id: "pfgl-1",
+        text: "fr (fractional unit) represents a fraction of the remaining free space in the grid container.",
+        searchPrompt: "CSS Grid fr fractional unit space distribution",
+        emoji: "▦",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "pfgl-2",
+        text: "repeat(auto-fit, minmax(250px, 1fr)) creates perfectly responsive card layouts with zero media queries.",
+        searchPrompt: "CSS grid auto-fit vs auto-fill minmax responsive cards no media queries",
+        emoji: "📱",
+        reactionCount: "4.3k",
+        commentCount: 330,
+      },
+      {
+        id: "pfgl-3",
+        text: "grid-template-areas enables visual ASCII-like layout mapping for headers, sidebars, and content.",
+        searchPrompt: "grid-template-areas named grid areas CSS layout architecture",
+        emoji: "🗺️",
+        reactionCount: "3.2k",
+        commentCount: 215,
+      },
+    ],
+  },
+
+  "pf-overflow-stacking": {
+    id: "pf-overflow-stacking",
+    title: "Stacking Context & Z-Index",
+    badge: "📚 3D Depth Layers",
+    tagline: "Three-dimensional layering along the Z-axis determining which elements paint in front of others",
+    takeaways: [
+      {
+        id: "pfos-1",
+        text: "z-index only takes effect on positioned elements (relative, absolute, fixed, sticky) or flex/grid items.",
+        searchPrompt: "why z-index is not working CSS positioning requirements",
+        emoji: "📚",
+        reactionCount: "4.8k",
+        commentCount: 410,
+      },
+      {
+        id: "pfos-2",
+        text: "Opacity < 1, transform, filter, and isolation: isolate spawn brand new local stacking contexts.",
+        searchPrompt: "what creates a stacking context CSS isolation opacity transform",
+        emoji: "🎭",
+        reactionCount: "4.0k",
+        commentCount: 290,
+      },
+      {
+        id: "pfos-3",
+        text: "A child element can NEVER escape or render in front of a higher stacking context of its parent.",
+        searchPrompt: "z-index stacking context boundary parent child trap",
+        emoji: "🔒",
+        reactionCount: "3.4k",
+        commentCount: 235,
+      },
+    ],
+  },
+
+  "pf-render-paint": {
+    id: "pf-render-paint",
+    title: "Layer Composite & Paint",
+    badge: "🎨 GPU Raster & Compositing",
+    tagline: "Rasterizing layout boxes into bitmap textures and compositing GPU layers at display refresh rates",
+    takeaways: [
+      {
+        id: "pfrp-1",
+        text: "Painting converts layout geometries into drawing instructions (fill text, draw borders, paint shadows).",
+        searchPrompt: "browser rendering pipeline paint rasterization composite layers",
+        emoji: "🎨",
+        reactionCount: "4.5k",
+        commentCount: 340,
+      },
+      {
+        id: "pfrp-2",
+        text: "will-change: transform hints the browser to promote the element to a dedicated GPU compositing layer.",
+        searchPrompt: "will-change transform promote to GPU layer hardware acceleration",
+        emoji: "🚀",
+        reactionCount: "3.7k",
+        commentCount: 255,
+      },
+      {
+        id: "pfrp-3",
+        text: "Animating transform and opacity avoids layout and paint phases completely for silky 120 FPS animations.",
+        searchPrompt: "cheap CSS animations transform opacity 60fps compositor thread",
+        emoji: "✨",
+        reactionCount: "3.1k",
+        commentCount: 195,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -4911,6 +5544,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Queues & Background Jobs"
       : node.category === "scaling"
       ? "Scaling & Load Balancing"
+      : node.category === "platform"
+      ? "Web Platform & DOM"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -973,7 +973,84 @@ export const BIGO_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const PLATFORM_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-platform-layout",
+    pillarId: "platform-css-pipeline",
+    title: "CSS Layout & Box Model Engine",
+    category: "platform",
+    badge: "9 Sequential Stages",
+    color: "#4338ca",
+    isPipeline: true,
+    items: [
+      {
+        id: "pf-token-parse",
+        stepNumber: 1,
+        label: "1. HTML/CSS Tokenizer",
+        badge: "🔤 Byte Stream → Tokens",
+        searchQuery: "HTML parser CSS tokenizer character stream DOM CSSOM construction",
+      },
+      {
+        id: "pf-cascade-resolve",
+        stepNumber: 2,
+        label: "2. Cascade & Specificity",
+        badge: "⚖️ @layer & Specificity",
+        searchQuery: "CSS cascade layers specificity calculation inline ID class element important",
+      },
+      {
+        id: "pf-computed-style",
+        stepNumber: 3,
+        label: "3. Computed Values",
+        badge: "📐 Relative → Pixels",
+        searchQuery: "getComputedStyle rem em vw relative to absolute pixel conversion",
+      },
+      {
+        id: "pf-box-sizing",
+        stepNumber: 4,
+        label: "4. Box Model Geometry",
+        badge: "📦 Border-Box & Margin Collapse",
+        searchQuery: "CSS box-sizing border-box content-box margin collapsing adjacent blocks",
+      },
+      {
+        id: "pf-bformatting-context",
+        stepNumber: 5,
+        label: "5. Formatting Contexts",
+        badge: "🧱 Block & Inline Formatting (BFC)",
+        searchQuery: "block formatting context BFC inline formatting context float clearance overflow hidden",
+      },
+      {
+        id: "pf-flex-layout",
+        stepNumber: 6,
+        label: "6. Flexbox Flow Engine",
+        badge: "↔️ Main & Cross Axis",
+        searchQuery: "CSS flexbox flex-grow flex-shrink flex-basis main axis cross axis justify-content",
+      },
+      {
+        id: "pf-grid-layout",
+        stepNumber: 7,
+        label: "7. CSS Grid Track Matrix",
+        badge: "▦ 2D Explicit/Implicit Tracks",
+        searchQuery: "CSS Grid layout fr units grid-template-areas auto-fit minmax implicit tracks",
+      },
+      {
+        id: "pf-overflow-stacking",
+        stepNumber: 8,
+        label: "8. Stacking Context & Z-Index",
+        badge: "📚 3D Depth Layers",
+        searchQuery: "CSS stacking context z-index opacity transform isolation will-change paint order",
+      },
+      {
+        id: "pf-render-paint",
+        stepNumber: 9,
+        label: "9. Layer Composite & Paint",
+        badge: "🎨 GPU Raster & Compositing",
+        searchQuery: "browser paint composite rasterization GPU layers transform translateZ",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -983,8 +1060,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "realtime") return REALTIME_GROUP_CARDS;
   if (category === "queues") return QUEUES_GROUP_CARDS;
   if (category === "scaling") return SCALING_GROUP_CARDS;
+  if (category === "platform") return PLATFORM_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

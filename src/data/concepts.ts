@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -105,8 +105,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "platform",
+    name: "10. Web Platform",
+    title: "Platform Fundamentals, HTML, CSS & DOM",
+    description: "Semantic DOM Tree, CSS Box Model & Cascading Layers, 9-Stage Layout Engine & Native Web APIs",
+    color: "#6366f1", // Indigo
+    icon: "Layout",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "10. OOP (4 Pillars)",
+    name: "11. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -115,7 +124,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "11. DSA",
+    name: "12. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -124,7 +133,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "12. Big O",
+    name: "13. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -138,7 +147,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 149,
+    count: 159,
   },
 ];
 
@@ -235,6 +244,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "system scaling load balancing NGINX reverse proxy horizontal scale",
     badge: "Traffic Distribution",
     color: "#14b8a6",
+  },
+  {
+    id: "root-platform",
+    label: "Web Platform & DOM",
+    category: "platform",
+    level: 0,
+    searchQuery: "Web platform HTML CSS DOM browser APIs layout engines",
+    badge: "Browser Platform",
+    color: "#6366f1",
   },
   {
     id: "root-oop",
@@ -1634,7 +1652,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 10. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 10. WEB PLATFORM & DOM FUNDAMENTALS
+  // ==========================================
+  // Pillar 1: Semantic HTML & DOM Tree Architecture
+  {
+    id: "platform-semantic-dom",
+    label: "Semantic HTML & DOM",
+    category: "platform",
+    parentId: "root-platform",
+    level: 1,
+    searchQuery: "semantic HTML5 markup DOM tree nodes elements parsing",
+    badge: "DOM Tree Structure",
+    color: "#4f46e5",
+  },
+  {
+    id: "platform-dom-nodes",
+    label: "Node vs Element Hierarchy",
+    category: "platform",
+    parentId: "platform-semantic-dom",
+    level: 2,
+    searchQuery: "DOM Node vs Element childNodes children parentNode document fragment",
+    badge: "Node vs Element",
+    color: "#6366f1",
+  },
+  {
+    id: "platform-event-bubbling",
+    label: "Event Bubbling & Capturing",
+    category: "platform",
+    parentId: "platform-semantic-dom",
+    level: 2,
+    searchQuery: "event bubbling capturing propagation stopPropagation event delegation target currentTarget",
+    badge: "Event Dispatch",
+    color: "#818cf8",
+  },
+  {
+    id: "platform-mutation-observer",
+    label: "MutationObserver & Batched DOM",
+    category: "platform",
+    parentId: "platform-semantic-dom",
+    level: 2,
+    searchQuery: "MutationObserver microtask batching DOM mutations disconnect observe records",
+    badge: "Batch Observers",
+    color: "#a5b4fc",
+  },
+
+  // Pillar 2: CSS Layout & Box Model Pipeline (Group Card)
+  {
+    id: "platform-css-pipeline",
+    label: "CSS Layout & Box Model",
+    category: "platform",
+    parentId: "root-platform",
+    level: 1,
+    searchQuery: "CSS box model layout engine cascade specificity formatting context",
+    badge: "9 Sequential Stages",
+    color: "#4338ca",
+  },
+
+  // Pillar 3: Modern Native Web & DOM APIs
+  {
+    id: "platform-dom-apis",
+    label: "Modern Web & Native APIs",
+    category: "platform",
+    parentId: "root-platform",
+    level: 1,
+    searchQuery: "Web APIs Shadow DOM Web Components IntersectionObserver Canvas OffscreenCanvas",
+    badge: "Native APIs",
+    color: "#3730a3",
+  },
+  {
+    id: "platform-shadow-dom",
+    label: "Shadow DOM & Custom Elements",
+    category: "platform",
+    parentId: "platform-dom-apis",
+    level: 2,
+    searchQuery: "Shadow DOM open closed encapsulated CSS custom elements slot template",
+    badge: "Encapsulation",
+    color: "#6366f1",
+  },
+  {
+    id: "platform-intersection-observer",
+    label: "Intersection & Resize Observers",
+    category: "platform",
+    parentId: "platform-dom-apis",
+    level: 2,
+    searchQuery: "IntersectionObserver lazy load infinite scroll ResizeObserver entry contentRect",
+    badge: "Viewport Watcher",
+    color: "#818cf8",
+  },
+  {
+    id: "platform-canvas-webgl",
+    label: "Canvas & OffscreenCanvas",
+    category: "platform",
+    parentId: "platform-dom-apis",
+    level: 2,
+    searchQuery: "HTML5 Canvas 2D context OffscreenCanvas web workers pixel manipulation",
+    badge: "Pixel Buffers",
+    color: "#a5b4fc",
+  },
+
+  // ==========================================
+  // 11. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
