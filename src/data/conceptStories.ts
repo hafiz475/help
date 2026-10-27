@@ -4042,6 +4042,639 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // BROWSER RENDERING STORIES
+  // ==========================================
+  "root-rendering": {
+    id: "root-rendering",
+    title: "Browser Rendering",
+    badge: "Critical Path",
+    tagline: "The multi-threaded browser rendering pipeline turning HTML, CSS, and JS into smooth 60 FPS pixels",
+    takeaways: [
+      {
+        id: "rren-1",
+        text: "The Critical Rendering Path (CRP) spans Network Bytes → DOM + CSSOM → Render Tree → Layout → Paint → Composite.",
+        searchPrompt: "critical rendering path steps browser performance optimization",
+        emoji: "🌐",
+        reactionCount: "5.1k",
+        commentCount: 420,
+      },
+      {
+        id: "rren-2",
+        text: "Understanding the difference between Reflow, Repaint, and GPU Compositing is the key to stutter-free 60 FPS UIs.",
+        searchPrompt: "reflow repaint composite browser rendering cost comparison",
+        emoji: "⚡",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+      {
+        id: "rren-3",
+        text: "Modern browsers parallelize rendering across Main Thread (DOM/Layout), Compositor Thread, and Raster Worker Threads.",
+        searchPrompt: "browser multi process multi thread architecture compositor raster worker",
+        emoji: "🧵",
+        reactionCount: "3.7k",
+        commentCount: 250,
+      },
+    ],
+  },
+
+  "rendering-pipeline": {
+    id: "rendering-pipeline",
+    title: "Critical Rendering Path",
+    badge: "9 Sequential Stages",
+    tagline: "Sequential pipeline steps required to turn remote server bytes into initial screen pixels",
+    takeaways: [
+      {
+        id: "rp-1",
+        text: "HTML parsing is incremental: the browser starts streaming tokens and building DOM before the file finishes downloading.",
+        searchPrompt: "incremental HTML parser streaming response browser DOM building",
+        emoji: "🌊",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+      {
+        id: "rp-2",
+        text: "CSS is render-blocking: the browser halts render tree creation until all external stylesheets are completely parsed.",
+        searchPrompt: "why CSS is render blocking critical CSS link rel preload",
+        emoji: "🛑",
+        reactionCount: "4.2k",
+        commentCount: 315,
+      },
+      {
+        id: "rp-3",
+        text: "Render Tree only contains visible nodes: <head>, <script>, and display: none elements are completely excluded.",
+        searchPrompt: "Render Tree construction display none vs visibility hidden difference",
+        emoji: "👁️",
+        reactionCount: "3.8k",
+        commentCount: 270,
+      },
+    ],
+  },
+
+  "rendering-reflow-repaint": {
+    id: "rendering-reflow-repaint",
+    title: "Reflow vs Repaint",
+    badge: "Geometry vs Pixels",
+    tagline: "Distinguishing between expensive physical box calculations and visual pixel recoloring",
+    takeaways: [
+      {
+        id: "rfrp-1",
+        text: "Reflow (Layout) recalculates element positions and sizes; it triggers recursively down the DOM tree.",
+        searchPrompt: "what causes browser reflow geometry recalculation performance cost",
+        emoji: "📐",
+        reactionCount: "4.8k",
+        commentCount: 380,
+      },
+      {
+        id: "rfrp-2",
+        text: "Repaint repaints visual surfaces (color, background, shadow) when geometry hasn't changed; cheaper than reflow.",
+        searchPrompt: "browser repaint vs reflow CSS properties list csstriggers",
+        emoji: "🎨",
+        reactionCount: "3.9k",
+        commentCount: 260,
+      },
+      {
+        id: "rfrp-3",
+        text: "Composite-only operations (transform, opacity) bypass both Reflow and Repaint directly on the GPU.",
+        searchPrompt: "composite only CSS properties transform opacity GPU accelerated",
+        emoji: "🚀",
+        reactionCount: "4.4k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "rendering-layout-thrashing": {
+    id: "rendering-layout-thrashing",
+    title: "Layout Thrashing & Forced Sync",
+    badge: "Forced Sync Layout",
+    tagline: "The catastrophic performance killer caused by interleaving DOM read and write operations inside loops",
+    takeaways: [
+      {
+        id: "rlt-1",
+        text: "Forced Synchronous Layout happens when JavaScript asks for geometry (offsetWidth) right after modifying DOM.",
+        searchPrompt: "forced synchronous layout JavaScript reading offsetHeight after style write",
+        emoji: "💥",
+        reactionCount: "5.2k",
+        commentCount: 460,
+      },
+      {
+        id: "rlt-2",
+        text: "Layout Thrashing runs the entire browser layout engine dozens of times per frame, destroying 60 FPS performance.",
+        searchPrompt: "layout thrashing loop performance bottleneck Chrome DevTools Performance",
+        emoji: "🐌",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+      {
+        id: "rlt-3",
+        text: "Fix: Batch all DOM geometric reads first, then batch all style/DOM writes together (or use FastDOM).",
+        searchPrompt: "how to fix layout thrashing batch DOM reads writes FastDOM pattern",
+        emoji: "🛠️",
+        reactionCount: "3.6k",
+        commentCount: 240,
+      },
+    ],
+  },
+
+  "rendering-composite-only": {
+    id: "rendering-composite-only",
+    title: "Composite-Only Animations",
+    badge: "GPU Transforms",
+    tagline: "Running silky-smooth 60/120 FPS animations strictly on the GPU compositor thread",
+    takeaways: [
+      {
+        id: "rco-1",
+        text: "transform: translate3d() and opacity do not affect surrounding element geometry or invalidate paint textures.",
+        searchPrompt: "why translate3d is faster than top left CSS animations compositor",
+        emoji: "🏎️",
+        reactionCount: "4.9k",
+        commentCount: 390,
+      },
+      {
+        id: "rco-2",
+        text: "Compositor thread runs independently of the JavaScript main thread: animations stay smooth even during heavy JS execution.",
+        searchPrompt: "browser compositor thread non-blocking main thread animations",
+        emoji: "🧵",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+      {
+        id: "rco-3",
+        text: "Beware of layer explosion: creating too many GPU compositing layers exhausts VRAM and degrades mobile performance.",
+        searchPrompt: "GPU layer explosion will change memory footprint VRAM mobile",
+        emoji: "⚠️",
+        reactionCount: "3.5k",
+        commentCount: 225,
+      },
+    ],
+  },
+
+  "rendering-containment": {
+    id: "rendering-containment",
+    title: "CSS Containment & Visibility",
+    badge: "contain: strict",
+    tagline: "Isolating subtrees from the rest of the document to limit reflow scopes and skip offscreen rendering",
+    takeaways: [
+      {
+        id: "rcon-1",
+        text: "contain: strict tells the browser that internal layout, paint, and size changes never affect external siblings.",
+        searchPrompt: "CSS contain property strict layout paint size isolation",
+        emoji: "📦",
+        reactionCount: "4.3k",
+        commentCount: 300,
+      },
+      {
+        id: "rcon-2",
+        text: "content-visibility: auto skips layout and painting for offscreen elements until they approach the viewport.",
+        searchPrompt: "content-visibility auto performance boost initial load rendering time",
+        emoji: "🚀",
+        reactionCount: "5.0k",
+        commentCount: 410,
+      },
+      {
+        id: "rcon-3",
+        text: "contain-intrinsic-size provides placeholder dimensions to prevent scrollbar jumping with content-visibility.",
+        searchPrompt: "contain-intrinsic-size preventing scrollbar jumping content-visibility",
+        emoji: "📏",
+        reactionCount: "3.6k",
+        commentCount: 235,
+      },
+    ],
+  },
+
+  "rendering-optimizations": {
+    id: "rendering-optimizations",
+    title: "Render Performance & Frames",
+    badge: "Frame Scheduling",
+    tagline: "Techniques for budgeting the 16.6ms frame window, scheduling updates, and prioritizing critical resources",
+    takeaways: [
+      {
+        id: "ropt-1",
+        text: "A 60 Hz display gives exactly 16.6ms per frame to execute JS, recalculate styles, layout, paint, and composite.",
+        searchPrompt: "16.6ms frame budget 60 FPS vsync display refresh browser lifecycle",
+        emoji: "⏱️",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "ropt-2",
+        text: "Long Tasks (> 50ms) block the main thread, delaying user input response and increasing Interaction to Next Paint (INP).",
+        searchPrompt: "Long Tasks 50ms Interaction to Next Paint INP Chrome DevTools",
+        emoji: "🛑",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+      {
+        id: "ropt-3",
+        text: "scheduler.yield() or requestIdleCallback break large chunks of synchronous work into small non-blocking slices.",
+        searchPrompt: "scheduler.yield vs requestIdleCallback breaking long tasks",
+        emoji: "✂️",
+        reactionCount: "3.4k",
+        commentCount: 215,
+      },
+    ],
+  },
+
+  "rendering-request-animation-frame": {
+    id: "rendering-request-animation-frame",
+    title: "requestAnimationFrame & vsync",
+    badge: "vsync Alignment",
+    tagline: "Synchronizing visual code executions precisely before the browser's next hardware screen refresh",
+    takeaways: [
+      {
+        id: "rraf-1",
+        text: "requestAnimationFrame fires right before style calculation and layout, eliminating wasted off-vsync draws.",
+        searchPrompt: "requestAnimationFrame vs setTimeout animation smoothness vsync",
+        emoji: "🎬",
+        reactionCount: "4.8k",
+        commentCount: 385,
+      },
+      {
+        id: "rraf-2",
+        text: "Automatically pauses when the user switches tabs, saving precious battery power and mobile CPU cycles.",
+        searchPrompt: "requestAnimationFrame background tab throttling battery savings",
+        emoji: "🔋",
+        reactionCount: "3.9k",
+        commentCount: 270,
+      },
+      {
+        id: "rraf-3",
+        text: "Receives a high-resolution DOMHighResTimeStamp to compute precise physics delta times.",
+        searchPrompt: "performance.now DOMHighResTimeStamp delta time game loop",
+        emoji: "⏱️",
+        reactionCount: "3.2k",
+        commentCount: 200,
+      },
+    ],
+  },
+
+  "rendering-critical-css": {
+    id: "rendering-critical-css",
+    title: "Critical CSS & Preload Hints",
+    badge: "preload / preconnect",
+    tagline: "Extracting above-the-fold styles and informing the browser network stack of high-priority assets early",
+    takeaways: [
+      {
+        id: "rcc-1",
+        text: "Inlining Critical CSS directly in <head> eliminates a full round-trip network hop for the First Contentful Paint (FCP).",
+        searchPrompt: "critical CSS extraction above the fold First Contentful Paint",
+        emoji: "⚡",
+        reactionCount: "4.9k",
+        commentCount: 395,
+      },
+      {
+        id: "rcc-2",
+        text: "<link rel='preload'> tells the speculative pre-parser to download essential fonts and hero images immediately.",
+        searchPrompt: "link rel preload as font as image priority fetchpriority high",
+        emoji: "🚀",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+      {
+        id: "rcc-3",
+        text: "preconnect initiates early DNS lookup, TCP handshake, and TLS negotiation with third-party origins (CDNs, fonts).",
+        searchPrompt: "link rel preconnect vs dns-prefetch third party origin latency",
+        emoji: "🤝",
+        reactionCount: "3.5k",
+        commentCount: 220,
+      },
+    ],
+  },
+
+  "rendering-virtual-dom-reconciliation": {
+    id: "rendering-virtual-dom-reconciliation",
+    title: "Virtual DOM Reconciliation",
+    badge: "DOM Diffing",
+    tagline: "Computing minimal DOM mutation sets in memory before touching the slow physical browser DOM tree",
+    takeaways: [
+      {
+        id: "rvdom-1",
+        text: "Virtual DOM creates lightweight plain JS object representations of the UI to avoid direct DOM manipulation costs.",
+        searchPrompt: "Virtual DOM reconciliation diffing algorithm React Fiber heuristic",
+        emoji: "🧠",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+      {
+        id: "rvdom-2",
+        text: "Keyed reconciliation (key prop) lets the diffing algorithm reorder existing nodes instead of recreating them.",
+        searchPrompt: "why key prop is important in React list diffing algorithm",
+        emoji: "🔑",
+        reactionCount: "4.2k",
+        commentCount: 295,
+      },
+      {
+        id: "rvdom-3",
+        text: "Modern compilers (Svelte, Solid) compile reactive dependencies to direct surgical DOM updates with zero VDOM overhead.",
+        searchPrompt: "Virtual DOM vs fine grained reactivity Svelte Solid compiler approach",
+        emoji: "🎯",
+        reactionCount: "3.8k",
+        commentCount: 260,
+      },
+    ],
+  },
+
+  // ------------------------------------------
+  // CRP 9-Stage Pipeline Group Card Items
+  // ------------------------------------------
+  "crp-bytes-tokens": {
+    id: "crp-bytes-tokens",
+    title: "Network Bytes & Tokens",
+    badge: "🔤 Stream → Tokens",
+    tagline: "Converting raw TCP data packets into characters and lexical tokens via the HTML tokenizer state machine",
+    takeaways: [
+      {
+        id: "crpbt-1",
+        text: "Reads binary bytes from network buffer, decoding UTF-8 characters and feeding the lexical state machine.",
+        searchPrompt: "HTML tokenizer state machine emitting tag tokens character tokens",
+        emoji: "🔤",
+        reactionCount: "4.0k",
+        commentCount: 280,
+      },
+      {
+        id: "crpbt-2",
+        text: "Speculative Pre-Parser scans ahead for external URLs (CSS, JS, images) and starts downloading them early.",
+        searchPrompt: "browser speculative pre-parser preload scanner background fetch",
+        emoji: "🔭",
+        reactionCount: "3.5k",
+        commentCount: 230,
+      },
+      {
+        id: "crpbt-3",
+        text: "Emits StartTag, EndTag, Character, and Comment tokens to the tree construction dispatcher.",
+        searchPrompt: "HTML5 tree construction dispatcher token stream",
+        emoji: "📦",
+        reactionCount: "2.9k",
+        commentCount: 180,
+      },
+    ],
+  },
+
+  "crp-dom-tree": {
+    id: "crp-dom-tree",
+    title: "Incremental DOM Tree",
+    badge: "🌳 Node Hierarchy",
+    tagline: "Constructing the live Document Object Model node tree incrementally as tokens arrive over the network",
+    takeaways: [
+      {
+        id: "crpdom-1",
+        text: "Creates parent-child relationships and maintains an open elements stack to automatically close malformed tags.",
+        searchPrompt: "HTML parser error tolerance stack of open elements automatic tag closing",
+        emoji: "🌳",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+      {
+        id: "crpdom-2",
+        text: "Synchronous <script> tags block DOM construction until downloaded and executed by the V8 JavaScript engine.",
+        searchPrompt: "parser blocking scripts execution DOM construction pause",
+        emoji: "⏸️",
+        reactionCount: "3.8k",
+        commentCount: 265,
+      },
+      {
+        id: "crpdom-3",
+        text: "Emits DOMContentLoaded event once the initial HTML document has been fully parsed into the DOM tree.",
+        searchPrompt: "DOMContentLoaded event vs load event browser lifecycle",
+        emoji: "🎉",
+        reactionCount: "3.3k",
+        commentCount: 210,
+      },
+    ],
+  },
+
+  "crp-cssom-tree": {
+    id: "crp-cssom-tree",
+    title: "CSSOM Construction",
+    badge: "📜 Render-Blocking CSS",
+    tagline: "Compiling stylesheets into a cascading style map and preventing flash of unstyled content (FOUC)",
+    takeaways: [
+      {
+        id: "crpcss-1",
+        text: "The CSSOM tree represents all computed cascading rules for every matched tag and selector.",
+        searchPrompt: "CSSOM tree construction cascading rules inheritance",
+        emoji: "📜",
+        reactionCount: "4.2k",
+        commentCount: 295,
+      },
+      {
+        id: "crpcss-2",
+        text: "Unlike HTML, CSS cannot be used incrementally: stylesheets must be parsed completely to resolve cascade overrides.",
+        searchPrompt: "why CSS cannot be parsed incrementally cascade specificity",
+        emoji: "🔒",
+        reactionCount: "3.7k",
+        commentCount: 245,
+      },
+      {
+        id: "crpcss-3",
+        text: "JavaScript execution is blocked if there are pending stylesheets currently downloading in flight.",
+        searchPrompt: "CSS blocks JS execution script waiting for stylesheet download",
+        emoji: "🛑",
+        reactionCount: "3.2k",
+        commentCount: 205,
+      },
+    ],
+  },
+
+  "crp-render-tree": {
+    id: "crp-render-tree",
+    title: "Render Tree Assembly",
+    badge: "👁️ Visible Elements Only",
+    tagline: "Combining the DOM and CSSOM trees into a visual-only tree of RenderObjects (RenderBoxes)",
+    takeaways: [
+      {
+        id: "crprt-1",
+        text: "Traverses the DOM tree from root, matching CSSOM rules to create corresponding RenderObject nodes.",
+        searchPrompt: "Render Tree attachment combining DOM and CSSOM RenderObject",
+        emoji: "👁️",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+      {
+        id: "crprt-2",
+        text: "Nodes styled with display: none and invisible tags (<head>, <meta>, <script>) are omitted entirely.",
+        searchPrompt: "elements excluded from Render Tree display none vs opacity 0",
+        emoji: "🚫",
+        reactionCount: "3.9k",
+        commentCount: 270,
+      },
+      {
+        id: "crprt-3",
+        text: "Elements styled with visibility: hidden ARE included in the Render Tree because they still occupy physical layout space.",
+        searchPrompt: "visibility hidden occupies space in Render Tree layout",
+        emoji: "👻",
+        reactionCount: "3.4k",
+        commentCount: 220,
+      },
+    ],
+  },
+
+  "crp-layout-reflow": {
+    id: "crp-layout-reflow",
+    title: "Layout (Reflow)",
+    badge: "📐 Coordinate Geometry",
+    tagline: "Calculating the exact position (x, y) and physical dimensions (width, height) of every render box",
+    takeaways: [
+      {
+        id: "crplay-1",
+        text: "Starts at viewport root, cascading dimensions downward: resolving percentages, rems, and flex distributions.",
+        searchPrompt: "browser layout phase box model coordinates reflow pass",
+        emoji: "📐",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "crplay-2",
+        text: "A reflow on a top-level container forces layout recalculation on all descendents and subsequent siblings.",
+        searchPrompt: "reflow propagation cascade parent to child sibling impact",
+        emoji: "🌊",
+        reactionCount: "3.8k",
+        commentCount: 265,
+      },
+      {
+        id: "crplay-3",
+        text: "Outputs a layout tree where every visible element has definite, fixed subpixel coordinates.",
+        searchPrompt: "layout tree geometric coordinates subpixel rendering",
+        emoji: "🎯",
+        reactionCount: "3.1k",
+        commentCount: 195,
+      },
+    ],
+  },
+
+  "crp-paint-raster": {
+    id: "crp-paint-raster",
+    title: "Paint (Rasterization)",
+    badge: "🎨 Draw Calls & Textures",
+    tagline: "Converting layout boxes into drawing command display lists and rasterizing pixels into memory buffers",
+    takeaways: [
+      {
+        id: "crppnt-1",
+        text: "Paints in strict CSS stacking order: background color → background images → borders → children → outlines.",
+        searchPrompt: "CSS 2.1 paint order stacking background border children outline",
+        emoji: "🎨",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+      {
+        id: "crppnt-2",
+        text: "Paint creates a display list of vector draw commands (DrawRect, DrawText) executed by the Skia graphics engine.",
+        searchPrompt: "browser paint display list Skia vector graphics draw calls",
+        emoji: "🖌️",
+        reactionCount: "3.6k",
+        commentCount: 240,
+      },
+      {
+        id: "crppnt-3",
+        text: "Rasterization turns display lists into actual RGBA bitmap pixels stored in graphics memory.",
+        searchPrompt: "rasterization phase bitmap pixel generation GPU raster threads",
+        emoji: "🖼️",
+        reactionCount: "3.0k",
+        commentCount: 185,
+      },
+    ],
+  },
+
+  "crp-gpu-composite": {
+    id: "crp-gpu-composite",
+    title: "GPU Compositing",
+    badge: "⚡ Hardware Layer Blending",
+    tagline: "Uploading rasterized layer tiles to the GPU and stitching them together on screen at monitor refresh rates",
+    takeaways: [
+      {
+        id: "crpgpu-1",
+        text: "Compositor divides layers into tiles (256x256 or 512x512) and rasters only visible viewport tiles.",
+        searchPrompt: "compositor thread layer tiling viewport rasterization GPU quad",
+        emoji: "⚡",
+        reactionCount: "4.8k",
+        commentCount: 375,
+      },
+      {
+        id: "crpgpu-2",
+        text: "GPU applies 3D matrices, perspective, and alpha transparency directly in hardware without CPU assistance.",
+        searchPrompt: "hardware accelerated compositing GPU draw quad matrix transform",
+        emoji: "🎮",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+      {
+        id: "crpgpu-3",
+        text: "Compositor thread sends draw quads to the OS display server (DirectX, Metal, Wayland) via the GPU process.",
+        searchPrompt: "GPU process draw quad OS display server vsync swap buffers",
+        emoji: "🖥️",
+        reactionCount: "3.5k",
+        commentCount: 220,
+      },
+    ],
+  },
+
+  "crp-frame-budget": {
+    id: "crp-frame-budget",
+    title: "16.6ms Frame Budget",
+    badge: "⏱️ 60 FPS Vsync Window",
+    tagline: "Managing the deadline budget to complete all script, layout, and compositing before the next monitor refresh",
+    takeaways: [
+      {
+        id: "crpfb-1",
+        text: "60 FPS displays refresh every 16.6ms; 120 FPS high-refresh gaming monitors allow only 8.3ms per frame.",
+        searchPrompt: "frame budget 60 FPS 16.6ms vs 120 FPS 8.3ms dropped frames jank",
+        emoji: "⏱️",
+        reactionCount: "4.9k",
+        commentCount: 410,
+      },
+      {
+        id: "crpfb-2",
+        text: "If JavaScript execution exceeds 10ms, layout and paint will miss the vsync window, causing visible stutter (jank).",
+        searchPrompt: "dropped frames jank caused by long JS execution frame budget",
+        emoji: "📉",
+        reactionCount: "4.2k",
+        commentCount: 315,
+      },
+      {
+        id: "crpfb-3",
+        text: "Chrome DevTools Performance panel highlights dropped frames in red and flags long tasks in the flame chart.",
+        searchPrompt: "Chrome DevTools Performance panel frame rate dropped frames red bar",
+        emoji: "🔍",
+        reactionCount: "3.6k",
+        commentCount: 235,
+      },
+    ],
+  },
+
+  "crp-vitals-metrics": {
+    id: "crp-vitals-metrics",
+    title: "Core Web Vitals (LCP/CLS)",
+    badge: "📊 Performance Telemetry",
+    tagline: "Measuring real-world user perception: First Contentful Paint, Largest Contentful Paint, and Layout Shifts",
+    takeaways: [
+      {
+        id: "crpcwv-1",
+        text: "FCP marks the instant the first DOM content (text or image) paints; target should be under 1.8s.",
+        searchPrompt: "First Contentful Paint FCP metric definition good threshold",
+        emoji: "🏁",
+        reactionCount: "4.7k",
+        commentCount: 350,
+      },
+      {
+        id: "crpcwv-2",
+        text: "LCP measures when the main hero element is visible; target under 2.5s on a mobile 4G connection.",
+        searchPrompt: "Largest Contentful Paint LCP optimization hero image preload",
+        emoji: "🏆",
+        reactionCount: "4.4k",
+        commentCount: 325,
+      },
+      {
+        id: "crpcwv-3",
+        text: "Cumulative Layout Shift (CLS) measures unexpected layout movements; reserve image spaces to keep CLS < 0.1.",
+        searchPrompt: "Cumulative Layout Shift CLS aspect-ratio dimension reserve",
+        emoji: "📐",
+        reactionCount: "3.8k",
+        commentCount: 260,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -5546,6 +6179,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Scaling & Load Balancing"
       : node.category === "platform"
       ? "Web Platform & DOM"
+      : node.category === "rendering"
+      ? "Browser Rendering"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

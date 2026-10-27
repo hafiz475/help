@@ -827,10 +827,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-browser-rendering",
-            name: "How Browsers Render",
-            isAvailable: false,
-            badge: "Roadmap",
+            name: "How Browsers Render ★",
+            categoryId: "rendering",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
             description: "Critical rendering path: HTML parser → DOM + CSSOM → Render Tree → Layout → Paint",
+            color: "#f43f5e",
           },
           {
             id: "topic-web-security-storage",

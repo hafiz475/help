@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -967,6 +967,8 @@ export function calculateGroupLayout(
         ? "Scaling & Load Balancing"
         : category === "platform"
         ? "Web Platform & DOM"
+        : category === "rendering"
+        ? "Browser Rendering"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -995,6 +997,8 @@ export function calculateGroupLayout(
         ? "Traffic Distribution"
         : category === "platform"
         ? "Browser Platform"
+        : category === "rendering"
+        ? "Critical Path"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1015,6 +1019,8 @@ export function calculateGroupLayout(
         ? "#14b8a6"
         : category === "platform"
         ? "#6366f1"
+        : category === "rendering"
+        ? "#f43f5e"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -2786,6 +2792,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1G: Browser Rendering Hub (placed top-right above platform at y = -4350)
+    const renderingHubX = 1300;
+    const renderingHubY = -4350;
+    const renderingHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-rendering")!,
+      x: renderingHubX,
+      y: renderingHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(renderingHubNode);
+    edges.push({
+      source: nodeHubNode.id,
+      target: renderingHubNode.id,
+      category: "rendering",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Rendering Node 1: Critical Rendering Path (Group Card)
+    const rCard = cardByPillar.get("rendering-pipeline");
+    if (rCard) {
+      const cardX = 2100;
+      const cardY = -4350;
+      const posCard: PositionedGroupCard = {
+        ...rCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: renderingHubNode.id,
+        target: rCard.id,
+        category: "rendering",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Rendering Node 2: Reflow vs Repaint Mechanics
+    const rReflowRaw = allNodes.find((n) => n.id === "rendering-reflow-repaint");
+    if (rReflowRaw) {
+      const rReflowX = 1950;
+      const rReflowY = -4550;
+      const rReflowNode: PositionedNode = {
+        ...rReflowRaw,
+        x: rReflowX,
+        y: rReflowY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(rReflowNode);
+      edges.push({
+        source: renderingHubNode.id,
+        target: rReflowNode.id,
+        category: "rendering",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const thrashRaw = allNodes.find((n) => n.id === "rendering-layout-thrashing");
+      if (thrashRaw) {
+        positionedNodes.push({
+          ...thrashRaw,
+          x: rReflowX + 320,
+          y: rReflowY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rReflowNode.id,
+          target: thrashRaw.id,
+          category: "rendering",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const compOnlyRaw = allNodes.find((n) => n.id === "rendering-composite-only");
+      if (compOnlyRaw) {
+        positionedNodes.push({
+          ...compOnlyRaw,
+          x: rReflowX + 320,
+          y: rReflowY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rReflowNode.id,
+          target: compOnlyRaw.id,
+          category: "rendering",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const containRaw = allNodes.find((n) => n.id === "rendering-containment");
+      if (containRaw) {
+        positionedNodes.push({
+          ...containRaw,
+          x: rReflowX + 320,
+          y: rReflowY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rReflowNode.id,
+          target: containRaw.id,
+          category: "rendering",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Rendering Node 3: Render Performance & Scheduling
+    const rOptRaw = allNodes.find((n) => n.id === "rendering-optimizations");
+    if (rOptRaw) {
+      const rOptX = 1950;
+      const rOptY = -4150;
+      const rOptNode: PositionedNode = {
+        ...rOptRaw,
+        x: rOptX,
+        y: rOptY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(rOptNode);
+      edges.push({
+        source: renderingHubNode.id,
+        target: rOptNode.id,
+        category: "rendering",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const rafRaw = allNodes.find((n) => n.id === "rendering-request-animation-frame");
+      if (rafRaw) {
+        positionedNodes.push({
+          ...rafRaw,
+          x: rOptX + 320,
+          y: rOptY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rOptNode.id,
+          target: rafRaw.id,
+          category: "rendering",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const critCssRaw = allNodes.find((n) => n.id === "rendering-critical-css");
+      if (critCssRaw) {
+        positionedNodes.push({
+          ...critCssRaw,
+          x: rOptX + 320,
+          y: rOptY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rOptNode.id,
+          target: critCssRaw.id,
+          category: "rendering",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const vdomRaw = allNodes.find((n) => n.id === "rendering-virtual-dom-reconciliation");
+      if (vdomRaw) {
+        positionedNodes.push({
+          ...vdomRaw,
+          x: rOptX + 320,
+          y: rOptY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rOptNode.id,
+          target: vdomRaw.id,
+          category: "rendering",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -3038,6 +3237,8 @@ export function calculateGroupLayout(
     pillarIds = ["scaling-algorithms", "scaling-nginx-pipeline", "scaling-horizontal-scale"];
   } else if (category === "platform") {
     pillarIds = ["platform-semantic-dom", "platform-css-pipeline", "platform-dom-apis"];
+  } else if (category === "rendering") {
+    pillarIds = ["rendering-pipeline", "rendering-reflow-repaint", "rendering-optimizations"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -3341,6 +3542,11 @@ export function getNodesForCategory(
       parentId: "root-node",
       level: 2,
     };
+    const renderingRoot = {
+      ...allNodes.find((n) => n.id === "root-rendering")!,
+      parentId: "root-node",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -3372,13 +3578,14 @@ export function getNodesForCategory(
         n.id !== "root-queues" &&
         n.id !== "root-scaling" &&
         n.id !== "root-platform" &&
+        n.id !== "root-rendering" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

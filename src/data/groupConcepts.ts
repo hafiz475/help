@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1050,7 +1050,84 @@ export const PLATFORM_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const RENDERING_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-rendering-crp",
+    pillarId: "rendering-pipeline",
+    title: "Critical Rendering Path Pipeline",
+    category: "rendering",
+    badge: "9 Sequential Stages",
+    color: "#e11d48",
+    isPipeline: true,
+    items: [
+      {
+        id: "crp-bytes-tokens",
+        stepNumber: 1,
+        label: "1. Network Bytes & Tokens",
+        badge: "🔤 Stream → Tokens",
+        searchQuery: "browser network bytes characters tokens lexical analysis parser",
+      },
+      {
+        id: "crp-dom-tree",
+        stepNumber: 2,
+        label: "2. Incremental DOM Tree",
+        badge: "🌳 Node Hierarchy",
+        searchQuery: "incremental DOM tree building browser streaming HTML parser",
+      },
+      {
+        id: "crp-cssom-tree",
+        stepNumber: 3,
+        label: "3. CSSOM Construction",
+        badge: "📜 Render-Blocking CSS",
+        searchQuery: "CSSOM construction render blocking stylesheets link rel stylesheet",
+      },
+      {
+        id: "crp-render-tree",
+        stepNumber: 4,
+        label: "4. Render Tree Assembly",
+        badge: "👁️ Visible Elements Only",
+        searchQuery: "Render Tree construction combine DOM CSSOM display none omitted",
+      },
+      {
+        id: "crp-layout-reflow",
+        stepNumber: 5,
+        label: "5. Layout (Reflow)",
+        badge: "📐 Coordinate Geometry",
+        searchQuery: "browser layout reflow geometry calculation viewport box coordinates",
+      },
+      {
+        id: "crp-paint-raster",
+        stepNumber: 6,
+        label: "6. Paint (Rasterization)",
+        badge: "🎨 Draw Calls & Textures",
+        searchQuery: "browser paint phase draw calls skia rasterization pixel fill",
+      },
+      {
+        id: "crp-gpu-composite",
+        stepNumber: 7,
+        label: "7. GPU Compositing",
+        badge: "⚡ Hardware Layer Blending",
+        searchQuery: "GPU compositing compositor thread tiling layer trees transform translateZ",
+      },
+      {
+        id: "crp-frame-budget",
+        stepNumber: 8,
+        label: "8. 16.6ms Frame Budget",
+        badge: "⏱️ 60 FPS Vsync Window",
+        searchQuery: "60 FPS 16.6ms frame budget jank avoidance vsync display refresh",
+      },
+      {
+        id: "crp-vitals-metrics",
+        stepNumber: 9,
+        label: "9. Core Web Vitals (LCP/CLS)",
+        badge: "📊 Performance Telemetry",
+        searchQuery: "Core Web Vitals LCP INP CLS First Contentful Paint telemetry",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1061,8 +1138,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "queues") return QUEUES_GROUP_CARDS;
   if (category === "scaling") return SCALING_GROUP_CARDS;
   if (category === "platform") return PLATFORM_GROUP_CARDS;
+  if (category === "rendering") return RENDERING_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

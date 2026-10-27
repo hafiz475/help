@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -114,8 +114,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "rendering",
+    name: "11. Browser Rendering",
+    title: "Browser Rendering & Critical Path",
+    description: "HTML/CSS Parsers, Render Tree, Layout, Paint, GPU Compositing & 60 FPS Jank Free Performance",
+    color: "#f43f5e", // Rose
+    icon: "Eye",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "11. OOP (4 Pillars)",
+    name: "12. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -124,7 +133,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "12. DSA",
+    name: "13. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -133,7 +142,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "13. Big O",
+    name: "14. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -147,7 +156,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 159,
+    count: 169,
   },
 ];
 
@@ -253,6 +262,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Web platform HTML CSS DOM browser APIs layout engines",
     badge: "Browser Platform",
     color: "#6366f1",
+  },
+  {
+    id: "root-rendering",
+    label: "Browser Rendering",
+    category: "rendering",
+    level: 0,
+    searchQuery: "browser rendering critical rendering path DOM CSSOM layout paint composite",
+    badge: "Critical Path",
+    color: "#f43f5e",
   },
   {
     id: "root-oop",
@@ -1751,7 +1769,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 11. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 11. BROWSER RENDERING & CRITICAL RENDERING PATH
+  // ==========================================
+  // Pillar 1: Critical Rendering Path (Group Card)
+  {
+    id: "rendering-pipeline",
+    label: "Critical Rendering Path",
+    category: "rendering",
+    parentId: "root-rendering",
+    level: 1,
+    searchQuery: "critical rendering path HTML parser CSSOM render tree layout paint composite",
+    badge: "9 Sequential Stages",
+    color: "#e11d48",
+  },
+
+  // Pillar 2: Reflow vs Repaint Mechanics
+  {
+    id: "rendering-reflow-repaint",
+    label: "Reflow vs Repaint",
+    category: "rendering",
+    parentId: "root-rendering",
+    level: 1,
+    searchQuery: "browser reflow vs repaint layout thrashing forced synchronous layout containment",
+    badge: "Geometry vs Pixels",
+    color: "#be123c",
+  },
+  {
+    id: "rendering-layout-thrashing",
+    label: "Layout Thrashing & Forced Sync",
+    category: "rendering",
+    parentId: "rendering-reflow-repaint",
+    level: 2,
+    searchQuery: "layout thrashing forced synchronous layout offsetHeight getBoundingClientRect batch DOM reads writes",
+    badge: "Forced Sync Layout",
+    color: "#f43f5e",
+  },
+  {
+    id: "rendering-composite-only",
+    label: "Composite-Only Animations",
+    category: "rendering",
+    parentId: "rendering-reflow-repaint",
+    level: 2,
+    searchQuery: "composite only animations transform opacity will-change GPU layer rasterization",
+    badge: "GPU Transforms",
+    color: "#fb7185",
+  },
+  {
+    id: "rendering-containment",
+    label: "CSS Containment & Visibility",
+    category: "rendering",
+    parentId: "rendering-reflow-repaint",
+    level: 2,
+    searchQuery: "CSS containment contain strict content-visibility auto layout isolation",
+    badge: "contain: strict",
+    color: "#fda4af",
+  },
+
+  // Pillar 3: Render Performance & Scheduling
+  {
+    id: "rendering-optimizations",
+    label: "Render Performance & Frames",
+    category: "rendering",
+    parentId: "root-rendering",
+    level: 1,
+    searchQuery: "browser frame scheduling requestAnimationFrame critical CSS resource hints virtual DOM",
+    badge: "Frame Scheduling",
+    color: "#9f1239",
+  },
+  {
+    id: "rendering-request-animation-frame",
+    label: "requestAnimationFrame & vsync",
+    category: "rendering",
+    parentId: "rendering-optimizations",
+    level: 2,
+    searchQuery: "requestAnimationFrame vsync 60fps refresh rate frame budget 16ms setTimeout jank",
+    badge: "vsync Alignment",
+    color: "#f43f5e",
+  },
+  {
+    id: "rendering-critical-css",
+    label: "Critical CSS & Preload Hints",
+    category: "rendering",
+    parentId: "rendering-optimizations",
+    level: 2,
+    searchQuery: "critical CSS inline above the fold link rel preload preconnect dns-prefetch",
+    badge: "preload / preconnect",
+    color: "#fb7185",
+  },
+  {
+    id: "rendering-virtual-dom-reconciliation",
+    label: "Virtual DOM Reconciliation",
+    category: "rendering",
+    parentId: "rendering-optimizations",
+    level: 2,
+    searchQuery: "Virtual DOM reconciliation diffing algorithm key prop batch updates React",
+    badge: "DOM Diffing",
+    color: "#fda4af",
+  },
+
+  // ==========================================
+  // 12. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
