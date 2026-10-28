@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -971,6 +971,8 @@ export function calculateGroupLayout(
         ? "Browser Rendering"
         : category === "security"
         ? "Cookies, Storage & CORS"
+        : category === "state"
+        ? "State & Rendering"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1003,6 +1005,8 @@ export function calculateGroupLayout(
         ? "Critical Path"
         : category === "security"
         ? "Browser Security"
+        : category === "state"
+        ? "Rendering Engine"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1027,6 +1031,8 @@ export function calculateGroupLayout(
         ? "#f43f5e"
         : category === "security"
         ? "#eab308"
+        : category === "state"
+        ? "#8b5cf6"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -3184,6 +3190,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1I: State Management & Rendering Hub (placed top-right above security at y = -5550)
+    const stateHubX = 1300;
+    const stateHubY = -5550;
+    const stateHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-state")!,
+      x: stateHubX,
+      y: stateHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(stateHubNode);
+    edges.push({
+      source: nodeHubNode.id,
+      target: stateHubNode.id,
+      category: "state",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // State Node 1: State & Reactivity Models
+    const sReactivityRaw = allNodes.find((n) => n.id === "state-reactivity-pillar");
+    if (sReactivityRaw) {
+      const sReactivityX = stateHubX + 650;
+      const sReactivityY = stateHubY - 180;
+      const sReactivityNode: PositionedNode = {
+        ...sReactivityRaw,
+        x: sReactivityX,
+        y: sReactivityY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(sReactivityNode);
+      edges.push({
+        source: stateHubNode.id,
+        target: sReactivityNode.id,
+        category: "state",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const uniRaw = allNodes.find((n) => n.id === "state-unidirectional-flow");
+      if (uniRaw) {
+        positionedNodes.push({
+          ...uniRaw,
+          x: sReactivityX + 320,
+          y: sReactivityY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sReactivityNode.id,
+          target: uniRaw.id,
+          category: "state",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const sigRaw = allNodes.find((n) => n.id === "state-fine-grained-signals");
+      if (sigRaw) {
+        positionedNodes.push({
+          ...sigRaw,
+          x: sReactivityX + 320,
+          y: sReactivityY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sReactivityNode.id,
+          target: sigRaw.id,
+          category: "state",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const swrRaw = allNodes.find((n) => n.id === "state-server-client-sync");
+      if (swrRaw) {
+        positionedNodes.push({
+          ...swrRaw,
+          x: sReactivityX + 320,
+          y: sReactivityY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sReactivityNode.id,
+          target: swrRaw.id,
+          category: "state",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // State Node 2: 9-Stage Rendering Pipeline (Group Card)
+    const stateCard = cardByPillar.get("state-rendering-pipeline");
+    if (stateCard) {
+      const cardX = stateHubX + 800;
+      const cardY = stateHubY;
+      const posCard: PositionedGroupCard = {
+        ...stateCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: stateHubNode.id,
+        target: stateCard.id,
+        category: "state",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 1);
+    }
+
+    // State Node 3: Hydration & Modern Architectures
+    const sHydrationRaw = allNodes.find((n) => n.id === "state-hydration-islands");
+    if (sHydrationRaw) {
+      const sHydrationX = stateHubX + 650;
+      const sHydrationY = stateHubY + 180;
+      const sHydrationNode: PositionedNode = {
+        ...sHydrationRaw,
+        x: sHydrationX,
+        y: sHydrationY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(sHydrationNode);
+      edges.push({
+        source: stateHubNode.id,
+        target: sHydrationNode.id,
+        category: "state",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const hydRaw = allNodes.find((n) => n.id === "state-dom-hydration");
+      if (hydRaw) {
+        positionedNodes.push({
+          ...hydRaw,
+          x: sHydrationX + 320,
+          y: sHydrationY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sHydrationNode.id,
+          target: hydRaw.id,
+          category: "state",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const islRaw = allNodes.find((n) => n.id === "state-selective-islands");
+      if (islRaw) {
+        positionedNodes.push({
+          ...islRaw,
+          x: sHydrationX + 320,
+          y: sHydrationY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sHydrationNode.id,
+          target: islRaw.id,
+          category: "state",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const rscRaw = allNodes.find((n) => n.id === "state-resumability-rsc");
+      if (rscRaw) {
+        positionedNodes.push({
+          ...rscRaw,
+          x: sHydrationX + 320,
+          y: sHydrationY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sHydrationNode.id,
+          target: rscRaw.id,
+          category: "state",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -3440,6 +3639,8 @@ export function calculateGroupLayout(
     pillarIds = ["rendering-pipeline", "rendering-reflow-repaint", "rendering-optimizations"];
   } else if (category === "security") {
     pillarIds = ["security-same-origin-cors", "security-cookie-lifecycle", "security-web-defenses"];
+  } else if (category === "state") {
+    pillarIds = ["state-reactivity-pillar", "state-rendering-pipeline", "state-hydration-islands"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -3753,6 +3954,11 @@ export function getNodesForCategory(
       parentId: "root-node",
       level: 2,
     };
+    const stateRoot = {
+      ...allNodes.find((n) => n.id === "root-state")!,
+      parentId: "root-node",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -3786,13 +3992,14 @@ export function getNodesForCategory(
         n.id !== "root-platform" &&
         n.id !== "root-rendering" &&
         n.id !== "root-security" &&
+        n.id !== "root-state" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

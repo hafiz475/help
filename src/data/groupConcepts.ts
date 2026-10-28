@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1204,7 +1204,84 @@ export const SECURITY_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const STATE_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-state-pipeline",
+    pillarId: "state-rendering-pipeline",
+    title: "9-Stage Rendering & State Pipeline",
+    category: "state",
+    badge: "9 Sequential Stages",
+    color: "#6d28d9",
+    isPipeline: true,
+    items: [
+      {
+        id: "state-ssg-build",
+        stepNumber: 1,
+        label: "1. Build-Time Static Synthesis (SSG)",
+        badge: "⚡ Pre-rendered HTML & JSON",
+        searchQuery: "static site generation SSG build time prerendering Next.js Astro getStaticProps",
+      },
+      {
+        id: "state-ssr-server-render",
+        stepNumber: 2,
+        label: "2. Server-Side Rendering (SSR)",
+        badge: "🖥️ Dynamic Node.js Streams",
+        searchQuery: "server side rendering SSR Node.js renderToPipeableStream dynamic request HTML",
+      },
+      {
+        id: "state-rsc-stream",
+        stepNumber: 3,
+        label: "3. React Server Components (RSC)",
+        badge: "📡 Zero-Bundle Flight Stream",
+        searchQuery: "React Server Components RSC flight protocol serialized AST zero client bundle",
+      },
+      {
+        id: "state-edge-isr-cache",
+        stepNumber: 4,
+        label: "4. Edge CDN & Revalidation (ISR)",
+        badge: "🌐 Stale-While-Revalidate",
+        searchQuery: "incremental static regeneration ISR edge CDN caching background revalidation",
+      },
+      {
+        id: "state-csr-client-mount",
+        stepNumber: 5,
+        label: "5. Client Single-Page App (CSR)",
+        badge: "📦 JS Bundle Download & Mount",
+        searchQuery: "client side rendering CSR single page app bundle bootstrap V8 execution",
+      },
+      {
+        id: "state-hydration-reconcile",
+        stepNumber: 6,
+        label: "6. DOM Hydration & Event Attachment",
+        badge: "💧 Hydrating Server HTML",
+        searchQuery: "DOM hydration attaching event listeners server client mismatch reconciliation",
+      },
+      {
+        id: "state-unidirectional-mutation",
+        stepNumber: 7,
+        label: "7. Unidirectional State Mutation",
+        badge: "🔄 Action → Dispatch → Reducer",
+        searchQuery: "unidirectional data flow Redux dispatch actions pure reducer immutable state",
+      },
+      {
+        id: "state-signal-graph-update",
+        stepNumber: 8,
+        label: "8. Fine-Grained Signals & Graphs",
+        badge: "⚡ Surgical DOM Micro-Updates",
+        searchQuery: "fine grained signals SolidJS reactivity graph micro DOM updates without VDOM",
+      },
+      {
+        id: "state-server-state-sync",
+        stepNumber: 9,
+        label: "9. Server State & Optimistic UI",
+        badge: "🚀 TanStack Query & Rollback",
+        searchQuery: "server state synchronization TanStack Query optimistic UI updates rollback cache invalidation",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1217,8 +1294,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "platform") return PLATFORM_GROUP_CARDS;
   if (category === "rendering") return RENDERING_GROUP_CARDS;
   if (category === "security") return SECURITY_GROUP_CARDS;
+  if (category === "state") return STATE_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

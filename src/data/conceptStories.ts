@@ -5308,6 +5308,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // STATE MANAGEMENT & RENDERING STORIES
+  // ==========================================
+  "root-state": {
+    id: "root-state",
+    title: "State Management & Rendering",
+    badge: "Rendering Engine",
+    tagline: "Unidirectional data flow, reactive signal graphs, server rendering, hydration, and progressive execution",
+    takeaways: [
+      {
+        id: "rstate-1",
+        text: "State is the single source of truth; rendering is pure projection of that state over time: UI = f(state).",
+        searchPrompt: "UI equals f of state functional reactive web architecture",
+        emoji: "🎨",
+        reactionCount: "4.8k",
+        commentCount: 390,
+      },
+      {
+        id: "rstate-2",
+        text: "Modern architectures balance server rendering (TTFB & SEO) with client reactivity (FID & interactive UX).",
+        searchPrompt: "SSR vs SSG vs CSR trade-offs Core Web Vitals TTFB INP",
+        emoji: "⚖️",
+        reactionCount: "3.9k",
+        commentCount: 310,
+      },
+      {
+        id: "rstate-3",
+        text: "Evolution from full-page hydration toward fine-grained signals, Astro islands, and Qwik resumability eliminates JavaScript bloat.",
+        searchPrompt: "modern frontend architecture islands resumability signals comparison",
+        emoji: "🚀",
+        reactionCount: "4.2k",
+        commentCount: 345,
+      },
+    ],
+  },
+
+  "state-reactivity-pillar": {
+    id: "state-reactivity-pillar",
+    title: "State & Reactivity Models",
+    badge: "Data Flow",
+    tagline: "From immutable Redux action dispatchers to fine-grained signals and server state caches",
+    takeaways: [
+      {
+        id: "srp-1",
+        text: "Unidirectional data flow guarantees deterministic debugging by funneling all mutations through explicit actions and reducers.",
+        searchPrompt: "unidirectional data flow benefits Flux Redux state predictability",
+        emoji: "🔄",
+        reactionCount: "3.7k",
+        commentCount: 280,
+      },
+      {
+        id: "srp-2",
+        text: "Fine-grained signals bind directly to DOM text nodes and attributes, bypassing full component re-rendering and Virtual DOM diffing.",
+        searchPrompt: "how signals work reactivity graph SolidJS Preact Signals",
+        emoji: "⚡",
+        reactionCount: "4.5k",
+        commentCount: 360,
+      },
+      {
+        id: "srp-3",
+        text: "Server state is fundamentally asynchronous and owned externally; separating server cache from client UI state prevents desync bugs.",
+        searchPrompt: "server state vs client state TanStack Query SWR paradigm shift",
+        emoji: "🌐",
+        reactionCount: "3.8k",
+        commentCount: 295,
+      },
+    ],
+  },
+
+  "state-unidirectional-flow": {
+    id: "state-unidirectional-flow",
+    title: "Unidirectional Data Flow",
+    badge: "Action → Reducer → State",
+    tagline: "Predictable, time-travel-debuggable state transitions governed by immutable updates",
+    takeaways: [
+      {
+        id: "udf-1",
+        text: "In Flux/Redux, views never mutate state directly; they dispatch plain object actions describing what happened.",
+        searchPrompt: "why immutable state updates matter React Redux re-render detection",
+        emoji: "📦",
+        reactionCount: "3.6k",
+        commentCount: 270,
+      },
+      {
+        id: "udf-2",
+        text: "Pure reducers compute the next state without side effects, enabling reliable logging, replay, and time-travel debugging.",
+        searchPrompt: "pure reducer function time travel debugging Redux DevTools",
+        emoji: "🕰️",
+        reactionCount: "3.2k",
+        commentCount: 215,
+      },
+      {
+        id: "udf-3",
+        text: "Immutable updates using shallow copies or Immer draft proxies ensure reference equality checks (prev !== next) trigger targeted re-renders.",
+        searchPrompt: "Immer produce proxy pattern shallow copy React state equality",
+        emoji: "🛡️",
+        reactionCount: "3.9k",
+        commentCount: 305,
+      },
+    ],
+  },
+
+  "state-fine-grained-signals": {
+    id: "state-fine-grained-signals",
+    title: "Fine-Grained Reactivity (Signals)",
+    badge: "Direct DOM Signals",
+    tagline: "Automatic dependency tracking graphs updating exact DOM nodes with zero reconciliation overhead",
+    takeaways: [
+      {
+        id: "fgs-1",
+        text: "Signals wrap primitive values in getter/setter closures that automatically record subscribers inside active computation contexts.",
+        searchPrompt: "how reactive signals track dependencies getter setter subscriber stack",
+        emoji: "📡",
+        reactionCount: "4.6k",
+        commentCount: 380,
+      },
+      {
+        id: "fgs-2",
+        text: "When a signal setter runs, only its exact downstream derived values and DOM effects re-execute, without re-running parent component functions.",
+        searchPrompt: "signals vs Virtual DOM performance benchmark SolidJS React",
+        emoji: "🎯",
+        reactionCount: "4.3k",
+        commentCount: 350,
+      },
+      {
+        id: "fgs-3",
+        text: "Glitch-free reactivity topologies use directed acyclic graphs (DAG) with topological sorting to prevent temporary inconsistent state evaluations.",
+        searchPrompt: "glitch free reactivity graph diamond problem push pull signals",
+        emoji: "💎",
+        reactionCount: "3.5k",
+        commentCount: 240,
+      },
+    ],
+  },
+
+  "state-server-client-sync": {
+    id: "state-server-client-sync",
+    title: "Server State & SWR Caching",
+    badge: "Stale-While-Revalidate",
+    tagline: "Declarative network synchronization with background caching, deduplication, and optimistic mutations",
+    takeaways: [
+      {
+        id: "scs-1",
+        text: "Stale-While-Revalidate immediately displays cached data from memory while silently revalidating over HTTP in the background.",
+        searchPrompt: "stale while revalidate HTTP cache control RFC 5861 SWR",
+        emoji: "⚡",
+        reactionCount: "3.9k",
+        commentCount: 290,
+      },
+      {
+        id: "scs-2",
+        text: "Request deduplication merges identical concurrent fetch requests across distant component trees into a single network round-trip.",
+        searchPrompt: "request deduplication query key caching TanStack Query React",
+        emoji: "🔗",
+        reactionCount: "3.4k",
+        commentCount: 230,
+      },
+      {
+        id: "scs-3",
+        text: "Optimistic UI mutations update the local cache instantly and roll back to previous snapshot if the server responds with an HTTP error.",
+        searchPrompt: "optimistic update rollback onSettled onError TanStack Query pattern",
+        emoji: "⏪",
+        reactionCount: "4.1k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "state-rendering-pipeline": {
+    id: "state-rendering-pipeline",
+    title: "9-Stage Rendering Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "The end-to-end journey from build-time static synthesis to server streaming, hydration, and reactive DOM mutations",
+    takeaways: [
+      {
+        id: "srp-p1",
+        text: "Static synthesis (SSG) delivers pre-rendered HTML from edge CDNs in <20ms for static and marketing pages.",
+        searchPrompt: "Next.js getStaticProps generateStaticParams SSG build output",
+        emoji: "🏭",
+        reactionCount: "3.8k",
+        commentCount: 285,
+      },
+      {
+        id: "srp-p2",
+        text: "Server streaming (SSR & RSC) pushes early HTML chunks and component ASTs as soon as database queries resolve.",
+        searchPrompt: "renderToPipeableStream React 18 progressive HTML chunk streaming",
+        emoji: "🌊",
+        reactionCount: "4.2k",
+        commentCount: 340,
+      },
+      {
+        id: "srp-p3",
+        text: "Hydration binds interactive event handlers to pre-rendered HTML without wiping or re-painting layout elements.",
+        searchPrompt: "how React hydration attaches event listeners to server markup",
+        emoji: "💧",
+        reactionCount: "4.0k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "state-hydration-islands": {
+    id: "state-hydration-islands",
+    title: "Hydration & Modern Architectures",
+    badge: "Execution Architecture",
+    tagline: "Solving the JavaScript cost of hydration through selective islands, server components, and resumability",
+    takeaways: [
+      {
+        id: "shi-1",
+        text: "Full DOM hydration is an 'uncanny valley' where server-rendered HTML looks interactive but clicks fail until JavaScript finishes downloading.",
+        searchPrompt: "hydration uncanny valley interaction to next paint INP JavaScript boot",
+        emoji: "🏜️",
+        reactionCount: "4.7k",
+        commentCount: 410,
+      },
+      {
+        id: "shi-2",
+        text: "Astro Islands isolate interactive widgets into independent micro-apps, leaving 90% of the page as pure zero-JS static HTML.",
+        searchPrompt: "Astro island architecture partial hydration client visible directive",
+        emoji: "🏝️",
+        reactionCount: "4.4k",
+        commentCount: 365,
+      },
+      {
+        id: "shi-3",
+        text: "Qwik Resumability serializes listeners directly into HTML attributes, eliminating client hydration entirely and loading JS on first user click.",
+        searchPrompt: "Qwik resumability explained zero hydration serialized closures qrl",
+        emoji: "⚡",
+        reactionCount: "4.6k",
+        commentCount: 395,
+      },
+    ],
+  },
+
+  "state-dom-hydration": {
+    id: "state-dom-hydration",
+    title: "Full DOM Hydration & Pitfalls",
+    badge: "Event Attachment",
+    tagline: "How frameworks reconcile server markup with client virtual trees and avoid destructive mismatches",
+    takeaways: [
+      {
+        id: "sdh-1",
+        text: "Hydration walks the pre-existing DOM tree and attaches synthetic event listeners matching the client component's initial render output.",
+        searchPrompt: "React hydrateRoot vs render difference explained internal fiber",
+        emoji: "🧩",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+      {
+        id: "sdh-2",
+        text: "Hydration mismatches occur when server HTML diverges from initial client render due to typeof window, Date.now(), or Math.random().",
+        searchPrompt: "React hydration error text content does not match server rendered HTML fix",
+        emoji: "⚠️",
+        reactionCount: "4.9k",
+        commentCount: 430,
+      },
+      {
+        id: "sdh-3",
+        text: "In React 18+, hydration mismatches trigger a client-side recovery patch rather than destroying and re-mounting the entire page tree.",
+        searchPrompt: "React 18 hydration mismatch recovery concurrent fiber error boundary",
+        emoji: "🩹",
+        reactionCount: "3.5k",
+        commentCount: 240,
+      },
+    ],
+  },
+
+  "state-selective-islands": {
+    id: "state-selective-islands",
+    title: "Selective Hydration & Islands",
+    badge: "Astro Islands",
+    tagline: "Deconstructing monolithic bundles into isolated interactive islands that hydrate on demand",
+    takeaways: [
+      {
+        id: "ssi-1",
+        text: "React Selective Hydration wraps components in Suspense boundaries, streaming HTML and prioritizing hydration based on user clicks.",
+        searchPrompt: "React 18 selective hydration Suspense user interaction priority",
+        emoji: "⏳",
+        reactionCount: "4.1k",
+        commentCount: 315,
+      },
+      {
+        id: "ssi-2",
+        text: "Astro Islands use client directives (client:idle, client:visible, client:media) to defer hydration until the component enters the viewport.",
+        searchPrompt: "Astro client visible directive intersection observer lazy hydration",
+        emoji: "👁️",
+        reactionCount: "4.3k",
+        commentCount: 340,
+      },
+      {
+        id: "ssi-3",
+        text: "Island architectures prevent client bundle pollution: marketing carousels or comments widgets hydrate without delaying main content interactivity.",
+        searchPrompt: "partial hydration benefits Core Web Vitals Total Blocking Time TBT",
+        emoji: "🛡️",
+        reactionCount: "3.8k",
+        commentCount: 275,
+      },
+    ],
+  },
+
+  "state-resumability-rsc": {
+    id: "state-resumability-rsc",
+    title: "Resumability & Server Components",
+    badge: "Zero-JS Resumable",
+    tagline: "Eliminating client-side runtime boot through serialized closures and server-only component trees",
+    takeaways: [
+      {
+        id: "rrr-1",
+        text: "React Server Components (RSC) run exclusively on Node.js/Edge, keeping database drivers and markdown parsers out of client bundles.",
+        searchPrompt: "React Server Components vs SSR zero bundle size explained",
+        emoji: "🖥️",
+        reactionCount: "4.7k",
+        commentCount: 405,
+      },
+      {
+        id: "rrr-2",
+        text: "RSC wire format is a compact JSON-like stream of UI virtual tree representations, allowing server components to re-render without client state loss.",
+        searchPrompt: "RSC flight protocol wire format payload inspection Next.js App Router",
+        emoji: "📡",
+        reactionCount: "3.9k",
+        commentCount: 300,
+      },
+      {
+        id: "rrr-3",
+        text: "Qwik serializes framework state and event listeners into HTML attributes (on:click='chunk.js#handler'), downloading zero JS until click.",
+        searchPrompt: "Qwik optimizer code splitting fine grained chunk loading on interaction",
+        emoji: "⚡",
+        reactionCount: "4.5k",
+        commentCount: 375,
+      },
+    ],
+  },
+
+  // State 9-Stage Pipeline Group Card Items
+  "state-ssg-build": {
+    id: "state-ssg-build",
+    title: "Build-Time Static Synthesis (SSG)",
+    badge: "⚡ Pre-rendered HTML & JSON",
+    tagline: "Generating immutable HTML documents and data payloads during the production build step",
+    takeaways: [
+      {
+        id: "ssgb-1",
+        text: "During build time, Next.js or Astro invokes data fetching functions and renders components into static HTML and JSON files.",
+        searchPrompt: "Next.js getStaticPaths generateStaticParams SSG build pipeline",
+        emoji: "🏗️",
+        reactionCount: "3.6k",
+        commentCount: 260,
+      },
+      {
+        id: "ssgb-2",
+        text: "Static pages require zero Node.js execution per request and can be distributed globally across edge CDN points of presence.",
+        searchPrompt: "SSG TTFB global CDN caching cloudflare vercel edge performance",
+        emoji: "⚡",
+        reactionCount: "4.1k",
+        commentCount: 310,
+      },
+      {
+        id: "ssgb-3",
+        text: "Static generation is ideal for blogs, documentation, and product catalogs where content changes infrequently relative to read volume.",
+        searchPrompt: "when to choose SSG over SSR web development architectural decision",
+        emoji: "📚",
+        reactionCount: "3.4k",
+        commentCount: 235,
+      },
+    ],
+  },
+
+  "state-ssr-server-render": {
+    id: "state-ssr-server-render",
+    title: "Server-Side Rendering (SSR)",
+    badge: "🖥️ Dynamic Node.js Streams",
+    tagline: "Computing HTML dynamically per incoming request with user-specific sessions and database queries",
+    takeaways: [
+      {
+        id: "ssrs-1",
+        text: "SSR executes component render cycles on every HTTP request, injecting fresh database records and personalized session headers.",
+        searchPrompt: "Server Side Rendering SSR Node.js getServerSideProps dynamic request",
+        emoji: "🚀",
+        reactionCount: "4.0k",
+        commentCount: 320,
+      },
+      {
+        id: "ssrs-2",
+        text: "Node.js streaming via renderToPipeableStream flushes the <head> and critical shell immediately while async data resolves in the background.",
+        searchPrompt: "React 18 streaming SSR renderToPipeableStream early flush head",
+        emoji: "🌊",
+        reactionCount: "4.4k",
+        commentCount: 355,
+      },
+      {
+        id: "ssrs-3",
+        text: "SSR ensures search engine crawlers (Googlebot) and social graph previewers receive fully rendered DOM without running client JS.",
+        searchPrompt: "SEO benefits of Server Side Rendering Open Graph meta tag crawler support",
+        emoji: "🔍",
+        reactionCount: "3.8k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  "state-rsc-stream": {
+    id: "state-rsc-stream",
+    title: "React Server Components (RSC)",
+    badge: "📡 Zero-Bundle Flight Stream",
+    tagline: "Executing async server logic directly in components and streaming serialized Flight AST to the browser",
+    takeaways: [
+      {
+        id: "rscs-1",
+        text: "Server Components run exclusively on the server, allowing direct database queries (e.g. Prisma, SQL) with zero client bundle impact.",
+        searchPrompt: "async Server Components React 19 direct database queries Next.js",
+        emoji: "🗄️",
+        reactionCount: "4.6k",
+        commentCount: 390,
+      },
+      {
+        id: "rscs-2",
+        text: "The Flight protocol streams a serialized component tree interleaving client component import references with rendered server HTML/props.",
+        searchPrompt: "how React Flight stream works wire format JSON chunks client boundaries",
+        emoji: "📡",
+        reactionCount: "3.9k",
+        commentCount: 295,
+      },
+      {
+        id: "rscs-3",
+        text: "Server Components never re-render on user interaction unless triggered by server actions or router refreshes, preserving client state.",
+        searchPrompt: "React Server Actions server component re-rendering optimistic router transitions",
+        emoji: "🔄",
+        reactionCount: "4.2k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "state-edge-isr-cache": {
+    id: "state-edge-isr-cache",
+    title: "Edge CDN & Revalidation (ISR)",
+    badge: "🌐 Stale-While-Revalidate",
+    tagline: "Combining static CDN performance with dynamic on-demand background regeneration",
+    takeaways: [
+      {
+        id: "eic-1",
+        text: "Incremental Static Regeneration (ISR) serves cached static HTML while triggering an asynchronous rebuild when TTL expires.",
+        searchPrompt: "Incremental Static Regeneration ISR Next.js revalidate seconds edge cache",
+        emoji: "⏱️",
+        reactionCount: "4.1k",
+        commentCount: 310,
+      },
+      {
+        id: "eic-2",
+        text: "On-demand revalidation uses cache tags (revalidateTag / revalidatePath) to purge stale cache slots immediately upon database mutations.",
+        searchPrompt: "on demand revalidation cache tags Next.js webhook CMS update",
+        emoji: "🎯",
+        reactionCount: "4.3k",
+        commentCount: 345,
+      },
+      {
+        id: "eic-3",
+        text: "Edge middleware inspects geolocation and authentication cookies in <5ms at the nearest edge server to rewrite or personalize cached routes.",
+        searchPrompt: "edge middleware routing Next.js Cloudflare Workers fast cookie lookup",
+        emoji: "🌍",
+        reactionCount: "3.7k",
+        commentCount: 270,
+      },
+    ],
+  },
+
+  "state-csr-client-mount": {
+    id: "state-csr-client-mount",
+    title: "Client Single-Page App (CSR)",
+    badge: "📦 JS Bundle Download & Mount",
+    tagline: "Delivering a blank HTML canvas and relying on client V8 execution to construct the entire UI DOM",
+    takeaways: [
+      {
+        id: "csr-1",
+        text: "In pure CSR, the server returns a skeletal index.html with an empty <div id='root'></div> and bundle script tags.",
+        searchPrompt: "Client Side Rendering CSR single page application bootstrap sequence",
+        emoji: "📦",
+        reactionCount: "3.5k",
+        commentCount: 245,
+      },
+      {
+        id: "csr-2",
+        text: "The browser downloads, parses, and executes multi-megabyte JS bundles before First Contentful Paint (FCP) can occur.",
+        searchPrompt: "CSR bundle size impact on First Contentful Paint FCP and Time to Interactive TTI",
+        emoji: "⏳",
+        reactionCount: "4.0k",
+        commentCount: 315,
+      },
+      {
+        id: "csr-3",
+        text: "Once mounted, subsequent navigation occurs in memory via History API (pushState) with zero full-page browser reloads.",
+        searchPrompt: "HTML5 History API pushState client side routing SPA navigation",
+        emoji: "🧭",
+        reactionCount: "3.8k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  "state-hydration-reconcile": {
+    id: "state-hydration-reconcile",
+    title: "DOM Hydration & Event Attachment",
+    badge: "💧 Hydrating Server HTML",
+    tagline: "Connecting client event dispatchers to pre-rendered server DOM nodes without layout thrashing",
+    takeaways: [
+      {
+        id: "hdr-1",
+        text: "Hydration traverses the live DOM nodes rendered by SSR and links them to client Virtual DOM fibers or reactive component instances.",
+        searchPrompt: "DOM hydration process fiber tree mounting React ReactDOM.hydrateRoot",
+        emoji: "💧",
+        reactionCount: "4.2k",
+        commentCount: 335,
+      },
+      {
+        id: "hdr-2",
+        text: "Event delegation attaches a single root event listener on the document boundary, dispatching synthetic events based on internal fibers.",
+        searchPrompt: "React synthetic event delegation root container event listener",
+        emoji: "🎛️",
+        reactionCount: "3.9k",
+        commentCount: 290,
+      },
+      {
+        id: "hdr-3",
+        text: "Mismatches during hydration force the runtime to discard server HTML and patch the DOM client-side, causing layout shift and performance lag.",
+        searchPrompt: "how to debug and prevent React hydration mismatch suppressHydrationWarning",
+        emoji: "🔍",
+        reactionCount: "4.5k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "state-unidirectional-mutation": {
+    id: "state-unidirectional-mutation",
+    title: "Unidirectional State Mutation",
+    badge: "🔄 Action → Dispatch → Reducer",
+    tagline: "Transitioning state deterministically through dispatched actions and pure reducer functions",
+    takeaways: [
+      {
+        id: "udm-1",
+        text: "Components emit intent by dispatching actions ({ type: 'cart/addItem', payload }); the store remains the single source of truth.",
+        searchPrompt: "Redux action creator dispatch store subscriber architecture",
+        emoji: "📤",
+        reactionCount: "3.6k",
+        commentCount: 260,
+      },
+      {
+        id: "udm-2",
+        text: "Pure reducers take (state, action) and return a new state object, guaranteeing zero hidden side effects or mutated references.",
+        searchPrompt: "pure functions reducer state machine deterministic state transitions",
+        emoji: "🧪",
+        reactionCount: "3.8k",
+        commentCount: 275,
+      },
+      {
+        id: "udm-3",
+        text: "Selectors memoize derived calculations with reselect/createSelector, skipping component re-renders unless source state slices change.",
+        searchPrompt: "memoized selectors Reselect createSelector React Redux performance",
+        emoji: "🎯",
+        reactionCount: "4.1k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "state-signal-graph-update": {
+    id: "state-signal-graph-update",
+    title: "Fine-Grained Signals & Graphs",
+    badge: "⚡ Surgical DOM Micro-Updates",
+    tagline: "Propagating reactive notifications through dependency graph edges to mutate exact DOM nodes",
+    takeaways: [
+      {
+        id: "sgu-1",
+        text: "Signals form an automatic directed graph of producers (state) and consumers (computations/effects) linked at runtime during get().",
+        searchPrompt: "signal reactivity graph producer consumer subscriber link",
+        emoji: "🕸️",
+        reactionCount: "4.5k",
+        commentCount: 370,
+      },
+      {
+        id: "sgu-2",
+        text: "Updating a signal mutates only the targeted textNode.textContent or element.setAttribute, with zero Virtual DOM diffing.",
+        searchPrompt: "SolidJS direct DOM updates compilation vs React VDOM diffing",
+        emoji: "⚡",
+        reactionCount: "4.7k",
+        commentCount: 400,
+      },
+      {
+        id: "sgu-3",
+        text: "Batching collapses multiple synchronous signal updates into a single downstream propagation cycle, preventing duplicate DOM writes.",
+        searchPrompt: "signal batching effect scheduling microtask queue reactivity",
+        emoji: "📦",
+        reactionCount: "3.9k",
+        commentCount: 295,
+      },
+    ],
+  },
+
+  "state-server-state-sync": {
+    id: "state-server-state-sync",
+    title: "Server State & Optimistic UI",
+    badge: "🚀 TanStack Query & Rollback",
+    tagline: "Handling asynchronous network state with automatic retry, window focus refetch, and rollback guarantees",
+    takeaways: [
+      {
+        id: "ssss-1",
+        text: "Server state libraries manage query keys, cache lifecycles (gcTime, staleTime), and automatic background refetch on window focus.",
+        searchPrompt: "TanStack Query staleTime vs gcTime cache garbage collection refetchOnWindowFocus",
+        emoji: "🔄",
+        reactionCount: "4.3k",
+        commentCount: 345,
+      },
+      {
+        id: "ssss-2",
+        text: "Optimistic updates immediately render expected mutations in the UI, storing previous state in context for instant rollback if HTTP 500 occurs.",
+        searchPrompt: "optimistic updates onMutate rollback onError context TanStack Query",
+        emoji: "⏪",
+        reactionCount: "4.6k",
+        commentCount: 385,
+      },
+      {
+        id: "ssss-3",
+        text: "Query invalidation marks active queries as stale and triggers immediate background re-fetching to maintain multi-tab consistency.",
+        searchPrompt: "queryClient invalidateQueries exact vs active cache synchronization",
+        emoji: "📡",
+        reactionCount: "3.8k",
+        commentCount: 280,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -6816,6 +7447,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Browser Rendering"
       : node.category === "security"
       ? "Web Security & Storage"
+      : node.category === "state"
+      ? "State Management & Rendering"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

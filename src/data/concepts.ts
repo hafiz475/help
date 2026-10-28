@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -132,8 +132,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "state",
+    name: "13. State & Rendering",
+    title: "State Management & Server/Client Rendering Architectures",
+    description: "Unidirectional Data Flow, SSR, SSG, ISR, Hydration Mismatch, RSC & Fine-Grained Signals",
+    color: "#8b5cf6", // Electric Violet
+    icon: "RefreshCw",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "13. OOP (4 Pillars)",
+    name: "14. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -142,7 +151,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "14. DSA",
+    name: "15. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -151,7 +160,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "15. Big O",
+    name: "16. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -165,7 +174,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 179,
+    count: 189,
   },
 ];
 
@@ -289,6 +298,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "web security cookies storage CORS same origin policy localStorage IndexedDB",
     badge: "Browser Security",
     color: "#eab308",
+  },
+  {
+    id: "root-state",
+    label: "State & Rendering",
+    category: "state",
+    level: 0,
+    searchQuery: "modern web state management SSR SSG CSR hydration React Vue Next.js",
+    badge: "Rendering Engine",
+    color: "#8b5cf6",
   },
   {
     id: "root-oop",
@@ -1985,7 +2003,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 13. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 13. STATE MANAGEMENT & RENDERING (SSR/SSG/CSR)
+  // ==========================================
+  // Pillar 1: State & Reactivity Models
+  {
+    id: "state-reactivity-pillar",
+    label: "State & Reactivity Models",
+    category: "state",
+    parentId: "root-state",
+    level: 1,
+    searchQuery: "state management unidirectional data flow signals reactive state graph",
+    badge: "Data Flow",
+    color: "#7c3aed",
+  },
+  {
+    id: "state-unidirectional-flow",
+    label: "Unidirectional Data Flow",
+    category: "state",
+    parentId: "state-reactivity-pillar",
+    level: 2,
+    searchQuery: "unidirectional data flow Redux Flux state tree actions dispatch reducers immutability",
+    badge: "Action → Reducer → State",
+    color: "#8b5cf6",
+  },
+  {
+    id: "state-fine-grained-signals",
+    label: "Fine-Grained Reactivity (Signals)",
+    category: "state",
+    parentId: "state-reactivity-pillar",
+    level: 2,
+    searchQuery: "fine grained reactivity signals SolidJS Vue observables dependency tracking without VDOM",
+    badge: "Direct DOM Signals",
+    color: "#a78bfa",
+  },
+  {
+    id: "state-server-client-sync",
+    label: "Server State & SWR Caching",
+    category: "state",
+    parentId: "state-reactivity-pillar",
+    level: 2,
+    searchQuery: "server state management TanStack Query SWR optimistic updates cache invalidation mutation",
+    badge: "Stale-While-Revalidate",
+    color: "#c4b5fd",
+  },
+
+  // Pillar 2: 9-Stage Rendering Pipeline (Group Card)
+  {
+    id: "state-rendering-pipeline",
+    label: "9-Stage Rendering Pipeline",
+    category: "state",
+    parentId: "root-state",
+    level: 1,
+    searchQuery: "web rendering architecture pipeline CSR SSR SSG ISR hydration server components streaming",
+    badge: "9 Sequential Stages",
+    color: "#6d28d9",
+  },
+
+  // Pillar 3: Hydration & Modern Architectures
+  {
+    id: "state-hydration-islands",
+    label: "Hydration & Modern Architectures",
+    category: "state",
+    parentId: "root-state",
+    level: 1,
+    searchQuery: "client hydration Astro islands resumability progressive rendering RSC",
+    badge: "Execution Architecture",
+    color: "#5b21b6",
+  },
+  {
+    id: "state-dom-hydration",
+    label: "Full DOM Hydration & Pitfalls",
+    category: "state",
+    parentId: "state-hydration-islands",
+    level: 2,
+    searchQuery: "DOM hydration React server HTML event listeners hydration mismatch error causes fixes",
+    badge: "Event Attachment",
+    color: "#8b5cf6",
+  },
+  {
+    id: "state-selective-islands",
+    label: "Selective Hydration & Islands",
+    category: "state",
+    parentId: "state-hydration-islands",
+    level: 2,
+    searchQuery: "selective hydration React Suspense Astro island architecture partial hydration on-demand",
+    badge: "Astro Islands",
+    color: "#a78bfa",
+  },
+  {
+    id: "state-resumability-rsc",
+    label: "Resumability & Server Components",
+    category: "state",
+    parentId: "state-hydration-islands",
+    level: 2,
+    searchQuery: "Qwik resumability React Server Components RSC zero client bundle wire format streaming",
+    badge: "Zero-JS Resumable",
+    color: "#c4b5fd",
+  },
+
+  // ==========================================
+  // 14. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

@@ -22,6 +22,7 @@ import {
   Layout,
   Eye,
   ShieldCheck,
+  RefreshCw,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -67,6 +68,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Eye size={16} />;
       case "security":
         return <ShieldCheck size={16} />;
+      case "state":
+        return <RefreshCw size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

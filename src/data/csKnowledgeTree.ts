@@ -847,10 +847,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-frontend-state",
-            name: "State Management & Rendering (SSR/SSG/CSR)",
-            isAvailable: false,
-            badge: "Roadmap",
+            name: "State Management & Rendering ★",
+            categoryId: "state",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
             description: "Unidirectional data flow, server rendering, hydration, and static site generation",
+            color: "#8b5cf6",
           },
           {
             id: "topic-perf-a11y",
