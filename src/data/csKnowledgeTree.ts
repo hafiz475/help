@@ -873,10 +873,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
         topics: [
           {
             id: "topic-ai-prereqs",
-            name: "Prerequisites (Linear Algebra, Probability, Python)",
-            isAvailable: false,
-            badge: "Roadmap",
+            name: "Prerequisites (Linear Algebra, Probability, Python) ★",
+            categoryId: "aimath",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
             description: "Matrix multiplications, probability distributions, and Python tensor math",
+            color: "#d946ef",
           },
           {
             id: "topic-ml-core",

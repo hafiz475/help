@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1358,7 +1358,84 @@ export const PERF_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const AIMATH_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-aimath-pipeline",
+    pillarId: "aimath-pipeline-pillar",
+    title: "9-Stage Tensor Math & Probability Pipeline",
+    category: "aimath",
+    badge: "9 Sequential Stages",
+    color: "#a21caf",
+    isPipeline: true,
+    items: [
+      {
+        id: "aimath-tensor-rank",
+        stepNumber: 1,
+        label: "1. Tensor Ranks (0D to 4D)",
+        badge: "🔢 Scalars to 4D Batches",
+        searchQuery: "tensor rank dimension scalar 0D vector 1D matrix 2D batch image tensor 4D",
+      },
+      {
+        id: "aimath-dot-product",
+        stepNumber: 2,
+        label: "2. Vector Projections & Similarity",
+        badge: "📐 u · v = ||u|| ||v|| cos θ",
+        searchQuery: "dot product cosine similarity vector angle semantic embedding search",
+      },
+      {
+        id: "aimath-matrix-transforms",
+        stepNumber: 3,
+        label: "3. Matrix Multiplication & Transpose",
+        badge: "🔄 (M × K) @ (K × N) GEMM",
+        searchQuery: "matrix multiplication inner dimension match transpose AT GPU GEMM acceleration",
+      },
+      {
+        id: "aimath-determinants-inverses",
+        stepNumber: 4,
+        label: "4. Determinants & Matrix Inverses",
+        badge: "🔍 det(A) ≠ 0 & A⁻¹ Invertibility",
+        searchQuery: "matrix determinant volume scaling matrix inverse singular matrix rank deficiency",
+      },
+      {
+        id: "aimath-eigen-pca",
+        stepNumber: 5,
+        label: "5. Eigendecomposition & PCA",
+        badge: "✨ A v = λ v & Dimensionality Drop",
+        searchQuery: "eigendecomposition principal component analysis PCA variance maximization SVD",
+      },
+      {
+        id: "aimath-conditional-bayes",
+        stepNumber: 6,
+        label: "6. Conditional Probability & Bayes",
+        badge: "🎲 P(Hypothesis | Evidence)",
+        searchQuery: "Bayes rule conditional probability prior posterior likelihood marginal probability",
+      },
+      {
+        id: "aimath-gaussian-distributions",
+        stepNumber: 7,
+        label: "7. Normal Distributions & Variance",
+        badge: "🔔 Bell Curve: μ (Mean) & σ² (Var)",
+        searchQuery: "Gaussian normal distribution probability density function PDF mean variance standard deviation",
+      },
+      {
+        id: "aimath-multivariate-gradients",
+        stepNumber: 8,
+        label: "8. Partial Derivatives & Gradients",
+        badge: "📉 ∇f = [∂f/∂x₁, ∂f/∂x₂]",
+        searchQuery: "multivariate calculus gradient vector partial derivative steepest descent tangent plane",
+      },
+      {
+        id: "aimath-numpy-broadcasting-stage",
+        stepNumber: 9,
+        label: "9. Strided Tensor Broadcasting",
+        badge: "⚡ Zero-Copy SIMD Broadcast",
+        searchQuery: "NumPy broadcasting dimensions match trailing axis stride tricks vectorized tensor math",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1373,8 +1450,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "security") return SECURITY_GROUP_CARDS;
   if (category === "state") return STATE_GROUP_CARDS;
   if (category === "perf") return PERF_GROUP_CARDS;
+  if (category === "aimath") return AIMATH_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

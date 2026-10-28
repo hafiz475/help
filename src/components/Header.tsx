@@ -24,6 +24,7 @@ import {
   ShieldCheck,
   RefreshCw,
   Activity,
+  Sigma,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -73,6 +74,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <RefreshCw size={16} />;
       case "perf":
         return <Activity size={16} />;
+      case "aimath":
+        return <Sigma size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

@@ -6570,6 +6570,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // AI & MATHEMATICAL PREREQUISITES STORIES
+  // ==========================================
+  "root-aimath": {
+    id: "root-aimath",
+    title: "AI & Math Prerequisites",
+    badge: "Tensor Foundations",
+    tagline: "Linear algebra, matrix transformations, probability theory, multivariate gradients, and NumPy tensor math",
+    takeaways: [
+      {
+        id: "raim-1",
+        text: "Machine learning models are mathematical functions: inputs are vectors, weights are matrices, and training is gradient calculus.",
+        searchPrompt: "mathematics of machine learning linear algebra calculus probability overview",
+        emoji: "🧠",
+        reactionCount: "5.1k",
+        commentCount: 430,
+      },
+      {
+        id: "raim-2",
+        text: "Linear algebra enables massive parallelism: billions of operations collapse into single GPU matrix multiplication kernels (GEMM).",
+        searchPrompt: "why linear algebra is fundamental to deep learning GPU tensor cores",
+        emoji: "⚡",
+        reactionCount: "4.7k",
+        commentCount: 380,
+      },
+      {
+        id: "raim-3",
+        text: "Probability quantifies uncertainty; Bayes' theorem and Gaussian distributions form the mathematical backbone of generative AI.",
+        searchPrompt: "probability theory in machine learning Gaussian distributions Bayes rule",
+        emoji: "🎲",
+        reactionCount: "4.4k",
+        commentCount: 345,
+      },
+    ],
+  },
+
+  "aimath-linear-algebra-pillar": {
+    id: "aimath-linear-algebra-pillar",
+    title: "Linear Algebra & Tensor Spaces",
+    badge: "Vector Spaces",
+    tagline: "From vectors and geometric dot products to high-dimensional matrices, eigenvalues, and SVD",
+    takeaways: [
+      {
+        id: "alp-1",
+        text: "Vectors represent data points or word embeddings in n-dimensional continuous geometric space.",
+        searchPrompt: "vector space representation machine learning embeddings cosine similarity",
+        emoji: "📐",
+        reactionCount: "4.2k",
+        commentCount: 320,
+      },
+      {
+        id: "alp-2",
+        text: "Matrices represent linear transformations that stretch, rotate, project, and shear vector spaces.",
+        searchPrompt: "matrices as linear transformations visual geometric intuition 3Blue1Brown",
+        emoji: "🔄",
+        reactionCount: "4.8k",
+        commentCount: 395,
+      },
+      {
+        id: "alp-3",
+        text: "Eigendecomposition and SVD uncover invariant directional axes, powering PCA dimensionality reduction and latent factor models.",
+        searchPrompt: "eigenvalues eigenvectors singular value decomposition SVD machine learning intuition",
+        emoji: "✨",
+        reactionCount: "4.1k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "aimath-vectors-matrices": {
+    id: "aimath-vectors-matrices",
+    title: "Vectors, Matrices & Dot Products",
+    badge: "Vector Math & Projections",
+    tagline: "Computing similarity, angular separation, and directional magnitude in multidimensional coordinate systems",
+    takeaways: [
+      {
+        id: "vmd-1",
+        text: "The dot product (u · v) sums element-wise products, quantifying how much two vectors point in the same direction.",
+        searchPrompt: "vector dot product formula geometric interpretation magnitude cosine",
+        emoji: "🎯",
+        reactionCount: "4.3k",
+        commentCount: 335,
+      },
+      {
+        id: "vmd-2",
+        text: "Cosine similarity divides the dot product by vector magnitudes, measuring angular similarity invariant to text length.",
+        searchPrompt: "cosine similarity vs euclidean distance vector search embeddings RAG",
+        emoji: "📐",
+        reactionCount: "4.7k",
+        commentCount: 410,
+      },
+      {
+        id: "vmd-3",
+        text: "Orthogonal vectors have a dot product of zero (cos 90° = 0), representing completely independent, uncorrelated features.",
+        searchPrompt: "orthogonal vectors meaning dot product zero feature independence",
+        emoji: "⊥",
+        reactionCount: "3.8k",
+        commentCount: 270,
+      },
+    ],
+  },
+
+  "aimath-matrix-multiplication": {
+    id: "aimath-matrix-multiplication",
+    title: "Matrix Multiplications & Transformations",
+    badge: "A @ B & Affine Maps",
+    tagline: "The workhorse of neural networks: General Matrix Multiply (GEMM) mapping input features to hidden layers",
+    takeaways: [
+      {
+        id: "mmm-1",
+        text: "Matrix multiplication requires matching inner dimensions: (M × K) @ (K × N) produces an output matrix of size (M × N).",
+        searchPrompt: "matrix multiplication dimensions rule inner outer dimension match",
+        emoji: "🔢",
+        reactionCount: "4.6k",
+        commentCount: 385,
+      },
+      {
+        id: "mmm-2",
+        text: "Every neural network linear layer y = W x + b is an affine transformation: matrix multiplication rotates/scales, and bias translates.",
+        searchPrompt: "neural network linear layer weight matrix multiplication affine transformation",
+        emoji: "🧠",
+        reactionCount: "4.9k",
+        commentCount: 420,
+      },
+      {
+        id: "mmm-3",
+        text: "Modern hardware (NVIDIA Tensor Cores, Google TPUs) features systolic arrays dedicated specifically to 16-bit float matrix multiply-accumulate.",
+        searchPrompt: "GPU Tensor Cores systolic array matrix multiplication acceleration GEMM",
+        emoji: "🚀",
+        reactionCount: "4.5k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "aimath-eigenvalues-svd": {
+    id: "aimath-eigenvalues-svd",
+    title: "Eigenvectors & SVD Decomposition",
+    badge: "Principal Components / SVD",
+    tagline: "Finding non-rotating characteristic directions to compress massive datasets without losing variance",
+    takeaways: [
+      {
+        id: "ees-1",
+        text: "An eigenvector v satisfies A v = λ v: transformation A merely scales v by eigenvalue λ without altering its direction.",
+        searchPrompt: "eigenvector eigenvalue formula geometric intuition scaling factor",
+        emoji: "✨",
+        reactionCount: "4.4k",
+        commentCount: 350,
+      },
+      {
+        id: "ees-2",
+        text: "Principal Component Analysis (PCA) projects high-dimensional data onto eigenvectors of the covariance matrix with largest eigenvalues.",
+        searchPrompt: "Principal Component Analysis PCA step by step covariance matrix eigenvectors",
+        emoji: "📉",
+        reactionCount: "4.6k",
+        commentCount: 390,
+      },
+      {
+        id: "ees-3",
+        text: "Singular Value Decomposition (SVD) factors any matrix into U Σ V^T, enabling recommender systems and low-rank LLM compression (LoRA).",
+        searchPrompt: "Singular Value Decomposition SVD matrix factorization LoRA fine tuning",
+        emoji: "🔬",
+        reactionCount: "4.2k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "aimath-pipeline-pillar": {
+    id: "aimath-pipeline-pillar",
+    title: "9-Stage Tensor Math & Probability Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "The progressive journey from scalar primitives and matrix transforms to Bayes' law and strided tensor broadcasting",
+    takeaways: [
+      {
+        id: "app-1",
+        text: "Understanding tensor rank bridges scalar calculus to multi-batch image (B, C, H, W) and token sequence (B, T, D) representations.",
+        searchPrompt: "tensor rank 0D 1D 2D 3D 4D PyTorch shapes explained",
+        emoji: "📦",
+        reactionCount: "4.0k",
+        commentCount: 310,
+      },
+      {
+        id: "app-2",
+        text: "Probability and multivariate calculus merge into gradient descent: loss functions calculate error, and gradients guide parameter updates.",
+        searchPrompt: "how calculus and probability power gradient descent machine learning",
+        emoji: "📉",
+        reactionCount: "4.5k",
+        commentCount: 375,
+      },
+      {
+        id: "app-3",
+        text: "Vectorized NumPy and PyTorch broadcasting execute C/CUDA SIMD loops without Python interpreter overhead.",
+        searchPrompt: "vectorization vs python for loops benchmark numpy speedup",
+        emoji: "⚡",
+        reactionCount: "4.3k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "aimath-probability-calc-pillar": {
+    id: "aimath-probability-calc-pillar",
+    title: "Probability, Calculus & NumPy",
+    badge: "Gradients & Distributions",
+    tagline: "Probabilistic modeling, chain-rule differentiation, and vectorized tensor computation",
+    takeaways: [
+      {
+        id: "apcp-1",
+        text: "Probability distributions (Gaussian, Bernoulli, Categorical) formalize uncertainty and model likelihood in classification and diffusion.",
+        searchPrompt: "probability distributions in machine learning Gaussian Categorical Bernoulli",
+        emoji: "🔔",
+        reactionCount: "4.1k",
+        commentCount: 305,
+      },
+      {
+        id: "apcp-2",
+        text: "The multivariate gradient ∇f points in the direction of steepest ascent; backpropagation recursively applies the calculus chain rule.",
+        searchPrompt: "multivariate calculus gradient vector chain rule backpropagation neural network",
+        emoji: "∇",
+        reactionCount: "4.8k",
+        commentCount: 415,
+      },
+      {
+        id: "apcp-3",
+        text: "NumPy broadcasting aligns arrays along trailing dimensions, applying element-wise operations with zero duplicate memory allocation.",
+        searchPrompt: "NumPy broadcasting rules trailing dimensions singleton expansion",
+        emoji: "⚡",
+        reactionCount: "4.4k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "aimath-bayes-distributions": {
+    id: "aimath-bayes-distributions",
+    title: "Bayes' Theorem & Distributions",
+    badge: "P(A|B) & Gaussian Normal",
+    tagline: "Updating prior beliefs based on empirical evidence and modeling natural data spread with the Bell Curve",
+    takeaways: [
+      {
+        id: "abd-1",
+        text: "Bayes' formula P(A|B) = [P(B|A) · P(A)] / P(B) updates prior probability P(A) into posterior probability given observed evidence B.",
+        searchPrompt: "Bayes theorem formula prior likelihood posterior evidence explained",
+        emoji: "🎲",
+        reactionCount: "4.7k",
+        commentCount: 400,
+      },
+      {
+        id: "abd-2",
+        text: "The Central Limit Theorem guarantees that independent random variables sum toward a Gaussian Normal Distribution (Bell Curve).",
+        searchPrompt: "Central Limit Theorem importance in statistics and machine learning",
+        emoji: "🔔",
+        reactionCount: "4.3k",
+        commentCount: 340,
+      },
+      {
+        id: "abd-3",
+        text: "Gaussian distributions are fully defined by two parameters: mean μ (center position) and variance σ² (spread/uncertainty).",
+        searchPrompt: "Gaussian normal distribution mean variance standard deviation 68 95 99.7 rule",
+        emoji: "📊",
+        reactionCount: "3.9k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "aimath-gradients-chain-rule": {
+    id: "aimath-gradients-chain-rule",
+    title: "Partial Derivatives & Chain Rule",
+    badge: "∇f & Backpropagation Base",
+    tagline: "Computing rate of change across multidimensional cost surfaces to optimize neural network weights",
+    takeaways: [
+      {
+        id: "gcr-1",
+        text: "A partial derivative ∂f/∂x measures the sensitivity of output f to changes in variable x while holding all other inputs constant.",
+        searchPrompt: "partial derivative intuition multivariate functions machine learning",
+        emoji: "∂",
+        reactionCount: "4.4k",
+        commentCount: 355,
+      },
+      {
+        id: "gcr-2",
+        text: "The gradient vector ∇f collects all partial derivatives; Gradient Descent steps in the opposite direction: θ = θ - α ∇f.",
+        searchPrompt: "gradient descent formula learning rate negative gradient step",
+        emoji: "📉",
+        reactionCount: "4.8k",
+        commentCount: 420,
+      },
+      {
+        id: "gcr-3",
+        text: "The calculus chain rule ∂z/∂x = (∂z/∂y) · (∂y/∂x) allows neural networks to propagate errors backward through hundreds of composed layers.",
+        searchPrompt: "calculus chain rule backpropagation reverse mode automatic differentiation",
+        emoji: "🔗",
+        reactionCount: "4.6k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "aimath-numpy-broadcasting": {
+    id: "aimath-numpy-broadcasting",
+    title: "NumPy Vectorization & Broadcasting",
+    badge: "SIMD Tensor Strides",
+    tagline: "Mastering array shape compatibility, stride arithmetic, and blazing C-level vector operations",
+    takeaways: [
+      {
+        id: "nb-1",
+        text: "Broadcasting compares shapes element-wise from right to left: two dimensions are compatible if they are equal or one of them is 1.",
+        searchPrompt: "NumPy broadcasting rules matching trailing dimensions examples",
+        emoji: "📏",
+        reactionCount: "4.5k",
+        commentCount: 370,
+      },
+      {
+        id: "nb-2",
+        text: "Under the hood, a dimension with size 1 has its stride set to 0 bytes, letting CPU SIMD instructions read the same memory repeatedly without copying.",
+        searchPrompt: "NumPy array strides explained stride trick zero copy broadcasting",
+        emoji: "🏎️",
+        reactionCount: "4.7k",
+        commentCount: 405,
+      },
+      {
+        id: "nb-3",
+        text: "Vectorized operations replace Python loops with compiled C/BLAS routines, speeding up matrix math by 50x to 200x.",
+        searchPrompt: "NumPy vectorization performance BLAS LAPACK C implementation speed",
+        emoji: "⚡",
+        reactionCount: "4.2k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  // AI Math 9-Stage Pipeline Group Card Items
+  "aimath-tensor-rank": {
+    id: "aimath-tensor-rank",
+    title: "Tensor Ranks (0D to 4D)",
+    badge: "🔢 Scalars to 4D Batches",
+    tagline: "Classifying data structures from 0D scalar numbers to 4D image batch volumes",
+    takeaways: [
+      {
+        id: "atr-1",
+        text: "Rank 0 is a Scalar (5); Rank 1 is a Vector [1, 2]; Rank 2 is a Matrix [[1, 2], [3, 4]]; Rank 3+ is a Tensor.",
+        searchPrompt: "tensor rank vs dimension scalar vector matrix tensor differences",
+        emoji: "🔢",
+        reactionCount: "4.1k",
+        commentCount: 310,
+      },
+      {
+        id: "atr-2",
+        text: "Image batches in PyTorch use 4D tensors with shape (B, C, H, W): Batch size, Color channels, Height, and Width.",
+        searchPrompt: "PyTorch 4D tensor shape B C H W image batch representation",
+        emoji: "🖼️",
+        reactionCount: "4.5k",
+        commentCount: 375,
+      },
+      {
+        id: "atr-3",
+        text: "Natural language sequences use 3D tensors: (Batch, Sequence Length, Embedding Dimension) for Transformer attention.",
+        searchPrompt: "Transformer input tensor shape batch sequence embedding dimension",
+        emoji: "📝",
+        reactionCount: "4.3k",
+        commentCount: 345,
+      },
+    ],
+  },
+
+  "aimath-dot-product": {
+    id: "aimath-dot-product",
+    title: "Vector Projections & Similarity",
+    badge: "📐 u · v = ||u|| ||v|| cos θ",
+    tagline: "Measuring directional alignment, geometric projections, and semantic relevance",
+    takeaways: [
+      {
+        id: "adp-1",
+        text: "Algebraic dot product u · v = Σ (u_i · v_i) multiplies matching coordinates and sums them into a single scalar value.",
+        searchPrompt: "algebraic dot product formula step by step example",
+        emoji: "🧮",
+        reactionCount: "3.9k",
+        commentCount: 285,
+      },
+      {
+        id: "adp-2",
+        text: "Vector projection projects vector u onto line v with magnitude (u · v) / ||v||, used in Gram-Schmidt orthogonalization.",
+        searchPrompt: "scalar and vector projection formula geometric visualization",
+        emoji: "📐",
+        reactionCount: "4.2k",
+        commentCount: 330,
+      },
+      {
+        id: "adp-3",
+        text: "Attention in Transformers computes Q · K^T: dot product similarity between Query and Key tokens to assign attention weights.",
+        searchPrompt: "scaled dot product attention formula query key dot product Transformer",
+        emoji: "🔍",
+        reactionCount: "4.8k",
+        commentCount: 420,
+      },
+    ],
+  },
+
+  "aimath-matrix-transforms": {
+    id: "aimath-matrix-transforms",
+    title: "Matrix Multiplication & Transpose",
+    badge: "🔄 (M × K) @ (K × N) GEMM",
+    tagline: "Composing multidimensional spatial transformations and swapping axes with transposition",
+    takeaways: [
+      {
+        id: "amt-1",
+        text: "Matrix multiplication is associative A(BC) = (AB)C, but strictly non-commutative: AB ≠ BA in general.",
+        searchPrompt: "matrix multiplication properties non commutative associative distributive",
+        emoji: "🔄",
+        reactionCount: "4.0k",
+        commentCount: 315,
+      },
+      {
+        id: "amt-2",
+        text: "Transposition A^T reflects a matrix across its main diagonal, swapping rows for columns: (A^T)_ij = A_ji.",
+        searchPrompt: "matrix transpose definition properties transpose of product formula",
+        emoji: "🪞",
+        reactionCount: "3.8k",
+        commentCount: 275,
+      },
+      {
+        id: "amt-3",
+        text: "The transpose rule (AB)^T = B^T A^T reverses operand order, critical when deriving backpropagation gradients.",
+        searchPrompt: "transpose of matrix product why order reverses derivation",
+        emoji: "⚖️",
+        reactionCount: "4.4k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "aimath-determinants-inverses": {
+    id: "aimath-determinants-inverses",
+    title: "Determinants & Matrix Inverses",
+    badge: "🔍 det(A) ≠ 0 & A⁻¹ Invertibility",
+    tagline: "Measuring area scaling factors and reversing linear mappings with matrix inverses",
+    takeaways: [
+      {
+        id: "adi-1",
+        text: "The determinant det(A) measures the factor by which linear transformation A scales 2D areas or 3D volumes.",
+        searchPrompt: "determinant geometric meaning area volume scaling factor 3Blue1Brown",
+        emoji: "📦",
+        reactionCount: "4.3k",
+        commentCount: 335,
+      },
+      {
+        id: "adi-2",
+        text: "If det(A) = 0, the matrix collapses space into fewer dimensions, making it singular and impossible to invert.",
+        searchPrompt: "singular matrix determinant zero non invertible matrix meaning",
+        emoji: "⚠️",
+        reactionCount: "4.1k",
+        commentCount: 300,
+      },
+      {
+        id: "adi-3",
+        text: "Matrix inverse A⁻¹ satisfies A A⁻¹ = I; solving linear systems Ax = b becomes x = A⁻¹ b when A is invertible.",
+        searchPrompt: "matrix inverse identity matrix solving linear equations Ax equals b",
+        emoji: "🔑",
+        reactionCount: "4.5k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "aimath-eigen-pca": {
+    id: "aimath-eigen-pca",
+    title: "Eigendecomposition & PCA",
+    badge: "✨ A v = λ v & Dimensionality Drop",
+    tagline: "Extracting orthogonal axes of maximum variance to compress datasets and remove noise",
+    takeaways: [
+      {
+        id: "aep-1",
+        text: "Eigendecomposition factors square symmetric covariance matrices into Q Λ Q^T, where columns of Q are orthogonal eigenvectors.",
+        searchPrompt: "spectral theorem symmetric matrix eigendecomposition orthogonal eigenvectors",
+        emoji: "✨",
+        reactionCount: "4.2k",
+        commentCount: 320,
+      },
+      {
+        id: "aep-2",
+        text: "PCA sorts eigenvalues descending: the top k eigenvectors capture the highest percentage of total variance in the data.",
+        searchPrompt: "explained variance ratio PCA scree plot choosing number of components",
+        emoji: "📊",
+        reactionCount: "4.6k",
+        commentCount: 390,
+      },
+      {
+        id: "aep-3",
+        text: "Dimensionality reduction from 1,000 dimensions to 50 speeds up model training while filtering out high-frequency noise.",
+        searchPrompt: "PCA dimensionality reduction noise reduction curse of dimensionality",
+        emoji: "📉",
+        reactionCount: "4.4k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "aimath-conditional-bayes": {
+    id: "aimath-conditional-bayes",
+    title: "Conditional Probability & Bayes",
+    badge: "🎲 P(Hypothesis | Evidence)",
+    tagline: "Formulating probabilistic classification and updating model beliefs using Bayes' rule",
+    takeaways: [
+      {
+        id: "acb-1",
+        text: "Conditional probability P(A|B) = P(A ∩ B) / P(B) computes the likelihood of event A given that event B has occurred.",
+        searchPrompt: "conditional probability definition formula sample space restriction",
+        emoji: "🎲",
+        reactionCount: "4.0k",
+        commentCount: 305,
+      },
+      {
+        id: "acb-2",
+        text: "Naive Bayes classifiers assume features are conditionally independent given class, enabling rapid spam filtering and text categorization.",
+        searchPrompt: "Naive Bayes classifier conditional independence assumption text classification",
+        emoji: "📧",
+        reactionCount: "4.5k",
+        commentCount: 375,
+      },
+      {
+        id: "acb-3",
+        text: "In Bayesian inference, maximum a posteriori (MAP) estimation balances empirical data likelihood with prior beliefs.",
+        searchPrompt: "Maximum A Posteriori MAP vs Maximum Likelihood Estimation MLE Bayesian",
+        emoji: "⚖️",
+        reactionCount: "4.2k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "aimath-gaussian-distributions": {
+    id: "aimath-gaussian-distributions",
+    title: "Normal Distributions & Variance",
+    badge: "🔔 Bell Curve: μ (Mean) & σ² (Var)",
+    tagline: "Modeling stochastic noise, weight initialization, and continuous probability densities",
+    takeaways: [
+      {
+        id: "agd-1",
+        text: "The Gaussian probability density function f(x) = (1 / σ√(2π)) · exp(-(x - μ)² / 2σ²) peaks symmetrically at mean μ.",
+        searchPrompt: "Gaussian normal distribution formula PDF probability density function",
+        emoji: "🔔",
+        reactionCount: "4.3k",
+        commentCount: 340,
+      },
+      {
+        id: "agd-2",
+        text: "Under standard normal N(0, 1), 68.2% of data lies within 1σ, 95.4% within 2σ, and 99.7% within 3σ of the mean.",
+        searchPrompt: "empirical rule 68 95 99.7 normal distribution standard deviation",
+        emoji: "📊",
+        reactionCount: "4.6k",
+        commentCount: 395,
+      },
+      {
+        id: "agd-3",
+        text: "He and Xavier weight initializations draw from Gaussian distributions scaled by layer fan-in to prevent vanishing gradients.",
+        searchPrompt: "He initialization Xavier initialization Gaussian normal distribution fan-in",
+        emoji: "🎯",
+        reactionCount: "4.4k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "aimath-multivariate-gradients": {
+    id: "aimath-multivariate-gradients",
+    title: "Partial Derivatives & Gradients",
+    badge: "📉 ∇f = [∂f/∂x₁, ∂f/∂x₂]",
+    tagline: "Tracing steepest slopes across high-dimensional loss landscapes to optimize parameters",
+    takeaways: [
+      {
+        id: "amg-1",
+        text: "The gradient ∇f(x) is a vector containing all first-order partial derivatives, perpendicular to contour level sets.",
+        searchPrompt: "gradient vector perpendicular to level curves contour lines calculus",
+        emoji: "∇",
+        reactionCount: "4.2k",
+        commentCount: 330,
+      },
+      {
+        id: "amg-2",
+        text: "The Jacobian matrix J collects all first-order partial derivatives of a vector-valued function: J_ij = ∂f_i / ∂x_j.",
+        searchPrompt: "Jacobian matrix definition vector valued functions backpropagation",
+        emoji: "📋",
+        reactionCount: "4.5k",
+        commentCount: 380,
+      },
+      {
+        id: "amg-3",
+        text: "The Hessian matrix H contains second-order partial derivatives, determining curvature and whether critical points are minima or saddle points.",
+        searchPrompt: "Hessian matrix second derivative curvature saddle point machine learning",
+        emoji: "🏔️",
+        reactionCount: "4.1k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "aimath-numpy-broadcasting-stage": {
+    id: "aimath-numpy-broadcasting-stage",
+    title: "Strided Tensor Broadcasting",
+    badge: "⚡ Zero-Copy SIMD Broadcast",
+    tagline: "Executing vectorized tensor arithmetic across mismatched shapes with zero memory duplication",
+    takeaways: [
+      {
+        id: "anb-1",
+        text: "A (3, 1) matrix broadcast with a (1, 4) row vector automatically yields a (3, 4) matrix without duplicating underlying memory.",
+        searchPrompt: "NumPy broadcasting shape 3 1 with 1 4 produces 3 4 example",
+        emoji: "📐",
+        reactionCount: "4.4k",
+        commentCount: 350,
+      },
+      {
+        id: "anb-2",
+        text: "np.newaxis (or None indexing) inserts a new dimension of length 1, allowing surgical broadcast alignment across tensor axes.",
+        searchPrompt: "np newaxis None dimension expansion broadcasting NumPy PyTorch",
+        emoji: "➕",
+        reactionCount: "4.6k",
+        commentCount: 390,
+      },
+      {
+        id: "anb-3",
+        text: "C-contiguous vs Fortran-contiguous memory layouts determine cache locality: row-major traversal is 10x faster for CPU cache prefetchers.",
+        searchPrompt: "C contiguous vs Fortran contiguous row major memory layout cache performance",
+        emoji: "🏎️",
+        reactionCount: "4.7k",
+        commentCount: 410,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -8082,6 +8713,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "State Management & Rendering"
       : node.category === "perf"
       ? "Performance & Accessibility"
+      : node.category === "aimath"
+      ? "AI & Math Prereqs"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

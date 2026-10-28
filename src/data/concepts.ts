@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -150,8 +150,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "aimath",
+    name: "15. AI & Math Prereqs",
+    title: "Linear Algebra, Probability, Calculus & Python Tensor Math",
+    description: "Matrix Multiplications, Eigenvalues, SVD, Bayes' Theorem, Vector Calculus & NumPy Broadcasting",
+    color: "#d946ef", // Electric Magenta
+    icon: "Sigma",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "15. OOP (4 Pillars)",
+    name: "16. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -160,7 +169,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "16. DSA",
+    name: "17. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -169,7 +178,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "17. Big O",
+    name: "18. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -183,7 +192,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 199,
+    count: 209,
   },
 ];
 
@@ -325,6 +334,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "web performance Core Web Vitals accessibility a11y optimization",
     badge: "Core Web Vitals",
     color: "#84cc16",
+  },
+  {
+    id: "root-aimath",
+    label: "AI & Math Prereqs",
+    category: "aimath",
+    level: 0,
+    searchQuery: "AI machine learning mathematics linear algebra probability calculus Python numpy tensors",
+    badge: "Tensor Foundations",
+    color: "#d946ef",
   },
   {
     id: "root-oop",
@@ -2219,7 +2237,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 15. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 15. AI & MATHEMATICAL PREREQUISITES (LINEAR ALGEBRA, PROBABILITY, TENSORS)
+  // ==========================================
+  // Pillar 1: Linear Algebra & Tensor Spaces
+  {
+    id: "aimath-linear-algebra-pillar",
+    label: "Linear Algebra & Tensor Spaces",
+    category: "aimath",
+    parentId: "root-aimath",
+    level: 1,
+    searchQuery: "linear algebra vectors matrices tensors vector spaces dot product AI",
+    badge: "Vector Spaces",
+    color: "#c026d3",
+  },
+  {
+    id: "aimath-vectors-matrices",
+    label: "Vectors, Matrices & Dot Products",
+    category: "aimath",
+    parentId: "aimath-linear-algebra-pillar",
+    level: 2,
+    searchQuery: "vector dot product cosine similarity geometric projection matrix dimensions",
+    badge: "Vector Math & Projections",
+    color: "#d946ef",
+  },
+  {
+    id: "aimath-matrix-multiplication",
+    label: "Matrix Multiplications & Transformations",
+    category: "aimath",
+    parentId: "aimath-linear-algebra-pillar",
+    level: 2,
+    searchQuery: "matrix multiplication dot product linear transformation affine mapping GPU GEMM",
+    badge: "A @ B & Affine Maps",
+    color: "#e879f9",
+  },
+  {
+    id: "aimath-eigenvalues-svd",
+    label: "Eigenvectors & SVD Decomposition",
+    category: "aimath",
+    parentId: "aimath-linear-algebra-pillar",
+    level: 2,
+    searchQuery: "eigenvalues eigenvectors singular value decomposition SVD PCA dimensionality reduction",
+    badge: "Principal Components / SVD",
+    color: "#f0abfc",
+  },
+
+  // Pillar 2: 9-Stage Tensor Math & Probability Pipeline (Group Card)
+  {
+    id: "aimath-pipeline-pillar",
+    label: "9-Stage Tensor Math & Probability Pipeline",
+    category: "aimath",
+    parentId: "root-aimath",
+    level: 1,
+    searchQuery: "AI math pipeline linear algebra probability calculus gradient descent tensor broadcasting",
+    badge: "9 Sequential Stages",
+    color: "#a21caf",
+  },
+
+  // Pillar 3: Probability, Calculus & NumPy
+  {
+    id: "aimath-probability-calc-pillar",
+    label: "Probability, Calculus & NumPy",
+    category: "aimath",
+    parentId: "root-aimath",
+    level: 1,
+    searchQuery: "probability theory distributions Bayes theorem partial derivatives gradient descent Python numpy",
+    badge: "Gradients & Distributions",
+    color: "#86198f",
+  },
+  {
+    id: "aimath-bayes-distributions",
+    label: "Bayes' Theorem & Distributions",
+    category: "aimath",
+    parentId: "aimath-probability-calc-pillar",
+    level: 2,
+    searchQuery: "Bayes theorem conditional probability Gaussian normal distribution prior posterior likelihood",
+    badge: "P(A|B) & Gaussian Normal",
+    color: "#d946ef",
+  },
+  {
+    id: "aimath-gradients-chain-rule",
+    label: "Partial Derivatives & Chain Rule",
+    category: "aimath",
+    parentId: "aimath-probability-calc-pillar",
+    level: 2,
+    searchQuery: "multivariate calculus partial derivatives gradient vector chain rule backpropagation",
+    badge: "∇f & Backpropagation Base",
+    color: "#e879f9",
+  },
+  {
+    id: "aimath-numpy-broadcasting",
+    label: "NumPy Vectorization & Broadcasting",
+    category: "aimath",
+    parentId: "aimath-probability-calc-pillar",
+    level: 2,
+    searchQuery: "NumPy broadcasting rules vectorization memory strides tensor shapes Python PyTorch",
+    badge: "SIMD Tensor Strides",
+    color: "#f0abfc",
+  },
+
+  // ==========================================
+  // 16. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

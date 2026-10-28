@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -975,6 +975,8 @@ export function calculateGroupLayout(
         ? "State & Rendering"
         : category === "perf"
         ? "Performance & a11y"
+        : category === "aimath"
+        ? "AI & Math Prereqs"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1011,6 +1013,8 @@ export function calculateGroupLayout(
         ? "Rendering Engine"
         : category === "perf"
         ? "Core Web Vitals"
+        : category === "aimath"
+        ? "Tensor Foundations"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1039,6 +1043,8 @@ export function calculateGroupLayout(
         ? "#8b5cf6"
         : category === "perf"
         ? "#84cc16"
+        : category === "aimath"
+        ? "#d946ef"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -3788,6 +3794,202 @@ export function calculateGroupLayout(
       layoutCardSubItems(posCard, positionedNodes, edges, 3, 2);
     }
 
+    // ==========================================
+    // BRANCH 3: AI & MACHINE LEARNING (Magenta, branch 3)
+    // ==========================================
+    // Sub-Branch 3A: AI & Math Prerequisites Hub (placed top-left at x = -1300, y = -1350)
+    const aimathHubX = -1300;
+    const aimathHubY = -1350;
+    const aimathHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-aimath")!,
+      x: aimathHubX,
+      y: aimathHubY,
+      level: 1,
+      branchIndex: 3,
+    };
+    positionedNodes.push(aimathHubNode);
+    edges.push({
+      source: rootNode.id,
+      target: aimathHubNode.id,
+      category: "aimath",
+      level: 1,
+      branchIndex: 3,
+    });
+
+    // AIMath Node 1: Linear Algebra & Tensor Spaces (Left)
+    const linAlgRaw = allNodes.find((n) => n.id === "aimath-linear-algebra-pillar");
+    if (linAlgRaw) {
+      const linAlgX = aimathHubX - 650;
+      const linAlgY = aimathHubY - 180;
+      const linAlgNode: PositionedNode = {
+        ...linAlgRaw,
+        x: linAlgX,
+        y: linAlgY,
+        level: 3,
+        branchIndex: 3,
+      };
+      positionedNodes.push(linAlgNode);
+      edges.push({
+        source: aimathHubNode.id,
+        target: linAlgNode.id,
+        category: "aimath",
+        level: 3,
+        branchIndex: 3,
+      });
+
+      const vecRaw = allNodes.find((n) => n.id === "aimath-vectors-matrices");
+      if (vecRaw) {
+        positionedNodes.push({
+          ...vecRaw,
+          x: linAlgX - 320,
+          y: linAlgY - 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: linAlgNode.id,
+          target: vecRaw.id,
+          category: "aimath",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const matRaw = allNodes.find((n) => n.id === "aimath-matrix-multiplication");
+      if (matRaw) {
+        positionedNodes.push({
+          ...matRaw,
+          x: linAlgX - 320,
+          y: linAlgY,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: linAlgNode.id,
+          target: matRaw.id,
+          category: "aimath",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const eigRaw = allNodes.find((n) => n.id === "aimath-eigenvalues-svd");
+      if (eigRaw) {
+        positionedNodes.push({
+          ...eigRaw,
+          x: linAlgX - 320,
+          y: linAlgY + 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: linAlgNode.id,
+          target: eigRaw.id,
+          category: "aimath",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+    }
+
+    // AIMath Node 2: 9-Stage Tensor Math & Probability Pipeline (Group Card, Left-Center)
+    const aimathCard = cardByPillar.get("aimath-pipeline-pillar");
+    if (aimathCard) {
+      const cardX = aimathHubX - 800;
+      const cardY = aimathHubY;
+      const posCard: PositionedGroupCard = {
+        ...aimathCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 3,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: aimathHubNode.id,
+        target: aimathCard.id,
+        category: "aimath",
+        level: 3,
+        branchIndex: 3,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 3);
+    }
+
+    // AIMath Node 3: Probability, Calculus & NumPy (Left-Down)
+    const probCalcRaw = allNodes.find((n) => n.id === "aimath-probability-calc-pillar");
+    if (probCalcRaw) {
+      const probX = aimathHubX - 650;
+      const probY = aimathHubY + 180;
+      const probNode: PositionedNode = {
+        ...probCalcRaw,
+        x: probX,
+        y: probY,
+        level: 3,
+        branchIndex: 3,
+      };
+      positionedNodes.push(probNode);
+      edges.push({
+        source: aimathHubNode.id,
+        target: probNode.id,
+        category: "aimath",
+        level: 3,
+        branchIndex: 3,
+      });
+
+      const bayesRaw = allNodes.find((n) => n.id === "aimath-bayes-distributions");
+      if (bayesRaw) {
+        positionedNodes.push({
+          ...bayesRaw,
+          x: probX - 320,
+          y: probY - 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: probNode.id,
+          target: bayesRaw.id,
+          category: "aimath",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const gradRaw = allNodes.find((n) => n.id === "aimath-gradients-chain-rule");
+      if (gradRaw) {
+        positionedNodes.push({
+          ...gradRaw,
+          x: probX - 320,
+          y: probY,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: probNode.id,
+          target: gradRaw.id,
+          category: "aimath",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const npRaw = allNodes.find((n) => n.id === "aimath-numpy-broadcasting");
+      if (npRaw) {
+        positionedNodes.push({
+          ...npRaw,
+          x: probX - 320,
+          y: probY + 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: probNode.id,
+          target: npRaw.id,
+          category: "aimath",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+    }
+
     // Automated overlap prevention relaxation pass
     preventLayoutOverlaps(positionedNodes, positionedCards);
 
@@ -3842,6 +4044,8 @@ export function calculateGroupLayout(
     pillarIds = ["state-reactivity-pillar", "state-rendering-pipeline", "state-hydration-islands"];
   } else if (category === "perf") {
     pillarIds = ["perf-vitals-pillar", "perf-optimization-pipeline", "perf-a11y-tree-pillar"];
+  } else if (category === "aimath") {
+    pillarIds = ["aimath-linear-algebra-pillar", "aimath-pipeline-pillar", "aimath-probability-calc-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -4165,6 +4369,11 @@ export function getNodesForCategory(
       parentId: "root-node",
       level: 2,
     };
+    const aimathRoot = {
+      ...allNodes.find((n) => n.id === "root-aimath")!,
+      parentId: "root-all",
+      level: 1,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -4200,13 +4409,14 @@ export function getNodesForCategory(
         n.id !== "root-security" &&
         n.id !== "root-state" &&
         n.id !== "root-perf" &&
+        n.id !== "root-aimath" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }
