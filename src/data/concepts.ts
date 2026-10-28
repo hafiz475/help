@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -177,8 +177,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "nlpllms",
+    name: "18. NLP & LLMs",
+    title: "Natural Language Processing & Large Language Models",
+    description: "BPE Tokenization, Vector Embeddings, Decoder-Only LLMs, RoPE, KV Cache, LoRA Fine-Tuning & RAG Pipelines",
+    color: "#10a37f", // OpenAI Mint Green
+    icon: "Bot",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "18. OOP (4 Pillars)",
+    name: "19. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -187,7 +196,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "19. DSA",
+    name: "20. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -196,7 +205,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "20. Big O",
+    name: "21. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -210,7 +219,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 229,
+    count: 239,
   },
 ];
 
@@ -379,6 +388,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "deep learning neural networks backpropagation autograd transformers attention pytorch",
     badge: "Neural Networks",
     color: "#7c3aed",
+  },
+  {
+    id: "root-nlpllms",
+    label: "NLP & LLMs",
+    category: "nlpllms",
+    level: 0,
+    searchQuery: "NLP large language models tokenization embeddings transformers attention LoRA RAG prompt engineering",
+    badge: "Generative Language",
+    color: "#10a37f",
   },
   {
     id: "root-oop",
@@ -2570,7 +2588,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 18. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 18. NLP & LARGE LANGUAGE MODELS (LLMS)
+  // ==========================================
+  // Pillar 1: Tokenization & Embedding Foundations
+  {
+    id: "nlp-token-embeddings-pillar",
+    label: "Tokenization & Vector Embeddings",
+    category: "nlpllms",
+    parentId: "root-nlpllms",
+    level: 1,
+    searchQuery: "NLP tokenization byte pair encoding BPE WordPiece dense embeddings vector similarity RoPE",
+    badge: "Vocabulary & Vectors",
+    color: "#0f766e",
+  },
+  {
+    id: "nlp-subword-tokenization",
+    label: "Subword Tokenization (BPE & WordPiece)",
+    category: "nlpllms",
+    parentId: "nlp-token-embeddings-pillar",
+    level: 2,
+    searchQuery: "subword tokenization Byte Pair Encoding BPE WordPiece SentencePiece tiktoken vocabulary size out of vocabulary OOV",
+    badge: "BPE, Byte-Level & Vocab",
+    color: "#10a37f",
+  },
+  {
+    id: "nlp-dense-embeddings",
+    label: "Semantic Embeddings & Cosine Space",
+    category: "nlpllms",
+    parentId: "nlp-token-embeddings-pillar",
+    level: 2,
+    searchQuery: "dense embeddings sentence transformers SBERT text-embedding-3 cosine similarity vector search dimensional space",
+    badge: "Dense Vectors & SBERT",
+    color: "#34d399",
+  },
+  {
+    id: "nlp-positional-encodings",
+    label: "Positional Encodings & RoPE",
+    category: "nlpllms",
+    parentId: "nlp-token-embeddings-pillar",
+    level: 2,
+    searchQuery: "positional encodings Rotary Position Embedding RoPE ALiBi sinusoidal position attention relative distance",
+    badge: "Rotary RoPE & Sinusoids",
+    color: "#6ee7b7",
+  },
+
+  // Pillar 2: 9-Stage LLM Inference & RAG Pipeline (Group Card)
+  {
+    id: "nlp-pipeline-pillar",
+    label: "9-Stage LLM Inference & RAG Pipeline",
+    category: "nlpllms",
+    parentId: "root-nlpllms",
+    level: 1,
+    searchQuery: "LLM inference pipeline prompt template causal attention KV cache sampling streaming RAG vector search LoRA guardrails",
+    badge: "9 Sequential Stages",
+    color: "#047857",
+  },
+
+  // Pillar 3: Modern LLM Architectures & Reasoning
+  {
+    id: "nlp-architecture-pillar",
+    label: "LLM Architectures & Reasoning",
+    category: "nlpllms",
+    parentId: "root-nlpllms",
+    level: 1,
+    searchQuery: "LLM architectures decoder-only GPT Llama Mistral Mixture of Experts MoE RLHF DPO chain of thought reasoning",
+    badge: "Decoders & MoE",
+    color: "#065f46",
+  },
+  {
+    id: "nlp-decoder-only-models",
+    label: "Decoder-Only Transformers (GPT & Llama)",
+    category: "nlpllms",
+    parentId: "nlp-architecture-pillar",
+    level: 2,
+    searchQuery: "decoder only transformer GPT Llama Mistral causal language modeling next token prediction pre-training",
+    badge: "Next-Token Predictors",
+    color: "#10a37f",
+  },
+  {
+    id: "nlp-mixture-of-experts",
+    label: "Mixture of Experts (MoE) & Gating",
+    category: "nlpllms",
+    parentId: "nlp-architecture-pillar",
+    level: 2,
+    searchQuery: "Mixture of Experts MoE sparse gating top-k routing Mixtral active parameters token dispatching",
+    badge: "Sparse Routing & Top-K",
+    color: "#34d399",
+  },
+  {
+    id: "nlp-reasoning-alignment",
+    label: "RLHF, DPO & Chain-of-Thought",
+    category: "nlpllms",
+    parentId: "nlp-architecture-pillar",
+    level: 2,
+    searchQuery: "alignment RLHF Direct Preference Optimization DPO PPO chain of thought CoT reasoning test time compute",
+    badge: "Direct Preference & CoT",
+    color: "#6ee7b7",
+  },
+
+  // ==========================================
+  // 19. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

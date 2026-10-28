@@ -8463,6 +8463,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // 18. NLP & LARGE LANGUAGE MODELS (LLMS) STORIES
+  // ==========================================
+  "root-nlpllms": {
+    id: "root-nlpllms",
+    title: "NLP & LLMs",
+    badge: "Generative Language",
+    tagline: "Scaling autoregressive language models to model text distributions, compress semantic knowledge, and perform reasoning",
+    takeaways: [
+      {
+        id: "nlp-r1",
+        text: "Large Language Models operate as next-token probability predictors P(wₜ | w₁, ..., wₜ₋₁) trained via cross-entropy loss over massive multi-trillion-token corpora.",
+        searchPrompt: "autoregressive language modeling next token prediction probability distribution",
+        emoji: "🧠",
+        reactionCount: "5.9k",
+        commentCount: 480,
+      },
+      {
+        id: "nlp-r2",
+        text: "Scaling laws (Chinchilla & Kaplan) dictate that model parameter capacity and training dataset volume must scale symmetrically for compute-optimal pre-training.",
+        searchPrompt: "Chinchilla scaling laws compute optimal training tokens parameters",
+        emoji: "📈",
+        reactionCount: "5.4k",
+        commentCount: 430,
+      },
+      {
+        id: "nlp-r3",
+        text: "Modern generative AI progresses through three key stages: Pre-training (world knowledge), Supervised Fine-Tuning (instruction following), and RLHF/DPO (alignment).",
+        searchPrompt: "pretraining supervised fine tuning RLHF DPO three stages LLM",
+        emoji: "🚀",
+        reactionCount: "5.7k",
+        commentCount: 460,
+      },
+    ],
+  },
+
+  "nlp-token-embeddings-pillar": {
+    id: "nlp-token-embeddings-pillar",
+    title: "Tokenization & Vector Embeddings",
+    badge: "Vocabulary & Vectors",
+    tagline: "Segmenting raw unicode text into statistical subword tokens and projecting into geometric embedding manifolds",
+    takeaways: [
+      {
+        id: "nlp-tep1",
+        text: "Tokenization bridges discrete human language and continuous neural tensor spaces, determining vocabulary boundaries and model token economics.",
+        searchPrompt: "tokenization subwords vocabulary bridge discrete text continuous vectors",
+        emoji: "🔤",
+        reactionCount: "5.2k",
+        commentCount: 410,
+      },
+      {
+        id: "nlp-tep2",
+        text: "Dense embeddings project variable-length phrases into continuous vector spaces where geometric proximity signifies semantic similarity (e.g. King - Man + Woman ≈ Queen).",
+        searchPrompt: "dense vector embeddings semantic space vector arithmetic analogies",
+        emoji: "📐",
+        reactionCount: "5.5k",
+        commentCount: 440,
+      },
+      {
+        id: "nlp-tep3",
+        text: "Modern architectures incorporate Rotary Position Embeddings (RoPE), rotating query and key vector slices to inject relative token sequence order directly into attention.",
+        searchPrompt: "Rotary Position Embedding RoPE relative positional encoding transformer",
+        emoji: "🔄",
+        reactionCount: "5.3k",
+        commentCount: 425,
+      },
+    ],
+  },
+
+  "nlp-subword-tokenization": {
+    id: "nlp-subword-tokenization",
+    title: "Subword Tokenization (BPE & WordPiece)",
+    badge: "BPE, Byte-Level & Vocab",
+    tagline: "Iteratively merging frequent byte pairs to solve out-of-vocabulary words with compact vocabularies",
+    takeaways: [
+      {
+        id: "nlp-swt1",
+        text: "Byte Pair Encoding (BPE) begins with individual characters/bytes and greedily merges the most frequent adjacent pairs until reaching target vocabulary capacity.",
+        searchPrompt: "Byte Pair Encoding BPE algorithm greedy pair merging vocabulary",
+        emoji: "✂️",
+        reactionCount: "5.1k",
+        commentCount: 395,
+      },
+      {
+        id: "nlp-swt2",
+        text: "Byte-level BPE (tiktoken) processes raw UTF-8 bytes directly, completely eliminating Out-of-Vocabulary (OOV) errors across all natural languages and source code.",
+        searchPrompt: "byte level BPE tiktoken UTF 8 out of vocabulary prevention",
+        emoji: "📦",
+        reactionCount: "5.3k",
+        commentCount: 415,
+      },
+      {
+        id: "nlp-swt3",
+        text: "Token fragmentation directly impacts cost and inference: rare words or non-English scripts require more tokens per sentence, increasing latency and context footprint.",
+        searchPrompt: "token fragmentation language bias token count inference cost LLM",
+        emoji: "💸",
+        reactionCount: "4.8k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "nlp-dense-embeddings": {
+    id: "nlp-dense-embeddings",
+    title: "Semantic Embeddings & Cosine Space",
+    badge: "Dense Vectors & SBERT",
+    tagline: "Projecting variable-length sentences into fixed-dimension vectors where geometric proximity signifies semantic similarity",
+    takeaways: [
+      {
+        id: "nlp-de1",
+        text: "Bi-encoders (Sentence-BERT) pass text independently through a Transformer and mean-pool token representations, generating 768 to 3072-dimensional semantic embeddings.",
+        searchPrompt: "Sentence-BERT SBERT mean pooling bi-encoder dense embedding",
+        emoji: "🎯",
+        reactionCount: "5.4k",
+        commentCount: 430,
+      },
+      {
+        id: "nlp-de2",
+        text: "Cosine similarity u · v / (||u|| ||v||) measures angular proximity in normalized hyperspherical space, enabling instant semantic search over millions of documents.",
+        searchPrompt: "cosine similarity vector search normalized hypersphere retrieval",
+        emoji: "📐",
+        reactionCount: "5.2k",
+        commentCount: 410,
+      },
+      {
+        id: "nlp-de3",
+        text: "Contrastive learning (InfoNCE loss) trains embeddings by pulling positive pairs closer while pushing negative in-batch distractors apart in vector space.",
+        searchPrompt: "contrastive learning InfoNCE loss semantic embedding training",
+        emoji: "🧲",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "nlp-positional-encodings": {
+    id: "nlp-positional-encodings",
+    title: "Positional Encodings & RoPE",
+    badge: "Rotary RoPE & Sinusoids",
+    tagline: "Infusing sequence order into permutation-invariant self-attention using complex rotational geometry",
+    takeaways: [
+      {
+        id: "nlp-pe1",
+        text: "Transformers are permutation invariant without positional encodings; 'dog bites man' and 'man bites dog' would produce identical self-attention without them.",
+        searchPrompt: "permutation invariance self attention why positional encoding is needed",
+        emoji: "🔄",
+        reactionCount: "5.6k",
+        commentCount: 450,
+      },
+      {
+        id: "nlp-pe2",
+        text: "Rotary Position Embedding (RoPE) rotates Query and Key vector pairs in 2D coordinate slices by mθ, encoding relative distance (m - n) naturally into inner products.",
+        searchPrompt: "Rotary Position Embedding RoPE mathematical derivation complex plane",
+        emoji: "🌀",
+        reactionCount: "5.5k",
+        commentCount: 440,
+      },
+      {
+        id: "nlp-pe3",
+        text: "RoPE facilitates long-context extrapolation via YaRN and NTK-aware scaling, extending model attention windows from 4k to 128k+ tokens with minimal fine-tuning.",
+        searchPrompt: "context window extension YaRN NTK aware RoPE scaling extrapolation",
+        emoji: "📜",
+        reactionCount: "5.2k",
+        commentCount: 415,
+      },
+    ],
+  },
+
+  "nlp-pipeline-pillar": {
+    id: "nlp-pipeline-pillar",
+    title: "9-Stage LLM Inference & RAG Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "End-to-end industrial lifecycle from prompt structuring and KV cache generation to RAG retrieval and safety guardrails",
+    takeaways: [
+      {
+        id: "nlp-pp1",
+        text: "LLM inference decouples into two regimes: compute-bound Prefill (parallel prompt processing) and memory-bound Decode (generating one token at a time).",
+        searchPrompt: "prefill phase vs decode phase memory bandwidth vs compute bound LLM",
+        emoji: "⚡",
+        reactionCount: "5.7k",
+        commentCount: 470,
+      },
+      {
+        id: "nlp-pp2",
+        text: "KV Caching eliminates redundant attention recomputation during decoding, trading GPU VRAM memory for massive 10x generation speedups.",
+        searchPrompt: "KV cache memory tradeoff generation latency optimization LLM",
+        emoji: "💾",
+        reactionCount: "5.5k",
+        commentCount: 445,
+      },
+      {
+        id: "nlp-pp3",
+        text: "Enterprise production architectures orchestrate hybrid vector search, parameter-efficient adapters (LoRA), and automated deterministic guardrails.",
+        searchPrompt: "enterprise LLM architecture RAG LoRA guardrails production MLOps",
+        emoji: "🛡️",
+        reactionCount: "5.1k",
+        commentCount: 395,
+      },
+    ],
+  },
+
+  "nlp-architecture-pillar": {
+    id: "nlp-architecture-pillar",
+    title: "LLM Architectures & Reasoning",
+    badge: "Decoders & MoE",
+    tagline: "Structural decoder designs, sparse expert routing, and alignment mechanisms driving modern intelligence",
+    takeaways: [
+      {
+        id: "nlp-ap1",
+        text: "Decoder-only architectures (GPT, Llama) dominate generative AI, optimizing autoregressive causal next-token prediction without cross-attention overhead.",
+        searchPrompt: "decoder only vs encoder decoder architecture generative LLM dominance",
+        emoji: "🏛️",
+        reactionCount: "5.3k",
+        commentCount: 420,
+      },
+      {
+        id: "nlp-ap2",
+        text: "Sparse Mixture of Experts (MoE) routes each token to top-K specialized feedforward networks, achieving high model capacity with low active parameter FLOPs.",
+        searchPrompt: "Mixture of Experts MoE sparse routing active parameters FLOPs",
+        emoji: "🔀",
+        reactionCount: "5.6k",
+        commentCount: 460,
+      },
+      {
+        id: "nlp-ap3",
+        text: "Reinforcement Learning from Human Feedback (RLHF) and Direct Preference Optimization (DPO) steer raw base models toward helpful, harmless, and honest assistant behavior.",
+        searchPrompt: "RLHF vs DPO alignment human preferences helpful honest harmless",
+        emoji: "🤝",
+        reactionCount: "5.4k",
+        commentCount: 435,
+      },
+    ],
+  },
+
+  "nlp-decoder-only-models": {
+    id: "nlp-decoder-only-models",
+    title: "Decoder-Only Transformers (GPT & Llama)",
+    badge: "Next-Token Predictors",
+    tagline: "Stacking causal self-attention layers with RMSNorm and SwiGLU activations for next-token generation",
+    takeaways: [
+      {
+        id: "nlp-dom1",
+        text: "Decoder-only models enforce a causal lower-triangular attention mask, ensuring position i can only attend to previous tokens j ≤ i, matching autoregressive generation.",
+        searchPrompt: "causal attention mask lower triangular next token prediction GPT Llama",
+        emoji: "🔒",
+        reactionCount: "5.2k",
+        commentCount: 410,
+      },
+      {
+        id: "nlp-dom2",
+        text: "Modern open-weights models standardize on pre-normalization with RMSNorm, SwiGLU non-linear activations, and Rotary Position Embeddings (RoPE).",
+        searchPrompt: "Llama architecture RMSNorm SwiGLU RoPE modern LLM standard",
+        emoji: "⚙️",
+        reactionCount: "5.4k",
+        commentCount: 440,
+      },
+      {
+        id: "nlp-dom3",
+        text: "Pre-training on trillions of tokens minimizes cross-entropy perplexity exp(loss), effectively forcing the network to simulate world logic and common-sense deduction.",
+        searchPrompt: "perplexity cross entropy loss pre-training emergent abilities LLM",
+        emoji: "🌍",
+        reactionCount: "5.0k",
+        commentCount: 390,
+      },
+    ],
+  },
+
+  "nlp-mixture-of-experts": {
+    id: "nlp-mixture-of-experts",
+    title: "Mixture of Experts (MoE) & Gating",
+    badge: "Sparse Routing & Top-K",
+    tagline: "Dynamically routing individual tokens to specialized sub-networks to scale model parameters sub-linearly",
+    takeaways: [
+      {
+        id: "nlp-moe1",
+        text: "MoE replaces the standard dense Feedforward Network (FFN) with N independent expert FFNs, dynamically selecting top-K experts per token using a softmax router.",
+        searchPrompt: "MoE gating network top k softmax router expert dispatching",
+        emoji: "🔀",
+        reactionCount: "5.5k",
+        commentCount: 450,
+      },
+      {
+        id: "nlp-moe2",
+        text: "A model like Mixtral 8x7B possesses 47B total parameters but activates only 13B parameters per token, delivering 70B-grade performance at 13B inference latency.",
+        searchPrompt: "Mixtral 8x7B active parameters vs total parameters latency savings",
+        emoji: "⚡",
+        reactionCount: "5.7k",
+        commentCount: 475,
+      },
+      {
+        id: "nlp-moe3",
+        text: "Load balancing auxiliary loss functions prevent expert collapse, ensuring tokens distribute evenly across all experts without single-expert bottlenecks.",
+        searchPrompt: "load balancing loss expert collapse auxiliary loss MoE training",
+        emoji: "⚖️",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "nlp-reasoning-alignment": {
+    id: "nlp-reasoning-alignment",
+    title: "RLHF, DPO & Chain-of-Thought",
+    badge: "Direct Preference & CoT",
+    tagline: "Steering models to follow instructions, align with human preferences, and reason via step-by-step thinking",
+    takeaways: [
+      {
+        id: "nlp-ra1",
+        text: "Direct Preference Optimization (DPO) optimizes human preference margins directly via implicit reward formulation, bypassing unstable PPO reward model training loops.",
+        searchPrompt: "Direct Preference Optimization DPO Rafailov preference pairs without PPO",
+        emoji: "🎯",
+        reactionCount: "5.6k",
+        commentCount: 460,
+      },
+      {
+        id: "nlp-ra2",
+        text: "Chain-of-Thought (CoT) prompting prompts models to emit intermediate reasoning steps, allocating test-time compute to decompose complex multi-step problems.",
+        searchPrompt: "Chain of Thought prompting CoT test time compute reasoning Wei",
+        emoji: "💡",
+        reactionCount: "5.4k",
+        commentCount: 435,
+      },
+      {
+        id: "nlp-ra3",
+        text: "Advanced reasoning models scale test-time compute by generating long internal chains of thought, evaluating self-corrections, and searching over diverse reasoning trajectories.",
+        searchPrompt: "reasoning models test time compute scaling search over reasoning trajectories",
+        emoji: "🧠",
+        reactionCount: "5.8k",
+        commentCount: 490,
+      },
+    ],
+  },
+
+  // 9-Stage LLM Inference & RAG Pipeline Group Card Items
+  "nlp-prompt-template": {
+    id: "nlp-prompt-template",
+    title: "1. Prompt Template & System Framing",
+    badge: "💬 System & Few-Shot Context",
+    tagline: "Formatting conversational roles, system directives, and in-context examples into structured ChatML schemas",
+    takeaways: [
+      {
+        id: "nlp-pt1",
+        text: "ChatML schemas format conversations into structured role demarcations (<|im_start|>system, user, assistant<|im_end|>), teaching models conversational turn boundaries.",
+        searchPrompt: "ChatML schema conversational roles system user assistant special tokens",
+        emoji: "💬",
+        reactionCount: "5.1k",
+        commentCount: 400,
+      },
+      {
+        id: "nlp-pt2",
+        text: "System prompts anchor model persona, operational constraints, tool definitions, and output schemas (e.g. strict JSON mode).",
+        searchPrompt: "system prompt engineering role constraints structured JSON mode",
+        emoji: "📐",
+        reactionCount: "4.9k",
+        commentCount: 375,
+      },
+      {
+        id: "nlp-pt3",
+        text: "Few-shot in-context learning provides 2-5 demonstration input-output pairs inside the prompt, steering output structure without parameter weight updates.",
+        searchPrompt: "few shot in context learning prompt engineering demonstration pairs",
+        emoji: "📋",
+        reactionCount: "4.7k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "nlp-tokenizer-encoding": {
+    id: "nlp-tokenizer-encoding",
+    title: "2. Tokenizer Encoding & Special Tokens",
+    badge: "🔤 BOS, EOS & Attention Mask",
+    tagline: "Translating prompt strings into input_ids tensor sequences accompanied by binary attention masks",
+    takeaways: [
+      {
+        id: "nlp-te1",
+        text: "Tokenizer converts input strings into a 1D tensor of integer token IDs, prepending Beginning-Of-Sequence (BOS) tokens.",
+        searchPrompt: "tokenizer encode input_ids BOS token prepending HuggingFace",
+        emoji: "🔤",
+        reactionCount: "4.8k",
+        commentCount: 365,
+      },
+      {
+        id: "nlp-te2",
+        text: "Attention masks distinguish real input tokens (value 1) from padding tokens (value 0) in batched inference, ensuring padding does not distort attention scores.",
+        searchPrompt: "attention mask batched inference padding token zeroing",
+        emoji: "🎭",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+      {
+        id: "nlp-te3",
+        text: "Detecting End-Of-Sequence (EOS) or custom stop tokens during generation signals the immediate termination of the generation loop.",
+        searchPrompt: "EOS token stopping criteria early termination text generation",
+        emoji: "🛑",
+        reactionCount: "4.6k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "nlp-causal-self-attention": {
+    id: "nlp-causal-self-attention",
+    title: "3. Causal Masked Self-Attention",
+    badge: "🔒 Autoregressive Upper-Tri Mask",
+    tagline: "Applying upper-triangular masking to enforce strictly unilateral token information flow",
+    takeaways: [
+      {
+        id: "nlp-csa1",
+        text: "Causal attention adds an upper-triangular mask of -inf to the pre-softmax attention logits matrix QKᵀ / √dₖ for all positions j > i.",
+        searchPrompt: "causal attention mask upper triangular -inf softmax zero",
+        emoji: "🔒",
+        reactionCount: "5.4k",
+        commentCount: 430,
+      },
+      {
+        id: "nlp-csa2",
+        text: "Softmax maps -inf to exact zero probability (e⁻ⁱⁿᶠ = 0), preventing tokens from illegally attending to future tokens during training and prefill.",
+        searchPrompt: "softmax negative infinity zero probability autoregressive constraint",
+        emoji: "📐",
+        reactionCount: "5.0k",
+        commentCount: 395,
+      },
+      {
+        id: "nlp-csa3",
+        text: "FlashAttention fuses matrix multiplication, softmax reduction, and dropout into high-speed SRAM GPU kernels, achieving 2-4x speedups without materializing full N×N attention matrices.",
+        searchPrompt: "FlashAttention Tri Dao SRAM IO awareness online softmax speedup",
+        emoji: "⚡",
+        reactionCount: "5.8k",
+        commentCount: 485,
+      },
+    ],
+  },
+
+  "nlp-kv-caching": {
+    id: "nlp-kv-caching",
+    title: "4. KV Cache Allocation & Update",
+    badge: "⚡ O(1) Precomputed Key-Values",
+    tagline: "Storing previous key and value tensor states in GPU memory to avoid quadratic recomputation",
+    takeaways: [
+      {
+        id: "nlp-kvc1",
+        text: "Without KV caching, generating token N requires recomputing attention over all N-1 previous tokens, resulting in catastrophic O(N²) quadratic generation latency.",
+        searchPrompt: "why KV cache is necessary quadratic generation latency LLM",
+        emoji: "⚠️",
+        reactionCount: "5.6k",
+        commentCount: 460,
+      },
+      {
+        id: "nlp-kvc2",
+        text: "KV cache stores Key and Value tensors for all past positions in GPU VRAM, allowing the next token to only project its own Query and append its Key/Value in O(1) time.",
+        searchPrompt: "KV cache O(1) decode step key value tensor append GPU memory",
+        emoji: "💾",
+        reactionCount: "5.3k",
+        commentCount: 425,
+      },
+      {
+        id: "nlp-kvc3",
+        text: "PagedAttention (vLLM) manages KV cache memory like virtual memory pages in operating systems, eliminating VRAM fragmentation and enabling 5x higher concurrent serving batches.",
+        searchPrompt: "PagedAttention vLLM virtual memory paging KV cache fragmentation",
+        emoji: "🚀",
+        reactionCount: "5.7k",
+        commentCount: 470,
+      },
+    ],
+  },
+
+  "nlp-logits-sampling": {
+    id: "nlp-logits-sampling",
+    title: "5. Logits Projection & Temperature",
+    badge: "🎲 Top-P, Top-K & Min-P Sampling",
+    tagline: "Transforming unnormalized vocabulary logits into stochastic token probability distributions",
+    takeaways: [
+      {
+        id: "nlp-ls1",
+        text: "Temperature T divides raw logits z / T prior to softmax: T → 0 yields deterministic greedy argmax decoding; T > 1 flattens distribution into creative diversity.",
+        searchPrompt: "temperature scaling logits softmax entropy greedy vs creative",
+        emoji: "🌡️",
+        reactionCount: "5.3k",
+        commentCount: 420,
+      },
+      {
+        id: "nlp-ls2",
+        text: "Top-P (Nucleus Sampling) restricts candidate sampling pool to the smallest set of tokens whose cumulative probability exceeds p (e.g. p=0.9), filtering out low-probability nonsense tails.",
+        searchPrompt: "top_p nucleus sampling Holtzman cumulative probability cutoff",
+        emoji: "🎯",
+        reactionCount: "5.1k",
+        commentCount: 400,
+      },
+      {
+        id: "nlp-ls3",
+        text: "Repetition penalty divides logits of tokens that have already appeared in the output, preventing loops and repetitive degenerate phrases.",
+        searchPrompt: "repetition penalty frequency penalty presence penalty text generation",
+        emoji: "🔁",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "nlp-autoregressive-stream": {
+    id: "nlp-autoregressive-stream",
+    title: "6. Autoregressive Token Streaming",
+    badge: "🌊 SSE / WebSocket Chunking",
+    tagline: "Emitting generated token fragments immediately to the client over Server-Sent Events (SSE)",
+    takeaways: [
+      {
+        id: "nlp-ast1",
+        text: "Streaming outputs generated token chunks as they arrive over HTTP Server-Sent Events (text/event-stream), drastically slashing Time-To-First-Token (TTFT) perception.",
+        searchPrompt: "server sent events SSE token streaming TTFT time to first token",
+        emoji: "🌊",
+        reactionCount: "5.4k",
+        commentCount: 435,
+      },
+      {
+        id: "nlp-ast2",
+        text: "TextStreamer decodes individual token IDs back into UTF-8 characters, buffering multi-byte unicode characters until complete glyphs can be emitted.",
+        searchPrompt: "TextStreamer HuggingFace UTF-8 multi-byte decoding buffer",
+        emoji: "🔤",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+      {
+        id: "nlp-ast3",
+        text: "Client-side EventSource or fetch ReadableStream decoders reconstruct token streams smoothly into conversational UI bubbles in real time.",
+        searchPrompt: "ReadableStream reader read fetch SSE client streaming UI React",
+        emoji: "💬",
+        reactionCount: "5.2k",
+        commentCount: 410,
+      },
+    ],
+  },
+
+  "nlp-rag-vector-search": {
+    id: "nlp-rag-vector-search",
+    title: "7. RAG Hybrid Dense/Sparse Search",
+    badge: "🔍 Vector DB & Reciprocal Rank",
+    tagline: "Retrieving grounded context from external knowledge bases using hybrid dense vector and sparse keyword search",
+    takeaways: [
+      {
+        id: "nlp-rvs1",
+        text: "Retrieval-Augmented Generation (RAG) grounds LLM generations on factual enterprise data, eliminating hallucinations and private data cutoff boundaries.",
+        searchPrompt: "Retrieval Augmented Generation RAG architecture hallucination prevention",
+        emoji: "🔍",
+        reactionCount: "5.6k",
+        commentCount: 460,
+      },
+      {
+        id: "nlp-rvs2",
+        text: "Hybrid Search combines dense vector similarity (semantic match via cosine) with BM25 sparse keyword search (exact acronym/part number match).",
+        searchPrompt: "hybrid search dense vector BM25 sparse search vector database",
+        emoji: "⚡",
+        reactionCount: "5.3k",
+        commentCount: 425,
+      },
+      {
+        id: "nlp-rvs3",
+        text: "Reciprocal Rank Fusion (RRF) and Cross-Encoder Re-rankers score and fuse candidate chunks to pass only the top 3-5 most relevant passages into the prompt.",
+        searchPrompt: "Reciprocal Rank Fusion RRF cross-encoder re-ranking RAG context window",
+        emoji: "📊",
+        reactionCount: "5.0k",
+        commentCount: 395,
+      },
+    ],
+  },
+
+  "nlp-lora-peft": {
+    id: "nlp-lora-peft",
+    title: "8. Parameter-Efficient Tuning (LoRA)",
+    badge: "📉 Low-Rank Adapter Matrices",
+    tagline: "Freezing foundational model weights and training compact low-rank decomposition matrices",
+    takeaways: [
+      {
+        id: "nlp-lor1",
+        text: "Low-Rank Adaptation (LoRA) freezes the pre-trained weight matrix W₀ (d × k) and parameterizes weight updates as a low-rank decomposition ΔW = B · A (d × r and r × k, where r ≪ min(d, k)).",
+        searchPrompt: "LoRA Low Rank Adaptation Hu mathematical explanation rank r alpha",
+        emoji: "📉",
+        reactionCount: "5.7k",
+        commentCount: 470,
+      },
+      {
+        id: "nlp-lor2",
+        text: "Reduces trainable parameter count by 99% (e.g. from 7B to 20M parameters), enabling fine-tuning on a single consumer GPU without optimizer state memory bloat.",
+        searchPrompt: "LoRA parameter reduction memory savings consumer GPU fine tuning",
+        emoji: "💾",
+        reactionCount: "5.5k",
+        commentCount: 440,
+      },
+      {
+        id: "nlp-lor3",
+        text: "At inference time, adapter weights ΔW can be merged back into base weights W = W₀ + (α/r)(B·A) with zero additional latency penalty.",
+        searchPrompt: "merge LoRA weights back into base model zero latency penalty",
+        emoji: "🚀",
+        reactionCount: "5.3k",
+        commentCount: 415,
+      },
+    ],
+  },
+
+  "nlp-guardrails-eval": {
+    id: "nlp-guardrails-eval",
+    title: "9. Guardrails, Evals & Alignment",
+    badge: "🛡️ PII Filtering & MT-Bench",
+    tagline: "Enforcing deterministic security boundaries, detecting prompt injection, and benchmarking response quality",
+    takeaways: [
+      {
+        id: "nlp-gr1",
+        text: "Input guardrails inspect incoming user prompts for jailbreaks, prompt injection, and adversarial attacks using regex and lightweight classification models.",
+        searchPrompt: "LLM guardrails prompt injection jailbreak defense NeMo Guardrails",
+        emoji: "🛡️",
+        reactionCount: "5.2k",
+        commentCount: 410,
+      },
+      {
+        id: "nlp-gr2",
+        text: "Output guardrails redact Personally Identifiable Information (PII), enforce JSON schema adherence, and verify factual grounding against retrieved source chunks.",
+        searchPrompt: "PII redaction output guardrails schema adherence hallucination check",
+        emoji: "🔒",
+        reactionCount: "5.0k",
+        commentCount: 390,
+      },
+      {
+        id: "nlp-gr3",
+        text: "Automated evaluation pipelines use MT-Bench, RAGAS, and LLM-as-a-Judge to measure context relevance, answer faithfulness, and conversational coherence.",
+        searchPrompt: "LLM as a judge MT-Bench RAGAS faithfulness context relevance evaluation",
+        emoji: "⚖️",
+        reactionCount: "5.3k",
+        commentCount: 425,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -9981,6 +10612,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Machine Learning"
       : node.category === "deeplearning"
       ? "Deep Learning"
+      : node.category === "nlpllms"
+      ? "NLP & LLMs"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

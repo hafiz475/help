@@ -903,10 +903,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-nlp-llms",
-            name: "NLP & LLMs",
-            isAvailable: false,
-            badge: "Roadmap",
+            name: "NLP & LLMs ★",
+            categoryId: "nlpllms",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
             description: "Tokenization, embeddings, self-attention, prompt engineering, and fine-tuning",
+            color: "#10a37f",
           },
           {
             id: "topic-computer-vision",

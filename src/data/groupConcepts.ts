@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1589,7 +1589,84 @@ export const DEEPLEARNING_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const NLPLLMS_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-nlp-pipeline",
+    pillarId: "nlp-pipeline-pillar",
+    title: "LLM Inference & RAG Pipeline",
+    category: "nlpllms",
+    badge: "9 Sequential Stages",
+    color: "#10a37f",
+    isPipeline: true,
+    items: [
+      {
+        id: "nlp-prompt-template",
+        stepNumber: 1,
+        label: "1. Prompt Template & System Framing",
+        badge: "💬 System & Few-Shot Context",
+        searchQuery: "prompt template system prompt few shot in context learning ChatML schema",
+      },
+      {
+        id: "nlp-tokenizer-encoding",
+        stepNumber: 2,
+        label: "2. Tokenizer Encoding & Special Tokens",
+        badge: "🔤 BOS, EOS & Attention Mask",
+        searchQuery: "tokenizer encode input_ids attention_mask BOS EOS padding tokens tiktoken",
+      },
+      {
+        id: "nlp-causal-self-attention",
+        stepNumber: 3,
+        label: "3. Causal Masked Self-Attention",
+        badge: "🔒 Autoregressive Upper-Tri Mask",
+        searchQuery: "causal masked self attention upper triangular mask autoregressive next token prediction",
+      },
+      {
+        id: "nlp-kv-caching",
+        stepNumber: 4,
+        label: "4. KV Cache Allocation & Update",
+        badge: "⚡ O(1) Precomputed Key-Values",
+        searchQuery: "KV cache key value cache generation phase prefill phase vLLM PagedAttention",
+      },
+      {
+        id: "nlp-logits-sampling",
+        stepNumber: 5,
+        label: "5. Logits Projection & Temperature",
+        badge: "🎲 Top-P, Top-K & Min-P Sampling",
+        searchQuery: "logits temperature sampling top_p nucleus sampling top_k min_p repetition penalty",
+      },
+      {
+        id: "nlp-autoregressive-stream",
+        stepNumber: 6,
+        label: "6. Autoregressive Token Streaming",
+        badge: "🌊 SSE / WebSocket Chunking",
+        searchQuery: "token streaming Server Sent Events SSE text-generation stream chunking HTTP chunked",
+      },
+      {
+        id: "nlp-rag-vector-search",
+        stepNumber: 7,
+        label: "7. RAG Hybrid Dense/Sparse Search",
+        badge: "🔍 Vector DB & Reciprocal Rank",
+        searchQuery: "Retrieval Augmented Generation RAG hybrid search BM25 vector database cosine similarity RRF",
+      },
+      {
+        id: "nlp-lora-peft",
+        stepNumber: 8,
+        label: "8. Parameter-Efficient Tuning (LoRA)",
+        badge: "📉 Low-Rank Adapter Matrices",
+        searchQuery: "LoRA Low Rank Adaptation PEFT adapter weights rank r alpha frozen base model",
+      },
+      {
+        id: "nlp-guardrails-eval",
+        stepNumber: 9,
+        label: "9. Guardrails, Evals & Alignment",
+        badge: "🛡️ PII Filtering & MT-Bench",
+        searchQuery: "LLM guardrails NeMo Guardrails prompt injection defense PII redaction MT-Bench LLM as a judge",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1607,8 +1684,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "aimath") return AIMATH_GROUP_CARDS;
   if (category === "mlcore") return MLCORE_GROUP_CARDS;
   if (category === "deeplearning") return DEEPLEARNING_GROUP_CARDS;
+  if (category === "nlpllms") return NLPLLMS_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

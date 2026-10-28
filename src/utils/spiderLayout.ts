@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -981,6 +981,8 @@ export function calculateGroupLayout(
         ? "Machine Learning"
         : category === "deeplearning"
         ? "Deep Learning"
+        : category === "nlpllms"
+        ? "NLP & LLMs"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1023,6 +1025,8 @@ export function calculateGroupLayout(
         ? "Learning Systems"
         : category === "deeplearning"
         ? "Neural Networks"
+        : category === "nlpllms"
+        ? "Generative Language"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1057,6 +1061,8 @@ export function calculateGroupLayout(
         ? "#0284c7"
         : category === "deeplearning"
         ? "#7c3aed"
+        : category === "nlpllms"
+        ? "#10a37f"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -4388,6 +4394,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 3D: NLP & Large Language Models (LLMs) Hub (placed at x = -1300, y = -3150)
+    const nlpHubX = -1300;
+    const nlpHubY = -3150;
+    const nlpHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-nlpllms")!,
+      x: nlpHubX,
+      y: nlpHubY,
+      level: 1,
+      branchIndex: 3,
+    };
+    positionedNodes.push(nlpHubNode);
+    edges.push({
+      source: deepHubNode.id,
+      target: nlpHubNode.id,
+      category: "nlpllms",
+      level: 1,
+      branchIndex: 3,
+    });
+
+    // NLP Node 1: Tokenization & Embedding Foundations (Left-Up)
+    const tokRaw = allNodes.find((n) => n.id === "nlp-token-embeddings-pillar");
+    if (tokRaw) {
+      const tokX = nlpHubX - 650;
+      const tokY = nlpHubY - 180;
+      const tokNode: PositionedNode = {
+        ...tokRaw,
+        x: tokX,
+        y: tokY,
+        level: 3,
+        branchIndex: 3,
+      };
+      positionedNodes.push(tokNode);
+      edges.push({
+        source: nlpHubNode.id,
+        target: tokNode.id,
+        category: "nlpllms",
+        level: 3,
+        branchIndex: 3,
+      });
+
+      const subwordRaw = allNodes.find((n) => n.id === "nlp-subword-tokenization");
+      if (subwordRaw) {
+        positionedNodes.push({
+          ...subwordRaw,
+          x: tokX - 320,
+          y: tokY - 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: tokNode.id,
+          target: subwordRaw.id,
+          category: "nlpllms",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const denseRaw = allNodes.find((n) => n.id === "nlp-dense-embeddings");
+      if (denseRaw) {
+        positionedNodes.push({
+          ...denseRaw,
+          x: tokX - 320,
+          y: tokY,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: tokNode.id,
+          target: denseRaw.id,
+          category: "nlpllms",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const posEncRaw = allNodes.find((n) => n.id === "nlp-positional-encodings");
+      if (posEncRaw) {
+        positionedNodes.push({
+          ...posEncRaw,
+          x: tokX - 320,
+          y: tokY + 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: tokNode.id,
+          target: posEncRaw.id,
+          category: "nlpllms",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+    }
+
+    // NLP Node 2: 9-Stage LLM Inference & RAG Pipeline (Group Card, Left-Center)
+    const nlpCard = cardByPillar.get("nlp-pipeline-pillar");
+    if (nlpCard) {
+      const cardX = nlpHubX - 800;
+      const cardY = nlpHubY;
+      const posCard: PositionedGroupCard = {
+        ...nlpCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 3,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: nlpHubNode.id,
+        target: nlpCard.id,
+        category: "nlpllms",
+        level: 3,
+        branchIndex: 3,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 3);
+    }
+
+    // NLP Node 3: Modern LLM Architectures & Reasoning (Left-Down)
+    const nlpArchRaw = allNodes.find((n) => n.id === "nlp-architecture-pillar");
+    if (nlpArchRaw) {
+      const nlpArchX = nlpHubX - 650;
+      const nlpArchY = nlpHubY + 180;
+      const nlpArchNode: PositionedNode = {
+        ...nlpArchRaw,
+        x: nlpArchX,
+        y: nlpArchY,
+        level: 3,
+        branchIndex: 3,
+      };
+      positionedNodes.push(nlpArchNode);
+      edges.push({
+        source: nlpHubNode.id,
+        target: nlpArchNode.id,
+        category: "nlpllms",
+        level: 3,
+        branchIndex: 3,
+      });
+
+      const decRaw = allNodes.find((n) => n.id === "nlp-decoder-only-models");
+      if (decRaw) {
+        positionedNodes.push({
+          ...decRaw,
+          x: nlpArchX - 320,
+          y: nlpArchY - 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: nlpArchNode.id,
+          target: decRaw.id,
+          category: "nlpllms",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const moeRaw = allNodes.find((n) => n.id === "nlp-mixture-of-experts");
+      if (moeRaw) {
+        positionedNodes.push({
+          ...moeRaw,
+          x: nlpArchX - 320,
+          y: nlpArchY,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: nlpArchNode.id,
+          target: moeRaw.id,
+          category: "nlpllms",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const rlhfRaw = allNodes.find((n) => n.id === "nlp-reasoning-alignment");
+      if (rlhfRaw) {
+        positionedNodes.push({
+          ...rlhfRaw,
+          x: nlpArchX - 320,
+          y: nlpArchY + 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: nlpArchNode.id,
+          target: rlhfRaw.id,
+          category: "nlpllms",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+    }
+
     // Automated overlap prevention relaxation pass
     preventLayoutOverlaps(positionedNodes, positionedCards);
 
@@ -4448,6 +4647,8 @@ export function calculateGroupLayout(
     pillarIds = ["mlcore-supervised-pillar", "mlcore-pipeline-pillar", "mlcore-unsupervised-eval-pillar"];
   } else if (category === "deeplearning") {
     pillarIds = ["dl-architecture-pillar", "dl-pipeline-pillar", "dl-optimization-pillar"];
+  } else if (category === "nlpllms") {
+    pillarIds = ["nlp-token-embeddings-pillar", "nlp-pipeline-pillar", "nlp-architecture-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -4786,6 +4987,11 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
+    const nlpRoot = {
+      ...allNodes.find((n) => n.id === "root-nlpllms")!,
+      parentId: "root-all",
+      level: 1,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -4824,13 +5030,14 @@ export function getNodesForCategory(
         n.id !== "root-aimath" &&
         n.id !== "root-mlcore" &&
         n.id !== "root-deeplearning" &&
+        n.id !== "root-nlpllms" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }
