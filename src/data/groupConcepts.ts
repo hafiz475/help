@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1512,7 +1512,84 @@ export const MLCORE_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const DEEPLEARNING_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-dl-pipeline",
+    pillarId: "dl-pipeline-pillar",
+    title: "Deep Learning Training Pipeline",
+    category: "deeplearning",
+    badge: "9 Sequential Stages",
+    color: "#7c3aed",
+    isPipeline: true,
+    items: [
+      {
+        id: "dl-dataset-dataloader",
+        stepNumber: 1,
+        label: "1. PyTorch Dataset & DataLoader",
+        badge: "📦 Batching & Workers",
+        searchQuery: "PyTorch Dataset DataLoader batch size pin memory num workers prefetch collate fn",
+      },
+      {
+        id: "dl-weight-init",
+        stepNumber: 2,
+        label: "2. Weight Initialization",
+        badge: "🎲 He & Xavier / Glorot",
+        searchQuery: "weight initialization He Kaiming initialization Xavier Glorot normal uniform variance scaling",
+      },
+      {
+        id: "dl-forward-pass",
+        stepNumber: 3,
+        label: "3. Tensor Forward Propagation",
+        badge: "⚡ MatMul & Layer Graph",
+        searchQuery: "forward pass tensor matrix multiplication linear layers activations computational graph",
+      },
+      {
+        id: "dl-loss-computation",
+        stepNumber: 4,
+        label: "4. Loss Function Computation",
+        badge: "🎯 CrossEntropy & MSE",
+        searchQuery: "loss computation cross entropy loss MSE Huber focal loss logits label smoothing",
+      },
+      {
+        id: "dl-autograd-backprop",
+        stepNumber: 5,
+        label: "5. Autograd & Backpropagation",
+        badge: "📉 Computational Graph & ∇W",
+        searchQuery: "PyTorch Autograd backward dynamic computational graph gradient calculation chain rule vector Jacobian",
+      },
+      {
+        id: "dl-optimizer-step",
+        stepNumber: 6,
+        label: "6. Optimizer Update Step",
+        badge: "🚀 AdamW, SGD & Weight Decay",
+        searchQuery: "optimizer step AdamW SGD with momentum decoupled weight decay gradient descent parameter update",
+      },
+      {
+        id: "dl-lr-scheduling",
+        stepNumber: 7,
+        label: "7. Learning Rate Warmup & Cosine",
+        badge: "📈 Warmup & Cosine Annealing",
+        searchQuery: "learning rate schedule linear warmup cosine annealing cyclic learning rate OneCycleLR",
+      },
+      {
+        id: "dl-regularization-norm",
+        stepNumber: 8,
+        label: "8. Regularization & Normalization",
+        badge: "🛡️ LayerNorm, BatchNorm & Dropout",
+        searchQuery: "LayerNorm Batch Normalization Dropout inverted dropout weight decay gradient clipping",
+      },
+      {
+        id: "dl-checkpoint-eval",
+        stepNumber: 9,
+        label: "9. Model Checkpoint & Validation",
+        badge: "💾 State Dict & Loss Curves",
+        searchQuery: "model checkpoint state dict save load validation loop loss curves early stopping safetensors",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1529,8 +1606,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "perf") return PERF_GROUP_CARDS;
   if (category === "aimath") return AIMATH_GROUP_CARDS;
   if (category === "mlcore") return MLCORE_GROUP_CARDS;
+  if (category === "deeplearning") return DEEPLEARNING_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

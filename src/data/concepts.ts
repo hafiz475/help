@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -168,8 +168,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "deeplearning",
+    name: "17. Deep Learning",
+    title: "Neural Networks, Backpropagation & Transformers",
+    description: "Feedforward Perceptrons, Autograd, AdamW, Attention & Distributed Training",
+    color: "#7c3aed", // Deep Amethyst
+    icon: "CircuitBoard",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "17. OOP (4 Pillars)",
+    name: "18. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -178,7 +187,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "18. DSA",
+    name: "19. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -187,7 +196,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "19. Big O",
+    name: "20. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -201,7 +210,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 219,
+    count: 229,
   },
 ];
 
@@ -361,6 +370,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "machine learning supervised unsupervised regression classification clustering decision trees",
     badge: "Learning Systems",
     color: "#0284c7",
+  },
+  {
+    id: "root-deeplearning",
+    label: "Deep Learning",
+    category: "deeplearning",
+    level: 0,
+    searchQuery: "deep learning neural networks backpropagation autograd transformers attention pytorch",
+    badge: "Neural Networks",
+    color: "#7c3aed",
   },
   {
     id: "root-oop",
@@ -2453,7 +2471,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 17. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 17. DEEP LEARNING (NEURAL NETWORKS & TRANSFORMERS)
+  // ==========================================
+  // Pillar 1: Neural Network Architecture & Activations
+  {
+    id: "dl-architecture-pillar",
+    label: "Neural Network Architectures",
+    category: "deeplearning",
+    parentId: "root-deeplearning",
+    level: 1,
+    searchQuery: "deep learning neural network architectures multilayer perceptron activations transformers",
+    badge: "Perceptrons & Tensors",
+    color: "#6d28d9",
+  },
+  {
+    id: "dl-feedforward-perceptrons",
+    label: "Multilayer Perceptrons (MLP)",
+    category: "deeplearning",
+    parentId: "dl-architecture-pillar",
+    level: 2,
+    searchQuery: "multilayer perceptron MLP dense linear layers weights biases forward propagation universal approximation",
+    badge: "Dense Layers & Biases",
+    color: "#7c3aed",
+  },
+  {
+    id: "dl-activation-functions",
+    label: "Non-Linear Activation Functions",
+    category: "deeplearning",
+    parentId: "dl-architecture-pillar",
+    level: 2,
+    searchQuery: "activation functions ReLU LeakyReLU GELU SiLU Swish Sigmoid Tanh dead relu non-linearity",
+    badge: "ReLU, GELU & Swish",
+    color: "#a78bfa",
+  },
+  {
+    id: "dl-transformers-attention",
+    label: "Self-Attention & Transformers",
+    category: "deeplearning",
+    parentId: "dl-architecture-pillar",
+    level: 2,
+    searchQuery: "self-attention mechanism query key value QKV scaled dot product multi-head attention transformer architecture",
+    badge: "Q, K, V & Multi-Head",
+    color: "#c4b5fd",
+  },
+
+  // Pillar 2: 9-Stage Deep Learning Pipeline (Group Card)
+  {
+    id: "dl-pipeline-pillar",
+    label: "9-Stage Deep Learning Pipeline",
+    category: "deeplearning",
+    parentId: "root-deeplearning",
+    level: 1,
+    searchQuery: "deep learning training pipeline pytorch dataset dataloader autograd backpropagation optimizer step lr scheduling",
+    badge: "9 Sequential Stages",
+    color: "#5b21b6",
+  },
+
+  // Pillar 3: Optimization & Gradient Dynamics
+  {
+    id: "dl-optimization-pillar",
+    label: "Optimization & Loss Dynamics",
+    category: "deeplearning",
+    parentId: "root-deeplearning",
+    level: 1,
+    searchQuery: "deep learning optimization vanishing exploding gradients loss surfaces saddle points mixed precision DDP",
+    badge: "Convergence & Gradients",
+    color: "#4c1d95",
+  },
+  {
+    id: "dl-vanishing-exploding-grad",
+    label: "Vanishing & Exploding Gradients",
+    category: "deeplearning",
+    parentId: "dl-optimization-pillar",
+    level: 2,
+    searchQuery: "vanishing gradient exploding gradient residual connections skip connections gradient clipping norm",
+    badge: "ResNet Skips & ClipNorm",
+    color: "#7c3aed",
+  },
+  {
+    id: "dl-loss-surfaces",
+    label: "Loss Landscapes & Local Minima",
+    category: "deeplearning",
+    parentId: "dl-optimization-pillar",
+    level: 2,
+    searchQuery: "loss landscape non-convex optimization saddle points local minima flat minima generalization SGD noise",
+    badge: "Saddle Points & Flat Minima",
+    color: "#a78bfa",
+  },
+  {
+    id: "dl-distributed-training",
+    label: "Mixed Precision & Distributed (DDP)",
+    category: "deeplearning",
+    parentId: "dl-optimization-pillar",
+    level: 2,
+    searchQuery: "mixed precision FP16 BF16 automatic mixed precision AMP DistributedDataParallel DDP all-reduce multi-GPU",
+    badge: "FP16/BF16 & AMP",
+    color: "#c4b5fd",
+  },
+
+  // ==========================================
+  // 18. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

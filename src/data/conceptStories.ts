@@ -7832,6 +7832,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // 17. DEEP LEARNING (NEURAL NETWORKS & TRANSFORMERS) STORIES
+  // ==========================================
+  "root-deeplearning": {
+    id: "root-deeplearning",
+    title: "Deep Learning",
+    badge: "Neural Networks",
+    tagline: "Composing parameterized non-linear layers into differentiable computational graphs trained via gradient descent",
+    takeaways: [
+      {
+        id: "dl-r1",
+        text: "Deep learning scales machine learning by replacing manual feature engineering with hierarchical representation learning directly from raw tensors.",
+        searchPrompt: "what is deep learning representation learning differentiable programming",
+        emoji: "🧠",
+        reactionCount: "5.7k",
+        commentCount: 460,
+      },
+      {
+        id: "dl-r2",
+        text: "Universal Approximation Theorems prove that neural networks can approximate any continuous function, with depth providing exponential parameter efficiency.",
+        searchPrompt: "universal approximation theorem depth vs width efficiency neural networks",
+        emoji: "📐",
+        reactionCount: "5.1k",
+        commentCount: 395,
+      },
+      {
+        id: "dl-r3",
+        text: "Modern deep learning revolves around differentiable programming: framing computation as an end-to-end directed acyclic graph optimized by automatic differentiation.",
+        searchPrompt: "differentiable programming computational graphs automatic differentiation",
+        emoji: "⚡",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "dl-architecture-pillar": {
+    id: "dl-architecture-pillar",
+    title: "Neural Network Architectures",
+    badge: "Perceptrons & Tensors",
+    tagline: "Structural blueprints organizing artificial neurons, non-linear activations, and attention layers",
+    takeaways: [
+      {
+        id: "dl-ap1",
+        text: "Architectures encode inductive biases: MLPs assume no geometric prior, CNNs assume translation equivariance, and Transformers assume permutation equivariance.",
+        searchPrompt: "inductive bias neural network architectures MLP CNN Transformer comparison",
+        emoji: "🏛️",
+        reactionCount: "5.2k",
+        commentCount: 410,
+      },
+      {
+        id: "dl-ap2",
+        text: "Layer stacking transforms low-level raw inputs into progressively abstract semantic embeddings in high-dimensional vector spaces.",
+        searchPrompt: "hierarchical representation learning deep layers semantic abstraction",
+        emoji: "🧱",
+        reactionCount: "4.9k",
+        commentCount: 375,
+      },
+      {
+        id: "dl-ap3",
+        text: "Residual skip connections and normalization layers are critical architectural backbones that stabilize gradient signals across hundreds of stacked layers.",
+        searchPrompt: "residual connections normalization deep architecture stability",
+        emoji: "🛡️",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "dl-feedforward-perceptrons": {
+    id: "dl-feedforward-perceptrons",
+    title: "Multilayer Perceptrons (MLP)",
+    badge: "Dense Layers & Biases",
+    tagline: "Foundational feedforward architecture stacking affine linear transformations and point-wise activations",
+    takeaways: [
+      {
+        id: "dl-ff1",
+        text: "Each dense layer computes an affine linear transformation y = Wx + b followed by non-linear activation σ(y), projecting inputs across latent dimensionalities.",
+        searchPrompt: "multilayer perceptron dense linear layer affine transformation forward pass",
+        emoji: "⚡",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+      {
+        id: "dl-ff2",
+        text: "Without non-linear activations between dense layers, stacking any number of linear transformations collapses into a single trivial linear layer W₂W₁x = W'x.",
+        searchPrompt: "why neural networks need non linear activation functions collapse proof",
+        emoji: "📐",
+        reactionCount: "5.3k",
+        commentCount: 425,
+      },
+      {
+        id: "dl-ff3",
+        text: "Weight matrices parameterize connection strengths between layers, while bias vectors shift activation thresholds independently of input magnitudes.",
+        searchPrompt: "neural network weights and biases role in decision boundary shift",
+        emoji: "⚖️",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "dl-activation-functions": {
+    id: "dl-activation-functions",
+    title: "Non-Linear Activation Functions",
+    badge: "ReLU, GELU & Swish",
+    tagline: "Infusing non-linear curvature into latent space to separate complex non-convex decision boundaries",
+    takeaways: [
+      {
+        id: "dl-af1",
+        text: "Rectified Linear Unit (ReLU) f(x) = max(0, x) prevents gradient saturation for positive inputs, but can cause neurons to permanently die if activations stay negative.",
+        searchPrompt: "ReLU activation dying ReLU problem LeakyReLU comparison",
+        emoji: "⚡",
+        reactionCount: "5.1k",
+        commentCount: 410,
+      },
+      {
+        id: "dl-af2",
+        text: "Gaussian Error Linear Unit (GELU, f(x) = x · Φ(x)) provides smooth non-zero gradients for negative inputs, standard in modern Transformers like BERT and GPT.",
+        searchPrompt: "GELU vs ReLU activation functions Transformer language models",
+        emoji: "🌊",
+        reactionCount: "4.8k",
+        commentCount: 365,
+      },
+      {
+        id: "dl-af3",
+        text: "Sigmoid and Tanh activations are primarily restricted to gates (LSTM, GRU) or output probabilities due to vanishing gradients in saturated tails where σ'(x) ≈ 0.",
+        searchPrompt: "vanishing gradients sigmoid tanh saturation backpropagation",
+        emoji: "📉",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "dl-transformers-attention": {
+    id: "dl-transformers-attention",
+    title: "Self-Attention & Transformers",
+    badge: "Q, K, V & Multi-Head",
+    tagline: "Dynamically routing contextual information across sequence tokens using scaled dot-product attention",
+    takeaways: [
+      {
+        id: "dl-ta1",
+        text: "Self-attention computes Attention(Q, K, V) = softmax(QKᵀ / √dₖ) V, allowing every token in a sequence to attend directly to every other token in O(1) path length.",
+        searchPrompt: "scaled dot product attention mechanism query key value explained",
+        emoji: "🎯",
+        reactionCount: "5.8k",
+        commentCount: 490,
+      },
+      {
+        id: "dl-ta2",
+        text: "The scaling factor 1/√dₖ prevents dot products from growing excessively large in high dimensions, preventing softmax gradients from vanishing.",
+        searchPrompt: "why scale dot product by square root of head dimension attention",
+        emoji: "📐",
+        reactionCount: "5.2k",
+        commentCount: 415,
+      },
+      {
+        id: "dl-ta3",
+        text: "Multi-Head Attention projects Q, K, and V into h distinct representation subspaces, enabling the model to simultaneously attend to syntactic, positional, and semantic relationships.",
+        searchPrompt: "multi head attention projection representation subspaces transformer",
+        emoji: "🔮",
+        reactionCount: "5.4k",
+        commentCount: 440,
+      },
+    ],
+  },
+
+  "dl-pipeline-pillar": {
+    id: "dl-pipeline-pillar",
+    title: "9-Stage Deep Learning Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "End-to-end disciplined PyTorch training workflow from tensor batching to checkpoint validation",
+    takeaways: [
+      {
+        id: "dl-pp1",
+        text: "Deep learning workflows require rigid orchestration across dataset streaming, tensor forward passes, loss calculation, backward propagation, and optimizer stepping.",
+        searchPrompt: "PyTorch training loop architecture dataset dataloader forward backward step",
+        emoji: "🏗️",
+        reactionCount: "5.3k",
+        commentCount: 435,
+      },
+      {
+        id: "dl-pp2",
+        text: "GPU VRAM bottlenecks and CPU-GPU data transfer latencies often dominate total training time more than theoretical arithmetic FLOP throughput.",
+        searchPrompt: "GPU VRAM bottleneck pinned memory CPU GPU transfer bottleneck deep learning",
+        emoji: "💾",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+      {
+        id: "dl-pp3",
+        text: "Reproducible deep learning training mandates deterministic seeding, decoupled state dictionaries, and synchronized distributed gradient all-reduce barriers.",
+        searchPrompt: "reproducible deep learning PyTorch seed deterministic training",
+        emoji: "🔒",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "dl-optimization-pillar": {
+    id: "dl-optimization-pillar",
+    title: "Optimization & Loss Dynamics",
+    badge: "Convergence & Gradients",
+    tagline: "Traversing high-dimensional non-convex loss surfaces and maintaining gradient stability",
+    takeaways: [
+      {
+        id: "dl-op1",
+        text: "Loss surfaces in deep models feature ubiquitous saddle points rather than isolated local minima, demanding momentum-based optimizers to escape plateaus.",
+        searchPrompt: "saddle points loss surface optimization escaping plateaus momentum",
+        emoji: "🏔️",
+        reactionCount: "5.0k",
+        commentCount: 390,
+      },
+      {
+        id: "dl-op2",
+        text: "Gradient stability is governed by the spectral radius of layer weight matrices; ill-conditioned matrices lead to exploding or decaying backprop signals.",
+        searchPrompt: "spectral radius weight matrices gradient stability condition number",
+        emoji: "⚖️",
+        reactionCount: "4.7k",
+        commentCount: 355,
+      },
+      {
+        id: "dl-op3",
+        text: "Distributed Data Parallel (DDP) distributes training batches across multiple GPUs, performing asynchronous ring all-reduce operations to synchronize gradients.",
+        searchPrompt: "PyTorch DistributedDataParallel DDP NCCL ring all reduce multi GPU",
+        emoji: "🚀",
+        reactionCount: "5.2k",
+        commentCount: 420,
+      },
+    ],
+  },
+
+  "dl-vanishing-exploding-grad": {
+    id: "dl-vanishing-exploding-grad",
+    title: "Vanishing & Exploding Gradients",
+    badge: "ResNet Skips & ClipNorm",
+    tagline: "Combating exponential gradient decay and runaway divergence across deep computational graphs",
+    takeaways: [
+      {
+        id: "dl-vg1",
+        text: "By the Chain Rule, gradients across L layers involve repeated matrix multiplications ∏Wₗ; if singular values are < 1, gradients vanish; if > 1, they explode to NaN.",
+        searchPrompt: "vanishing exploding gradients chain rule matrix product singular values",
+        emoji: "📉",
+        reactionCount: "5.1k",
+        commentCount: 405,
+      },
+      {
+        id: "dl-vg2",
+        text: "Residual connections (ResNet, x + F(x)) create direct highway gradients ∂(x + F(x))/∂x = I + ∂F(x)/∂x, guaranteeing that gradient signals flow unattenuated to early layers.",
+        searchPrompt: "ResNet skip connections mathematical gradient highway identity mapping",
+        emoji: "🛣️",
+        reactionCount: "5.5k",
+        commentCount: 460,
+      },
+      {
+        id: "dl-vg3",
+        text: "Gradient Clipping (torch.nn.utils.clip_grad_norm_) rescales the collective gradient vector whenever its L2 norm exceeds a maximum threshold, preventing catastrophic updates.",
+        searchPrompt: "gradient clipping clip_grad_norm threshold prevent exploding gradients",
+        emoji: "✂️",
+        reactionCount: "4.8k",
+        commentCount: 370,
+      },
+    ],
+  },
+
+  "dl-loss-surfaces": {
+    id: "dl-loss-surfaces",
+    title: "Loss Landscapes & Local Minima",
+    badge: "Saddle Points & Flat Minima",
+    tagline: "Analyzing non-convex optimization geometry and generalization properties of flat vs sharp minima",
+    takeaways: [
+      {
+        id: "dl-ls1",
+        text: "In high-dimensional parameter spaces (millions of weights), almost all critical points where ∇L = 0 are saddle points with both positive and negative eigenvalues, not true local minima.",
+        searchPrompt: "saddle points vs local minima high dimensional non-convex optimization",
+        emoji: "🌌",
+        reactionCount: "4.9k",
+        commentCount: 385,
+      },
+      {
+        id: "dl-ls2",
+        text: "Flat minima generalize significantly better to unseen test distributions than sharp minima, because slight shifts in test data distribution incur minimal loss penalties.",
+        searchPrompt: "flat minima vs sharp minima generalization gap loss landscape",
+        emoji: "🏞️",
+        reactionCount: "5.3k",
+        commentCount: 430,
+      },
+      {
+        id: "dl-ls3",
+        text: "Stochastic Gradient Descent (SGD) with moderate mini-batch noise acts as implicit regularization, kicking optimization trajectories out of sharp ravines into flat basins.",
+        searchPrompt: "SGD implicit regularization mini batch noise flat basin escape",
+        emoji: "🎲",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "dl-distributed-training": {
+    id: "dl-distributed-training",
+    title: "Mixed Precision & Distributed (DDP)",
+    badge: "FP16/BF16 & AMP",
+    tagline: "Scaling tensor training across GPU clusters using automatic mixed precision and all-reduce parallelism",
+    takeaways: [
+      {
+        id: "dl-dt1",
+        text: "Automatic Mixed Precision (torch.cuda.amp.autocast) executes matrix multiplications in FP16/BF16 Tensor Cores while maintaining master weights in FP32, doubling throughput.",
+        searchPrompt: "automatic mixed precision AMP PyTorch FP16 BF16 Tensor Cores",
+        emoji: "⚡",
+        reactionCount: "5.4k",
+        commentCount: 445,
+      },
+      {
+        id: "dl-dt2",
+        text: "GradScaler dynamically scales loss by a factor (e.g. 2¹⁶) before backprop to prevent FP16 gradient underflow, descaling gradients prior to optimizer steps.",
+        searchPrompt: "GradScaler loss scaling FP16 gradient underflow prevention PyTorch",
+        emoji: "📈",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+      {
+        id: "dl-dt3",
+        text: "DistributedDataParallel (DDP) spawns one process per GPU, computing local forward/backward passes and interleaving NCCL ring-all-reduce gradient synchronization concurrently with backward passes.",
+        searchPrompt: "DistributedDataParallel DDP overlapping computation communication NCCL",
+        emoji: "🌐",
+        reactionCount: "5.2k",
+        commentCount: 415,
+      },
+    ],
+  },
+
+  // 9-Stage Deep Learning Pipeline Group Card Items
+  "dl-dataset-dataloader": {
+    id: "dl-dataset-dataloader",
+    title: "1. PyTorch Dataset & DataLoader",
+    badge: "📦 Batching & Workers",
+    tagline: "Efficient multi-threaded data loading, tensor transformations, and pinned host-to-device streaming",
+    takeaways: [
+      {
+        id: "dl-dd1",
+        text: "torch.utils.data.Dataset encapsulates raw data access and augmentation pipelines via __len__ and __getitem__ methods.",
+        searchPrompt: "PyTorch custom Dataset class __len__ __getitem__ best practices",
+        emoji: "📦",
+        reactionCount: "4.8k",
+        commentCount: 370,
+      },
+      {
+        id: "dl-dd2",
+        text: "DataLoader uses multi-process worker pools (num_workers > 0) to preload batches into CPU memory while the GPU processes the active batch, eliminating GPU starvation.",
+        searchPrompt: "PyTorch DataLoader num_workers prefetch GPU starvation prevention",
+        emoji: "🔄",
+        reactionCount: "4.7k",
+        commentCount: 355,
+      },
+      {
+        id: "dl-dd3",
+        text: "Setting pin_memory=True locks host RAM pages, enabling asynchronous Direct Memory Access (DMA) transfer to GPU memory without CPU cycle overhead.",
+        searchPrompt: "pin_memory True PyTorch page locked memory CUDA DMA transfer",
+        emoji: "⚡",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "dl-weight-init": {
+    id: "dl-weight-init",
+    title: "2. Weight Initialization",
+    badge: "🎲 He & Xavier / Glorot",
+    tagline: "Setting initial parameter variance to prevent layer activations from vanishing or exploding on step 0",
+    takeaways: [
+      {
+        id: "dl-wi1",
+        text: "Initializing weights to exact zeros breaks symmetry: all hidden neurons compute identical activations and receive identical gradients, preventing feature specialization.",
+        searchPrompt: "symmetry breaking zero initialization failure neural networks",
+        emoji: "⚠️",
+        reactionCount: "5.1k",
+        commentCount: 420,
+      },
+      {
+        id: "dl-wi2",
+        text: "Xavier / Glorot initialization samples weights from N(0, 2 / (fan_in + fan_out)), preserving activation variance across Tanh and Sigmoid activation layers.",
+        searchPrompt: "Xavier Glorot initialization variance preservation tanh sigmoid",
+        emoji: "📐",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "dl-wi3",
+        text: "He / Kaiming initialization samples from N(0, 2 / fan_in), calibrated specifically for ReLU/GELU activations to account for half of the neurons zeroing out.",
+        searchPrompt: "He Kaiming initialization ReLU activation variance scaling",
+        emoji: "🎯",
+        reactionCount: "4.9k",
+        commentCount: 385,
+      },
+    ],
+  },
+
+  "dl-forward-pass": {
+    id: "dl-forward-pass",
+    title: "3. Tensor Forward Propagation",
+    badge: "⚡ MatMul & Layer Graph",
+    tagline: "Executing batched tensor matrix multiplications and caching intermediate activations for backprop",
+    takeaways: [
+      {
+        id: "dl-fp1",
+        text: "Inputs propagate forward through linear layers and activations: h = σ(W · X + b), constructing a dynamic Directed Acyclic Graph (DAG) on the fly.",
+        searchPrompt: "forward pass PyTorch module forward method computational graph",
+        emoji: "⚡",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+      {
+        id: "dl-fp2",
+        text: "PyTorch Autograd records all tensor operations where requires_grad=True, holding forward activation tensors in GPU memory for use during the backward pass.",
+        searchPrompt: "PyTorch requires_grad activation caching backward graph memory",
+        emoji: "🧠",
+        reactionCount: "4.8k",
+        commentCount: 365,
+      },
+      {
+        id: "dl-fp3",
+        text: "During inference or validation, wrapping execution in `torch.no_grad()` prevents Autograd from allocating computation graphs, cutting VRAM usage by 50%.",
+        searchPrompt: "torch no_grad inference memory reduction PyTorch",
+        emoji: "🚀",
+        reactionCount: "5.3k",
+        commentCount: 435,
+      },
+    ],
+  },
+
+  "dl-loss-computation": {
+    id: "dl-loss-computation",
+    title: "4. Loss Function Computation",
+    badge: "🎯 CrossEntropy & MSE",
+    tagline: "Quantifying discrepancy between model prediction logits and ground-truth target tensors",
+    takeaways: [
+      {
+        id: "dl-lc1",
+        text: "Loss functions reduce multidimensional prediction error into a single scalar metric; Mean Squared Error (MSE) measures Euclidean deviation for regression.",
+        searchPrompt: "regression loss functions MSE MAE Huber loss comparison",
+        emoji: "📉",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+      {
+        id: "dl-lc2",
+        text: "CrossEntropyLoss merges LogSoftmax and Negative Log Likelihood (NLLLoss) into a fused CUDA kernel for optimal numerical stability and prevention of log(0) NaN crashes.",
+        searchPrompt: "CrossEntropyLoss fused log_softmax NLLLoss numerical stability",
+        emoji: "🎯",
+        reactionCount: "5.1k",
+        commentCount: 410,
+      },
+      {
+        id: "dl-lc3",
+        text: "Label Smoothing (e.g. ε=0.1) replaces one-hot hard labels with softened probability distributions, preventing logits from exploding to extreme overconfidence.",
+        searchPrompt: "label smoothing regularization cross entropy overconfidence prevention",
+        emoji: "🛡️",
+        reactionCount: "4.7k",
+        commentCount: 365,
+      },
+    ],
+  },
+
+  "dl-autograd-backprop": {
+    id: "dl-autograd-backprop",
+    title: "5. Autograd & Backpropagation",
+    badge: "📉 Computational Graph & ∇W",
+    tagline: "Traversing the dynamic computational graph in reverse to compute exact partial derivatives",
+    takeaways: [
+      {
+        id: "dl-bp1",
+        text: "Invoking `loss.backward()` traverses the dynamic computational graph in reverse from scalar loss to parameter leaves, applying the multivariable Chain Rule.",
+        searchPrompt: "PyTorch loss backward dynamic DAG reverse accumulation Chain Rule",
+        emoji: "📉",
+        reactionCount: "5.5k",
+        commentCount: 465,
+      },
+      {
+        id: "dl-bp2",
+        text: "Autograd calculates Vector-Jacobian Products (VJPs) vᵀJ rather than computing massive full Jacobian matrices, achieving O(N) linear time complexity for scalar losses.",
+        searchPrompt: "vector Jacobian product VJP automatic differentiation reverse mode",
+        emoji: "📐",
+        reactionCount: "5.0k",
+        commentCount: 400,
+      },
+      {
+        id: "dl-bp3",
+        text: "Gradients accumulate into parameter `.grad` buffers via tensor addition; failing to zero gradients between training iterations causes unintended accumulation.",
+        searchPrompt: "PyTorch gradient accumulation zero_grad parameter grad buffer",
+        emoji: "⚠️",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "dl-optimizer-step": {
+    id: "dl-optimizer-step",
+    title: "6. Optimizer Update Step",
+    badge: "🚀 AdamW, SGD & Weight Decay",
+    tagline: "Updating parameter weights using adaptive gradient moments and decoupled L2 weight decay",
+    takeaways: [
+      {
+        id: "dl-os1",
+        text: "Adam maintains running exponential averages of first moments (gradient direction) and second moments (gradient variance) to tailor per-parameter step sizes.",
+        searchPrompt: "Adam optimizer first second moment adaptive learning rate math",
+        emoji: "⚡",
+        reactionCount: "5.2k",
+        commentCount: 420,
+      },
+      {
+        id: "dl-os2",
+        text: "AdamW decouples weight decay from gradient updates (w := w - ηλw - η m̂ₜ / (√v̂ₜ + ε)), penalizing large weights properly unlike standard Adam with L2 regularization.",
+        searchPrompt: "AdamW decoupled weight decay Loshchilov Hutter Adam difference",
+        emoji: "🚀",
+        reactionCount: "5.4k",
+        commentCount: 450,
+      },
+      {
+        id: "dl-os3",
+        text: "Preferred loop idiom: `optimizer.zero_grad(set_to_none=True)` deallocates gradient memory instead of writing zeros, accelerating subsequent backward passes.",
+        searchPrompt: "optimizer zero_grad set_to_none True performance benefit PyTorch",
+        emoji: "💡",
+        reactionCount: "4.8k",
+        commentCount: 375,
+      },
+    ],
+  },
+
+  "dl-lr-scheduling": {
+    id: "dl-lr-scheduling",
+    title: "7. Learning Rate Warmup & Cosine",
+    badge: "📈 Warmup & Cosine Annealing",
+    tagline: "Dynamically scaling step sizes across epochs to balance early stability and late convergence",
+    takeaways: [
+      {
+        id: "dl-ls1-stage",
+        text: "Learning rate warmup linearly scales η from 0 to target value across the initial 1-5% of steps, preventing uncalibrated early gradients from corrupting initial weights.",
+        searchPrompt: "learning rate warmup purpose transformer training stability",
+        emoji: "📈",
+        reactionCount: "4.9k",
+        commentCount: 390,
+      },
+      {
+        id: "dl-ls2-stage",
+        text: "Cosine Annealing smoothly reduces learning rate following a half-cosine curve toward a small minimum, allowing parameters to settle into deep, fine-grained minima.",
+        searchPrompt: "cosine annealing learning rate schedule CosineAnnealingLR PyTorch",
+        emoji: "📉",
+        reactionCount: "4.8k",
+        commentCount: 370,
+      },
+      {
+        id: "dl-ls3-stage",
+        text: "OneCycleLR pairs learning rate warmup and cosine cooldown with inverse momentum scheduling, reducing required training iterations by up to 50% (Super-Convergence).",
+        searchPrompt: "OneCycleLR super convergence Leslie Smith learning rate policy",
+        emoji: "🏎️",
+        reactionCount: "5.0k",
+        commentCount: 410,
+      },
+    ],
+  },
+
+  "dl-regularization-norm": {
+    id: "dl-regularization-norm",
+    title: "8. Regularization & Normalization",
+    badge: "🛡️ LayerNorm, BatchNorm & Dropout",
+    tagline: "Stabilizing internal covariate shifts and preventing co-adaptation of specialized neural features",
+    takeaways: [
+      {
+        id: "dl-rn1",
+        text: "Batch Normalization normalizes activations across mini-batch samples; while effective in CNNs, it introduces small-batch variance and state dependency during inference.",
+        searchPrompt: "Batch Normalization internal covariate shift batch size dependency",
+        emoji: "⚖️",
+        reactionCount: "4.7k",
+        commentCount: 350,
+      },
+      {
+        id: "dl-rn2",
+        text: "Layer Normalization normalizes across channel features for each token independently, making it batch-size invariant and the universal standard for Transformers.",
+        searchPrompt: "Layer Normalization vs Batch Normalization transformer architecture",
+        emoji: "📏",
+        reactionCount: "5.1k",
+        commentCount: 415,
+      },
+      {
+        id: "dl-rn3",
+        text: "Dropout randomly zeroes neuron activations during training with probability p, preventing co-adaptation and forcing the network to learn redundant robust sub-networks.",
+        searchPrompt: "Dropout inverted dropout training vs evaluation mode PyTorch",
+        emoji: "🛡️",
+        reactionCount: "4.8k",
+        commentCount: 375,
+      },
+    ],
+  },
+
+  "dl-checkpoint-eval": {
+    id: "dl-checkpoint-eval",
+    title: "9. Model Checkpoint & Validation",
+    badge: "💾 State Dict & Loss Curves",
+    tagline: "Persisting weights, tracking validation loss metrics, and preventing overfitting via early stopping",
+    takeaways: [
+      {
+        id: "dl-ce1",
+        text: "Persist weights using `torch.save(model.state_dict(), path)` rather than serializing the entire Python model class, ensuring long-term code decoupling.",
+        searchPrompt: "save model state_dict vs full model pickle PyTorch best practice",
+        emoji: "💾",
+        reactionCount: "5.0k",
+        commentCount: 395,
+      },
+      {
+        id: "dl-ce2",
+        text: "Bundle model state_dict, optimizer state_dict, scheduler state, and current epoch into a dictionary checkpoint to allow seamless resumption after spot instance preemption.",
+        searchPrompt: "complete training checkpoint PyTorch resume training spot instances",
+        emoji: "🔄",
+        reactionCount: "4.8k",
+        commentCount: 365,
+      },
+      {
+        id: "dl-ce3",
+        text: "Modern production pipelines use `safetensors` format: zero-copy memory mapping that is 5x faster than pickle while eliminating arbitrary code execution security risks.",
+        searchPrompt: "safetensors format HuggingFace zero copy security vs pickle",
+        emoji: "🔒",
+        reactionCount: "5.2k",
+        commentCount: 425,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -9348,6 +9979,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "AI & Math Prereqs"
       : node.category === "mlcore"
       ? "Machine Learning"
+      : node.category === "deeplearning"
+      ? "Deep Learning"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

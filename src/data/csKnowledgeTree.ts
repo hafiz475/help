@@ -893,10 +893,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-deep-learning",
-            name: "Deep Learning (Neural Networks, Transformers)",
-            isAvailable: false,
-            badge: "Roadmap",
+            name: "Deep Learning (Neural Networks, Transformers) ★",
+            categoryId: "deeplearning",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
             description: "Feedforward networks, backpropagation, activation functions, and attention layers",
+            color: "#7c3aed",
           },
           {
             id: "topic-nlp-llms",

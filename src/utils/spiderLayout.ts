@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -979,6 +979,8 @@ export function calculateGroupLayout(
         ? "AI & Math Prereqs"
         : category === "mlcore"
         ? "Machine Learning"
+        : category === "deeplearning"
+        ? "Deep Learning"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1019,6 +1021,8 @@ export function calculateGroupLayout(
         ? "Tensor Foundations"
         : category === "mlcore"
         ? "Learning Systems"
+        : category === "deeplearning"
+        ? "Neural Networks"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1051,6 +1055,8 @@ export function calculateGroupLayout(
         ? "#d946ef"
         : category === "mlcore"
         ? "#0284c7"
+        : category === "deeplearning"
+        ? "#7c3aed"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -4189,6 +4195,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 3C: Deep Learning (Neural Networks & Transformers) Hub (placed at x = -1300, y = -2550)
+    const deepHubX = -1300;
+    const deepHubY = -2550;
+    const deepHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-deeplearning")!,
+      x: deepHubX,
+      y: deepHubY,
+      level: 1,
+      branchIndex: 3,
+    };
+    positionedNodes.push(deepHubNode);
+    edges.push({
+      source: mlHubNode.id,
+      target: deepHubNode.id,
+      category: "deeplearning",
+      level: 1,
+      branchIndex: 3,
+    });
+
+    // DL Node 1: Neural Network Architectures (Left-Up)
+    const archRaw = allNodes.find((n) => n.id === "dl-architecture-pillar");
+    if (archRaw) {
+      const archX = deepHubX - 650;
+      const archY = deepHubY - 180;
+      const archNode: PositionedNode = {
+        ...archRaw,
+        x: archX,
+        y: archY,
+        level: 3,
+        branchIndex: 3,
+      };
+      positionedNodes.push(archNode);
+      edges.push({
+        source: deepHubNode.id,
+        target: archNode.id,
+        category: "deeplearning",
+        level: 3,
+        branchIndex: 3,
+      });
+
+      const mlpRaw = allNodes.find((n) => n.id === "dl-feedforward-perceptrons");
+      if (mlpRaw) {
+        positionedNodes.push({
+          ...mlpRaw,
+          x: archX - 320,
+          y: archY - 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: archNode.id,
+          target: mlpRaw.id,
+          category: "deeplearning",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const actRaw = allNodes.find((n) => n.id === "dl-activation-functions");
+      if (actRaw) {
+        positionedNodes.push({
+          ...actRaw,
+          x: archX - 320,
+          y: archY,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: archNode.id,
+          target: actRaw.id,
+          category: "deeplearning",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const tfRaw = allNodes.find((n) => n.id === "dl-transformers-attention");
+      if (tfRaw) {
+        positionedNodes.push({
+          ...tfRaw,
+          x: archX - 320,
+          y: archY + 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: archNode.id,
+          target: tfRaw.id,
+          category: "deeplearning",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+    }
+
+    // DL Node 2: 9-Stage Deep Learning Pipeline (Group Card, Left-Center)
+    const dlCard = cardByPillar.get("dl-pipeline-pillar");
+    if (dlCard) {
+      const cardX = deepHubX - 800;
+      const cardY = deepHubY;
+      const posCard: PositionedGroupCard = {
+        ...dlCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 3,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: deepHubNode.id,
+        target: dlCard.id,
+        category: "deeplearning",
+        level: 3,
+        branchIndex: 3,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 3);
+    }
+
+    // DL Node 3: Optimization & Loss Dynamics (Left-Down)
+    const optRaw = allNodes.find((n) => n.id === "dl-optimization-pillar");
+    if (optRaw) {
+      const optX = deepHubX - 650;
+      const optY = deepHubY + 180;
+      const optNode: PositionedNode = {
+        ...optRaw,
+        x: optX,
+        y: optY,
+        level: 3,
+        branchIndex: 3,
+      };
+      positionedNodes.push(optNode);
+      edges.push({
+        source: deepHubNode.id,
+        target: optNode.id,
+        category: "deeplearning",
+        level: 3,
+        branchIndex: 3,
+      });
+
+      const gradRaw = allNodes.find((n) => n.id === "dl-vanishing-exploding-grad");
+      if (gradRaw) {
+        positionedNodes.push({
+          ...gradRaw,
+          x: optX - 320,
+          y: optY - 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: optNode.id,
+          target: gradRaw.id,
+          category: "deeplearning",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const surfRaw = allNodes.find((n) => n.id === "dl-loss-surfaces");
+      if (surfRaw) {
+        positionedNodes.push({
+          ...surfRaw,
+          x: optX - 320,
+          y: optY,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: optNode.id,
+          target: surfRaw.id,
+          category: "deeplearning",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const distRaw = allNodes.find((n) => n.id === "dl-distributed-training");
+      if (distRaw) {
+        positionedNodes.push({
+          ...distRaw,
+          x: optX - 320,
+          y: optY + 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: optNode.id,
+          target: distRaw.id,
+          category: "deeplearning",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+    }
+
     // Automated overlap prevention relaxation pass
     preventLayoutOverlaps(positionedNodes, positionedCards);
 
@@ -4247,6 +4446,8 @@ export function calculateGroupLayout(
     pillarIds = ["aimath-linear-algebra-pillar", "aimath-pipeline-pillar", "aimath-probability-calc-pillar"];
   } else if (category === "mlcore") {
     pillarIds = ["mlcore-supervised-pillar", "mlcore-pipeline-pillar", "mlcore-unsupervised-eval-pillar"];
+  } else if (category === "deeplearning") {
+    pillarIds = ["dl-architecture-pillar", "dl-pipeline-pillar", "dl-optimization-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -4580,6 +4781,11 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
+    const deepRoot = {
+      ...allNodes.find((n) => n.id === "root-deeplearning")!,
+      parentId: "root-all",
+      level: 1,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -4617,13 +4823,14 @@ export function getNodesForCategory(
         n.id !== "root-perf" &&
         n.id !== "root-aimath" &&
         n.id !== "root-mlcore" &&
+        n.id !== "root-deeplearning" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }
