@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -159,8 +159,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "mlcore",
+    name: "16. Machine Learning",
+    title: "Supervised, Unsupervised & Ensemble Learning",
+    description: "Linear & Logistic Regression, Decision Trees, Random Forests, K-Means, SVMs, Bias-Variance & Regularization",
+    color: "#0284c7", // Azure Blue
+    icon: "Brain",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "16. OOP (4 Pillars)",
+    name: "17. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -169,7 +178,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "17. DSA",
+    name: "18. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -178,7 +187,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "18. Big O",
+    name: "19. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -192,7 +201,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 209,
+    count: 219,
   },
 ];
 
@@ -343,6 +352,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "AI machine learning mathematics linear algebra probability calculus Python numpy tensors",
     badge: "Tensor Foundations",
     color: "#d946ef",
+  },
+  {
+    id: "root-mlcore",
+    label: "Machine Learning",
+    category: "mlcore",
+    level: 0,
+    searchQuery: "machine learning supervised unsupervised regression classification clustering decision trees",
+    badge: "Learning Systems",
+    color: "#0284c7",
   },
   {
     id: "root-oop",
@@ -2336,7 +2354,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 16. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 16. MACHINE LEARNING (SUPERVISED & UNSUPERVISED)
+  // ==========================================
+  // Pillar 1: Supervised Learning Models
+  {
+    id: "mlcore-supervised-pillar",
+    label: "Supervised Learning Models",
+    category: "mlcore",
+    parentId: "root-mlcore",
+    level: 1,
+    searchQuery: "supervised learning linear logistic regression decision trees SVM naive bayes",
+    badge: "Labeled Ground Truth",
+    color: "#0369a1",
+  },
+  {
+    id: "mlcore-regression-models",
+    label: "Linear & Logistic Regression",
+    category: "mlcore",
+    parentId: "mlcore-supervised-pillar",
+    level: 2,
+    searchQuery: "linear regression ordinary least squares logistic regression sigmoid log loss binary classification",
+    badge: "Continuous & Sigmoid Odds",
+    color: "#0284c7",
+  },
+  {
+    id: "mlcore-trees-ensembles",
+    label: "Decision Trees & Random Forests",
+    category: "mlcore",
+    parentId: "mlcore-supervised-pillar",
+    level: 2,
+    searchQuery: "decision trees ID3 CART Gini impurity information gain Random Forest bagging ensemble",
+    badge: "Gini Impurity & Bagging",
+    color: "#38bdf8",
+  },
+  {
+    id: "mlcore-svm-kernels",
+    label: "Support Vector Machines (SVM)",
+    category: "mlcore",
+    parentId: "mlcore-supervised-pillar",
+    level: 2,
+    searchQuery: "Support Vector Machines SVM maximum margin hyperplane kernel trick RBF slack variables",
+    badge: "Max-Margin & RBF Kernel",
+    color: "#7dd3fc",
+  },
+
+  // Pillar 2: 9-Stage Machine Learning Pipeline (Group Card)
+  {
+    id: "mlcore-pipeline-pillar",
+    label: "9-Stage Machine Learning Pipeline",
+    category: "mlcore",
+    parentId: "root-mlcore",
+    level: 1,
+    searchQuery: "machine learning pipeline data preprocessing feature engineering train test split cross validation model evaluation",
+    badge: "9 Sequential Stages",
+    color: "#075985",
+  },
+
+  // Pillar 3: Unsupervised & Model Tuning
+  {
+    id: "mlcore-unsupervised-eval-pillar",
+    label: "Unsupervised & Model Tuning",
+    category: "mlcore",
+    parentId: "root-mlcore",
+    level: 1,
+    searchQuery: "unsupervised learning k-means clustering PCA bias variance tradeoff L1 L2 regularization",
+    badge: "Clustering & Generalization",
+    color: "#0c4a6e",
+  },
+  {
+    id: "mlcore-kmeans-clustering",
+    label: "K-Means & Density Clustering",
+    category: "mlcore",
+    parentId: "mlcore-unsupervised-eval-pillar",
+    level: 2,
+    searchQuery: "K-means clustering centroid Lloyd algorithm inertia elbow method DBSCAN density",
+    badge: "Centroids & DBSCAN",
+    color: "#0284c7",
+  },
+  {
+    id: "mlcore-bias-variance-tradeoff",
+    label: "Bias-Variance & Overfitting",
+    category: "mlcore",
+    parentId: "mlcore-unsupervised-eval-pillar",
+    level: 2,
+    searchQuery: "bias variance tradeoff high bias underfitting high variance overfitting generalization error",
+    badge: "Underfit vs Overfit",
+    color: "#38bdf8",
+  },
+  {
+    id: "mlcore-regularization-eval",
+    label: "L1/L2 Regularization & Metrics",
+    category: "mlcore",
+    parentId: "mlcore-unsupervised-eval-pillar",
+    level: 2,
+    searchQuery: "L1 Lasso L2 Ridge regularization confusion matrix precision recall F1 ROC AUC score",
+    badge: "Lasso/Ridge & ROC-AUC",
+    color: "#7dd3fc",
+  },
+
+  // ==========================================
+  // 17. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

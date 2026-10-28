@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -977,6 +977,8 @@ export function calculateGroupLayout(
         ? "Performance & a11y"
         : category === "aimath"
         ? "AI & Math Prereqs"
+        : category === "mlcore"
+        ? "Machine Learning"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1015,6 +1017,8 @@ export function calculateGroupLayout(
         ? "Core Web Vitals"
         : category === "aimath"
         ? "Tensor Foundations"
+        : category === "mlcore"
+        ? "Learning Systems"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1045,6 +1049,8 @@ export function calculateGroupLayout(
         ? "#84cc16"
         : category === "aimath"
         ? "#d946ef"
+        : category === "mlcore"
+        ? "#0284c7"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -3990,6 +3996,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 3B: Machine Learning (Supervised & Unsupervised) Hub (placed at x = -1300, y = -1950)
+    const mlHubX = -1300;
+    const mlHubY = -1950;
+    const mlHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-mlcore")!,
+      x: mlHubX,
+      y: mlHubY,
+      level: 1,
+      branchIndex: 3,
+    };
+    positionedNodes.push(mlHubNode);
+    edges.push({
+      source: aimathHubNode.id,
+      target: mlHubNode.id,
+      category: "mlcore",
+      level: 1,
+      branchIndex: 3,
+    });
+
+    // ML Node 1: Supervised Learning Models (Left-Up)
+    const supRaw = allNodes.find((n) => n.id === "mlcore-supervised-pillar");
+    if (supRaw) {
+      const supX = mlHubX - 650;
+      const supY = mlHubY - 180;
+      const supNode: PositionedNode = {
+        ...supRaw,
+        x: supX,
+        y: supY,
+        level: 3,
+        branchIndex: 3,
+      };
+      positionedNodes.push(supNode);
+      edges.push({
+        source: mlHubNode.id,
+        target: supNode.id,
+        category: "mlcore",
+        level: 3,
+        branchIndex: 3,
+      });
+
+      const regRaw = allNodes.find((n) => n.id === "mlcore-regression-models");
+      if (regRaw) {
+        positionedNodes.push({
+          ...regRaw,
+          x: supX - 320,
+          y: supY - 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: supNode.id,
+          target: regRaw.id,
+          category: "mlcore",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const treeRaw = allNodes.find((n) => n.id === "mlcore-trees-ensembles");
+      if (treeRaw) {
+        positionedNodes.push({
+          ...treeRaw,
+          x: supX - 320,
+          y: supY,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: supNode.id,
+          target: treeRaw.id,
+          category: "mlcore",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const svmRaw = allNodes.find((n) => n.id === "mlcore-svm-kernels");
+      if (svmRaw) {
+        positionedNodes.push({
+          ...svmRaw,
+          x: supX - 320,
+          y: supY + 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: supNode.id,
+          target: svmRaw.id,
+          category: "mlcore",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+    }
+
+    // ML Node 2: 9-Stage Machine Learning Pipeline (Group Card, Left-Center)
+    const mlCard = cardByPillar.get("mlcore-pipeline-pillar");
+    if (mlCard) {
+      const cardX = mlHubX - 800;
+      const cardY = mlHubY;
+      const posCard: PositionedGroupCard = {
+        ...mlCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 3,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: mlHubNode.id,
+        target: mlCard.id,
+        category: "mlcore",
+        level: 3,
+        branchIndex: 3,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 3);
+    }
+
+    // ML Node 3: Unsupervised & Model Tuning (Left-Down)
+    const unsupRaw = allNodes.find((n) => n.id === "mlcore-unsupervised-eval-pillar");
+    if (unsupRaw) {
+      const unsupX = mlHubX - 650;
+      const unsupY = mlHubY + 180;
+      const unsupNode: PositionedNode = {
+        ...unsupRaw,
+        x: unsupX,
+        y: unsupY,
+        level: 3,
+        branchIndex: 3,
+      };
+      positionedNodes.push(unsupNode);
+      edges.push({
+        source: mlHubNode.id,
+        target: unsupNode.id,
+        category: "mlcore",
+        level: 3,
+        branchIndex: 3,
+      });
+
+      const kmRaw = allNodes.find((n) => n.id === "mlcore-kmeans-clustering");
+      if (kmRaw) {
+        positionedNodes.push({
+          ...kmRaw,
+          x: unsupX - 320,
+          y: unsupY - 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: unsupNode.id,
+          target: kmRaw.id,
+          category: "mlcore",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const bvRaw = allNodes.find((n) => n.id === "mlcore-bias-variance-tradeoff");
+      if (bvRaw) {
+        positionedNodes.push({
+          ...bvRaw,
+          x: unsupX - 320,
+          y: unsupY,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: unsupNode.id,
+          target: bvRaw.id,
+          category: "mlcore",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const regEvalRaw = allNodes.find((n) => n.id === "mlcore-regularization-eval");
+      if (regEvalRaw) {
+        positionedNodes.push({
+          ...regEvalRaw,
+          x: unsupX - 320,
+          y: unsupY + 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: unsupNode.id,
+          target: regEvalRaw.id,
+          category: "mlcore",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+    }
+
     // Automated overlap prevention relaxation pass
     preventLayoutOverlaps(positionedNodes, positionedCards);
 
@@ -4046,6 +4245,8 @@ export function calculateGroupLayout(
     pillarIds = ["perf-vitals-pillar", "perf-optimization-pipeline", "perf-a11y-tree-pillar"];
   } else if (category === "aimath") {
     pillarIds = ["aimath-linear-algebra-pillar", "aimath-pipeline-pillar", "aimath-probability-calc-pillar"];
+  } else if (category === "mlcore") {
+    pillarIds = ["mlcore-supervised-pillar", "mlcore-pipeline-pillar", "mlcore-unsupervised-eval-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -4374,6 +4575,11 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
+    const mlcoreRoot = {
+      ...allNodes.find((n) => n.id === "root-mlcore")!,
+      parentId: "root-all",
+      level: 1,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -4410,13 +4616,14 @@ export function getNodesForCategory(
         n.id !== "root-state" &&
         n.id !== "root-perf" &&
         n.id !== "root-aimath" &&
+        n.id !== "root-mlcore" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

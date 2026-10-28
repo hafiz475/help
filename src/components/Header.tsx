@@ -25,6 +25,7 @@ import {
   RefreshCw,
   Activity,
   Sigma,
+  Brain,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -76,6 +77,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Activity size={16} />;
       case "aimath":
         return <Sigma size={16} />;
+      case "mlcore":
+        return <Brain size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

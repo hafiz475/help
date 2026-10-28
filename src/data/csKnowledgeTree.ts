@@ -883,10 +883,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-ml-core",
-            name: "Machine Learning (Supervised & Unsupervised)",
-            isAvailable: false,
-            badge: "Roadmap",
+            name: "Machine Learning (Supervised & Unsupervised) ★",
+            categoryId: "mlcore",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
             description: "Regression, classification, decision trees, k-means clustering, and overfitting",
+            color: "#0284c7",
           },
           {
             id: "topic-deep-learning",

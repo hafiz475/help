@@ -7201,6 +7201,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // 16. MACHINE LEARNING (SUPERVISED & UNSUPERVISED) STORIES
+  // ==========================================
+  "root-mlcore": {
+    id: "root-mlcore",
+    title: "Machine Learning",
+    badge: "Learning Systems",
+    tagline: "Extracting statistical patterns from data to generalize and predict without explicit hardcoded rules",
+    takeaways: [
+      {
+        id: "ml-r1",
+        text: "Machine learning shifts software engineering from hand-crafting procedural rules to learning decision boundaries from empirical training data.",
+        searchPrompt: "what is machine learning supervised unsupervised paradigms explained",
+        emoji: "🧠",
+        reactionCount: "5.4k",
+        commentCount: 430,
+      },
+      {
+        id: "ml-r2",
+        text: "Supervised models learn from labeled pairs, unsupervised models discover latent structure, and self-supervised models predict masked segments.",
+        searchPrompt: "supervised vs unsupervised vs self supervised learning machine learning",
+        emoji: "🏷️",
+        reactionCount: "4.8k",
+        commentCount: 380,
+      },
+      {
+        id: "ml-r3",
+        text: "The ultimate objective of any learning algorithm is out-of-sample generalization: minimizing risk on unseen test distributions while avoiding memorization.",
+        searchPrompt: "generalization error empirical risk minimization machine learning",
+        emoji: "🎯",
+        reactionCount: "4.5k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "mlcore-supervised-pillar": {
+    id: "mlcore-supervised-pillar",
+    title: "Supervised Learning Models",
+    badge: "Labeled Ground Truth",
+    tagline: "Mapping input feature spaces to continuous targets or discrete classes using labeled training pairs",
+    takeaways: [
+      {
+        id: "ml-sp1",
+        text: "Supervised learning trains on dataset (X, y) where input vectors X map to ground-truth targets y by minimizing an empirical loss function.",
+        searchPrompt: "supervised learning mapping inputs to targets empirical loss minimization",
+        emoji: "📊",
+        reactionCount: "4.9k",
+        commentCount: 395,
+      },
+      {
+        id: "ml-sp2",
+        text: "Regression predicts continuous real-valued targets (e.g. latency, revenue), while classification predicts discrete categorical class boundaries.",
+        searchPrompt: "regression vs classification supervised machine learning differences",
+        emoji: "📈",
+        reactionCount: "4.6k",
+        commentCount: 350,
+      },
+      {
+        id: "ml-sp3",
+        text: "Parametric models assume fixed mathematical forms (Linear, Logistic), while non-parametric models expand capacity with training data volume (Trees, KNN, SVMs).",
+        searchPrompt: "parametric vs non parametric machine learning models",
+        emoji: "📐",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "mlcore-regression-models": {
+    id: "mlcore-regression-models",
+    title: "Linear & Logistic Regression",
+    badge: "Continuous & Sigmoid Odds",
+    tagline: "Foundational parametric models for continuous prediction and probabilistic binary classification",
+    takeaways: [
+      {
+        id: "ml-rm1",
+        text: "Ordinary Least Squares (OLS) minimizes Mean Squared Error (MSE), deriving closed-form Normal Equations θ = (XᵀX)⁻¹Xᵀy or iterating via Gradient Descent.",
+        searchPrompt: "ordinary least squares normal equation closed form gradient descent",
+        emoji: "📉",
+        reactionCount: "4.8k",
+        commentCount: 375,
+      },
+      {
+        id: "ml-rm2",
+        text: "Logistic Regression passes linear combinations through the Sigmoid activation σ(z) = 1 / (1 + e⁻ᶻ), modeling calibrated Bernoulli class probabilities.",
+        searchPrompt: "logistic regression sigmoid activation binary cross entropy log loss",
+        emoji: "⚡",
+        reactionCount: "4.5k",
+        commentCount: 340,
+      },
+      {
+        id: "ml-rm3",
+        text: "Coefficients provide transparent interpretability: odds ratios in logistic models and marginal unit feature attributions in linear models.",
+        searchPrompt: "logistic regression odds ratio feature importance interpretability",
+        emoji: "🔍",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "mlcore-trees-ensembles": {
+    id: "mlcore-trees-ensembles",
+    title: "Decision Trees & Random Forests",
+    badge: "Gini Impurity & Bagging",
+    tagline: "Non-linear partitioning trees combined into variance-reducing ensemble forests",
+    takeaways: [
+      {
+        id: "ml-te1",
+        text: "Decision trees greedily partition feature space into orthogonal hyperplanes to maximize Gini Impurity reduction 1 - ∑pᵢ² or Information Gain.",
+        searchPrompt: "decision trees Gini impurity entropy information gain CART algorithm",
+        emoji: "🌲",
+        reactionCount: "5.1k",
+        commentCount: 420,
+      },
+      {
+        id: "ml-te2",
+        text: "Individual decision trees exhibit high variance and overfit deep leaves; min-samples-split, max-depth, and cost-complexity pruning enforce regularization.",
+        searchPrompt: "decision tree pruning cost complexity max depth overfitting control",
+        emoji: "✂️",
+        reactionCount: "4.4k",
+        commentCount: 335,
+      },
+      {
+        id: "ml-te3",
+        text: "Random Forests aggregate hundreds of de-correlated trees via Bootstrap Aggregation (Bagging) and random feature subsampling √p, slashing variance drastically.",
+        searchPrompt: "random forest bagging bootstrap aggregation feature subsampling out of bag error",
+        emoji: "🌳",
+        reactionCount: "4.9k",
+        commentCount: 405,
+      },
+    ],
+  },
+
+  "mlcore-svm-kernels": {
+    id: "mlcore-svm-kernels",
+    title: "Support Vector Machines (SVM)",
+    badge: "Max-Margin & RBF Kernel",
+    tagline: "Optimal margin hyperplanes and kernel projections into linearly separable Hilbert spaces",
+    takeaways: [
+      {
+        id: "ml-svm1",
+        text: "Support Vector Machines maximize the geometric margin 2/||w|| between opposing class boundary points (support vectors), yielding robust generalization.",
+        searchPrompt: "support vector machines maximum margin hyperplane support vectors geometry",
+        emoji: "🛡️",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "ml-svm2",
+        text: "Soft-margin SVM incorporates slack variables ξᵢ penalized by hyperparameter C, balancing maximum separation margin against training classification error.",
+        searchPrompt: "soft margin SVM slack variables hyperparameter C regularization tradeoff",
+        emoji: "⚖️",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+      {
+        id: "ml-svm3",
+        text: "The Kernel Trick (e.g. Radial Basis Function / Gaussian RBF) evaluates inner products in infinite-dimensional Hilbert space without explicit coordinate transformation.",
+        searchPrompt: "kernel trick SVM RBF radial basis function Mercer theorem Hilbert space",
+        emoji: "✨",
+        reactionCount: "4.8k",
+        commentCount: 390,
+      },
+    ],
+  },
+
+  "mlcore-pipeline-pillar": {
+    id: "mlcore-pipeline-pillar",
+    title: "9-Stage Machine Learning Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "End-to-end disciplined engineering lifecycle from raw data ingestion to production ONNX inference serving",
+    takeaways: [
+      {
+        id: "ml-pp1",
+        text: "Production machine learning consists of 90% software engineering and data pipelines, and only 10% algorithm parameter fitting.",
+        searchPrompt: "production machine learning engineering pipelines vs model training hidden technical debt",
+        emoji: "🏗️",
+        reactionCount: "5.2k",
+        commentCount: 440,
+      },
+      {
+        id: "ml-pp2",
+        text: "Data leakage is the deadliest silent killer: scalers, imputers, and encoders must be fit exclusively on training folds, never on validation/test sets.",
+        searchPrompt: "prevent data leakage scikit-learn pipeline fit transform train test split",
+        emoji: "🚨",
+        reactionCount: "5.0k",
+        commentCount: 415,
+      },
+      {
+        id: "ml-pp3",
+        text: "A disciplined pipeline codifies feature transforms, cross-validation, hyperparameter tuning, residual auditing, and model serialization into repeatable artifacts.",
+        searchPrompt: "MLOps end to end machine learning pipeline reproducibility",
+        emoji: "🚀",
+        reactionCount: "4.6k",
+        commentCount: 370,
+      },
+    ],
+  },
+
+  "mlcore-unsupervised-eval-pillar": {
+    id: "mlcore-unsupervised-eval-pillar",
+    title: "Unsupervised & Model Tuning",
+    badge: "Clustering & Generalization",
+    tagline: "Discovering latent geometry without labels and rigorously evaluating model generalization",
+    takeaways: [
+      {
+        id: "ml-uep1",
+        text: "Unsupervised learning extracts latent clusters, intrinsic manifold structures, and probability density landscapes from unlabeled observations X.",
+        searchPrompt: "unsupervised learning clustering density estimation manifold learning",
+        emoji: "🌌",
+        reactionCount: "4.7k",
+        commentCount: 365,
+      },
+      {
+        id: "ml-uep2",
+        text: "Total expected prediction error decomposes into Bias² + Variance + Irreducible Noise, requiring systematic regularization tuning.",
+        searchPrompt: "bias variance decomposition mathematical proof irreducible noise",
+        emoji: "⚖️",
+        reactionCount: "4.5k",
+        commentCount: 340,
+      },
+      {
+        id: "ml-uep3",
+        text: "Model evaluation must account for asymmetric real-world business error costs; accuracy fails on class imbalance, requiring ROC-AUC, Precision, and Recall.",
+        searchPrompt: "class imbalance precision recall ROC AUC cost sensitive learning",
+        emoji: "📊",
+        reactionCount: "4.8k",
+        commentCount: 385,
+      },
+    ],
+  },
+
+  "mlcore-kmeans-clustering": {
+    id: "mlcore-kmeans-clustering",
+    title: "K-Means & Density Clustering",
+    badge: "Centroids & DBSCAN",
+    tagline: "Partitioning unlabeled vectors into k cohesive Voronoi cells and density-reachable clusters",
+    takeaways: [
+      {
+        id: "ml-km1",
+        text: "Lloyd's K-Means algorithm alternates between assigning points to the nearest centroid and updating centroids as the center of mass of their assigned cluster.",
+        searchPrompt: "K-means clustering Lloyd algorithm Voronoi diagram inertia convergence",
+        emoji: "📍",
+        reactionCount: "4.6k",
+        commentCount: 350,
+      },
+      {
+        id: "ml-km2",
+        text: "Select optimal k using the Elbow Method (diminishing returns on inertia reduction) and Silhouette Score measuring intra-cluster cohesion vs inter-cluster separation.",
+        searchPrompt: "elbow method silhouette score optimal number of clusters K-means",
+        emoji: "📐",
+        reactionCount: "4.4k",
+        commentCount: 320,
+      },
+      {
+        id: "ml-km3",
+        text: "DBSCAN groups points based on dense neighborhood connectivity within radius ε, finding non-spherical clusters while segregating noise outliers.",
+        searchPrompt: "DBSCAN clustering density reachable core points epsilon min_samples outliers",
+        emoji: "🫧",
+        reactionCount: "4.7k",
+        commentCount: 370,
+      },
+    ],
+  },
+
+  "mlcore-bias-variance-tradeoff": {
+    id: "mlcore-bias-variance-tradeoff",
+    title: "Bias-Variance & Overfitting",
+    badge: "Underfit vs Overfit",
+    tagline: "Balancing model hypothesis capacity against sample noise to achieve minimal generalization error",
+    takeaways: [
+      {
+        id: "ml-bv1",
+        text: "High Bias (Underfitting) occurs when a model lacks expressive capacity, resulting in high training error and equally high test error.",
+        searchPrompt: "high bias underfitting machine learning diagnostic remedies",
+        emoji: "📉",
+        reactionCount: "4.8k",
+        commentCount: 375,
+      },
+      {
+        id: "ml-bv2",
+        text: "High Variance (Overfitting) occurs when a model memorizes idiosyncrasies and noise in the training set, achieving zero training error but failing on test data.",
+        searchPrompt: "high variance overfitting symptoms regularization early stopping",
+        emoji: "📈",
+        reactionCount: "4.9k",
+        commentCount: 395,
+      },
+      {
+        id: "ml-bv3",
+        text: "Learning curves plotting train vs validation loss as sample size grows diagnose the exact regime: converging plateaus indicate high bias; wide gaps indicate high variance.",
+        searchPrompt: "learning curves diagnosing bias vs variance scikit-learn",
+        emoji: "📊",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "mlcore-regularization-eval": {
+    id: "mlcore-regularization-eval",
+    title: "L1/L2 Regularization & Metrics",
+    badge: "Lasso/Ridge & ROC-AUC",
+    tagline: "Penalizing model complexity norms and evaluating threshold-independent performance",
+    takeaways: [
+      {
+        id: "ml-re1",
+        text: "L2 Ridge Regularization penalizes the squared L2 norm λ||w||₂², shrinking weights smoothly to prevent collinearity and numerical instability.",
+        searchPrompt: "L2 ridge regularization weight decay multicollinearity penalty",
+        emoji: "🛡️",
+        reactionCount: "4.6k",
+        commentCount: 345,
+      },
+      {
+        id: "ml-re2",
+        text: "L1 Lasso Regularization penalizes the L1 norm λ||w||₁, whose diamond geometry forces non-essential feature weights to exact zero, performing automatic feature selection.",
+        searchPrompt: "L1 lasso regularization sparsity feature selection diamond contour",
+        emoji: "💎",
+        reactionCount: "4.8k",
+        commentCount: 380,
+      },
+      {
+        id: "ml-re3",
+        text: "Receiver Operating Characteristic (ROC) plots TPR vs FPR across all classification cutoffs; ROC-AUC measures ranking ability independent of decision thresholds.",
+        searchPrompt: "ROC curve AUC score precision recall curve threshold independent evaluation",
+        emoji: "🎯",
+        reactionCount: "4.9k",
+        commentCount: 410,
+      },
+    ],
+  },
+
+  // 9-Stage Machine Learning Pipeline Group Card Items
+  "mlcore-problem-framing": {
+    id: "mlcore-problem-framing",
+    title: "1. Problem Framing & Data Collection",
+    badge: "🎯 Objective & Label Ingestion",
+    tagline: "Translating business goals into mathematically sound ML objectives and clean data ingestion pipelines",
+    takeaways: [
+      {
+        id: "ml-pf1",
+        text: "Translate ambiguous business goals into explicit ML formulations: regression, binary/multi-class classification, ranking, or unsupervised clustering.",
+        searchPrompt: "machine learning problem formulation business metric conversion",
+        emoji: "🎯",
+        reactionCount: "4.5k",
+        commentCount: 325,
+      },
+      {
+        id: "ml-pf2",
+        text: "Audit ground truth label collection mechanisms for systemic historical bias, measurement noise, and survivorship selection artifacts.",
+        searchPrompt: "ground truth data collection label noise selection bias MLOps",
+        emoji: "📋",
+        reactionCount: "4.3k",
+        commentCount: 290,
+      },
+      {
+        id: "ml-pf3",
+        text: "Establish a naive heuristic or dummy baseline (e.g. predict mean or majority class) before training complex models to measure genuine value-add.",
+        searchPrompt: "establishing machine learning baseline DummyClassifier heuristic benchmark",
+        emoji: "📐",
+        reactionCount: "4.1k",
+        commentCount: 270,
+      },
+    ],
+  },
+
+  "mlcore-eda-cleaning": {
+    id: "mlcore-eda-cleaning",
+    title: "2. Data Cleaning & Imputation",
+    badge: "🧹 Missing Values & Outliers",
+    tagline: "Analyzing distributions, handling missing data, and addressing extreme anomaly artifacts",
+    takeaways: [
+      {
+        id: "ml-eda1",
+        text: "Exploratory Data Analysis (EDA) computes correlation matrices, inspects skewness, and visualizes feature distributions to spot anomalies.",
+        searchPrompt: "exploratory data analysis EDA feature correlation distribution analysis",
+        emoji: "🔍",
+        reactionCount: "4.6k",
+        commentCount: 335,
+      },
+      {
+        id: "ml-eda2",
+        text: "Impute missing values using median for skewed numeric features, mode for categorical data, or iterative multivariate techniques (IterativeImputer/MICE).",
+        searchPrompt: "missing data imputation techniques mean median MICE KNN imputer",
+        emoji: "🧹",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+      {
+        id: "ml-eda3",
+        text: "Detect outliers using IQR (Q1 - 1.5×IQR to Q3 + 1.5×IQR) or Isolation Forests, distinguishing sensor corruptions from legitimate high-impact tail events.",
+        searchPrompt: "outlier detection IQR Isolation Forest z score data cleaning",
+        emoji: "⚠️",
+        reactionCount: "4.2k",
+        commentCount: 285,
+      },
+    ],
+  },
+
+  "mlcore-feature-engineering": {
+    id: "mlcore-feature-engineering",
+    title: "3. Feature Scaling & Encoding",
+    badge: "📐 StandardScaler & One-Hot",
+    tagline: "Transforming raw data into optimized numeric representations for linear and gradient algorithms",
+    takeaways: [
+      {
+        id: "ml-fe1",
+        text: "StandardScaler normalizes features to zero mean and unit variance (x - μ)/σ, accelerating gradient descent and equalizing Euclidean distance metrics in SVM and KNN.",
+        searchPrompt: "StandardScaler vs MinMaxScaler feature normalization distance based algorithms",
+        emoji: "📐",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "ml-fe2",
+        text: "One-Hot Encoding converts nominal variables into binary indicator vectors; high-cardinality features leverage Target Encoding with smoothing.",
+        searchPrompt: "one hot encoding target encoding high cardinality categorical features",
+        emoji: "🔤",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+      {
+        id: "ml-fe3",
+        text: "Domain-specific feature interactions (ratios, polynomial combinations, log transforms) allow linear estimators to model complex multiplicative relationships.",
+        searchPrompt: "feature engineering polynomial features interaction terms log transformation",
+        emoji: "⚙️",
+        reactionCount: "4.3k",
+        commentCount: 300,
+      },
+    ],
+  },
+
+  "mlcore-train-test-split": {
+    id: "mlcore-train-test-split",
+    title: "4. Stratified Dataset Splitting",
+    badge: "✂️ 80/20 & Class Stratification",
+    tagline: "Isolating an untouched holdout evaluation set while preserving class distribution proportions",
+    takeaways: [
+      {
+        id: "ml-tts1",
+        text: "Carve out an inviolable test holdout set prior to any feature transformation or imputation to guarantee complete protection against data leakage.",
+        searchPrompt: "train test split golden rules data leakage holdout validation",
+        emoji: "✂️",
+        reactionCount: "4.8k",
+        commentCount: 380,
+      },
+      {
+        id: "ml-tts2",
+        text: "Employ StratifiedShuffleSplit for classification to ensure each split maintains identical target class proportions as the overall population.",
+        searchPrompt: "stratified train test split class imbalance preservation scikit-learn",
+        emoji: "⚖️",
+        reactionCount: "4.5k",
+        commentCount: 340,
+      },
+      {
+        id: "ml-tts3",
+        text: "For time-dependent or sequence data, strictly use TimeSeriesSplit to avoid lookahead bias and temporal leakage from future timestamps.",
+        searchPrompt: "time series split cross validation temporal data leakage prevention",
+        emoji: "⏳",
+        reactionCount: "4.4k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "mlcore-model-training": {
+    id: "mlcore-model-training",
+    title: "5. Estimator Fit & Optimization",
+    badge: "🏋️ Gradient Descent & Loss Min",
+    tagline: "Iteratively updating parameters to minimize empirical loss across the training distribution",
+    takeaways: [
+      {
+        id: "ml-mt1",
+        text: "Gradient descent computes loss gradients with respect to model weights ∇w L and updates parameters w := w - η ∇w L against the direction of steepest ascent.",
+        searchPrompt: "gradient descent weight update learning rate loss minimization mathematics",
+        emoji: "🏋️",
+        reactionCount: "4.9k",
+        commentCount: 400,
+      },
+      {
+        id: "ml-mt2",
+        text: "Mini-batch SGD samples small subsets (e.g. 32 to 512 rows), combining SIMD vectorization throughput with gradient noise that helps escape shallow local minima.",
+        searchPrompt: "mini batch stochastic gradient descent vectorization benefits",
+        emoji: "⚡",
+        reactionCount: "4.6k",
+        commentCount: 350,
+      },
+      {
+        id: "ml-mt3",
+        text: "Track validation loss alongside training loss at every iteration; trigger EarlyStopping when validation loss ceases to improve for patience epochs.",
+        searchPrompt: "early stopping validation loss monitoring prevent overfitting training",
+        emoji: "🛑",
+        reactionCount: "4.4k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "mlcore-cross-validation": {
+    id: "mlcore-cross-validation",
+    title: "6. K-Fold Cross-Validation",
+    badge: "🔄 5-Fold Resampling Stability",
+    tagline: "Resampling data across k subsets to compute robust out-of-fold generalization statistics",
+    takeaways: [
+      {
+        id: "ml-cv1",
+        text: "K-Fold Cross-Validation splits training data into k equal partitions, cycling through training on k-1 folds and scoring on the remaining fold.",
+        searchPrompt: "k fold cross validation resampling technique explained",
+        emoji: "🔄",
+        reactionCount: "4.7k",
+        commentCount: 365,
+      },
+      {
+        id: "ml-cv2",
+        text: "Averaging performance across k folds yields low-variance metric estimates and realistic confidence intervals for model selection.",
+        searchPrompt: "cross validation score mean and standard deviation model comparison",
+        emoji: "📊",
+        reactionCount: "4.4k",
+        commentCount: 325,
+      },
+      {
+        id: "ml-cv3",
+        text: "Out-of-fold (OOF) predictions generated during cross-validation provide unpolluted features to train second-level stacked meta-learners.",
+        searchPrompt: "out of fold OOF predictions stacked ensemble meta model",
+        emoji: "🧱",
+        reactionCount: "4.2k",
+        commentCount: 295,
+      },
+    ],
+  },
+
+  "mlcore-hyperparam-tuning": {
+    id: "mlcore-hyperparam-tuning",
+    title: "7. Hyperparameter Tuning",
+    badge: "🎛️ GridSearchCV & Optuna Bayes",
+    tagline: "Systematically optimizing structural hyperparameters to maximize validation metric performance",
+    takeaways: [
+      {
+        id: "ml-ht1",
+        text: "Hyperparameters govern structural constraints (depth, learning rate, regularization λ) and cannot be optimized directly by standard gradient descent.",
+        searchPrompt: "model parameters vs hyperparameters machine learning differences",
+        emoji: "🎛️",
+        reactionCount: "4.8k",
+        commentCount: 380,
+      },
+      {
+        id: "ml-ht2",
+        text: "RandomizedSearchCV samples parameter spaces probabilistically, outperforming brute-force GridSearchCV by discovering effective configurations in far fewer trials.",
+        searchPrompt: "randomized search vs grid search hyperparameter optimization Bergstra Bengio",
+        emoji: "🎲",
+        reactionCount: "4.5k",
+        commentCount: 335,
+      },
+      {
+        id: "ml-ht3",
+        text: "Bayesian optimization (Optuna / Hyperopt) fits a Gaussian process or TPE surrogate model over historical trials to intelligently sample promising configurations.",
+        searchPrompt: "Optuna Bayesian hyperparameter optimization Tree structured Parzen Estimator",
+        emoji: "🧠",
+        reactionCount: "4.9k",
+        commentCount: 410,
+      },
+    ],
+  },
+
+  "mlcore-model-evaluation": {
+    id: "mlcore-model-evaluation",
+    title: "8. Evaluation & Residual Analysis",
+    badge: "📊 F1, ROC-AUC & Residuals",
+    tagline: "Auditing confusion matrices, precision-recall trade-offs, and regression residual distributions",
+    takeaways: [
+      {
+        id: "ml-me1",
+        text: "Confusion matrices enumerate TP, FP, TN, and FN counts; calculate Precision for false-positive penalties and Recall for false-negative penalties.",
+        searchPrompt: "confusion matrix precision recall F1 score harmonic mean trade off",
+        emoji: "📊",
+        reactionCount: "5.0k",
+        commentCount: 420,
+      },
+      {
+        id: "ml-me2",
+        text: "F1-Score is the harmonic mean of Precision and Recall 2×(P×R)/(P+R), punishing extreme imbalances between sensitivity and specificity.",
+        searchPrompt: "F1 score harmonic mean classification metric imbalanced classes",
+        emoji: "⚖️",
+        reactionCount: "4.6k",
+        commentCount: 350,
+      },
+      {
+        id: "ml-me3",
+        text: "In regression, residual analysis plots (y - ŷ) against predictions; random homoscedastic scatter confirms linearity, while funnel shapes reveal heteroscedasticity.",
+        searchPrompt: "residual plots regression diagnostics homoscedasticity normality of residuals",
+        emoji: "🔍",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "mlcore-model-serving": {
+    id: "mlcore-model-serving",
+    title: "9. ONNX / Joblib Export & Serving",
+    badge: "🚀 Serialization & Fast Inference",
+    tagline: "Serializing trained pipelines into portable runtimes with low-latency REST/gRPC endpoints",
+    takeaways: [
+      {
+        id: "ml-ms1",
+        text: "Serialize the unified Pipeline object containing preprocessing transformers and estimators via Joblib, or export graph computational structures to ONNX format.",
+        searchPrompt: "export scikit learn pipeline to ONNX format fast inference runtime",
+        emoji: "📦",
+        reactionCount: "4.8k",
+        commentCount: 385,
+      },
+      {
+        id: "ml-ms2",
+        text: "Serve low-latency inference using async FastAPI or Triton Inference Server with dynamic request batching to maximize hardware GPU/CPU utilization.",
+        searchPrompt: "serve machine learning model FastAPI Triton dynamic batching low latency",
+        emoji: "🚀",
+        reactionCount: "4.9k",
+        commentCount: 405,
+      },
+      {
+        id: "ml-ms3",
+        text: "Monitor real-time serving endpoints for data drift (Kolmogorov-Smirnov feature distribution shift) and concept drift (degrading ground truth accuracy over time).",
+        searchPrompt: "model monitoring data drift concept drift Kolmogorov Smirnov Evidently AI",
+        emoji: "📡",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -8715,6 +9346,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Performance & Accessibility"
       : node.category === "aimath"
       ? "AI & Math Prereqs"
+      : node.category === "mlcore"
+      ? "Machine Learning"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

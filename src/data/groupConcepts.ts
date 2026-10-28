@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1435,7 +1435,84 @@ export const AIMATH_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const MLCORE_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-mlcore-pipeline",
+    pillarId: "mlcore-pipeline-pillar",
+    title: "Machine Learning Lifecycle Pipeline",
+    category: "mlcore",
+    badge: "9 Sequential Stages",
+    color: "#0284c7",
+    isPipeline: true,
+    items: [
+      {
+        id: "mlcore-problem-framing",
+        stepNumber: 1,
+        label: "1. Problem Framing & Data Collection",
+        badge: "🎯 Objective & Label Ingestion",
+        searchQuery: "machine learning problem framing business metric target variable data ingestion data drift",
+      },
+      {
+        id: "mlcore-eda-cleaning",
+        stepNumber: 2,
+        label: "2. Data Cleaning & Imputation",
+        badge: "🧹 Missing Values & Outliers",
+        searchQuery: "exploratory data analysis EDA missing value imputation median mean mode outlier removal IQR",
+      },
+      {
+        id: "mlcore-feature-engineering",
+        stepNumber: 3,
+        label: "3. Feature Scaling & Encoding",
+        badge: "📐 StandardScaler & One-Hot",
+        searchQuery: "feature engineering standardization normalizer min max scaling one hot encoding target encoding",
+      },
+      {
+        id: "mlcore-train-test-split",
+        stepNumber: 4,
+        label: "4. Stratified Dataset Splitting",
+        badge: "✂️ 80/20 & Class Stratification",
+        searchQuery: "train test split stratified k fold data leakage prevention temporal split validation set",
+      },
+      {
+        id: "mlcore-model-training",
+        stepNumber: 5,
+        label: "5. Estimator Fit & Optimization",
+        badge: "🏋️ Gradient Descent & Loss Min",
+        searchQuery: "model fit estimator loss function optimization gradient descent backprop convergence",
+      },
+      {
+        id: "mlcore-cross-validation",
+        stepNumber: 6,
+        label: "6. K-Fold Cross-Validation",
+        badge: "🔄 5-Fold Resampling Stability",
+        searchQuery: "k-fold cross validation out of fold predictions resampling variance estimation scikit-learn",
+      },
+      {
+        id: "mlcore-hyperparam-tuning",
+        stepNumber: 7,
+        label: "7. Hyperparameter Tuning",
+        badge: "🎛️ GridSearchCV & Optuna Bayes",
+        searchQuery: "hyperparameter tuning grid search randomized search Optuna Bayesian optimization learning rate tree depth",
+      },
+      {
+        id: "mlcore-model-evaluation",
+        stepNumber: 8,
+        label: "8. Evaluation & Residual Analysis",
+        badge: "📊 F1, ROC-AUC & Residuals",
+        searchQuery: "model evaluation confusion matrix precision recall F1 score ROC AUC curve residual plots error analysis",
+      },
+      {
+        id: "mlcore-model-serving",
+        stepNumber: 9,
+        label: "9. ONNX / Joblib Export & Serving",
+        badge: "🚀 Serialization & Fast Inference",
+        searchQuery: "model deployment joblib pickle ONNX export Triton FastAPI latency monitoring drift detection",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1451,8 +1528,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "state") return STATE_GROUP_CARDS;
   if (category === "perf") return PERF_GROUP_CARDS;
   if (category === "aimath") return AIMATH_GROUP_CARDS;
+  if (category === "mlcore") return MLCORE_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }
