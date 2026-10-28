@@ -5939,6 +5939,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // PERFORMANCE & ACCESSIBILITY (a11y) STORIES
+  // ==========================================
+  "root-perf": {
+    id: "root-perf",
+    title: "Performance & Accessibility",
+    badge: "Core Web Vitals",
+    tagline: "Speed, responsiveness, layout stability, screen reader semantics, and WCAG 2.2 accessibility standards",
+    takeaways: [
+      {
+        id: "rperf-1",
+        text: "Performance is user experience and revenue: a 100ms latency improvement lifts conversion rates by up to 8%.",
+        searchPrompt: "web performance business impact conversion bounce rate Google study",
+        emoji: "⚡",
+        reactionCount: "4.9k",
+        commentCount: 410,
+      },
+      {
+        id: "rperf-2",
+        text: "Core Web Vitals (LCP, INP, CLS) measure real user perception: load speed, interactive responsiveness, and visual stability.",
+        searchPrompt: "Google Core Web Vitals thresholds 75th percentile CrUX ranking",
+        emoji: "📊",
+        reactionCount: "4.3k",
+        commentCount: 350,
+      },
+      {
+        id: "rperf-3",
+        text: "Accessibility is not an afterthought: semantic HTML and ARIA trees ensure assistive technology can navigate without keyboard barriers.",
+        searchPrompt: "accessibility first development WCAG 2.2 Level AA compliance screen reader",
+        emoji: "♿",
+        reactionCount: "4.6k",
+        commentCount: 385,
+      },
+    ],
+  },
+
+  "perf-vitals-pillar": {
+    id: "perf-vitals-pillar",
+    title: "Core Web Vitals & Auditing",
+    badge: "Google Vitals",
+    tagline: "Auditing real-world user metrics against Google Chrome 75th percentile thresholds",
+    takeaways: [
+      {
+        id: "pvp-1",
+        text: "Lab tests (Lighthouse) simulate controlled mobile throttles; Field data (CrUX) records actual user devices, networks, and battery limits.",
+        searchPrompt: "Lighthouse lab data vs CrUX field data synthetic vs real user monitoring",
+        emoji: "🔬",
+        reactionCount: "3.8k",
+        commentCount: 290,
+      },
+      {
+        id: "pvp-2",
+        text: "Passing Core Web Vitals requires 75% of page visits across mobile and desktop to fall strictly in the 'Good' threshold tier.",
+        searchPrompt: "Core Web Vitals 75th percentile pass criteria SEO ranking factor",
+        emoji: "🎯",
+        reactionCount: "4.1k",
+        commentCount: 320,
+      },
+      {
+        id: "pvp-3",
+        text: "Automated CI regression budgets stop heavy dependencies and uncompressed assets before they merge into production branches.",
+        searchPrompt: "performance budgets Lighthouse CI GitHub Actions bundle size limit",
+        emoji: "🛡️",
+        reactionCount: "3.5k",
+        commentCount: 245,
+      },
+    ],
+  },
+
+  "perf-lcp-metric": {
+    id: "perf-lcp-metric",
+    title: "Largest Contentful Paint (LCP)",
+    badge: "Loading Speed (<2.5s)",
+    tagline: "Measuring when the main visible content block finishes rendering in the viewport",
+    takeaways: [
+      {
+        id: "lcp-1",
+        text: "LCP tracks the render timestamp of the largest image or text block in the initial viewport; target is under 2.5 seconds.",
+        searchPrompt: "Largest Contentful Paint LCP optimization threshold 2.5s Google",
+        emoji: "⏱️",
+        reactionCount: "4.4k",
+        commentCount: 360,
+      },
+      {
+        id: "lcp-2",
+        text: "Tagging hero images with fetchpriority='high' and rel='preload' bypasses the browser preload scanner queue for instant download.",
+        searchPrompt: "fetchpriority high hero image preload scanner early discovery",
+        emoji: "🚀",
+        reactionCount: "4.7k",
+        commentCount: 395,
+      },
+      {
+        id: "lcp-3",
+        text: "Eliminating render-blocking CSS and preloading custom web fonts prevents Invisible Text flashes (FOIT) from stalling LCP.",
+        searchPrompt: "eliminate render blocking CSS font-display swap FOIT LCP fix",
+        emoji: "🔤",
+        reactionCount: "3.9k",
+        commentCount: 305,
+      },
+    ],
+  },
+
+  "perf-inp-metric": {
+    id: "perf-inp-metric",
+    title: "Interaction to Next Paint (INP)",
+    badge: "Responsiveness (<200ms)",
+    tagline: "Replacing FID to measure latency of every click, tap, and keypress across the entire page lifecycle",
+    takeaways: [
+      {
+        id: "inp-1",
+        text: "INP measures the worst latency from user gesture to visual frame update; target is strictly under 200 milliseconds.",
+        searchPrompt: "Interaction to Next Paint INP definition replace FID 200ms threshold",
+        emoji: "🖱️",
+        reactionCount: "4.8k",
+        commentCount: 420,
+      },
+      {
+        id: "inp-2",
+        text: "Long tasks (>50ms) freeze the V8 main thread; breaking tasks with scheduler.yield() or setTimeout(0) lets input events process immediately.",
+        searchPrompt: "how to break up long tasks scheduler.yield requestIdleCallback INP",
+        emoji: "✂️",
+        reactionCount: "4.5k",
+        commentCount: 380,
+      },
+      {
+        id: "inp-3",
+        text: "Avoid expensive synchronous re-renders inside event handlers: show immediate feedback first, then compute state in transitions.",
+        searchPrompt: "React useTransition startTransition INP optimization non-blocking updates",
+        emoji: "⚡",
+        reactionCount: "4.2k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "perf-cls-metric": {
+    id: "perf-cls-metric",
+    title: "Cumulative Layout Shift (CLS)",
+    badge: "Visual Stability (<0.1)",
+    tagline: "Eliminating unexpected content jumps caused by unsized images, dynamic ads, and late-loaded web fonts",
+    takeaways: [
+      {
+        id: "cls-1",
+        text: "CLS quantifies visual instability caused by layout shifts without user interaction; target score is under 0.1.",
+        searchPrompt: "Cumulative Layout Shift CLS formula impact fraction distance fraction",
+        emoji: "📐",
+        reactionCount: "4.1k",
+        commentCount: 315,
+      },
+      {
+        id: "cls-2",
+        text: "Always declare width/height or aspect-ratio on images and video embeds so browsers reserve layout geometry before media downloads.",
+        searchPrompt: "CSS aspect ratio image dimensions prevent layout shift CLS",
+        emoji: "🖼️",
+        reactionCount: "4.6k",
+        commentCount: 385,
+      },
+      {
+        id: "cls-3",
+        text: "Fallback font metric overrides (size-adjust, ascent-override) match system font geometry to custom fonts, ending FOUT layout shifts.",
+        searchPrompt: "font metric override size-adjust ascent-override zero CLS font swap",
+        emoji: "🔤",
+        reactionCount: "3.9k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "perf-optimization-pipeline": {
+    id: "perf-optimization-pipeline",
+    title: "9-Stage Performance & a11y Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "The complete pipeline from network hints and bundle splitting to accessibility trees and real-user telemetry",
+    takeaways: [
+      {
+        id: "pop-1",
+        text: "Resource hints establish TCP/TLS handshakes early, cutting hundreds of milliseconds off third-party API and CDN origins.",
+        searchPrompt: "preconnect dns-prefetch resource hints performance benefits",
+        emoji: "🌐",
+        reactionCount: "3.7k",
+        commentCount: 275,
+      },
+      {
+        id: "pop-2",
+        text: "Next-gen formats (AVIF/WebP) and responsive srcset save 60-80% of bandwidth compared to legacy PNG and JPEG images.",
+        searchPrompt: "modern image formats AVIF vs WebP compression comparison",
+        emoji: "📦",
+        reactionCount: "4.3k",
+        commentCount: 340,
+      },
+      {
+        id: "pop-3",
+        text: "Accessibility tree validation runs synchronously with DOM layout: every semantic tag enriches the assistive accessibility object model.",
+        searchPrompt: "Accessibility Tree computation browser rendering engine AOM",
+        emoji: "♿",
+        reactionCount: "4.0k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "perf-a11y-tree-pillar": {
+    id: "perf-a11y-tree-pillar",
+    title: "Accessibility (a11y) & Screen Readers",
+    badge: "WCAG 2.2 Standards",
+    tagline: "Building inclusive web applications adhering to WCAG Perceivable, Operable, Understandable, and Robust principles",
+    takeaways: [
+      {
+        id: "patp-1",
+        text: "First rule of ARIA: Do not use ARIA if you can use native semantic HTML elements (<button>, <nav>, <main>, <dialog>).",
+        searchPrompt: "first rule of ARIA native HTML semantics accessibility best practice",
+        emoji: "📜",
+        reactionCount: "4.9k",
+        commentCount: 440,
+      },
+      {
+        id: "patp-2",
+        text: "Color contrast must meet WCAG 2.2 minimums: 4.5:1 for normal body text and 3:1 for large headers and interactive components.",
+        searchPrompt: "WCAG 2.2 color contrast ratios 4.5 to 1 accessibility tools",
+        emoji: "🎨",
+        reactionCount: "3.8k",
+        commentCount: 295,
+      },
+      {
+        id: "patp-3",
+        text: "All interactive controls must be completely navigable using only a keyboard (Tab, Shift+Tab, Enter, Space, Escape, Arrows).",
+        searchPrompt: "keyboard accessibility testing without mouse tab order focus indicator",
+        emoji: "⌨️",
+        reactionCount: "4.4k",
+        commentCount: 365,
+      },
+    ],
+  },
+
+  "perf-aria-roles": {
+    id: "perf-aria-roles",
+    title: "Accessible Object Model (AOM) & ARIA",
+    badge: "AOM / Roles & States",
+    tagline: "How the browser compiles semantic HTML and ARIA attributes into the assistive technology accessibility tree",
+    takeaways: [
+      {
+        id: "par-1",
+        text: "The Accessibility Tree (AOM) mirrors the DOM but contains only accessibility nodes with role, name, state, and value.",
+        searchPrompt: "Accessible Object Model AOM Chrome DevTools accessibility tree inspection",
+        emoji: "🌳",
+        reactionCount: "4.1k",
+        commentCount: 310,
+      },
+      {
+        id: "par-2",
+        text: "aria-expanded, aria-hidden, and aria-controls inform screen readers dynamically when accordions or mobile drawers open.",
+        searchPrompt: "accessible collapsible accordion pattern aria-expanded aria-controls",
+        emoji: "📂",
+        reactionCount: "3.9k",
+        commentCount: 285,
+      },
+      {
+        id: "par-3",
+        text: "aria-label provides an invisible accessible name for icon-only buttons (e.g. search magnifying glass or hamburger menu).",
+        searchPrompt: "aria-label vs aria-labelledby vs aria-describedby differences",
+        emoji: "🏷️",
+        reactionCount: "4.5k",
+        commentCount: 375,
+      },
+    ],
+  },
+
+  "perf-keyboard-focus": {
+    id: "perf-keyboard-focus",
+    title: "Keyboard Navigation & Focus Traps",
+    badge: "Tab Order & Trap",
+    tagline: "Guaranteeing seamless non-mouse navigation, clear visible focus rings, and modal containment",
+    takeaways: [
+      {
+        id: "pkf-1",
+        text: "Modals must trap keyboard focus so pressing Tab cannot leak into background links; the native <dialog> element does this automatically.",
+        searchPrompt: "focus trap implementation modal accessibility HTML5 dialog showModal",
+        emoji: "🪤",
+        reactionCount: "4.6k",
+        commentCount: 390,
+      },
+      {
+        id: "pkf-2",
+        text: "The HTML inert attribute disables interaction, focusability, and screen reader access for background containers under open overlays.",
+        searchPrompt: "HTML inert attribute accessibility modal background inert polyfill",
+        emoji: "🔒",
+        reactionCount: "4.3k",
+        commentCount: 345,
+      },
+      {
+        id: "pkf-3",
+        text: "Never remove focus outlines with outline: none without providing an accessible high-contrast replacement (:focus-visible).",
+        searchPrompt: "CSS focus-visible outline accessibility WCAG non-text contrast",
+        emoji: "🎯",
+        reactionCount: "4.8k",
+        commentCount: 415,
+      },
+    ],
+  },
+
+  "perf-screen-reader-announcers": {
+    id: "perf-screen-reader-announcers",
+    title: "Live Regions & Color Contrast",
+    badge: "aria-live & 4.5:1 Ratio",
+    tagline: "Broadcasting asynchronous page updates to screen readers and ensuring legibility across vision spectra",
+    takeaways: [
+      {
+        id: "psra-1",
+        text: "aria-live='polite' announces dynamic cart additions or form notifications when the screen reader finishes its current sentence.",
+        searchPrompt: "aria-live polite vs assertive screen reader notification announcements",
+        emoji: "📢",
+        reactionCount: "4.2k",
+        commentCount: 330,
+      },
+      {
+        id: "psra-2",
+        text: "aria-live='assertive' immediately interrupts the screen reader and should be reserved strictly for critical errors and session expiry.",
+        searchPrompt: "aria-live assertive accessibility alerts best practices",
+        emoji: "🚨",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+      {
+        id: "psra-3",
+        text: "Information must never be conveyed by color alone: form errors require both a red border and an explicit text error label or icon.",
+        searchPrompt: "WCAG use of color form validation error message accessible pattern",
+        emoji: "👁️",
+        reactionCount: "4.5k",
+        commentCount: 370,
+      },
+    ],
+  },
+
+  // Performance & a11y 9-Stage Pipeline Group Card Items
+  "perf-resource-hints": {
+    id: "perf-resource-hints",
+    title: "DNS Prefetch & Preconnect",
+    badge: "⚡ dns-prefetch & preconnect",
+    tagline: "Resolving DNS lookups and initiating TLS handshakes before requests are issued",
+    takeaways: [
+      {
+        id: "prh-1",
+        text: "rel='dns-prefetch' performs early DNS lookup for third-party domains (e.g. analytics, fonts) in the background.",
+        searchPrompt: "dns-prefetch performance resource hint syntax usage",
+        emoji: "🌐",
+        reactionCount: "3.6k",
+        commentCount: 250,
+      },
+      {
+        id: "prh-2",
+        text: "rel='preconnect' performs DNS, TCP, and TLS handshakes, saving 100-300ms of round-trip time for critical cross-origin assets.",
+        searchPrompt: "preconnect resource hint Google Fonts CDN connection speed",
+        emoji: "🤝",
+        reactionCount: "4.2k",
+        commentCount: 325,
+      },
+      {
+        id: "prh-3",
+        text: "Limit preconnect to 2-3 essential domains; overusing preconnect exhausts browser connection limits and mobile radio power.",
+        searchPrompt: "preconnect best practices avoid over-preconnecting browser limits",
+        emoji: "⚠️",
+        reactionCount: "3.5k",
+        commentCount: 230,
+      },
+    ],
+  },
+
+  "perf-asset-priority": {
+    id: "perf-asset-priority",
+    title: "Fetch Priority & Hero Preload",
+    badge: "🚀 fetchpriority='high' & preload",
+    tagline: "Instructing the browser downloader to prioritize high-value above-the-fold assets",
+    takeaways: [
+      {
+        id: "pap-1",
+        text: "fetchpriority='high' elevates LCP images above lower-priority scripts and lazy images during early network contention.",
+        searchPrompt: "fetchpriority attribute Chrome network priority scheduler",
+        emoji: "🚀",
+        reactionCount: "4.5k",
+        commentCount: 370,
+      },
+      {
+        id: "pap-2",
+        text: "rel='preload' forces early discovery of assets defined inside external CSS files, such as critical brand web fonts.",
+        searchPrompt: "link rel preload as font type font woff2 crossorigin",
+        emoji: "🔤",
+        reactionCount: "4.1k",
+        commentCount: 310,
+      },
+      {
+        id: "pap-3",
+        text: "Never preload below-the-fold assets: wasted preloads delay critical CSS and trigger browser console warnings.",
+        searchPrompt: "unused preload warning Chrome DevTools performance audit",
+        emoji: "🛡️",
+        reactionCount: "3.4k",
+        commentCount: 220,
+      },
+    ],
+  },
+
+  "perf-code-splitting": {
+    id: "perf-code-splitting",
+    title: "Dynamic Import & Tree Shaking",
+    badge: "✂️ Dynamic import() & ESM Dead Code",
+    tagline: "Partitioning monolithic bundles into on-demand chunks and eliminating unreferenced exports",
+    takeaways: [
+      {
+        id: "pcs-1",
+        text: "Route-based code splitting (React.lazy / Next dynamic) downloads only the JavaScript needed for the visited URL.",
+        searchPrompt: "route based code splitting React lazy Suspense dynamic import",
+        emoji: "📦",
+        reactionCount: "4.3k",
+        commentCount: 345,
+      },
+      {
+        id: "pcs-2",
+        text: "ESM static imports allow Rollup/Vite to perform tree shaking, dropping unused exports and saving tens of kilobytes.",
+        searchPrompt: "tree shaking ES modules sideEffects false package.json optimization",
+        emoji: "🌲",
+        reactionCount: "4.0k",
+        commentCount: 315,
+      },
+      {
+        id: "pcs-3",
+        text: "Heavy libraries (charts, rich text editors, date pickers) should be dynamically loaded on user hover or focus.",
+        searchPrompt: "lazy loading on interaction hover focus button dynamic import",
+        emoji: "🖱️",
+        reactionCount: "4.4k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "perf-image-optimization": {
+    id: "perf-image-optimization",
+    title: "Responsive Images & AVIF/WebP",
+    badge: "🖼️ AVIF, WebP, srcset & sizes",
+    tagline: "Serving modern compressed formats tailored precisely to viewport dimensions and pixel density",
+    takeaways: [
+      {
+        id: "pio-1",
+        text: "AVIF provides up to 50% better compression than JPEG with superior color fidelity at low bitrates.",
+        searchPrompt: "AVIF vs WebP vs JPEG image format compression benchmark",
+        emoji: "🖼️",
+        reactionCount: "4.2k",
+        commentCount: 330,
+      },
+      {
+        id: "pio-2",
+        text: "The HTML <picture> element and srcset/sizes allow browsers to choose the ideal image resolution for the device DPR.",
+        searchPrompt: "HTML picture element srcset sizes responsive images tutorial",
+        emoji: "📱",
+        reactionCount: "3.9k",
+        commentCount: 295,
+      },
+      {
+        id: "pio-3",
+        text: "loading='lazy' defers off-screen image decoding until the user scrolls within 1250px of the image viewport.",
+        searchPrompt: "native image loading lazy attribute decoding async performance",
+        emoji: "⏳",
+        reactionCount: "4.4k",
+        commentCount: 365,
+      },
+    ],
+  },
+
+  "perf-main-thread-yield": {
+    id: "perf-main-thread-yield",
+    title: "Main-Thread Yielding & Scheduler",
+    badge: "⏱️ scheduler.yield() & 50ms Slices",
+    tagline: "Chopping intensive JavaScript computation into micro-slices to keep the main thread responsive to clicks",
+    takeaways: [
+      {
+        id: "pmty-1",
+        text: "Tasks exceeding 50ms are flagged as Long Tasks by Chrome; tasks over 200ms severely degrade the INP score.",
+        searchPrompt: "Chrome Performance Long Tasks 50ms threshold Total Blocking Time",
+        emoji: "⏱️",
+        reactionCount: "4.5k",
+        commentCount: 380,
+      },
+      {
+        id: "pmty-2",
+        text: "scheduler.yield() pauses execution and relinquishes the main thread to let the browser dispatch user clicks and paint frames.",
+        searchPrompt: "scheduler.yield API modern JavaScript cooperative multitasking",
+        emoji: "⏸️",
+        reactionCount: "4.7k",
+        commentCount: 405,
+      },
+      {
+        id: "pmty-3",
+        text: "Web Workers offload heavy data parsing, crypto hashing, and image filtering entirely off the UI thread.",
+        searchPrompt: "Web Workers Comlink offload CPU intensive work from main thread",
+        emoji: "⚙️",
+        reactionCount: "4.1k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "perf-layout-reservation": {
+    id: "perf-layout-reservation",
+    title: "Geometry & Font Pre-allocation",
+    badge: "📐 aspect-ratio & font-display: swap",
+    tagline: "Locking container bounding boxes and matching font fallbacks to achieve a perfect 0.00 CLS score",
+    takeaways: [
+      {
+        id: "plr-1",
+        text: "aspect-ratio: 16 / 9 reserves container space instantly, preventing the page jump when dynamic media finishes loading.",
+        searchPrompt: "CSS aspect-ratio property responsive embeds zero CLS",
+        emoji: "📐",
+        reactionCount: "4.2k",
+        commentCount: 335,
+      },
+      {
+        id: "plr-2",
+        text: "font-display: optional gives the custom font 100ms to load; if late, it keeps the fallback font to guarantee zero layout shift.",
+        searchPrompt: "font-display optional vs swap zero CLS typography performance",
+        emoji: "🔤",
+        reactionCount: "4.4k",
+        commentCount: 355,
+      },
+      {
+        id: "plr-3",
+        text: "Dynamic banner ads and consent notices must reserve their exact minimum height in CSS so surrounding content never shifts.",
+        searchPrompt: "reserve ad slot dimensions min-height CLS prevention",
+        emoji: "🛡️",
+        reactionCount: "3.7k",
+        commentCount: 270,
+      },
+    ],
+  },
+
+  "perf-a11y-tree-synthesis": {
+    id: "perf-a11y-tree-synthesis",
+    title: "Accessibility Tree Synthesis",
+    badge: "♿ DOM to AOM Tree Translation",
+    tagline: "Compiling semantic HTML into screen-reader readable nodes with computed roles, names, and states",
+    takeaways: [
+      {
+        id: "pats-1",
+        text: "The browser constructs the Accessibility Tree alongside the Render Tree, mapping HTML elements to accessibility roles.",
+        searchPrompt: "how browsers compute accessibility tree from DOM elements",
+        emoji: "🌳",
+        reactionCount: "4.0k",
+        commentCount: 310,
+      },
+      {
+        id: "pats-2",
+        text: "A <button> automatically exposes role='button', keyboard focusability, and Enter/Space trigger handling that a <div> lacks.",
+        searchPrompt: "why you should never use div for button accessible HTML semantics",
+        emoji: "🔘",
+        reactionCount: "4.8k",
+        commentCount: 425,
+      },
+      {
+        id: "pats-3",
+        text: "Heading hierarchy (h1 through h6) forms a structural table of contents used by 80% of screen reader users to scan pages.",
+        searchPrompt: "screen reader heading navigation rotor table of contents h1 h2 h3",
+        emoji: "📑",
+        reactionCount: "4.3k",
+        commentCount: 345,
+      },
+    ],
+  },
+
+  "perf-focus-management": {
+    id: "perf-focus-management",
+    title: "Modal Focus Trap & Roving Tabindex",
+    badge: "🎯 inert attribute & Focus Containment",
+    tagline: "Directing the user's cursor deterministically through complex custom widgets and dialogs",
+    takeaways: [
+      {
+        id: "pfm-1",
+        text: "When a dialog opens, focus must move to the first actionable element; when it closes, focus must restore to the opening trigger.",
+        searchPrompt: "accessible dialog focus management return focus on close",
+        emoji: "🔄",
+        reactionCount: "4.4k",
+        commentCount: 360,
+      },
+      {
+        id: "pfm-2",
+        text: "Roving tabindex keeps tabindex='0' on the active list item and '-1' on siblings, allowing Arrow keys to cycle items cleanly.",
+        searchPrompt: "roving tabindex pattern accessible menu tabs toolbar keyboard",
+        emoji: "🎯",
+        reactionCount: "4.1k",
+        commentCount: 315,
+      },
+      {
+        id: "pfm-3",
+        text: "Skip Links (<a href='#main-content' class='sr-only focus:not-sr-only'>) let keyboard users bypass repetitive navigation headers.",
+        searchPrompt: "skip to content link accessibility implementation CSS focus visible",
+        emoji: "⏭️",
+        reactionCount: "4.5k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "perf-rum-monitoring": {
+    id: "perf-rum-monitoring",
+    title: "RUM Telemetry & Lighthouse 100",
+    badge: "📊 web-vitals RUM & Axe-core",
+    tagline: "Capturing real-world field metrics and automating accessibility regressions in CI/CD pipelines",
+    takeaways: [
+      {
+        id: "prm-1",
+        text: "The web-vitals npm library reports accurate LCP, INP, and CLS field metrics directly to analytics backends via navigator.sendBeacon.",
+        searchPrompt: "web-vitals library Google Analytics sendBeacon real user monitoring",
+        emoji: "📊",
+        reactionCount: "4.3k",
+        commentCount: 345,
+      },
+      {
+        id: "prm-2",
+        text: "Automated Axe-core tests (@axe-core/react, jest-axe) catch 30-50% of accessibility issues (color contrast, missing alt) during dev.",
+        searchPrompt: "automated accessibility testing axe-core jest React CI CD",
+        emoji: "🪓",
+        reactionCount: "4.6k",
+        commentCount: 390,
+      },
+      {
+        id: "prm-3",
+        text: "Achieving a 100/100 Lighthouse score requires zero render-blocking CSS, modern image formats, low TBT, and clean WCAG contrast.",
+        searchPrompt: "how to get 100 100 Lighthouse score performance accessibility SEO best practices",
+        emoji: "💯",
+        reactionCount: "4.9k",
+        commentCount: 450,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -7449,6 +8080,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Web Security & Storage"
       : node.category === "state"
       ? "State Management & Rendering"
+      : node.category === "perf"
+      ? "Performance & Accessibility"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

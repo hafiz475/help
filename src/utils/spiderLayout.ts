@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -973,6 +973,8 @@ export function calculateGroupLayout(
         ? "Cookies, Storage & CORS"
         : category === "state"
         ? "State & Rendering"
+        : category === "perf"
+        ? "Performance & a11y"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1007,6 +1009,8 @@ export function calculateGroupLayout(
         ? "Browser Security"
         : category === "state"
         ? "Rendering Engine"
+        : category === "perf"
+        ? "Core Web Vitals"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1033,6 +1037,8 @@ export function calculateGroupLayout(
         ? "#eab308"
         : category === "state"
         ? "#8b5cf6"
+        : category === "perf"
+        ? "#84cc16"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -3383,6 +3389,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1J: Performance & a11y Hub (placed top-right above state at y = -6150)
+    const perfHubX = 1300;
+    const perfHubY = -6150;
+    const perfHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-perf")!,
+      x: perfHubX,
+      y: perfHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(perfHubNode);
+    edges.push({
+      source: nodeHubNode.id,
+      target: perfHubNode.id,
+      category: "perf",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Perf Node 1: Core Web Vitals & Auditing
+    const pVitalsRaw = allNodes.find((n) => n.id === "perf-vitals-pillar");
+    if (pVitalsRaw) {
+      const pVitalsX = perfHubX + 650;
+      const pVitalsY = perfHubY - 180;
+      const pVitalsNode: PositionedNode = {
+        ...pVitalsRaw,
+        x: pVitalsX,
+        y: pVitalsY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(pVitalsNode);
+      edges.push({
+        source: perfHubNode.id,
+        target: pVitalsNode.id,
+        category: "perf",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const lcpRaw = allNodes.find((n) => n.id === "perf-lcp-metric");
+      if (lcpRaw) {
+        positionedNodes.push({
+          ...lcpRaw,
+          x: pVitalsX + 320,
+          y: pVitalsY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pVitalsNode.id,
+          target: lcpRaw.id,
+          category: "perf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const inpRaw = allNodes.find((n) => n.id === "perf-inp-metric");
+      if (inpRaw) {
+        positionedNodes.push({
+          ...inpRaw,
+          x: pVitalsX + 320,
+          y: pVitalsY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pVitalsNode.id,
+          target: inpRaw.id,
+          category: "perf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const clsRaw = allNodes.find((n) => n.id === "perf-cls-metric");
+      if (clsRaw) {
+        positionedNodes.push({
+          ...clsRaw,
+          x: pVitalsX + 320,
+          y: pVitalsY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pVitalsNode.id,
+          target: clsRaw.id,
+          category: "perf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Perf Node 2: 9-Stage Performance & a11y Pipeline (Group Card)
+    const perfCard = cardByPillar.get("perf-optimization-pipeline");
+    if (perfCard) {
+      const cardX = perfHubX + 800;
+      const cardY = perfHubY;
+      const posCard: PositionedGroupCard = {
+        ...perfCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: perfHubNode.id,
+        target: perfCard.id,
+        category: "perf",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 1);
+    }
+
+    // Perf Node 3: Accessibility (a11y) & Screen Readers
+    const pA11yRaw = allNodes.find((n) => n.id === "perf-a11y-tree-pillar");
+    if (pA11yRaw) {
+      const pA11yX = perfHubX + 650;
+      const pA11yY = perfHubY + 180;
+      const pA11yNode: PositionedNode = {
+        ...pA11yRaw,
+        x: pA11yX,
+        y: pA11yY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(pA11yNode);
+      edges.push({
+        source: perfHubNode.id,
+        target: pA11yNode.id,
+        category: "perf",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const ariaRaw = allNodes.find((n) => n.id === "perf-aria-roles");
+      if (ariaRaw) {
+        positionedNodes.push({
+          ...ariaRaw,
+          x: pA11yX + 320,
+          y: pA11yY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pA11yNode.id,
+          target: ariaRaw.id,
+          category: "perf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const focusRaw = allNodes.find((n) => n.id === "perf-keyboard-focus");
+      if (focusRaw) {
+        positionedNodes.push({
+          ...focusRaw,
+          x: pA11yX + 320,
+          y: pA11yY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pA11yNode.id,
+          target: focusRaw.id,
+          category: "perf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const annRaw = allNodes.find((n) => n.id === "perf-screen-reader-announcers");
+      if (annRaw) {
+        positionedNodes.push({
+          ...annRaw,
+          x: pA11yX + 320,
+          y: pA11yY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: pA11yNode.id,
+          target: annRaw.id,
+          category: "perf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -3641,6 +3840,8 @@ export function calculateGroupLayout(
     pillarIds = ["security-same-origin-cors", "security-cookie-lifecycle", "security-web-defenses"];
   } else if (category === "state") {
     pillarIds = ["state-reactivity-pillar", "state-rendering-pipeline", "state-hydration-islands"];
+  } else if (category === "perf") {
+    pillarIds = ["perf-vitals-pillar", "perf-optimization-pipeline", "perf-a11y-tree-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -3959,6 +4160,11 @@ export function getNodesForCategory(
       parentId: "root-node",
       level: 2,
     };
+    const perfRoot = {
+      ...allNodes.find((n) => n.id === "root-perf")!,
+      parentId: "root-node",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -3993,13 +4199,14 @@ export function getNodesForCategory(
         n.id !== "root-rendering" &&
         n.id !== "root-security" &&
         n.id !== "root-state" &&
+        n.id !== "root-perf" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

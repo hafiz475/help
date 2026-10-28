@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -141,8 +141,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "perf",
+    name: "14. Performance & a11y",
+    title: "Web Performance, Core Web Vitals & Accessibility (a11y)",
+    description: "Core Web Vitals (LCP, INP, CLS), Bundle Splitting, ARIA Tree, Focus Traps & Screen Reader Semantics",
+    color: "#84cc16", // Lime
+    icon: "Activity",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "14. OOP (4 Pillars)",
+    name: "15. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -151,7 +160,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "15. DSA",
+    name: "16. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -160,7 +169,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "16. Big O",
+    name: "17. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -174,7 +183,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 189,
+    count: 199,
   },
 ];
 
@@ -307,6 +316,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "modern web state management SSR SSG CSR hydration React Vue Next.js",
     badge: "Rendering Engine",
     color: "#8b5cf6",
+  },
+  {
+    id: "root-perf",
+    label: "Performance & a11y",
+    category: "perf",
+    level: 0,
+    searchQuery: "web performance Core Web Vitals accessibility a11y optimization",
+    badge: "Core Web Vitals",
+    color: "#84cc16",
   },
   {
     id: "root-oop",
@@ -2102,7 +2120,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 14. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 14. PERFORMANCE & ACCESSIBILITY (a11y)
+  // ==========================================
+  // Pillar 1: Core Web Vitals & Auditing
+  {
+    id: "perf-vitals-pillar",
+    label: "Core Web Vitals & Auditing",
+    category: "perf",
+    parentId: "root-perf",
+    level: 1,
+    searchQuery: "Core Web Vitals LCP INP CLS Lighthouse Chrome User Experience Report CrUX",
+    badge: "Google Vitals",
+    color: "#65a30d",
+  },
+  {
+    id: "perf-lcp-metric",
+    label: "Largest Contentful Paint (LCP)",
+    category: "perf",
+    parentId: "perf-vitals-pillar",
+    level: 2,
+    searchQuery: "Largest Contentful Paint LCP optimization hero images font display fetchpriority",
+    badge: "Loading Speed (<2.5s)",
+    color: "#84cc16",
+  },
+  {
+    id: "perf-inp-metric",
+    label: "Interaction to Next Paint (INP)",
+    category: "perf",
+    parentId: "perf-vitals-pillar",
+    level: 2,
+    searchQuery: "Interaction to Next Paint INP long tasks requestIdleCallback scheduler yield",
+    badge: "Responsiveness (<200ms)",
+    color: "#a3e635",
+  },
+  {
+    id: "perf-cls-metric",
+    label: "Cumulative Layout Shift (CLS)",
+    category: "perf",
+    parentId: "perf-vitals-pillar",
+    level: 2,
+    searchQuery: "Cumulative Layout Shift CLS aspect-ratio dimension reserve font font-display swap",
+    badge: "Visual Stability (<0.1)",
+    color: "#bef264",
+  },
+
+  // Pillar 2: 9-Stage Performance & a11y Pipeline (Group Card)
+  {
+    id: "perf-optimization-pipeline",
+    label: "9-Stage Performance & a11y Pipeline",
+    category: "perf",
+    parentId: "root-perf",
+    level: 1,
+    searchQuery: "web performance optimization pipeline code splitting tree shaking lazy loading ARIA tree focus audit",
+    badge: "9 Sequential Stages",
+    color: "#4d7c0f",
+  },
+
+  // Pillar 3: Accessibility (a11y) & Screen Readers
+  {
+    id: "perf-a11y-tree-pillar",
+    label: "Accessibility (a11y) & Screen Readers",
+    category: "perf",
+    parentId: "root-perf",
+    level: 1,
+    searchQuery: "web accessibility a11y WCAG ARIA roles screen reader focus management",
+    badge: "WCAG 2.2 Standards",
+    color: "#3f6212",
+  },
+  {
+    id: "perf-aria-roles",
+    label: "Accessible Object Model (AOM) & ARIA",
+    category: "perf",
+    parentId: "perf-a11y-tree-pillar",
+    level: 2,
+    searchQuery: "Accessible Object Model AOM ARIA roles aria-expanded aria-label semantic HTML",
+    badge: "AOM / Roles & States",
+    color: "#84cc16",
+  },
+  {
+    id: "perf-keyboard-focus",
+    label: "Keyboard Navigation & Focus Traps",
+    category: "perf",
+    parentId: "perf-a11y-tree-pillar",
+    level: 2,
+    searchQuery: "keyboard navigation focus trap modal tabindex 0 -1 roving tabindex a11y",
+    badge: "Tab Order & Trap",
+    color: "#a3e635",
+  },
+  {
+    id: "perf-screen-reader-announcers",
+    label: "Live Regions & Color Contrast",
+    category: "perf",
+    parentId: "perf-a11y-tree-pillar",
+    level: 2,
+    searchQuery: "aria-live polite assertive screen reader announcements WCAG color contrast 4.5:1",
+    badge: "aria-live & 4.5:1 Ratio",
+    color: "#bef264",
+  },
+
+  // ==========================================
+  // 15. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

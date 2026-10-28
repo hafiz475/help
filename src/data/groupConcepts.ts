@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1281,7 +1281,84 @@ export const STATE_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const PERF_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-perf-pipeline",
+    pillarId: "perf-optimization-pipeline",
+    title: "9-Stage Performance & a11y Pipeline",
+    category: "perf",
+    badge: "9 Sequential Stages",
+    color: "#4d7c0f",
+    isPipeline: true,
+    items: [
+      {
+        id: "perf-resource-hints",
+        stepNumber: 1,
+        label: "1. DNS Prefetch & Preconnect",
+        badge: "⚡ dns-prefetch & preconnect",
+        searchQuery: "resource hints dns prefetch preconnect early hints 103 preload HTTP 2 3",
+      },
+      {
+        id: "perf-asset-priority",
+        stepNumber: 2,
+        label: "2. Fetch Priority & Hero Preload",
+        badge: "🚀 fetchpriority='high' & preload",
+        searchQuery: "fetchpriority high hero image preloading responsive preload font preload crossorigin",
+      },
+      {
+        id: "perf-code-splitting",
+        stepNumber: 3,
+        label: "3. Dynamic Import & Tree Shaking",
+        badge: "✂️ Dynamic import() & ESM Dead Code",
+        searchQuery: "code splitting dynamic import React lazy Vite Webpack tree shaking sideEffects false",
+      },
+      {
+        id: "perf-image-optimization",
+        stepNumber: 4,
+        label: "4. Responsive Images & AVIF/WebP",
+        badge: "🖼️ AVIF, WebP, srcset & sizes",
+        searchQuery: "next image picture element AVIF WebP srcset sizes loading lazy decoding async",
+      },
+      {
+        id: "perf-main-thread-yield",
+        stepNumber: 5,
+        label: "5. Main-Thread Yielding & Scheduler",
+        badge: "⏱️ scheduler.yield() & 50ms Slices",
+        searchQuery: "scheduler yield requestIdleCallback break up long tasks INP optimization 50ms rule",
+      },
+      {
+        id: "perf-layout-reservation",
+        stepNumber: 6,
+        label: "6. Geometry & Font Pre-allocation",
+        badge: "📐 aspect-ratio & font-display: swap",
+        searchQuery: "prevent CLS aspect-ratio dimension reservation font-display optional fallback metric override",
+      },
+      {
+        id: "perf-a11y-tree-synthesis",
+        stepNumber: 7,
+        label: "7. Accessibility Tree Synthesis",
+        badge: "♿ DOM to AOM Tree Translation",
+        searchQuery: "Accessibility Tree AOM synthesis semantic HTML vs generic div browser tree computation",
+      },
+      {
+        id: "perf-focus-management",
+        stepNumber: 8,
+        label: "8. Modal Focus Trap & Roving Tabindex",
+        badge: "🎯 inert attribute & Focus Containment",
+        searchQuery: "modal focus trap inert attribute roving tabindex keyboard accessibility WCAG",
+      },
+      {
+        id: "perf-rum-monitoring",
+        stepNumber: 9,
+        label: "9. RUM Telemetry & Lighthouse 100",
+        badge: "📊 web-vitals RUM & Axe-core",
+        searchQuery: "Real User Monitoring RUM web-vitals npm package Google Analytics axe-core automated audit",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1295,8 +1372,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "rendering") return RENDERING_GROUP_CARDS;
   if (category === "security") return SECURITY_GROUP_CARDS;
   if (category === "state") return STATE_GROUP_CARDS;
+  if (category === "perf") return PERF_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }
