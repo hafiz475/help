@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1743,7 +1743,87 @@ export const VISION_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+// ==========================================
+// MOBILE PLATFORM GROUPS & 9-STAGE PIPELINE
+// ==========================================
+export const MOBILE_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-mobile-pipeline",
+    pillarId: "mobile-pipeline-pillar",
+    title: "Mobile App Runtime & Delivery Pipeline (9 Stages)",
+    category: "mobile",
+    badge: "9 Sequential Stages",
+    color: "#2563eb",
+    isPipeline: true,
+    items: [
+      {
+        id: "mobile-app-init-coldstart",
+        stepNumber: 1,
+        label: "1. Cold Start & Splash Screen",
+        badge: "⏱️ OS Fork & Application Init",
+        searchQuery: "mobile cold start splash screen application onCreate didFinishLaunchingWithOptions TTI time to interactive",
+      },
+      {
+        id: "mobile-runtime-bridging",
+        stepNumber: 2,
+        label: "2. Native Bridge & Architecture",
+        badge: "🌉 JNI & Objective-C/Swift Bridge",
+        searchQuery: "mobile native bridge JNI Java Native Interface C++ bindings iOS Swift ObjC runtime interop",
+      },
+      {
+        id: "mobile-declarative-ui-tree",
+        stepNumber: 3,
+        label: "3. Declarative UI (SwiftUI / Compose)",
+        badge: "🎨 Diffing & Render Tree",
+        searchQuery: "declarative UI SwiftUI Jetpack Compose state driven UI tree recomposition view diffing",
+      },
+      {
+        id: "mobile-network-caching-layer",
+        stepNumber: 4,
+        label: "4. Network Interception & Cache",
+        badge: "📡 OkHttp & URLSession Interceptors",
+        searchQuery: "mobile network interceptors OkHttp URLSession HTTP cache disk cache etag retry policies",
+      },
+      {
+        id: "mobile-sqlite-room-coredata",
+        stepNumber: 5,
+        label: "5. Local Persistence (Room / CoreData)",
+        badge: "💾 SQLite WAL & ORM Transactions",
+        searchQuery: "mobile local database Room Android CoreData iOS SQLite WAL mode migrations encrypted SQLite SQLCipher",
+      },
+      {
+        id: "mobile-push-fcm-apns",
+        stepNumber: 6,
+        label: "6. Push Notifications (APNs & FCM)",
+        badge: "🔔 Device Tokens & Payload Handling",
+        searchQuery: "mobile push notifications Apple Push Notification Service APNs Firebase Cloud Messaging FCM background payload",
+      },
+      {
+        id: "mobile-background-work-sync",
+        stepNumber: 7,
+        label: "7. Background Work & Schedulers",
+        badge: "⚙️ WorkManager & BackgroundTasks",
+        searchQuery: "mobile background jobs Android WorkManager iOS BGTaskScheduler periodic sync constraint based execution",
+      },
+      {
+        id: "mobile-native-sensors-hardware",
+        stepNumber: 8,
+        label: "8. Hardware & Sensors (GPS, Camera)",
+        badge: "📍 Runtime Permissions & Biometrics",
+        searchQuery: "mobile device hardware sensors GPS CoreLocation LocationManager CameraX AVFoundation FaceID BiometricPrompt",
+      },
+      {
+        id: "mobile-crash-analytics-profiling",
+        stepNumber: 9,
+        label: "9. Crashlytics & App Bundles",
+        badge: "📊 Symbolication, ProGuard & APK/AAB",
+        searchQuery: "mobile crash analytics Crashlytics Sentry dSYM ProGuard R8 bytecode shrinking Android App Bundle AAB IPA",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1763,8 +1843,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "deeplearning") return DEEPLEARNING_GROUP_CARDS;
   if (category === "nlpllms") return NLPLLMS_GROUP_CARDS;
   if (category === "vision") return VISION_GROUP_CARDS;
+  if (category === "mobile") return MOBILE_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

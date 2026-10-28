@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision" || category === "mobile") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -985,6 +985,8 @@ export function calculateGroupLayout(
         ? "NLP & LLMs"
         : category === "vision"
         ? "Computer Vision"
+        : category === "mobile"
+        ? "Mobile Platform"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1031,6 +1033,8 @@ export function calculateGroupLayout(
         ? "Generative Language"
         : category === "vision"
         ? "Spatial Intelligence"
+        : category === "mobile"
+        ? "Native & Cross-Platform"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1069,6 +1073,8 @@ export function calculateGroupLayout(
         ? "#10a37f"
         : category === "vision"
         ? "#ef4444"
+        : category === "mobile"
+        ? "#2563eb"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -4786,6 +4792,202 @@ export function calculateGroupLayout(
       }
     }
 
+    // ==========================================
+    // BRANCH 4: MOBILE, DATA & EMERGING TECH (Blue, branch 4)
+    // ==========================================
+    // Sub-Branch 4A: Mobile Platform Hub (placed along the left spine at x = -1300, y = -4350)
+    const mobileHubX = -1300;
+    const mobileHubY = -4350;
+    const mobileHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-mobile")!,
+      x: mobileHubX,
+      y: mobileHubY,
+      level: 1,
+      branchIndex: 4,
+    };
+    positionedNodes.push(mobileHubNode);
+    edges.push({
+      source: visionHubNode.id,
+      target: mobileHubNode.id,
+      category: "mobile",
+      level: 1,
+      branchIndex: 4,
+    });
+
+    // Mobile Node 1: Lifecycle & Memory Management (Left-Up)
+    const lifeRaw = allNodes.find((n) => n.id === "mobile-lifecycle-memory-pillar");
+    if (lifeRaw) {
+      const lifeX = mobileHubX - 650;
+      const lifeY = mobileHubY - 180;
+      const lifeNode: PositionedNode = {
+        ...lifeRaw,
+        x: lifeX,
+        y: lifeY,
+        level: 3,
+        branchIndex: 4,
+      };
+      positionedNodes.push(lifeNode);
+      edges.push({
+        source: mobileHubNode.id,
+        target: lifeNode.id,
+        category: "mobile",
+        level: 3,
+        branchIndex: 4,
+      });
+
+      const stateRaw = allNodes.find((n) => n.id === "mobile-app-lifecycle-states");
+      if (stateRaw) {
+        positionedNodes.push({
+          ...stateRaw,
+          x: lifeX - 320,
+          y: lifeY - 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: lifeNode.id,
+          target: stateRaw.id,
+          category: "mobile",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const arcRaw = allNodes.find((n) => n.id === "mobile-memory-constraints-arc");
+      if (arcRaw) {
+        positionedNodes.push({
+          ...arcRaw,
+          x: lifeX - 320,
+          y: lifeY,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: lifeNode.id,
+          target: arcRaw.id,
+          category: "mobile",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const uiRaw = allNodes.find((n) => n.id === "mobile-ui-rendering-thread");
+      if (uiRaw) {
+        positionedNodes.push({
+          ...uiRaw,
+          x: lifeX - 320,
+          y: lifeY + 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: lifeNode.id,
+          target: uiRaw.id,
+          category: "mobile",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+    }
+
+    // Mobile Node 2: 9-Stage Mobile App Runtime & Delivery Pipeline (Group Card, Left-Center)
+    const mobileCard = cardByPillar.get("mobile-pipeline-pillar");
+    if (mobileCard) {
+      const cardX = mobileHubX - 800;
+      const cardY = mobileHubY;
+      const posCard: PositionedGroupCard = {
+        ...mobileCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 4,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: mobileHubNode.id,
+        target: mobileCard.id,
+        category: "mobile",
+        level: 3,
+        branchIndex: 4,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 4);
+    }
+
+    // Mobile Node 3: Cross-Platform & Native Engine (Left-Down)
+    const crossPillarRaw = allNodes.find((n) => n.id === "mobile-crossplatform-ecosystem-pillar");
+    if (crossPillarRaw) {
+      const crossX = mobileHubX - 650;
+      const crossY = mobileHubY + 180;
+      const crossNode: PositionedNode = {
+        ...crossPillarRaw,
+        x: crossX,
+        y: crossY,
+        level: 3,
+        branchIndex: 4,
+      };
+      positionedNodes.push(crossNode);
+      edges.push({
+        source: mobileHubNode.id,
+        target: crossNode.id,
+        category: "mobile",
+        level: 3,
+        branchIndex: 4,
+      });
+
+      const rnRaw = allNodes.find((n) => n.id === "mobile-react-native-jsc-hermes");
+      if (rnRaw) {
+        positionedNodes.push({
+          ...rnRaw,
+          x: crossX - 320,
+          y: crossY - 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: crossNode.id,
+          target: rnRaw.id,
+          category: "mobile",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const fltRaw = allNodes.find((n) => n.id === "mobile-flutter-dart-engine");
+      if (fltRaw) {
+        positionedNodes.push({
+          ...fltRaw,
+          x: crossX - 320,
+          y: crossY,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: crossNode.id,
+          target: fltRaw.id,
+          category: "mobile",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const offRaw = allNodes.find((n) => n.id === "mobile-offline-first-sync");
+      if (offRaw) {
+        positionedNodes.push({
+          ...offRaw,
+          x: crossX - 320,
+          y: crossY + 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: crossNode.id,
+          target: offRaw.id,
+          category: "mobile",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+    }
+
     // Automated overlap prevention relaxation pass
     preventLayoutOverlaps(positionedNodes, positionedCards);
 
@@ -4850,6 +5052,8 @@ export function calculateGroupLayout(
     pillarIds = ["nlp-token-embeddings-pillar", "nlp-pipeline-pillar", "nlp-architecture-pillar"];
   } else if (category === "vision") {
     pillarIds = ["vision-conv-foundations-pillar", "vision-pipeline-pillar", "vision-vit-multimodal-pillar"];
+  } else if (category === "mobile") {
+    pillarIds = ["mobile-lifecycle-memory-pillar", "mobile-pipeline-pillar", "mobile-crossplatform-ecosystem-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -5198,6 +5402,11 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
+    const mobileRoot = {
+      ...allNodes.find((n) => n.id === "root-mobile")!,
+      parentId: "root-all",
+      level: 1,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -5238,13 +5447,14 @@ export function getNodesForCategory(
         n.id !== "root-deeplearning" &&
         n.id !== "root-nlpllms" &&
         n.id !== "root-vision" &&
+        n.id !== "root-mobile" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

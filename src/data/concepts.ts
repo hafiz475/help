@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -195,8 +195,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "mobile",
+    name: "20. Mobile Platform",
+    title: "Mobile Architecture, Lifecycle & Native Runtime",
+    description: "App Lifecycles, Memory Constraints & ARC/GC, 120 FPS Jitter, Declarative UI, Local Storage & Cross-Platform Hermes/Flutter",
+    color: "#2563eb", // Vibrant Native Blue
+    icon: "Smartphone",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "20. OOP (4 Pillars)",
+    name: "21. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -205,7 +214,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "21. DSA",
+    name: "22. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -214,7 +223,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "22. Big O",
+    name: "23. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -228,7 +237,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 249,
+    count: 259,
   },
 ];
 
@@ -415,6 +424,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "computer vision CNN convolutions object detection YOLO vision transformer ViT segmentation",
     badge: "Spatial Intelligence",
     color: "#ef4444",
+  },
+  {
+    id: "root-mobile",
+    label: "Mobile Platform",
+    category: "mobile",
+    level: 0,
+    searchQuery: "mobile platform architecture Android iOS lifecycle memory ARC GC Hermes Flutter",
+    badge: "Native & Cross-Platform",
+    color: "#2563eb",
   },
   {
     id: "root-oop",
@@ -2804,7 +2822,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 20. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 20. MOBILE PLATFORM (ANDROID & IOS)
+  // ==========================================
+  // Pillar 1: Lifecycle & Memory Management
+  {
+    id: "mobile-lifecycle-memory-pillar",
+    label: "Lifecycle & Memory Management",
+    category: "mobile",
+    parentId: "root-mobile",
+    level: 1,
+    searchQuery: "mobile app lifecycle states process death memory constraints ARC garbage collection main thread",
+    badge: "Process & Memory",
+    color: "#1d4ed8",
+  },
+  {
+    id: "mobile-app-lifecycle-states",
+    label: "App Lifecycle & Process Death",
+    category: "mobile",
+    parentId: "mobile-lifecycle-memory-pillar",
+    level: 2,
+    searchQuery: "mobile app lifecycle foreground background suspended process death state restoration activity viewcontroller",
+    badge: "Foreground & Background",
+    color: "#2563eb",
+  },
+  {
+    id: "mobile-memory-constraints-arc",
+    label: "Memory Constraints & ARC / GC",
+    category: "mobile",
+    parentId: "mobile-lifecycle-memory-pillar",
+    level: 2,
+    searchQuery: "mobile memory limits low memory killer ARC retain cycles weak unowned Android ART GC heap allocation",
+    badge: "ARC Retain Cycles & ART GC",
+    color: "#3b82f6",
+  },
+  {
+    id: "mobile-ui-rendering-thread",
+    label: "Main Thread & 120 FPS Jank",
+    category: "mobile",
+    parentId: "mobile-lifecycle-memory-pillar",
+    level: 2,
+    searchQuery: "mobile UI thread 60fps 120fps frame drops jank vsync coroutines grand central dispatch background thread",
+    badge: "VSync & UI Thread",
+    color: "#60a5fa",
+  },
+
+  // Pillar 2: 9-Stage Mobile App Runtime & Delivery Pipeline (Group Card)
+  {
+    id: "mobile-pipeline-pillar",
+    label: "9-Stage Mobile Runtime Pipeline",
+    category: "mobile",
+    parentId: "root-mobile",
+    level: 1,
+    searchQuery: "mobile runtime delivery pipeline cold start native bridge declarative UI offline cache push notifications sensors telemetry",
+    badge: "9 Sequential Stages",
+    color: "#1e40af",
+  },
+
+  // Pillar 3: Cross-Platform & Native Bridge
+  {
+    id: "mobile-crossplatform-ecosystem-pillar",
+    label: "Cross-Platform & Native Engine",
+    category: "mobile",
+    parentId: "root-mobile",
+    level: 1,
+    searchQuery: "cross platform mobile React Native Hermes JSI Fabric TurboModules Flutter Dart Skia Impeller offline sync",
+    badge: "Engines & Bridges",
+    color: "#172554",
+  },
+  {
+    id: "mobile-react-native-jsc-hermes",
+    label: "React Native, Hermes & JSI",
+    category: "mobile",
+    parentId: "mobile-crossplatform-ecosystem-pillar",
+    level: 2,
+    searchQuery: "React Native Hermes bytecode engine JSI JavaScript Interface Fabric renderer TurboModules zero serialization",
+    badge: "Hermes & JSI Architecture",
+    color: "#2563eb",
+  },
+  {
+    id: "mobile-flutter-dart-engine",
+    label: "Flutter, Dart AOT & Impeller",
+    category: "mobile",
+    parentId: "mobile-crossplatform-ecosystem-pillar",
+    level: 2,
+    searchQuery: "Flutter Dart AOT compilation Skia Impeller rendering engine custom rasterization widget tree",
+    badge: "Dart AOT & Impeller Canvas",
+    color: "#3b82f6",
+  },
+  {
+    id: "mobile-offline-first-sync",
+    label: "Offline-First Sync & Conflict",
+    category: "mobile",
+    parentId: "mobile-crossplatform-ecosystem-pillar",
+    level: 2,
+    searchQuery: "mobile offline first local SQLite WatermelonDB optimistic UI CRDT conflict resolution network reconnect sync",
+    badge: "Optimistic UI & Local Sync",
+    color: "#60a5fa",
+  },
+
+  // ==========================================
+  // 21. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

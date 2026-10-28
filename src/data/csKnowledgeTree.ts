@@ -929,10 +929,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
         topics: [
           {
             id: "topic-mobile-fundamentals",
-            name: "Mobile Platform (Android & iOS)",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "App lifecycle, memory constraints, push notifications, and background tasks",
+            name: "Mobile Platform (Android & iOS) ★",
+            categoryId: "mobile",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "App lifecycle, memory constraints, push notifications, background tasks, and Hermes/Flutter engines",
+            color: "#2563eb",
           },
           {
             id: "topic-data-pipelines",

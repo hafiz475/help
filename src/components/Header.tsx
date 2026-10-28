@@ -29,6 +29,7 @@ import {
   CircuitBoard,
   Bot,
   Camera,
+  Smartphone,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -88,6 +89,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Bot size={16} />;
       case "vision":
         return <Camera size={16} />;
+      case "mobile":
+        return <Smartphone size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

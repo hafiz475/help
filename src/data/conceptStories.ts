@@ -9727,6 +9727,639 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // MOBILE PLATFORM PILLARS & CONCEPTS
+  // ==========================================
+  "root-mobile": {
+    id: "root-mobile",
+    title: "Mobile Platform",
+    badge: "Native & Cross-Platform",
+    tagline: "Architecting high-performance native iOS and Android apps with declarative UIs, resilient offline sync, and strict resource management",
+    takeaways: [
+      {
+        id: "mob-root-1",
+        text: "Mobile operating systems strictly throttle background CPU execution and reclaim memory by killing background processes without user warning.",
+        searchPrompt: "mobile platform architecture Android iOS lifecycle low memory killer",
+        emoji: "📱",
+        reactionCount: "6.9k",
+        commentCount: 512,
+      },
+      {
+        id: "mob-root-2",
+        text: "Modern mobile engineering balances declarative reactive UI paradigms (SwiftUI, Jetpack Compose) with native platform bridges and offline-first persistence.",
+        searchPrompt: "declarative UI architecture SwiftUI Jetpack Compose mobile best practices",
+        emoji: "⚡",
+        reactionCount: "6.1k",
+        commentCount: 430,
+      },
+      {
+        id: "mob-root-3",
+        text: "Zero-jank 120Hz ProMotion/SmoothDisplay requires all networking, JSON parsing, and database transactions to run strictly off the main UI thread.",
+        searchPrompt: "mobile 120fps UI thread jank VSync coroutines GCD dispatch queue",
+        emoji: "🏎️",
+        reactionCount: "6.4k",
+        commentCount: 478,
+      },
+    ],
+  },
+
+  "mobile-lifecycle-memory-pillar": {
+    id: "mobile-lifecycle-memory-pillar",
+    title: "Lifecycle & Memory Management",
+    badge: "Process & Memory",
+    tagline: "Navigating app state transitions, preserving view state across process death, and avoiding native retain cycles",
+    takeaways: [
+      {
+        id: "mob-life-p1",
+        text: "App lifecycles move between Foreground Active, Inactive, Background, and Suspended states governed by aggressive OS power policies.",
+        searchPrompt: "iOS app state transitions Android activity lifecycle onPause onStop",
+        emoji: "🔄",
+        reactionCount: "5.1k",
+        commentCount: 360,
+      },
+      {
+        id: "mob-life-p2",
+        text: "Process death occurs silently when low memory triggers the OS Low Memory Killer (LMK); ViewModel SavedStateHandle or onSaveInstanceState must restore state.",
+        searchPrompt: "Android process death SavedStateHandle iOS state restoration",
+        emoji: "💀",
+        reactionCount: "5.7k",
+        commentCount: 415,
+      },
+      {
+        id: "mob-life-p3",
+        text: "Memory leaks in mobile cause rapid out-of-memory (OOM) crashes because smartphones allocate hard heap budgets (often 192MB-512MB) per process.",
+        searchPrompt: "mobile memory leak detection LeakCanary Instruments OOM limits",
+        emoji: "📉",
+        reactionCount: "5.3k",
+        commentCount: 388,
+      },
+    ],
+  },
+
+  "mobile-app-lifecycle-states": {
+    id: "mobile-app-lifecycle-states",
+    title: "App Lifecycle & Process Death",
+    badge: "Foreground & Background",
+    tagline: "Handling system interrupts, background suspensions, and restoring transient UI state",
+    takeaways: [
+      {
+        id: "mob-state-1",
+        text: "When a user switches apps, the OS pauses the current activity/view controller and grants a small time window (e.g. 5-30s) to persist transient state.",
+        searchPrompt: "handling background transitions didEnterBackground onStop mobile",
+        emoji: "⏸️",
+        reactionCount: "4.6k",
+        commentCount: 310,
+      },
+      {
+        id: "mob-state-2",
+        text: "Configuration changes (like device rotation or dark mode switch) destroy and recreate activities in Android, requiring ViewModel or retainInstance preservation.",
+        searchPrompt: "Android activity recreation configuration changes ViewModel retain",
+        emoji: "🔄",
+        reactionCount: "4.9k",
+        commentCount: 335,
+      },
+      {
+        id: "mob-state-3",
+        text: "Cold start benchmarks measure time from OS zygote process fork to initial frame draw (TTI), demanding deferred non-critical SDK initializations.",
+        searchPrompt: "mobile cold start optimization TTID TTFD deferred SDK initialization",
+        emoji: "⏱️",
+        reactionCount: "5.2k",
+        commentCount: 375,
+      },
+    ],
+  },
+
+  "mobile-memory-constraints-arc": {
+    id: "mobile-memory-constraints-arc",
+    title: "Memory Constraints & ARC / GC",
+    badge: "ARC Retain Cycles & ART GC",
+    tagline: "Automatic Reference Counting vs Garbage Collection, weak references, and escaping closures",
+    takeaways: [
+      {
+        id: "mob-arc-1",
+        text: "Swift and Objective-C use compile-time Automatic Reference Counting (ARC) with zero runtime GC pauses, but require [weak self] to prevent circular retain cycles.",
+        searchPrompt: "Swift ARC retain cycle weak unowned capture list memory management",
+        emoji: "🔗",
+        reactionCount: "5.5k",
+        commentCount: 410,
+      },
+      {
+        id: "mob-arc-2",
+        text: "Android's ART runtime utilizes a generational Garbage Collector with Concurrent Mark-Sweep and Generational CC to minimize UI pauses.",
+        searchPrompt: "Android ART generational garbage collection concurrent copy GC pauses",
+        emoji: "🧹",
+        reactionCount: "4.8k",
+        commentCount: 320,
+      },
+      {
+        id: "mob-arc-3",
+        text: "Large Bitmaps are the number one cause of mobile OOMs; decoding images into exact ImageView target dimensions avoids massive ARGB_8888 allocations.",
+        searchPrompt: "Android Bitmap inSampleSize decoding memory optimization Coil Glide",
+        emoji: "🖼️",
+        reactionCount: "5.4k",
+        commentCount: 395,
+      },
+    ],
+  },
+
+  "mobile-ui-rendering-thread": {
+    id: "mobile-ui-rendering-thread",
+    title: "Main Thread & 120 FPS Jank",
+    badge: "VSync & UI Thread",
+    tagline: "Frame budgets (16.6ms for 60Hz, 8.3ms for 120Hz), Choreographer, and background dispatchers",
+    takeaways: [
+      {
+        id: "mob-ui-1",
+        text: "The main thread handles touch events, view hierarchy layout, and draw commands; blocking it for even 5 seconds triggers an Application Not Responding (ANR) crash.",
+        searchPrompt: "Android ANR Application Not Responding main thread watchdog crash",
+        emoji: "🛑",
+        reactionCount: "5.8k",
+        commentCount: 440,
+      },
+      {
+        id: "mob-ui-2",
+        text: "At 120Hz refresh rates, each frame has an 8.3ms rendering budget; dropped frames cause noticeable visual stutter known as jank.",
+        searchPrompt: "mobile 120Hz frame budget 8.3ms VSync Choreographer jank",
+        emoji: "⚡",
+        reactionCount: "5.1k",
+        commentCount: 360,
+      },
+      {
+        id: "mob-ui-3",
+        text: "Kotlin Coroutines (Dispatchers.IO / Dispatchers.Default) and Swift async/await + Task.detached shift heavy computations seamlessly off the MainActor.",
+        searchPrompt: "Kotlin Coroutines Dispatchers IO vs Main Swift MainActor async await",
+        emoji: "🔀",
+        reactionCount: "5.6k",
+        commentCount: 425,
+      },
+    ],
+  },
+
+  "mobile-pipeline-pillar": {
+    id: "mobile-pipeline-pillar",
+    title: "9-Stage Mobile Runtime Pipeline",
+    badge: "End-to-End Pipeline",
+    tagline: "Sequential pipeline orchestrating cold boot, declarative render trees, local caching, push tokens, and telemetry",
+    takeaways: [
+      {
+        id: "mob-pipe-p1",
+        text: "The mobile delivery pipeline governs app execution from process fork and splash screen display through native bridge communication and background sync.",
+        searchPrompt: "mobile application architecture end to end execution pipeline",
+        emoji: "🚀",
+        reactionCount: "5.9k",
+        commentCount: 460,
+      },
+      {
+        id: "mob-pipe-p2",
+        text: "Modern mobile pipelines favor local SQLite/Room single source of truth architectures where network responses update the database and UI reacts to database streams.",
+        searchPrompt: "single source of truth mobile database flow LiveData StateFlow Room",
+        emoji: "💾",
+        reactionCount: "5.3k",
+        commentCount: 380,
+      },
+      {
+        id: "mob-pipe-p3",
+        text: "App bundling tools like Android App Bundles (AAB) and iOS App Thinning slice resources and native libraries to deliver only architecture-specific bytes per device.",
+        searchPrompt: "Android App Bundle dynamic delivery iOS App Thinning slicing",
+        emoji: "📦",
+        reactionCount: "5.4k",
+        commentCount: 390,
+      },
+    ],
+  },
+
+  "mobile-crossplatform-ecosystem-pillar": {
+    id: "mobile-crossplatform-ecosystem-pillar",
+    title: "Cross-Platform & Native Engine",
+    badge: "Engines & Bridges",
+    tagline: "React Native with Hermes bytecode, Flutter with direct Skia/Impeller rendering, and offline synchronization",
+    takeaways: [
+      {
+        id: "mob-cross-p1",
+        text: "React Native modern architecture eliminates the asynchronous JSON bridge using JavaScript Interface (JSI) for direct C++ pointer invocations.",
+        searchPrompt: "React Native new architecture JSI Fabric TurboModules vs old bridge",
+        emoji: "🌉",
+        reactionCount: "6.2k",
+        commentCount: 490,
+      },
+      {
+        id: "mob-cross-p2",
+        text: "Flutter compiles Dart code directly to native ARM machine code and draws its own widgets via Impeller/Skia, guaranteeing identical pixel rendering across platforms.",
+        searchPrompt: "Flutter Impeller rendering engine Dart AOT machine code rasterization",
+        emoji: "🎨",
+        reactionCount: "5.9k",
+        commentCount: 445,
+      },
+      {
+        id: "mob-cross-p3",
+        text: "Offline-first sync architectures leverage optimistic local mutations with conflict-free replicated data types (CRDTs) to ensure uninterrupted offline productivity.",
+        searchPrompt: "offline-first mobile architecture CRDT conflict resolution WatermelonDB",
+        emoji: "📶",
+        reactionCount: "5.7k",
+        commentCount: 420,
+      },
+    ],
+  },
+
+  "mobile-react-native-jsc-hermes": {
+    id: "mobile-react-native-jsc-hermes",
+    title: "React Native, Hermes & JSI",
+    badge: "Hermes & JSI Architecture",
+    tagline: "Ahead-of-Time bytecode compilation, Fabric concurrent renderer, and synchronous C++ TurboModules",
+    takeaways: [
+      {
+        id: "mob-rn-1",
+        text: "Hermes compiles JavaScript into optimized bytecode at build time, slashing app launch time and memory footprint compared to standard JSC.",
+        searchPrompt: "Hermes JavaScript engine ahead of time compilation bytecode mobile",
+        emoji: "⚡",
+        reactionCount: "5.7k",
+        commentCount: 425,
+      },
+      {
+        id: "mob-rn-2",
+        text: "The JavaScript Interface (JSI) exposes C++ host objects to JS without string serialization, enabling 60FPS gesture animations via Reanimated 3.",
+        searchPrompt: "React Native JSI host objects Reanimated worklets UI thread animation",
+        emoji: "🧵",
+        reactionCount: "5.3k",
+        commentCount: 380,
+      },
+      {
+        id: "mob-rn-3",
+        text: "Fabric Concurrent Renderer reconciles React fiber trees directly on native C++ shadow threads, enabling seamless integration with native iOS/Android layout passes.",
+        searchPrompt: "React Native Fabric renderer concurrent mode C++ shadow tree",
+        emoji: "🏗️",
+        reactionCount: "5.0k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "mobile-flutter-dart-engine": {
+    id: "mobile-flutter-dart-engine",
+    title: "Flutter, Dart AOT & Impeller",
+    badge: "Dart AOT & Impeller Canvas",
+    tagline: "Compiling directly to ARM64, bypassing OEM view hierarchies with custom GPU-accelerated rasterization",
+    takeaways: [
+      {
+        id: "mob-flt-1",
+        text: "Flutter compiles Dart to native ARM64 assembly using Ahead-of-Time (AOT) compilation, avoiding intermediate interpreters or bytecode runtimes.",
+        searchPrompt: "Flutter Dart AOT compilation ARM64 native machine code",
+        emoji: "🎯",
+        reactionCount: "5.4k",
+        commentCount: 395,
+      },
+      {
+        id: "mob-flt-2",
+        text: "The Impeller rendering engine precompiles all GPU shaders at build time, eliminating shader compilation stutter (early jank) on iOS and Android.",
+        searchPrompt: "Flutter Impeller rendering engine precompiled shaders shader compilation jank",
+        emoji: "✨",
+        reactionCount: "5.8k",
+        commentCount: 440,
+      },
+      {
+        id: "mob-flt-3",
+        text: "Flutter's three-tree architecture (Widget Tree, Element Tree, RenderObject Tree) minimizes layout recalculations by caching and diffing immutable widget configurations.",
+        searchPrompt: "Flutter widget tree element tree renderobject tree diffing",
+        emoji: "🌳",
+        reactionCount: "5.2k",
+        commentCount: 370,
+      },
+    ],
+  },
+
+  "mobile-offline-first-sync": {
+    id: "mobile-offline-first-sync",
+    title: "Offline-First Sync & Conflict",
+    badge: "Optimistic UI & Local Sync",
+    tagline: "Local database as source of truth, mutation queues, exponential backoff retries, and delta synchronization",
+    takeaways: [
+      {
+        id: "mob-off-1",
+        text: "Optimistic updates immediately reflect user actions in the local database and UI, enqueueing a persistent network sync task in a background queue.",
+        searchPrompt: "optimistic UI updates mobile local first sync queue",
+        emoji: "⏩",
+        reactionCount: "5.1k",
+        commentCount: 365,
+      },
+      {
+        id: "mob-off-2",
+        text: "Conflict resolution strategies (Last-Write-Wins, vector clocks, or 3-way merges) resolve divergence when multiple devices modify the same record offline.",
+        searchPrompt: "offline sync conflict resolution Last-Write-Wins vector clocks CRDT",
+        emoji: "⚖️",
+        reactionCount: "5.3k",
+        commentCount: 385,
+      },
+      {
+        id: "mob-off-3",
+        text: "Delta sync sends only timestamps or changelogs rather than full table dumps, drastically reducing cellular data usage and battery consumption.",
+        searchPrompt: "delta synchronization mobile bandwidth battery optimization",
+        emoji: "📉",
+        reactionCount: "4.9k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  // ==========================================
+  // MOBILE PLATFORM 9-STAGE PIPELINE STORIES
+  // ==========================================
+  "mobile-app-init-coldstart": {
+    id: "mobile-app-init-coldstart",
+    title: "1. Cold Start & Splash Screen",
+    badge: "OS Fork & Application Init",
+    tagline: "Process spawning, Application.onCreate / didFinishLaunchingWithOptions, and initial frame rendering",
+    takeaways: [
+      {
+        id: "mob-init-1",
+        text: "Cold start initializes the OS process, loads runtime libraries, calls Application.onCreate/didFinishLaunching, and inflates the launch theme window.",
+        searchPrompt: "mobile app cold start launch stages Android iOS application init",
+        emoji: "⏱️",
+        reactionCount: "4.7k",
+        commentCount: 320,
+      },
+      {
+        id: "mob-init-2",
+        text: "SplashScreen APIs display a branded placeholder window instantly from the OS theme before any code execution starts, avoiding blank white screens.",
+        searchPrompt: "Android 12 SplashScreen API iOS LaunchScreen storyboard theme",
+        emoji: "🖼️",
+        reactionCount: "4.3k",
+        commentCount: 290,
+      },
+      {
+        id: "mob-init-3",
+        text: "Heavy third-party SDK initializations (Analytics, AdMob, Sentry) should be lazily initialized or offloaded to App Startup libraries to preserve TTID.",
+        searchPrompt: "Android Jetpack App Startup library lazy SDK initialization",
+        emoji: "🚀",
+        reactionCount: "4.9k",
+        commentCount: 355,
+      },
+    ],
+  },
+
+  "mobile-runtime-bridging": {
+    id: "mobile-runtime-bridging",
+    title: "2. Native Bridge & Architecture",
+    badge: "JNI & Objective-C/Swift Bridge",
+    tagline: "Connecting managed runtimes to native platform APIs via JNI, C/C++ bindings, and Swift interoperability",
+    takeaways: [
+      {
+        id: "mob-brg-1",
+        text: "Java Native Interface (JNI) allows Java/Kotlin code running in ART to call and be called by native applications and libraries written in C/C++.",
+        searchPrompt: "Java Native Interface JNI Android NDK C++ native bridge",
+        emoji: "🌉",
+        reactionCount: "4.5k",
+        commentCount: 305,
+      },
+      {
+        id: "mob-brg-2",
+        text: "Direct C/C++ bridges in game engines and cross-platform frameworks bypass reflection overhead for high-throughput frame rendering and physics calculations.",
+        searchPrompt: "NDK C++ direct bindings performance mobile cross platform",
+        emoji: "⚙️",
+        reactionCount: "4.2k",
+        commentCount: 280,
+      },
+      {
+        id: "mob-brg-3",
+        text: "Swift-C++ interoperability eliminates Objective-C++ bridging headers, allowing modern Swift code to directly instantiate and invoke C++ classes zero-cost.",
+        searchPrompt: "Swift C++ interoperability bidirectional zero-cost abstractions",
+        emoji: "🏎️",
+        reactionCount: "4.8k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "mobile-declarative-ui-tree": {
+    id: "mobile-declarative-ui-tree",
+    title: "3. Declarative UI (SwiftUI / Compose)",
+    badge: "Diffing & Render Tree",
+    tagline: "State-driven unidirectional data flow, recomposition scopes, and declarative view diffing",
+    takeaways: [
+      {
+        id: "mob-ui3-1",
+        text: "In declarative UI frameworks, the view is a pure function of state (UI = f(State)); state updates trigger smart recomposition of only affected nodes.",
+        searchPrompt: "declarative UI f(state) Jetpack Compose SwiftUI recomposition",
+        emoji: "🎨",
+        reactionCount: "5.6k",
+        commentCount: 415,
+      },
+      {
+        id: "mob-ui3-2",
+        text: "Jetpack Compose compiler annotates composable functions with stability markers to skip recomposition when parameters haven't changed.",
+        searchPrompt: "Jetpack Compose stability markers @Stable @Immutable skip recomposition",
+        emoji: "🛡️",
+        reactionCount: "5.1k",
+        commentCount: 370,
+      },
+      {
+        id: "mob-ui3-3",
+        text: "SwiftUI uses structural identity and explicit id markers along with dynamic property wrappers (@State, @Binding, @Observable) for efficient view tree updates.",
+        searchPrompt: "SwiftUI structural identity view graph @Observable macro diffing",
+        emoji: "🧩",
+        reactionCount: "5.3k",
+        commentCount: 385,
+      },
+    ],
+  },
+
+  "mobile-network-caching-layer": {
+    id: "mobile-network-caching-layer",
+    title: "4. Network Interception & Cache",
+    badge: "OkHttp & URLSession Interceptors",
+    tagline: "HTTP client interceptor chains, transparent gzip compression, connection pooling, and disk cache headers",
+    takeaways: [
+      {
+        id: "mob-net-1",
+        text: "Interceptor chains in OkHttp / URLSession inject authentication tokens, log payloads, handle automatic retries, and rewrite cache-control headers.",
+        searchPrompt: "OkHttp interceptor chain URLSession delegate authentication retry",
+        emoji: "📡",
+        reactionCount: "4.9k",
+        commentCount: 345,
+      },
+      {
+        id: "mob-net-2",
+        text: "HTTP conditional requests use ETag and If-None-Match headers; a 304 Not Modified response saves expensive mobile cellular data and battery life.",
+        searchPrompt: "HTTP ETag conditional requests 304 Not Modified mobile caching",
+        emoji: "🏷️",
+        reactionCount: "4.6k",
+        commentCount: 315,
+      },
+      {
+        id: "mob-net-3",
+        text: "Connection pooling reuses open TCP/TLS sockets across multiple HTTP requests, eliminating the multi-RTT handshake penalty on high-latency cellular towers.",
+        searchPrompt: "mobile connection pooling TLS session resumption keep-alive",
+        emoji: "🔌",
+        reactionCount: "4.8k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "mobile-sqlite-room-coredata": {
+    id: "mobile-sqlite-room-coredata",
+    title: "5. Local Persistence (Room / CoreData)",
+    badge: "SQLite WAL & ORM Transactions",
+    tagline: "Compile-time query verification, Write-Ahead Logging (WAL), schema migrations, and reactive entity queries",
+    takeaways: [
+      {
+        id: "mob-db-1",
+        text: "Android Room validates SQL queries at compile time, eliminating runtime syntax errors and generating reactive Flow / LiveData query observers.",
+        searchPrompt: "Android Room compile time SQL validation reactive queries Flow",
+        emoji: "💾",
+        reactionCount: "5.2k",
+        commentCount: 380,
+      },
+      {
+        id: "mob-db-2",
+        text: "SQLite Write-Ahead Logging (WAL) allows concurrent readers to query tables while a background writer writes to the log, ending read-write lock contention.",
+        searchPrompt: "SQLite WAL write ahead logging concurrency mobile performance",
+        emoji: "📝",
+        reactionCount: "4.7k",
+        commentCount: 325,
+      },
+      {
+        id: "mob-db-3",
+        text: "CoreData and SwiftData provide object-graph management with faulting, lazy relationship fetching, and persistent history tracking across devices.",
+        searchPrompt: "CoreData faulting lazy loading SwiftData persistent history tracking",
+        emoji: "🗄️",
+        reactionCount: "4.9k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "mobile-push-fcm-apns": {
+    id: "mobile-push-fcm-apns",
+    title: "6. Push Notifications (APNs & FCM)",
+    badge: "Device Tokens & Payload Handling",
+    tagline: "Apple Push Notification Service, Firebase Cloud Messaging, background data silent pushes, and notification channels",
+    takeaways: [
+      {
+        id: "mob-push-1",
+        text: "Device push tokens are unique cryptographic handles issued by APNs / FCM that identify the specific app install on a hardware device.",
+        searchPrompt: "APNs device token FCM registration token push notification architecture",
+        emoji: "🔔",
+        reactionCount: "5.4k",
+        commentCount: 395,
+      },
+      {
+        id: "mob-push-2",
+        text: "Silent push notifications (content-available: 1 / high priority data) wake the app in the background to fetch new content before the user unlocks the screen.",
+        searchPrompt: "silent push notification background data fetch content-available",
+        emoji: "🔕",
+        reactionCount: "5.0k",
+        commentCount: 360,
+      },
+      {
+        id: "mob-push-3",
+        text: "Android Notification Channels give users granular control to opt out of marketing alerts while keeping critical order or message notifications active.",
+        searchPrompt: "Android Notification Channels importance levels user notification control",
+        emoji: "📢",
+        reactionCount: "4.6k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "mobile-background-work-sync": {
+    id: "mobile-background-work-sync",
+    title: "7. Background Work & Schedulers",
+    badge: "WorkManager & BackgroundTasks",
+    tagline: "Guaranteed background execution respecting Doze mode, unmetered network constraints, and battery charging limits",
+    takeaways: [
+      {
+        id: "mob-wk-1",
+        text: "Android WorkManager gracefully survives process death and device reboots, scheduling deferrable background jobs with battery and network constraints.",
+        searchPrompt: "Android WorkManager constraints battery unmetered network execution",
+        emoji: "⚙️",
+        reactionCount: "5.3k",
+        commentCount: 375,
+      },
+      {
+        id: "mob-wk-2",
+        text: "iOS BGTaskScheduler delegates background processing to iOS power management algorithms, which determine optimal execution windows based on user usage patterns.",
+        searchPrompt: "iOS BGTaskScheduler BGAppRefreshTask BGProcessingTask power management",
+        emoji: "🔋",
+        reactionCount: "4.8k",
+        commentCount: 330,
+      },
+      {
+        id: "mob-wk-3",
+        text: "Foreground Services in Android display an ongoing user notification and are strictly reserved for active tasks like media playback, navigation, or phone calls.",
+        searchPrompt: "Android foreground service ongoing notification types Android 14 requirements",
+        emoji: "🏃",
+        reactionCount: "4.9k",
+        commentCount: 345,
+      },
+    ],
+  },
+
+  "mobile-native-sensors-hardware": {
+    id: "mobile-native-sensors-hardware",
+    title: "8. Hardware & Sensors (GPS, Camera)",
+    badge: "Runtime Permissions & Biometrics",
+    tagline: "Fine vs coarse geolocation, CameraX/AVFoundation hardware pipelines, and FaceID / BiometricPrompt auth",
+    takeaways: [
+      {
+        id: "mob-sen-1",
+        text: "Modern mobile platforms enforce runtime permissions; apps must handle 'approximate location' fallback and graceful permission denials.",
+        searchPrompt: "mobile runtime permissions fine vs coarse location one-time permission",
+        emoji: "📍",
+        reactionCount: "4.7k",
+        commentCount: 325,
+      },
+      {
+        id: "mob-sen-2",
+        text: "BiometricPrompt (Android) and LocalAuthentication (iOS) interface with hardware security enclaves to verify Face ID and fingerprint biometrics securely.",
+        searchPrompt: "mobile biometrics Secure Enclave Android BiometricPrompt FaceID",
+        emoji: "🔐",
+        reactionCount: "5.5k",
+        commentCount: 410,
+      },
+      {
+        id: "mob-sen-3",
+        text: "CameraX and AVFoundation abstract diverse device lens hardware into lifecycle-aware camera capture, preview, and image analysis pipelines.",
+        searchPrompt: "CameraX lifecycle aware preview image analysis AVFoundation iOS",
+        emoji: "📷",
+        reactionCount: "4.9k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "mobile-crash-analytics-profiling": {
+    id: "mobile-crash-analytics-profiling",
+    title: "9. Crashlytics & App Bundles",
+    badge: "Symbolication, ProGuard & APK/AAB",
+    tagline: "dSYM and mapping.txt symbolication, R8 bytecode shrinking, release signing, and production crash telemetry",
+    takeaways: [
+      {
+        id: "mob-crash-1",
+        text: "R8 and ProGuard shrink APK sizes by stripping unused classes, inlining functions, and obfuscating code identifiers to hinder reverse engineering.",
+        searchPrompt: "Android R8 compiler code shrinking ProGuard obfuscation mapping txt",
+        emoji: "🛡️",
+        reactionCount: "5.1k",
+        commentCount: 365,
+      },
+      {
+        id: "mob-crash-2",
+        text: "Crash symbolication converts hexadecimal memory addresses in crash stack traces into readable method names and file line numbers using dSYM or mapping.txt.",
+        searchPrompt: "crash symbolication dSYM mapping txt Sentry Crashlytics stack trace",
+        emoji: "📊",
+        reactionCount: "5.6k",
+        commentCount: 420,
+      },
+      {
+        id: "mob-crash-3",
+        text: "Google Play and Apple App Store enforce strict binary verification, target API level requirements, and automated pre-launch testing on physical device farms.",
+        searchPrompt: "Google Play Console pre-launch report TestFlight App Store review guidelines",
+        emoji: "🏪",
+        reactionCount: "5.2k",
+        commentCount: 380,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -11249,6 +11882,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "NLP & LLMs"
       : node.category === "vision"
       ? "Computer Vision"
+      : node.category === "mobile"
+      ? "Mobile Platform"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"
