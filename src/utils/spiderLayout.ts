@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -969,6 +969,8 @@ export function calculateGroupLayout(
         ? "Web Platform & DOM"
         : category === "rendering"
         ? "Browser Rendering"
+        : category === "security"
+        ? "Cookies, Storage & CORS"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -999,6 +1001,8 @@ export function calculateGroupLayout(
         ? "Browser Platform"
         : category === "rendering"
         ? "Critical Path"
+        : category === "security"
+        ? "Browser Security"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1021,6 +1025,8 @@ export function calculateGroupLayout(
         ? "#6366f1"
         : category === "rendering"
         ? "#f43f5e"
+        : category === "security"
+        ? "#eab308"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -2985,6 +2991,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1H: Web Security & Storage Hub (placed top-right above rendering at y = -4950)
+    const securityHubX = 1300;
+    const securityHubY = -4950;
+    const securityHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-security")!,
+      x: securityHubX,
+      y: securityHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(securityHubNode);
+    edges.push({
+      source: nodeHubNode.id,
+      target: securityHubNode.id,
+      category: "security",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Security Node 1: Same-Origin Policy & CORS
+    const sOriginRaw = allNodes.find((n) => n.id === "security-same-origin-cors");
+    if (sOriginRaw) {
+      const sOriginX = 1950;
+      const sOriginY = -5150;
+      const sOriginNode: PositionedNode = {
+        ...sOriginRaw,
+        x: sOriginX,
+        y: sOriginY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(sOriginNode);
+      edges.push({
+        source: securityHubNode.id,
+        target: sOriginNode.id,
+        category: "security",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const sopRaw = allNodes.find((n) => n.id === "security-sop-boundary");
+      if (sopRaw) {
+        positionedNodes.push({
+          ...sopRaw,
+          x: sOriginX + 320,
+          y: sOriginY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sOriginNode.id,
+          target: sopRaw.id,
+          category: "security",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const preflightRaw = allNodes.find((n) => n.id === "security-cors-preflight");
+      if (preflightRaw) {
+        positionedNodes.push({
+          ...preflightRaw,
+          x: sOriginX + 320,
+          y: sOriginY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sOriginNode.id,
+          target: preflightRaw.id,
+          category: "security",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const credRaw = allNodes.find((n) => n.id === "security-credentialed-requests");
+      if (credRaw) {
+        positionedNodes.push({
+          ...credRaw,
+          x: sOriginX + 320,
+          y: sOriginY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sOriginNode.id,
+          target: credRaw.id,
+          category: "security",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Security Node 2: Cookie Security & Storage Pipeline (Group Card)
+    const secCard = cardByPillar.get("security-cookie-lifecycle");
+    if (secCard) {
+      const cardX = 2100;
+      const cardY = -4950;
+      const posCard: PositionedGroupCard = {
+        ...secCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: securityHubNode.id,
+        target: secCard.id,
+        category: "security",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Security Node 3: Client-Side Defense Architecture
+    const sDefenseRaw = allNodes.find((n) => n.id === "security-web-defenses");
+    if (sDefenseRaw) {
+      const sDefenseX = 1950;
+      const sDefenseY = -4750;
+      const sDefenseNode: PositionedNode = {
+        ...sDefenseRaw,
+        x: sDefenseX,
+        y: sDefenseY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(sDefenseNode);
+      edges.push({
+        source: securityHubNode.id,
+        target: sDefenseNode.id,
+        category: "security",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const cspRaw = allNodes.find((n) => n.id === "security-csp-headers");
+      if (cspRaw) {
+        positionedNodes.push({
+          ...cspRaw,
+          x: sDefenseX + 320,
+          y: sDefenseY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sDefenseNode.id,
+          target: cspRaw.id,
+          category: "security",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const sriRaw = allNodes.find((n) => n.id === "security-subresource-integrity");
+      if (sriRaw) {
+        positionedNodes.push({
+          ...sriRaw,
+          x: sDefenseX + 320,
+          y: sDefenseY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sDefenseNode.id,
+          target: sriRaw.id,
+          category: "security",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const ttRaw = allNodes.find((n) => n.id === "security-trusted-types");
+      if (ttRaw) {
+        positionedNodes.push({
+          ...ttRaw,
+          x: sDefenseX + 320,
+          y: sDefenseY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sDefenseNode.id,
+          target: ttRaw.id,
+          category: "security",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -3239,6 +3438,8 @@ export function calculateGroupLayout(
     pillarIds = ["platform-semantic-dom", "platform-css-pipeline", "platform-dom-apis"];
   } else if (category === "rendering") {
     pillarIds = ["rendering-pipeline", "rendering-reflow-repaint", "rendering-optimizations"];
+  } else if (category === "security") {
+    pillarIds = ["security-same-origin-cors", "security-cookie-lifecycle", "security-web-defenses"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -3547,6 +3748,11 @@ export function getNodesForCategory(
       parentId: "root-node",
       level: 2,
     };
+    const securityRoot = {
+      ...allNodes.find((n) => n.id === "root-security")!,
+      parentId: "root-node",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -3579,13 +3785,14 @@ export function getNodesForCategory(
         n.id !== "root-scaling" &&
         n.id !== "root-platform" &&
         n.id !== "root-rendering" &&
+        n.id !== "root-security" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

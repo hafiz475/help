@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1127,7 +1127,84 @@ export const RENDERING_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const SECURITY_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-security-pipeline",
+    pillarId: "security-cookie-lifecycle",
+    title: "Cookie Security & Storage Pipeline",
+    category: "security",
+    badge: "9 Sequential Stages",
+    color: "#a16207",
+    isPipeline: true,
+    items: [
+      {
+        id: "sec-origin-check",
+        stepNumber: 1,
+        label: "1. Origin Tuple Check",
+        badge: "🔒 Protocol + Host + Port",
+        searchQuery: "browser origin tuple check scheme domain port security boundary",
+      },
+      {
+        id: "sec-preflight-handshake",
+        stepNumber: 2,
+        label: "2. CORS Preflight Handshake",
+        badge: "🤝 OPTIONS Handshake",
+        searchQuery: "CORS preflight handshake OPTIONS Access-Control-Allow-Origin",
+      },
+      {
+        id: "sec-cookie-attributes",
+        stepNumber: 3,
+        label: "3. Cookie Security Flags",
+        badge: "🛡️ HttpOnly, Secure, SameSite",
+        searchQuery: "Set-Cookie flags HttpOnly Secure SameSite Strict Lax None",
+      },
+      {
+        id: "sec-cookie-storage",
+        stepNumber: 4,
+        label: "4. Cookie Jar Scoping",
+        badge: "🍪 Domain & Path Scoping",
+        searchQuery: "cookie jar domain path scoping session vs persistent cookie",
+      },
+      {
+        id: "sec-local-storage",
+        stepNumber: 5,
+        label: "5. Web Storage (5MB KV)",
+        badge: "💾 localStorage / sessionStorage",
+        searchQuery: "localStorage vs sessionStorage synchronous key value 5MB quota",
+      },
+      {
+        id: "sec-indexeddb",
+        stepNumber: 6,
+        label: "6. IndexedDB Transactions",
+        badge: "🗄️ Async NoSQL Store",
+        searchQuery: "IndexedDB transactional object store indexes cursor async storage",
+      },
+      {
+        id: "sec-xss-defense",
+        stepNumber: 7,
+        label: "7. XSS Sanitization & CSP",
+        badge: "🧼 Input Escaping & Nonces",
+        searchQuery: "cross site scripting XSS prevention sanitization CSP nonce innerHTML",
+      },
+      {
+        id: "sec-csrf-protection",
+        stepNumber: 8,
+        label: "8. Anti-CSRF Tokens",
+        badge: "🎫 Synchronizer Token & SameSite",
+        searchQuery: "cross site request forgery CSRF synchronizer token pattern SameSite cookie",
+      },
+      {
+        id: "sec-credential-transport",
+        stepNumber: 9,
+        label: "9. Credentialed Transport",
+        badge: "🔑 Authorization & Bearer Tokens",
+        searchQuery: "HTTP Authorization Bearer token withCredentials fetch credentials include",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1139,8 +1216,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "scaling") return SCALING_GROUP_CARDS;
   if (category === "platform") return PLATFORM_GROUP_CARDS;
   if (category === "rendering") return RENDERING_GROUP_CARDS;
+  if (category === "security") return SECURITY_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

@@ -4675,6 +4675,639 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // WEB SECURITY, COOKIES & STORAGE STORIES
+  // ==========================================
+  "root-security": {
+    id: "root-security",
+    title: "Cookies, Storage & CORS",
+    badge: "Browser Security",
+    tagline: "The fundamental trust boundaries, storage mechanisms, and defensive shields protecting client web applications",
+    takeaways: [
+      {
+        id: "rsec-1",
+        text: "The Same-Origin Policy (SOP) is the cornerstone of web security, isolating isolated document contexts by protocol, host, and port.",
+        searchPrompt: "same origin policy SOP browser trust boundary explained",
+        emoji: "🛡️",
+        reactionCount: "5.4k",
+        commentCount: 440,
+      },
+      {
+        id: "rsec-2",
+        text: "CORS is not a security feature for the client; it is an opt-in relaxation mechanism for servers to share resources cross-origin safely.",
+        searchPrompt: "CORS cross origin resource sharing misconceptions server relaxation",
+        emoji: "🌐",
+        reactionCount: "4.8k",
+        commentCount: 380,
+      },
+      {
+        id: "rsec-3",
+        text: "Defense-in-depth combines HttpOnly/SameSite cookies, strict Content Security Policy, and sanitized storage to eliminate XSS/CSRF vectors.",
+        searchPrompt: "web application defense in depth cookies CSP XSS CSRF prevention",
+        emoji: "🔒",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+    ],
+  },
+
+  "security-same-origin-cors": {
+    id: "security-same-origin-cors",
+    title: "Same-Origin Policy & CORS",
+    badge: "Origin Security",
+    tagline: "Regulating cross-origin document access and orchestrating preflight handshakes for complex requests",
+    takeaways: [
+      {
+        id: "ssoc-1",
+        text: "Two URLs share the same origin only if their protocol (scheme), exact domain (host), and port match identically.",
+        searchPrompt: "same origin comparison table protocol domain port examples",
+        emoji: "🔍",
+        reactionCount: "4.9k",
+        commentCount: 390,
+      },
+      {
+        id: "ssoc-2",
+        text: "Cross-origin writes (forms, links) and cross-origin embeds (images, scripts) are allowed; cross-origin reads are blocked.",
+        searchPrompt: "same origin policy read write embed permissions difference",
+        emoji: "🚦",
+        reactionCount: "4.3k",
+        commentCount: 320,
+      },
+      {
+        id: "ssoc-3",
+        text: "CORS headers (Access-Control-Allow-Origin) allow servers to whitelist trusted client domains for cross-origin reads.",
+        searchPrompt: "Access-Control-Allow-Origin wildcard vs specific domain credentials",
+        emoji: "🤝",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+    ],
+  },
+
+  "security-sop-boundary": {
+    id: "security-sop-boundary",
+    title: "Same-Origin Policy (SOP)",
+    badge: "Protocol/Host/Port",
+    tagline: "The browser sandbox preventing malicious websites from snooping on sensitive authenticated DOM and cookies",
+    takeaways: [
+      {
+        id: "ssop-1",
+        text: "Prevents an iframe on evil.com from reading the DOM, localStorage, or cookies of bank.com running in another frame.",
+        searchPrompt: "how same origin policy prevents cross site DOM access iframe",
+        emoji: "🧱",
+        reactionCount: "5.0k",
+        commentCount: 410,
+      },
+      {
+        id: "ssop-2",
+        text: "document.domain relaxation is deprecated in modern browsers; use window.postMessage with strict targetOrigin checks.",
+        searchPrompt: "document.domain relaxation deprecated window.postMessage security",
+        emoji: "✉️",
+        reactionCount: "3.9k",
+        commentCount: 275,
+      },
+      {
+        id: "ssop-3",
+        text: "Window objects from different origins only expose a restricted set of properties (window.location write-only, window.close).",
+        searchPrompt: "cross-origin restricted window object properties DOM security",
+        emoji: "🪟",
+        reactionCount: "3.2k",
+        commentCount: 205,
+      },
+    ],
+  },
+
+  "security-cors-preflight": {
+    id: "security-cors-preflight",
+    title: "CORS Preflight (OPTIONS)",
+    badge: "Preflight Handshake",
+    tagline: "The automatic HTTP OPTIONS probe sent to check whether the server understands non-simple requests",
+    takeaways: [
+      {
+        id: "scp-1",
+        text: "Triggered whenever requests use custom headers (Authorization), non-simple methods (PUT, DELETE), or JSON Content-Type.",
+        searchPrompt: "what triggers CORS preflight request OPTIONS simple vs preflighted",
+        emoji: "✈️",
+        reactionCount: "5.3k",
+        commentCount: 450,
+      },
+      {
+        id: "scp-2",
+        text: "Server answers with Access-Control-Allow-Methods and Access-Control-Allow-Headers to approve the real request.",
+        searchPrompt: "CORS preflight response headers Access-Control-Allow-Methods",
+        emoji: "📋",
+        reactionCount: "4.1k",
+        commentCount: 300,
+      },
+      {
+        id: "scp-3",
+        text: "Use Access-Control-Max-Age to cache preflight responses in browser RAM and avoid round-trip latency on every fetch.",
+        searchPrompt: "Access-Control-Max-Age preflight caching performance optimization",
+        emoji: "⚡",
+        reactionCount: "3.6k",
+        commentCount: 245,
+      },
+    ],
+  },
+
+  "security-credentialed-requests": {
+    id: "security-credentialed-requests",
+    title: "Credentials & Exposed Headers",
+    badge: "withCredentials",
+    tagline: "Rules governing cookies, authorization headers, and custom response header access in cross-origin fetches",
+    takeaways: [
+      {
+        id: "scr-1",
+        text: "Cross-origin fetches omit cookies by default; credentials: 'include' (or withCredentials = true) is required to send them.",
+        searchPrompt: "fetch credentials include cross origin cookies XMLHttpRequest withCredentials",
+        emoji: "🔑",
+        reactionCount: "4.7k",
+        commentCount: 370,
+      },
+      {
+        id: "scr-2",
+        text: "When credentials are included, the server CANNOT return Access-Control-Allow-Origin: *; it must return the exact origin.",
+        searchPrompt: "Access-Control-Allow-Origin wildcard credentials cannot be used together error",
+        emoji: "🚫",
+        reactionCount: "5.2k",
+        commentCount: 430,
+      },
+      {
+        id: "scr-3",
+        text: "Custom response headers are hidden from JavaScript unless explicitly listed in Access-Control-Expose-Headers.",
+        searchPrompt: "Access-Control-Expose-Headers custom headers hidden in response fetch",
+        emoji: "👁️",
+        reactionCount: "3.8k",
+        commentCount: 260,
+      },
+    ],
+  },
+
+  "security-cookie-lifecycle": {
+    id: "security-cookie-lifecycle",
+    title: "Cookies & Storage Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "The complete browser data storage and isolation hierarchy: Cookies, Web Storage, IndexedDB, and transport tokens",
+    takeaways: [
+      {
+        id: "scl-1",
+        text: "Combines 5MB synchronous Key-Value Web Storage with high-capacity transactional async IndexedDB stores.",
+        searchPrompt: "localStorage vs sessionStorage vs IndexedDB comparison quotas",
+        emoji: "💾",
+        reactionCount: "4.8k",
+        commentCount: 395,
+      },
+      {
+        id: "scl-2",
+        text: "HttpOnly cookies prevent JavaScript from accessing authentication tokens, neutralizing most XSS token theft.",
+        searchPrompt: "HttpOnly cookies security XSS protection session storage tokens",
+        emoji: "🛡️",
+        reactionCount: "5.1k",
+        commentCount: 410,
+      },
+      {
+        id: "scl-3",
+        text: "SameSite=Lax (default in modern browsers) blocks cross-site cookie transmission on third-party POST requests.",
+        searchPrompt: "SameSite cookie attribute Strict vs Lax vs None CSRF protection",
+        emoji: "🍪",
+        reactionCount: "4.5k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "security-web-defenses": {
+    id: "security-web-defenses",
+    title: "Client-Side Defenses",
+    badge: "Defense in Depth",
+    tagline: "Modern browser security headers, cryptographic script hashes, and injection sink quarantines",
+    takeaways: [
+      {
+        id: "swd-1",
+        text: "Content Security Policy (CSP) restricts what script, style, and media sources the browser is permitted to execute.",
+        searchPrompt: "Content Security Policy CSP header implementation best practices",
+        emoji: "📜",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+      {
+        id: "swd-2",
+        text: "Subresource Integrity (SRI) guarantees that CDN-hosted scripts have not been tampered with or compromised.",
+        searchPrompt: "Subresource Integrity SRI hash checking script tag security",
+        emoji: "🔒",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+      {
+        id: "swd-3",
+        text: "Trusted Types enforce programmatic sanitization policies before strings can be passed into dangerous DOM sinks (innerHTML).",
+        searchPrompt: "Trusted Types API preventing DOM XSS innerHTML injection sink",
+        emoji: "🧼",
+        reactionCount: "3.7k",
+        commentCount: 265,
+      },
+    ],
+  },
+
+  "security-csp-headers": {
+    id: "security-csp-headers",
+    title: "Content Security Policy (CSP)",
+    badge: "Script Whitelist",
+    tagline: "The strongest browser defense against Cross-Site Scripting (XSS) and malicious data exfiltration",
+    takeaways: [
+      {
+        id: "scsp-1",
+        text: "default-src 'self' blocks all inline scripts, eval(), and unauthorized third-party domains by default.",
+        searchPrompt: "CSP default-src self script-src unsafe-inline eval restriction",
+        emoji: "🛡️",
+        reactionCount: "5.0k",
+        commentCount: 415,
+      },
+      {
+        id: "scsp-2",
+        text: "Cryptographic nonces ('nonce-random123') allow legitimate inlined server scripts while rejecting injected attacker payloads.",
+        searchPrompt: "CSP nonce based policy dynamic script injection protection",
+        emoji: "🎲",
+        reactionCount: "4.4k",
+        commentCount: 330,
+      },
+      {
+        id: "scsp-3",
+        text: "Content-Security-Policy-Report-Only mode collects violation telemetry without breaking existing production pages.",
+        searchPrompt: "CSP report only mode report-to report-uri telemetry monitoring",
+        emoji: "📡",
+        reactionCount: "3.8k",
+        commentCount: 270,
+      },
+    ],
+  },
+
+  "security-subresource-integrity": {
+    id: "security-subresource-integrity",
+    title: "Subresource Integrity (SRI)",
+    badge: "SHA Hash Check",
+    tagline: "Cryptographically verifying that external CDN files have not been maliciously modified or compromised",
+    takeaways: [
+      {
+        id: "ssri-1",
+        text: "The browser hashes the downloaded script (e.g. sha384-...) and refuses to execute it if the hash does not match.",
+        searchPrompt: "how Subresource Integrity SRI works SHA hash comparison CDN",
+        emoji: "🔐",
+        reactionCount: "4.5k",
+        commentCount: 325,
+      },
+      {
+        id: "ssri-2",
+        text: "Requires crossorigin='anonymous' attribute so the browser can read response bytes without CORS taint.",
+        searchPrompt: "SRI crossorigin anonymous requirement CORS response inspection",
+        emoji: "🌐",
+        reactionCount: "3.8k",
+        commentCount: 255,
+      },
+      {
+        id: "ssri-3",
+        text: "Protects applications from supply-chain attacks where third-party CDN libraries are hijacked by hackers.",
+        searchPrompt: "preventing supply chain attacks CDN compromise Subresource Integrity",
+        emoji: "⛓️",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "security-trusted-types": {
+    id: "security-trusted-types",
+    title: "Trusted Types & Injection Sinks",
+    badge: "DOM Sink Defense",
+    tagline: "Eliminating DOM-based XSS by locking down dangerous browser sinks at compile and runtime",
+    takeaways: [
+      {
+        id: "stt-1",
+        text: "Blocks passing raw, uninspected strings to element.innerHTML, outerHTML, or script.src directly.",
+        searchPrompt: "Trusted Types API preventing DOM XSS innerHTML sinks",
+        emoji: "🧼",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+      {
+        id: "stt-2",
+        text: "Developers create named security policies (trustedTypes.createPolicy) using DOMPurify to produce TrustedHTML objects.",
+        searchPrompt: "DOMPurify trustedTypes createPolicy sanitized HTML injection",
+        emoji: "🧪",
+        reactionCount: "3.9k",
+        commentCount: 280,
+      },
+      {
+        id: "stt-3",
+        text: "Can be enforced via CSP directive: require-trusted-types-for 'script' for total DOM XSS eradication.",
+        searchPrompt: "require-trusted-types-for script CSP directive Chrome enforcement",
+        emoji: "🔒",
+        reactionCount: "3.5k",
+        commentCount: 220,
+      },
+    ],
+  },
+
+  // ------------------------------------------
+  // Security 9-Stage Pipeline Group Card Items
+  // ------------------------------------------
+  "sec-origin-check": {
+    id: "sec-origin-check",
+    title: "Origin Tuple Check",
+    badge: "🔒 Protocol + Host + Port",
+    tagline: "Evaluating the scheme, hostname, and network port of the caller against the target resource",
+    takeaways: [
+      {
+        id: "soc-1",
+        text: "http://example.com:80 and https://example.com:443 are completely different origins due to protocol and port.",
+        searchPrompt: "origin tuple definition scheme host port browser security boundary",
+        emoji: "🔒",
+        reactionCount: "4.5k",
+        commentCount: 310,
+      },
+      {
+        id: "soc-2",
+        text: "Subdomains (api.example.com vs app.example.com) are distinct origins; cookies can be shared, but DOM cannot.",
+        searchPrompt: "subdomain same origin policy cookie domain sharing vs DOM isolation",
+        emoji: "🏢",
+        reactionCount: "4.0k",
+        commentCount: 275,
+      },
+      {
+        id: "soc-3",
+        text: "Origin header is automatically set by the browser and cannot be spoofed or overridden by client JavaScript.",
+        searchPrompt: "browser forbidden header names Origin Host Referer tampering",
+        emoji: "🛡️",
+        reactionCount: "3.6k",
+        commentCount: 230,
+      },
+    ],
+  },
+
+  "sec-preflight-handshake": {
+    id: "sec-preflight-handshake",
+    title: "CORS Preflight Handshake",
+    badge: "🤝 OPTIONS Handshake",
+    tagline: "Exchanging capability metadata via an HTTP OPTIONS preflight probe before dispatching payload",
+    takeaways: [
+      {
+        id: "sph-1",
+        text: "Browser sends Access-Control-Request-Method and Access-Control-Request-Headers headers in preflight.",
+        searchPrompt: "OPTIONS preflight request headers Access-Control-Request-Headers",
+        emoji: "🤝",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+      {
+        id: "sph-2",
+        text: "If server status is not 2xx or headers don't match, the browser drops the request and throws a CORS error.",
+        searchPrompt: "CORS error preflight did not succeed status 403 404 response",
+        emoji: "🛑",
+        reactionCount: "4.9k",
+        commentCount: 410,
+      },
+      {
+        id: "sph-3",
+        text: "Simple requests (GET/POST with application/x-www-form-urlencoded or text/plain) bypass preflight.",
+        searchPrompt: "CORS simple request criteria Content-Type multipart form-data",
+        emoji: "⏩",
+        reactionCount: "3.7k",
+        commentCount: 250,
+      },
+    ],
+  },
+
+  "sec-cookie-attributes": {
+    id: "sec-cookie-attributes",
+    title: "Cookie Security Flags",
+    badge: "🛡️ HttpOnly, Secure, SameSite",
+    tagline: "Configuring cryptographic, transport, and cross-site containment attributes on Set-Cookie headers",
+    takeaways: [
+      {
+        id: "sca-1",
+        text: "HttpOnly flag blocks document.cookie access, preventing malicious XSS scripts from reading session IDs.",
+        searchPrompt: "HttpOnly cookie flag session security document.cookie undefined",
+        emoji: "🛡️",
+        reactionCount: "5.3k",
+        commentCount: 440,
+      },
+      {
+        id: "sca-2",
+        text: "Secure flag guarantees the cookie is only transmitted over encrypted HTTPS connections, preventing snooping.",
+        searchPrompt: "Secure cookie flag HTTPS encrypted transport man in the middle",
+        emoji: "🔐",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+      {
+        id: "sca-3",
+        text: "SameSite=Strict prevents cookie transmission on ANY cross-site navigation, giving absolute CSRF immunity.",
+        searchPrompt: "SameSite Strict vs Lax navigation top-level GET request difference",
+        emoji: "🍪",
+        reactionCount: "4.1k",
+        commentCount: 285,
+      },
+    ],
+  },
+
+  "sec-cookie-storage": {
+    id: "sec-cookie-storage",
+    title: "Cookie Jar Scoping",
+    badge: "🍪 Domain & Path Scoping",
+    tagline: "Managing lifetime expiration (Max-Age), domain inheritance, and path isolation in the browser cookie jar",
+    takeaways: [
+      {
+        id: "scs-1",
+        text: "Session cookies without Expires/Max-Age live in RAM and disappear when the browser session terminates.",
+        searchPrompt: "session cookies vs persistent cookies Expires Max-Age in seconds",
+        emoji: "⏱️",
+        reactionCount: "4.2k",
+        commentCount: 290,
+      },
+      {
+        id: "scs-2",
+        text: "Domain=example.com scopes the cookie to all subdomains; omitting Domain restricts it strictly to exact host.",
+        searchPrompt: "cookie domain scoping host-only cookie prefix __Host- __Secure-",
+        emoji: "🌐",
+        reactionCount: "3.9k",
+        commentCount: 265,
+      },
+      {
+        id: "scs-3",
+        text: "Modern browsers cap maximum cookie lifetime to 400 days to enhance user privacy and tracking limits.",
+        searchPrompt: "browser cookie 400 day expiration limit privacy sandbox",
+        emoji: "📅",
+        reactionCount: "3.3k",
+        commentCount: 210,
+      },
+    ],
+  },
+
+  "sec-local-storage": {
+    id: "sec-local-storage",
+    title: "Web Storage (5MB KV)",
+    badge: "💾 localStorage / sessionStorage",
+    tagline: "Synchronous string key-value storage scoped per origin, ideal for UI themes and client preferences",
+    takeaways: [
+      {
+        id: "sls-1",
+        text: "localStorage persists permanently across browser restarts; sessionStorage clears when the tab closes.",
+        searchPrompt: "localStorage vs sessionStorage persistence lifetime tab scope",
+        emoji: "💾",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "sls-2",
+        text: "Storage is synchronous: storing large JSON strings blocks the JavaScript main thread and harms UI responsiveness.",
+        searchPrompt: "localStorage synchronous performance main thread blocking serialization",
+        emoji: "⚠️",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+      {
+        id: "sls-3",
+        text: "NEVER store sensitive auth tokens (JWTs) in localStorage: any XSS flaw gives attackers instant token theft.",
+        searchPrompt: "why storing JWT in localStorage is insecure XSS vulnerability",
+        emoji: "🚨",
+        reactionCount: "5.4k",
+        commentCount: 470,
+      },
+    ],
+  },
+
+  "sec-indexeddb": {
+    id: "sec-indexeddb",
+    title: "IndexedDB Transactions",
+    badge: "🗄️ Async NoSQL Store",
+    tagline: "High-capacity transactional asynchronous object database storing structured cloneable data and blobs",
+    takeaways: [
+      {
+        id: "sidb-1",
+        text: "Asynchronous transactional storage supporting gigabytes of data with indexes, key ranges, and cursors.",
+        searchPrompt: "IndexedDB async transactions object stores cursors performance",
+        emoji: "🗄️",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+      {
+        id: "sidb-2",
+        text: "Supports structured cloning: stores native JavaScript Objects, Arrays, ArrayBuffers, and Blobs directly.",
+        searchPrompt: "IndexedDB structured clone algorithm binary blobs storage",
+        emoji: "📦",
+        reactionCount: "3.8k",
+        commentCount: 250,
+      },
+      {
+        id: "sidb-3",
+        text: "Wrapper libraries (idb, Dexie.js) simplify complex event-driven request syntax into ergonomic async/await promises.",
+        searchPrompt: "Dexie.js vs idb wrapper IndexedDB promise based library",
+        emoji: "✨",
+        reactionCount: "3.5k",
+        commentCount: 220,
+      },
+    ],
+  },
+
+  "sec-xss-defense": {
+    id: "sec-xss-defense",
+    title: "XSS Sanitization & CSP",
+    badge: "🧼 Input Escaping & Nonces",
+    tagline: "Neutralizing Stored, Reflected, and DOM-based Cross-Site Scripting vulnerabilities",
+    takeaways: [
+      {
+        id: "sxss-1",
+        text: "XSS occurs when untrusted user input is executed as browser code: injecting script tags or event handlers.",
+        searchPrompt: "cross site scripting XSS types stored reflected DOM explained",
+        emoji: "🦠",
+        reactionCount: "5.2k",
+        commentCount: 430,
+      },
+      {
+        id: "sxss-2",
+        text: "Always use context-aware HTML escaping or textContent instead of innerHTML when rendering dynamic text.",
+        searchPrompt: "textContent vs innerHTML XSS prevention context aware escaping",
+        emoji: "🧼",
+        reactionCount: "4.5k",
+        commentCount: 340,
+      },
+      {
+        id: "sxss-3",
+        text: "A robust CSP header provides the ultimate fallback safety net if an escaping bug ever slips through.",
+        searchPrompt: "CSP as defense in depth against XSS vulnerability mitigation",
+        emoji: "🛡️",
+        reactionCount: "3.9k",
+        commentCount: 275,
+      },
+    ],
+  },
+
+  "sec-csrf-protection": {
+    id: "sec-csrf-protection",
+    title: "Anti-CSRF Tokens",
+    badge: "🎫 Synchronizer Token & SameSite",
+    tagline: "Preventing unauthorized state-changing requests executed by victim browsers using ambient credentials",
+    takeaways: [
+      {
+        id: "scsrf-1",
+        text: "CSRF tricks a user's browser into executing unwanted actions (e.g. transfer funds) on a site where they are logged in.",
+        searchPrompt: "cross site request forgery CSRF attack mechanics ambient credentials",
+        emoji: "🎭",
+        reactionCount: "4.9k",
+        commentCount: 390,
+      },
+      {
+        id: "scsrf-2",
+        text: "Synchronizer Token Pattern generates an unpredictable, cryptographically strong token validated per session.",
+        searchPrompt: "synchronizer token pattern anti CSRF token validation header",
+        emoji: "🎫",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+      {
+        id: "scsrf-3",
+        text: "SameSite=Lax or Strict cookie attributes prevent ambient cookie attachment on cross-site form submissions.",
+        searchPrompt: "how SameSite cookie attribute prevents CSRF modern web",
+        emoji: "🔒",
+        reactionCount: "4.0k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  "sec-credential-transport": {
+    id: "sec-credential-transport",
+    title: "Credentialed Transport",
+    badge: "🔑 Authorization & Bearer Tokens",
+    tagline: "Secure transport protocols: Authorization Bearer headers, mutual TLS, and token refresh rotations",
+    takeaways: [
+      {
+        id: "sct-1",
+        text: "Authorization: Bearer <token> headers are not ambient, making them immune to automatic CSRF submission.",
+        searchPrompt: "Authorization Bearer token vs cookie authentication CSRF comparison",
+        emoji: "🔑",
+        reactionCount: "4.8k",
+        commentCount: 375,
+      },
+      {
+        id: "sct-2",
+        text: "Refresh Token Rotation issues a new single-use refresh token with every access token renewal to catch token theft.",
+        searchPrompt: "refresh token rotation security pattern single use token replay detection",
+        emoji: "🔄",
+        reactionCount: "4.4k",
+        commentCount: 330,
+      },
+      {
+        id: "sct-3",
+        text: "Mutual TLS (mTLS) authenticates both client and server certificates at the TLS transport layer before HTTP begins.",
+        searchPrompt: "mutual TLS mTLS client certificate authentication browser security",
+        emoji: "🔐",
+        reactionCount: "3.7k",
+        commentCount: 250,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -6181,6 +6814,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Web Platform & DOM"
       : node.category === "rendering"
       ? "Browser Rendering"
+      : node.category === "security"
+      ? "Web Security & Storage"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

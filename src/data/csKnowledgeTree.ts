@@ -837,10 +837,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-web-security-storage",
-            name: "Cookies, Storage & CORS",
-            isAvailable: false,
-            badge: "Roadmap",
+            name: "Cookies, Storage & CORS ★",
+            categoryId: "security",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
             description: "Same-origin policy, CORS preflights, localStorage, IndexedDB, and HttpOnly cookies",
+            color: "#eab308",
           },
           {
             id: "topic-frontend-state",

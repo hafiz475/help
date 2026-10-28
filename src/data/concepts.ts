@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -123,8 +123,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "security",
+    name: "12. Cookies & Security",
+    title: "Web Security, Cookies, Storage & CORS",
+    description: "Same-Origin Policy, CORS Preflight, HttpOnly Cookies, Storage APIs & XSS/CSRF Defenses",
+    color: "#eab308", // Golden Amber
+    icon: "ShieldCheck",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "12. OOP (4 Pillars)",
+    name: "13. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -133,7 +142,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "13. DSA",
+    name: "14. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -142,7 +151,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "14. Big O",
+    name: "15. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -156,7 +165,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 169,
+    count: 179,
   },
 ];
 
@@ -271,6 +280,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "browser rendering critical rendering path DOM CSSOM layout paint composite",
     badge: "Critical Path",
     color: "#f43f5e",
+  },
+  {
+    id: "root-security",
+    label: "Cookies, Storage & CORS",
+    category: "security",
+    level: 0,
+    searchQuery: "web security cookies storage CORS same origin policy localStorage IndexedDB",
+    badge: "Browser Security",
+    color: "#eab308",
   },
   {
     id: "root-oop",
@@ -1868,7 +1886,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 12. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 12. WEB SECURITY, STORAGE & CORS
+  // ==========================================
+  // Pillar 1: Same-Origin Policy & CORS
+  {
+    id: "security-same-origin-cors",
+    label: "Same-Origin Policy & CORS",
+    category: "security",
+    parentId: "root-security",
+    level: 1,
+    searchQuery: "browser same origin policy CORS preflight cross origin resource sharing",
+    badge: "Origin Security",
+    color: "#ca8a04",
+  },
+  {
+    id: "security-sop-boundary",
+    label: "Same-Origin Policy (SOP)",
+    category: "security",
+    parentId: "security-same-origin-cors",
+    level: 2,
+    searchQuery: "same origin policy SOP protocol host port iframe fetch boundary",
+    badge: "Protocol/Host/Port",
+    color: "#eab308",
+  },
+  {
+    id: "security-cors-preflight",
+    label: "CORS Preflight (OPTIONS)",
+    category: "security",
+    parentId: "security-same-origin-cors",
+    level: 2,
+    searchQuery: "CORS preflight request OPTIONS Access-Control-Allow-Origin Allow-Methods headers",
+    badge: "Preflight Handshake",
+    color: "#facc15",
+  },
+  {
+    id: "security-credentialed-requests",
+    label: "Credentials & Exposed Headers",
+    category: "security",
+    parentId: "security-same-origin-cors",
+    level: 2,
+    searchQuery: "CORS credentials withCredentials Access-Control-Allow-Credentials Access-Control-Expose-Headers",
+    badge: "withCredentials",
+    color: "#fde047",
+  },
+
+  // Pillar 2: Cookie Security & Storage Pipeline (Group Card)
+  {
+    id: "security-cookie-lifecycle",
+    label: "Cookies & Storage Pipeline",
+    category: "security",
+    parentId: "root-security",
+    level: 1,
+    searchQuery: "cookie lifecycle HttpOnly SameSite Secure localStorage sessionStorage IndexedDB",
+    badge: "9 Sequential Stages",
+    color: "#a16207",
+  },
+
+  // Pillar 3: Client-Side Defense Architecture
+  {
+    id: "security-web-defenses",
+    label: "Client-Side Defenses",
+    category: "security",
+    parentId: "root-security",
+    level: 1,
+    searchQuery: "web application security XSS CSRF Content Security Policy CSP SRI Trusted Types",
+    badge: "Defense in Depth",
+    color: "#854d0e",
+  },
+  {
+    id: "security-csp-headers",
+    label: "Content Security Policy (CSP)",
+    category: "security",
+    parentId: "security-web-defenses",
+    level: 2,
+    searchQuery: "Content Security Policy CSP header default-src script-src nonce hash unsafe-inline",
+    badge: "Script Whitelist",
+    color: "#eab308",
+  },
+  {
+    id: "security-subresource-integrity",
+    label: "Subresource Integrity (SRI)",
+    category: "security",
+    parentId: "security-web-defenses",
+    level: 2,
+    searchQuery: "Subresource Integrity SRI integrity attribute sha384 CDN script tamper check",
+    badge: "SHA Hash Check",
+    color: "#facc15",
+  },
+  {
+    id: "security-trusted-types",
+    label: "Trusted Types & Injection Sinks",
+    category: "security",
+    parentId: "security-web-defenses",
+    level: 2,
+    searchQuery: "Trusted Types DOM XSS innerHTML injection sink policy sanitizer API",
+    badge: "DOM Sink Defense",
+    color: "#fde047",
+  },
+
+  // ==========================================
+  // 13. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
