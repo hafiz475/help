@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1666,7 +1666,84 @@ export const NLPLLMS_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const VISION_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-vision-pipeline",
+    pillarId: "vision-pipeline-pillar",
+    title: "Computer Vision & Detection Pipeline",
+    category: "vision",
+    badge: "9 Sequential Stages",
+    color: "#ef4444",
+    isPipeline: true,
+    items: [
+      {
+        id: "vision-image-preprocessing",
+        stepNumber: 1,
+        label: "1. Image Ingestion & Normalization",
+        badge: "🖼️ RGB 0-1 & ImageNet μ/σ",
+        searchQuery: "image preprocessing normalization RGB channels ImageNet mean std standard deviation tensor",
+      },
+      {
+        id: "vision-spatial-augmentation",
+        stepNumber: 2,
+        label: "2. Spatial Augmentations (Albumentations)",
+        badge: "🔄 Affine, Crop & MixUp",
+        searchQuery: "data augmentation Albumentations random crop horizontal flip affine transform CutMix MixUp",
+      },
+      {
+        id: "vision-backbone-extraction",
+        stepNumber: 3,
+        label: "3. Feature Pyramid Network (FPN)",
+        badge: "📐 Multi-Scale P3-P7 Feature Maps",
+        searchQuery: "Feature Pyramid Network FPN bottom-up top-down lateral connections multi-scale features",
+      },
+      {
+        id: "vision-anchor-box-generation",
+        stepNumber: 4,
+        label: "4. Anchor & Grid Cell Assignment",
+        badge: "🎯 Prior Boxes & Center Coordinates",
+        searchQuery: "anchor boxes prior bounding box aspect ratios grid cell assignment anchor-free center point",
+      },
+      {
+        id: "vision-bounding-box-regression",
+        stepNumber: 5,
+        label: "5. Bounding Box Coordinate Regression",
+        badge: "📦 (cx, cy, w, h) & CIoU Loss",
+        searchQuery: "bounding box regression cx cy w h GIoU DIoU CIoU loss coordinate regression",
+      },
+      {
+        id: "vision-class-score-prediction",
+        stepNumber: 6,
+        label: "6. Class Confidence & Objectness",
+        badge: "🏷️ Focal Loss & Sigmoid Class Prob",
+        searchQuery: "objectness score classification logits Focal Loss class imbalance foreground background",
+      },
+      {
+        id: "vision-nms-filtering",
+        stepNumber: 7,
+        label: "7. Non-Maximum Suppression (NMS)",
+        badge: "🧹 IoU Threshold & Duplicate Purge",
+        searchQuery: "Non-Maximum Suppression NMS IoU threshold Soft-NMS duplicate bounding box pruning",
+      },
+      {
+        id: "vision-semantic-segmentation",
+        stepNumber: 8,
+        label: "8. Semantic & Instance Masks",
+        badge: "🎭 Pixel Mask Logits & Mask R-CNN",
+        searchQuery: "semantic segmentation instance segmentation pixel mask logits RoIAlign binary cross entropy",
+      },
+      {
+        id: "vision-tensorrt-onnx-export",
+        stepNumber: 9,
+        label: "9. TensorRT / ONNX Acceleration",
+        badge: "🚀 FP16 Engine & 120 FPS Inference",
+        searchQuery: "TensorRT ONNX export INT8 quantization CUDA execution provider high FPS inference vision",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1685,8 +1762,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "mlcore") return MLCORE_GROUP_CARDS;
   if (category === "deeplearning") return DEEPLEARNING_GROUP_CARDS;
   if (category === "nlpllms") return NLPLLMS_GROUP_CARDS;
+  if (category === "vision") return VISION_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

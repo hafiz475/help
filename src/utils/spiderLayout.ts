@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -983,6 +983,8 @@ export function calculateGroupLayout(
         ? "Deep Learning"
         : category === "nlpllms"
         ? "NLP & LLMs"
+        : category === "vision"
+        ? "Computer Vision"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1027,6 +1029,8 @@ export function calculateGroupLayout(
         ? "Neural Networks"
         : category === "nlpllms"
         ? "Generative Language"
+        : category === "vision"
+        ? "Spatial Intelligence"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1063,6 +1067,8 @@ export function calculateGroupLayout(
         ? "#7c3aed"
         : category === "nlpllms"
         ? "#10a37f"
+        : category === "vision"
+        ? "#ef4444"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -4587,6 +4593,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 3E: Computer Vision Hub (placed at x = -1300, y = -3750)
+    const visionHubX = -1300;
+    const visionHubY = -3750;
+    const visionHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-vision")!,
+      x: visionHubX,
+      y: visionHubY,
+      level: 1,
+      branchIndex: 3,
+    };
+    positionedNodes.push(visionHubNode);
+    edges.push({
+      source: nlpHubNode.id,
+      target: visionHubNode.id,
+      category: "vision",
+      level: 1,
+      branchIndex: 3,
+    });
+
+    // Vision Node 1: Convolutional Foundations (Left-Up)
+    const convRaw = allNodes.find((n) => n.id === "vision-conv-foundations-pillar");
+    if (convRaw) {
+      const convX = visionHubX - 650;
+      const convY = visionHubY - 180;
+      const convNode: PositionedNode = {
+        ...convRaw,
+        x: convX,
+        y: convY,
+        level: 3,
+        branchIndex: 3,
+      };
+      positionedNodes.push(convNode);
+      edges.push({
+        source: visionHubNode.id,
+        target: convNode.id,
+        category: "vision",
+        level: 3,
+        branchIndex: 3,
+      });
+
+      const conv2dRaw = allNodes.find((n) => n.id === "vision-2d-convolutions");
+      if (conv2dRaw) {
+        positionedNodes.push({
+          ...conv2dRaw,
+          x: convX - 320,
+          y: convY - 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: convNode.id,
+          target: conv2dRaw.id,
+          category: "vision",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const poolRaw = allNodes.find((n) => n.id === "vision-pooling-receptive-field");
+      if (poolRaw) {
+        positionedNodes.push({
+          ...poolRaw,
+          x: convX - 320,
+          y: convY,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: convNode.id,
+          target: poolRaw.id,
+          category: "vision",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const resnetRaw = allNodes.find((n) => n.id === "vision-resnet-backbones");
+      if (resnetRaw) {
+        positionedNodes.push({
+          ...resnetRaw,
+          x: convX - 320,
+          y: convY + 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: convNode.id,
+          target: resnetRaw.id,
+          category: "vision",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+    }
+
+    // Vision Node 2: 9-Stage Computer Vision & Detection Pipeline (Group Card, Left-Center)
+    const visionCard = cardByPillar.get("vision-pipeline-pillar");
+    if (visionCard) {
+      const cardX = visionHubX - 800;
+      const cardY = visionHubY;
+      const posCard: PositionedGroupCard = {
+        ...visionCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 3,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: visionHubNode.id,
+        target: visionCard.id,
+        category: "vision",
+        level: 3,
+        branchIndex: 3,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 3);
+    }
+
+    // Vision Node 3: Vision Transformers & SOTA (Left-Down)
+    const vitPillarRaw = allNodes.find((n) => n.id === "vision-vit-multimodal-pillar");
+    if (vitPillarRaw) {
+      const vitX = visionHubX - 650;
+      const vitY = visionHubY + 180;
+      const vitNode: PositionedNode = {
+        ...vitPillarRaw,
+        x: vitX,
+        y: vitY,
+        level: 3,
+        branchIndex: 3,
+      };
+      positionedNodes.push(vitNode);
+      edges.push({
+        source: visionHubNode.id,
+        target: vitNode.id,
+        category: "vision",
+        level: 3,
+        branchIndex: 3,
+      });
+
+      const vitRaw = allNodes.find((n) => n.id === "vision-transformers-vit");
+      if (vitRaw) {
+        positionedNodes.push({
+          ...vitRaw,
+          x: vitX - 320,
+          y: vitY - 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: vitNode.id,
+          target: vitRaw.id,
+          category: "vision",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const yoloRaw = allNodes.find((n) => n.id === "vision-yolo-detection");
+      if (yoloRaw) {
+        positionedNodes.push({
+          ...yoloRaw,
+          x: vitX - 320,
+          y: vitY,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: vitNode.id,
+          target: yoloRaw.id,
+          category: "vision",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+
+      const maskRaw = allNodes.find((n) => n.id === "vision-mask-rcnn-segmentation");
+      if (maskRaw) {
+        positionedNodes.push({
+          ...maskRaw,
+          x: vitX - 320,
+          y: vitY + 35,
+          level: 4,
+          branchIndex: 3,
+        });
+        edges.push({
+          source: vitNode.id,
+          target: maskRaw.id,
+          category: "vision",
+          level: 4,
+          branchIndex: 3,
+        });
+      }
+    }
+
     // Automated overlap prevention relaxation pass
     preventLayoutOverlaps(positionedNodes, positionedCards);
 
@@ -4649,6 +4848,8 @@ export function calculateGroupLayout(
     pillarIds = ["dl-architecture-pillar", "dl-pipeline-pillar", "dl-optimization-pillar"];
   } else if (category === "nlpllms") {
     pillarIds = ["nlp-token-embeddings-pillar", "nlp-pipeline-pillar", "nlp-architecture-pillar"];
+  } else if (category === "vision") {
+    pillarIds = ["vision-conv-foundations-pillar", "vision-pipeline-pillar", "vision-vit-multimodal-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -4992,6 +5193,11 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
+    const visionRoot = {
+      ...allNodes.find((n) => n.id === "root-vision")!,
+      parentId: "root-all",
+      level: 1,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -5031,13 +5237,14 @@ export function getNodesForCategory(
         n.id !== "root-mlcore" &&
         n.id !== "root-deeplearning" &&
         n.id !== "root-nlpllms" &&
+        n.id !== "root-vision" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

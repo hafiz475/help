@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -186,8 +186,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "vision",
+    name: "19. Computer Vision",
+    title: "Convolutional Networks, Vision Transformers & Object Detection",
+    description: "2D Convolutions, Strides & Pooling, ResNet, ViT Patch Encodings, YOLO Bounding Boxes, Mask R-CNN & Albumentations",
+    color: "#ef4444", // Vivid Optical Red
+    icon: "Camera",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "19. OOP (4 Pillars)",
+    name: "20. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -196,7 +205,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "20. DSA",
+    name: "21. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -205,7 +214,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "21. Big O",
+    name: "22. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -219,7 +228,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 239,
+    count: 249,
   },
 ];
 
@@ -397,6 +406,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "NLP large language models tokenization embeddings transformers attention LoRA RAG prompt engineering",
     badge: "Generative Language",
     color: "#10a37f",
+  },
+  {
+    id: "root-vision",
+    label: "Computer Vision",
+    category: "vision",
+    level: 0,
+    searchQuery: "computer vision CNN convolutions object detection YOLO vision transformer ViT segmentation",
+    badge: "Spatial Intelligence",
+    color: "#ef4444",
   },
   {
     id: "root-oop",
@@ -2687,7 +2705,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 19. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 19. COMPUTER VISION (CNNS, VITS & DETECTION)
+  // ==========================================
+  // Pillar 1: Convolutional Foundations & Feature Extraction
+  {
+    id: "vision-conv-foundations-pillar",
+    label: "Convolutional Feature Extraction",
+    category: "vision",
+    parentId: "root-vision",
+    level: 1,
+    searchQuery: "computer vision 2D convolutions kernels padding strides pooling receptive field ResNet ConvNeXt",
+    badge: "Spatial Kernels & Tensors",
+    color: "#dc2626",
+  },
+  {
+    id: "vision-2d-convolutions",
+    label: "2D Convolutions, Kernels & Padding",
+    category: "vision",
+    parentId: "vision-conv-foundations-pillar",
+    level: 2,
+    searchQuery: "2D convolution kernel filter weights valid same padding stride dilation translation equivariance spatial cross correlation",
+    badge: "3×3 Filters & Stride",
+    color: "#ef4444",
+  },
+  {
+    id: "vision-pooling-receptive-field",
+    label: "Pooling, Strides & Receptive Field",
+    category: "vision",
+    parentId: "vision-conv-foundations-pillar",
+    level: 2,
+    searchQuery: "max pooling average pooling global average pooling receptive field calculation spatial downsampling translation invariance",
+    badge: "Max Pooling & Effective Field",
+    color: "#f87171",
+  },
+  {
+    id: "vision-resnet-backbones",
+    label: "ResNet & Modern ConvNeXt Backbones",
+    category: "vision",
+    parentId: "vision-conv-foundations-pillar",
+    level: 2,
+    searchQuery: "ResNet residual blocks skip connections bottleneck layers ConvNeXt 7x7 depthwise separable inverted bottleneck",
+    badge: "Residual Blocks & 7×7 Stems",
+    color: "#fca5a5",
+  },
+
+  // Pillar 2: 9-Stage Computer Vision & Detection Pipeline (Group Card)
+  {
+    id: "vision-pipeline-pillar",
+    label: "9-Stage Computer Vision Pipeline",
+    category: "vision",
+    parentId: "root-vision",
+    level: 1,
+    searchQuery: "computer vision pipeline image preprocessing spatial augmentation FPN anchors bounding box regression NMS segmentation TensorRT",
+    badge: "9 Sequential Stages",
+    color: "#b91c1c",
+  },
+
+  // Pillar 3: Modern Vision Transformers & Multi-Modal
+  {
+    id: "vision-vit-multimodal-pillar",
+    label: "Vision Transformers & Detection",
+    category: "vision",
+    parentId: "root-vision",
+    level: 1,
+    searchQuery: "Vision Transformers ViT patch projection class token YOLO real-time detection bounding boxes Mask R-CNN segmentation",
+    badge: "Patches & Detectors",
+    color: "#991b1b",
+  },
+  {
+    id: "vision-transformers-vit",
+    label: "Vision Transformers (ViT) & Patches",
+    category: "vision",
+    parentId: "vision-vit-multimodal-pillar",
+    level: 2,
+    searchQuery: "Vision Transformer ViT 16x16 patch linear projection CLS token positional embeddings multi-head self-attention",
+    badge: "16×16 Patches & CLS Token",
+    color: "#ef4444",
+  },
+  {
+    id: "vision-yolo-detection",
+    label: "YOLO Real-Time Object Detection",
+    category: "vision",
+    parentId: "vision-vit-multimodal-pillar",
+    level: 2,
+    searchQuery: "YOLO You Only Look Once single stage object detection CSPDarknet anchor free CIoU loss real-time 60fps",
+    badge: "Single-Stage & CSPDarknet",
+    color: "#f87171",
+  },
+  {
+    id: "vision-mask-rcnn-segmentation",
+    label: "Segmentation & Instance Masks",
+    category: "vision",
+    parentId: "vision-vit-multimodal-pillar",
+    level: 2,
+    searchQuery: "semantic segmentation instance segmentation Mask R-CNN RoIAlign U-Net skip connections binary mask prediction",
+    badge: "U-Net & Mask R-CNN RoIAlign",
+    color: "#fca5a5",
+  },
+
+  // ==========================================
+  // 20. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

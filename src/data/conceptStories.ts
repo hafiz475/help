@@ -9094,6 +9094,639 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // COMPUTER VISION PILLARS & CONCEPTS
+  // ==========================================
+  "root-vision": {
+    id: "root-vision",
+    title: "Computer Vision",
+    badge: "Spatial Intelligence",
+    tagline: "Extracting high-dimensional visual semantics from 2D pixel grids through convolutions, attention, and multimodal representation learning",
+    takeaways: [
+      {
+        id: "vis-root-1",
+        text: "Computer vision transforms raw pixel matrices (H x W x C) into semantic scene representations, spatial coordinates, and instance segmentation masks.",
+        searchPrompt: "computer vision representation learning pixel tensors spatial semantics",
+        emoji: "👁️",
+        reactionCount: "6.8k",
+        commentCount: 520,
+      },
+      {
+        id: "vis-root-2",
+        text: "Modern vision spans classic feature pyramids, deep residual convolutional networks, ViT patch tokenization, and real-time bounding box regression.",
+        searchPrompt: "convolutional networks vs vision transformers object detection segmentation",
+        emoji: "📷",
+        reactionCount: "5.9k",
+        commentCount: 412,
+      },
+      {
+        id: "vis-root-3",
+        text: "Zero-shot visual reasoning bridges pixels and natural language through contrastive image-text models like CLIP and vision-language foundation models (VLMs).",
+        searchPrompt: "multimodal vision language models CLIP zero-shot visual reasoning",
+        emoji: "🌐",
+        reactionCount: "6.2k",
+        commentCount: 468,
+      },
+    ],
+  },
+
+  "vision-conv-foundations-pillar": {
+    id: "vision-conv-foundations-pillar",
+    title: "Convolutional Foundations",
+    badge: "Spatial Inductive Bias",
+    tagline: "Translation-invariant spatial filtering, receptive field hierarchies, and residual skip connections",
+    takeaways: [
+      {
+        id: "vis-conv-p1",
+        text: "Convolutions exploit local pixel correlations through parameter sharing and translation invariance, scaling far more efficiently than fully connected layers.",
+        searchPrompt: "convolutional layers weight sharing translation equivariance inductive bias",
+        emoji: "📐",
+        reactionCount: "4.7k",
+        commentCount: 310,
+      },
+      {
+        id: "vis-conv-p2",
+        text: "Successive strided convolutions and pooling layers expand the effective receptive field, enabling deep networks to capture global context.",
+        searchPrompt: "effective receptive field CNN dilation stride calculation",
+        emoji: "🔍",
+        reactionCount: "4.1k",
+        commentCount: 285,
+      },
+      {
+        id: "vis-conv-p3",
+        text: "Residual skip connections mitigate vanishing gradients in ultra-deep backbones, allowing stable propagation across hundreds of convolutional layers.",
+        searchPrompt: "ResNet residual skip connection gradient highway deep backbones",
+        emoji: "⚡",
+        reactionCount: "5.4k",
+        commentCount: 390,
+      },
+    ],
+  },
+
+  "vision-2d-convolutions": {
+    id: "vision-2d-convolutions",
+    title: "2D Convolutions & Filters",
+    badge: "Discrete Spatial Kernels",
+    tagline: "Element-wise dot product of learnable kernel tensors sliding across input feature maps",
+    takeaways: [
+      {
+        id: "vis-2dconv-1",
+        text: "A 2D convolution slides a small matrix of learnable weights (e.g., 3x3) across input spatial channels, computing inner products to detect localized visual patterns.",
+        searchPrompt: "2D convolution kernel sliding window feature map cross correlation",
+        emoji: "🧮",
+        reactionCount: "4.3k",
+        commentCount: 290,
+      },
+      {
+        id: "vis-2dconv-2",
+        text: "Padding strategies ('valid' vs 'same') preserve spatial dimensions, preventing premature grid shrinkage at image borders during deep stacking.",
+        searchPrompt: "convolution padding valid vs same border reflection mode",
+        emoji: "🔲",
+        reactionCount: "3.8k",
+        commentCount: 215,
+      },
+      {
+        id: "vis-2dconv-3",
+        text: "Depthwise separable convolutions decompose standard 3D kernels into spatial-only and point-wise (1x1) steps, drastically reducing FLOPs for mobile inference.",
+        searchPrompt: "depthwise separable convolution MobileNet FLOPs reduction parameter efficiency",
+        emoji: "📱",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "vision-pooling-receptive-field": {
+    id: "vision-pooling-receptive-field",
+    title: "Pooling & Receptive Field",
+    badge: "Context Aggregation",
+    tagline: "Spatial downsampling, max/average pooling, and progressive expansion of visual field of view",
+    takeaways: [
+      {
+        id: "vis-pool-1",
+        text: "Max pooling retains dominant feature activations within a spatial patch, imparting slight translational invariance and halving spatial resolution.",
+        searchPrompt: "max pooling vs average pooling downsampling invariance deep learning",
+        emoji: "📉",
+        reactionCount: "3.9k",
+        commentCount: 245,
+      },
+      {
+        id: "vis-pool-2",
+        text: "Global Average Pooling (GAP) collapses each entire channel into a single scalar, replacing massive fully connected dense heads and preventing severe overfitting.",
+        searchPrompt: "global average pooling GAP vs fully connected layers classification head",
+        emoji: "🎯",
+        reactionCount: "4.2k",
+        commentCount: 275,
+      },
+      {
+        id: "vis-pool-3",
+        text: "The effective receptive field (ERF) follows a Gaussian distribution over input coordinates, heavily favoring centered pixels over perimeter regions.",
+        searchPrompt: "effective receptive field Gaussian distribution dilated convolution atrous",
+        emoji: "🌐",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "vision-resnet-backbones": {
+    id: "vision-resnet-backbones",
+    title: "ResNet & Deep Backbones",
+    badge: "Residual Highways",
+    tagline: "Identity mappings solving degradation in deep networks, from ResNet-50 to ConvNeXt",
+    takeaways: [
+      {
+        id: "vis-res-1",
+        text: "Identity shortcut connections F(x) + x force layers to learn residual perturbations rather than complete transformations, unlocking training past 100+ layers.",
+        searchPrompt: "ResNet residual learning identity mapping degradation problem He et al",
+        emoji: "🛣️",
+        reactionCount: "5.8k",
+        commentCount: 430,
+      },
+      {
+        id: "vis-res-2",
+        text: "Bottleneck blocks use 1x1 convolutions to compress channel dimensions before a 3x3 convolution and then expand back, saving computational complexity.",
+        searchPrompt: "ResNet bottleneck block 1x1 conv channel reduction expansion",
+        emoji: "⏳",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+      {
+        id: "vis-res-3",
+        text: "ConvNeXt modernizes pure convolutional designs with inverted bottlenecks, 7x7 depthwise filters, and LayerNorm, competing directly with Vision Transformers.",
+        searchPrompt: "ConvNeXt architecture modernizing ConvNets for the 2020s Liu et al",
+        emoji: "🏎️",
+        reactionCount: "5.1k",
+        commentCount: 385,
+      },
+    ],
+  },
+
+  "vision-pipeline-pillar": {
+    id: "vision-pipeline-pillar",
+    title: "Computer Vision & Detection Pipeline",
+    badge: "End-to-End Pipeline",
+    tagline: "Sequential visual processing pipeline from raw pixel normalization to real-time TensorRT acceleration",
+    takeaways: [
+      {
+        id: "vis-pipe-p1",
+        text: "The computer vision pipeline chains data augmentation, multi-scale feature pyramids, region proposals, and non-maximum suppression into a unified inference flow.",
+        searchPrompt: "end to end computer vision pipeline architecture detection segmentation",
+        emoji: "🔄",
+        reactionCount: "5.5k",
+        commentCount: 410,
+      },
+      {
+        id: "vis-pipe-p2",
+        text: "Feature Pyramid Networks (FPN) combine top-down semantic features with bottom-up high-resolution details, enabling robust detection across multi-scale objects.",
+        searchPrompt: "feature pyramid network FPN multi scale object detection architecture",
+        emoji: "🔺",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+      {
+        id: "vis-pipe-p3",
+        text: "Production deployment converts PyTorch models into optimized ONNX graphs and executes FP16/INT8 kernel fusions on NVIDIA TensorRT engines.",
+        searchPrompt: "production vision deployment ONNX export TensorRT engine optimization",
+        emoji: "🚀",
+        reactionCount: "5.7k",
+        commentCount: 445,
+      },
+    ],
+  },
+
+  "vision-vit-multimodal-pillar": {
+    id: "vision-vit-multimodal-pillar",
+    title: "Vision Transformers & SOTA",
+    badge: "Attention & Multimodality",
+    tagline: "Self-attention over image patches, single-stage real-time detectors, and vision-language foundational models",
+    takeaways: [
+      {
+        id: "vis-vit-p1",
+        text: "Vision Transformers (ViT) break images into non-overlapping 16x16 patches, projecting them as 1D sequence tokens into standard transformer encoders.",
+        searchPrompt: "vision transformer ViT patch embedding self attention an image is worth 16x16 words",
+        emoji: "🧩",
+        reactionCount: "6.1k",
+        commentCount: 480,
+      },
+      {
+        id: "vis-vit-p2",
+        text: "Single-stage detectors like YOLO treat object detection as a unified spatial regression problem, predicting bounding boxes and class logits in a single forward pass.",
+        searchPrompt: "YOLO single stage object detection grid regression real-time inference",
+        emoji: "⚡",
+        reactionCount: "6.5k",
+        commentCount: 512,
+      },
+      {
+        id: "vis-vit-p3",
+        text: "Multimodal alignment models like CLIP embed text and images into a shared metric latent space, enabling zero-shot open-vocabulary classification without retraining.",
+        searchPrompt: "CLIP contrastive language image pre-training zero-shot open vocabulary",
+        emoji: "🤝",
+        reactionCount: "6.4k",
+        commentCount: 495,
+      },
+    ],
+  },
+
+  "vision-transformers-vit": {
+    id: "vision-transformers-vit",
+    title: "Vision Transformers (ViT)",
+    badge: "Patch Self-Attention",
+    tagline: "Treating images as tokenized patch sequences without handcrafted inductive convolutional bias",
+    takeaways: [
+      {
+        id: "vis-vit-1",
+        text: "ViT divides an HxW image into N = (HW)/P^2 patches, flattens them, and linearly projects them into token embeddings with learnable 1D position embeddings.",
+        searchPrompt: "ViT patch projection linear embedding positional encodings",
+        emoji: "🧱",
+        reactionCount: "5.6k",
+        commentCount: 420,
+      },
+      {
+        id: "vis-vit-2",
+        text: "Unlike CNNs with hardcoded local receptive fields, global self-attention allows early ViT layers to model long-range relationships across distant corners of an image.",
+        searchPrompt: "global receptive field self-attention vs local convolutions ViT",
+        emoji: "🌐",
+        reactionCount: "5.2k",
+        commentCount: 390,
+      },
+      {
+        id: "vis-vit-3",
+        text: "Swin Transformer introduces hierarchical shifted local windows, limiting self-attention complexity to linear O(N) while maintaining multi-scale compatibility.",
+        searchPrompt: "Swin Transformer shifted window self-attention hierarchical vision backbone",
+        emoji: "🪟",
+        reactionCount: "5.4k",
+        commentCount: 405,
+      },
+    ],
+  },
+
+  "vision-yolo-detection": {
+    id: "vision-yolo-detection",
+    title: "YOLO Real-Time Detection",
+    badge: "Single-Stage Regression",
+    tagline: "High-frame-rate bounding box regression and multi-class classification across spatial grid cells",
+    takeaways: [
+      {
+        id: "vis-yolo-1",
+        text: "YOLO divides the input image into an SxS grid; each cell directly predicts bounding box coordinates (x, y, w, h), objectness score, and class probabilities.",
+        searchPrompt: "YOLO real-time object detection grid based bounding box regression",
+        emoji: "🎯",
+        reactionCount: "6.7k",
+        commentCount: 535,
+      },
+      {
+        id: "vis-yolo-2",
+        text: "Modern YOLO iterations (v8/v9/v11) leverage anchor-free decoupled heads, separating classification and regression branches for superior convergence.",
+        searchPrompt: "anchor-free object detection decoupled head YOLOv8 YOLOv9",
+        emoji: "⚡",
+        reactionCount: "5.9k",
+        commentCount: 460,
+      },
+      {
+        id: "vis-yolo-3",
+        text: "Complete IoU (CIoU) loss and Distribution Focal Loss penalize aspect ratio deviations, overlap distance, and localization ambiguity simultaneously.",
+        searchPrompt: "CIoU loss Distribution Focal Loss bounding box regression geometry",
+        emoji: "📐",
+        reactionCount: "5.1k",
+        commentCount: 375,
+      },
+    ],
+  },
+
+  "vision-mask-rcnn-segmentation": {
+    id: "vision-mask-rcnn-segmentation",
+    title: "Mask R-CNN & Segmentation",
+    badge: "Pixel-Level Masks",
+    tagline: "Two-stage instance segmentation extending Faster R-CNN with RoIAlign and binary mask branch",
+    takeaways: [
+      {
+        id: "vis-mask-1",
+        text: "Mask R-CNN augments Faster R-CNN with a parallel FCN branch that predicts pixel-level binary masks for every detected object instance.",
+        searchPrompt: "Mask R-CNN instance segmentation architecture He et al",
+        emoji: "🎭",
+        reactionCount: "5.3k",
+        commentCount: 395,
+      },
+      {
+        id: "vis-mask-2",
+        text: "RoIAlign solves spatial misalignment by avoiding quantization of region proposal coordinates, using bilinear interpolation to preserve exact sub-pixel boundaries.",
+        searchPrompt: "RoIAlign vs RoIPool bilinear interpolation spatial misalignment",
+        emoji: "📏",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+      {
+        id: "vis-mask-3",
+        text: "Semantic segmentation assigns class labels to all pixels without separating individual objects, whereas instance segmentation uniquely segments each individual instance.",
+        searchPrompt: "semantic vs instance vs panoptic segmentation differences explained",
+        emoji: "🎨",
+        reactionCount: "5.0k",
+        commentCount: 370,
+      },
+    ],
+  },
+
+  // ==========================================
+  // COMPUTER VISION 9-STAGE PIPELINE STORIES
+  // ==========================================
+  "vision-image-preprocessing": {
+    id: "vision-image-preprocessing",
+    title: "1. Image Preprocessing & Augmentation",
+    badge: "Input Normalization",
+    tagline: "Resizing, channel standardization, color jitter, CutMix, and Albumentations for robust generalization",
+    takeaways: [
+      {
+        id: "vis-prep-1",
+        text: "Channel normalization scales raw uint8 pixel values [0, 255] into zero-mean, unit-variance float tensors using ImageNet mean and std vectors.",
+        searchPrompt: "ImageNet normalization mean std tensor conversion PyTorch torchvision",
+        emoji: "📊",
+        reactionCount: "4.2k",
+        commentCount: 280,
+      },
+      {
+        id: "vis-prep-2",
+        text: "Advanced data augmentations like Mosaic, MixUp, and CutMix synthesize multi-image combinations to prevent feature overfitting and improve occlusion handling.",
+        searchPrompt: "CutMix MixUp Mosaic augmentation computer vision generalization",
+        emoji: "🧩",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+      {
+        id: "vis-prep-3",
+        text: "Letterboxing preserves original aspect ratios by padding borders with neutral color rather than warping, maintaining accurate spatial geometry.",
+        searchPrompt: "letterbox image padding aspect ratio preservation object detection",
+        emoji: "🖼️",
+        reactionCount: "3.9k",
+        commentCount: 260,
+      },
+    ],
+  },
+
+  "vision-edge-feature-extraction": {
+    id: "vision-edge-feature-extraction",
+    title: "2. Edge & Feature Extraction",
+    badge: "Low-Level Gradients",
+    tagline: "Sobel filters, Canny edge detection, Haar cascades, and shallow convolution gradient maps",
+    takeaways: [
+      {
+        id: "vis-edge-1",
+        text: "Sobel and Scharr operators convolve horizontal and vertical derivative kernels to compute spatial gradient magnitude and orientation across luminance maps.",
+        searchPrompt: "Sobel filter gradient magnitude edge detection OpenCV discrete derivatives",
+        emoji: "📐",
+        reactionCount: "3.7k",
+        commentCount: 220,
+      },
+      {
+        id: "vis-edge-2",
+        text: "Canny edge detection combines Gaussian smoothing, gradient calculation, non-maximum suppression, and hysteresis thresholding to extract thin, continuous boundaries.",
+        searchPrompt: "Canny edge detector hysteresis thresholding non maximum suppression",
+        emoji: "✏️",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+      {
+        id: "vis-edge-3",
+        text: "Shallow neural network layers automatically learn Gabor-like directional filters, detecting edges, textures, and color gradients without manual filter design.",
+        searchPrompt: "CNN first layer filters Gabor wavelets edge detection visualization",
+        emoji: "🔬",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "vision-backbone-feature-pyramids": {
+    id: "vision-backbone-feature-pyramids",
+    title: "3. CNN Backbones & FPN",
+    badge: "Multi-Scale Hierarchy",
+    tagline: "Hierarchical representation learning with lateral connections and top-down semantic enrichment",
+    takeaways: [
+      {
+        id: "vis-fpn-1",
+        text: "Feature Pyramid Networks (FPN) construct a top-down pathway with lateral connections, fusing deep semantically rich features with shallow spatially precise features.",
+        searchPrompt: "Feature Pyramid Network lateral connections top down pathway Lin et al",
+        emoji: "🔺",
+        reactionCount: "5.1k",
+        commentCount: 370,
+      },
+      {
+        id: "vis-fpn-2",
+        text: "PANet (Path Aggregation Network) adds an additional bottom-up augmentation pathway to shorten information propagation from low-level feature maps to high-level nodes.",
+        searchPrompt: "PANet path aggregation network bottom-up pathway object detection",
+        emoji: "🔄",
+        reactionCount: "4.6k",
+        commentCount: 325,
+      },
+      {
+        id: "vis-fpn-3",
+        text: "Backbone architectures (ResNet, RegNet, EfficientNet) extract feature maps at C2, C3, C4, and C5 stages with strides of 4, 8, 16, and 32 pixels.",
+        searchPrompt: "CNN backbone stages stride 4 8 16 32 feature resolution pyramid",
+        emoji: "🏛️",
+        reactionCount: "4.8k",
+        commentCount: 345,
+      },
+    ],
+  },
+
+  "vision-anchor-proposal-rpn": {
+    id: "vision-anchor-proposal-rpn",
+    title: "4. Region Proposals & Anchors",
+    badge: "Candidate Generation",
+    tagline: "Region Proposal Networks (RPN) evaluating candidate bounding boxes across predefined aspect ratios",
+    takeaways: [
+      {
+        id: "vis-rpn-1",
+        text: "Region Proposal Networks (RPN) slide a small conv network over backbone feature maps, predicting objectness logits and relative bounding box deltas.",
+        searchPrompt: "Region Proposal Network RPN Faster R-CNN anchor boxes deltas",
+        emoji: "📦",
+        reactionCount: "4.7k",
+        commentCount: 330,
+      },
+      {
+        id: "vis-rpn-2",
+        text: "Anchor boxes provide multi-scale reference templates with varied aspect ratios (1:1, 1:2, 2:1) at each spatial sliding window position.",
+        searchPrompt: "anchor boxes scales aspect ratios intersection over union matching",
+        emoji: "🔲",
+        reactionCount: "4.3k",
+        commentCount: 290,
+      },
+      {
+        id: "vis-rpn-3",
+        text: "Positive anchors are assigned by computing Intersection over Union (IoU >= 0.7) with ground-truth boxes, training regression offsets (dx, dy, dw, dh).",
+        searchPrompt: "IoU threshold ground truth matching bounding box delta regression",
+        emoji: "🎯",
+        reactionCount: "4.5k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "vision-bounding-box-nms": {
+    id: "vision-bounding-box-nms",
+    title: "5. Bounding Box & NMS",
+    badge: "Redundancy Elimination",
+    tagline: "Non-Maximum Suppression (NMS), Soft-NMS, and coordinate regression to filter overlapping detections",
+    takeaways: [
+      {
+        id: "vis-nms-1",
+        text: "Non-Maximum Suppression (NMS) sorts candidate boxes by confidence score, iteratively suppressing lower-scoring overlapping boxes with IoU above a threshold.",
+        searchPrompt: "Non Maximum Suppression NMS algorithm object detection IoU threshold",
+        emoji: "✂️",
+        reactionCount: "5.2k",
+        commentCount: 380,
+      },
+      {
+        id: "vis-nms-2",
+        text: "Soft-NMS decays bounding box confidence scores via continuous Gaussian functions instead of abrupt hard pruning, improving recall in crowded object scenes.",
+        searchPrompt: "Soft-NMS continuous score decay crowded object detection Bodla et al",
+        emoji: "📉",
+        reactionCount: "4.6k",
+        commentCount: 320,
+      },
+      {
+        id: "vis-nms-3",
+        text: "Fast NMS parallelizes the matrix IoU calculation across all remaining candidates simultaneously on GPU CUDA cores, unlocking 100+ FPS detector throughput.",
+        searchPrompt: "Fast NMS GPU parallelization matrix IoU real-time detector",
+        emoji: "⚡",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "vision-instance-panoptic-segmentation": {
+    id: "vision-instance-panoptic-segmentation",
+    title: "6. Instance & Panoptic Masks",
+    badge: "Dense Semantic Masks",
+    tagline: "Per-pixel binary mask generation, foreground segmentation, and unifying stuff and thing semantics",
+    takeaways: [
+      {
+        id: "vis-seg-1",
+        text: "Instance segmentation delineates individual objects (e.g., person #1, person #2), separating overlapping instances of the identical semantic class.",
+        searchPrompt: "instance segmentation mask prediction pixel level object boundaries",
+        emoji: "🎭",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+      {
+        id: "vis-seg-2",
+        text: "Panoptic segmentation unifies 'stuff' (amorphous background regions like sky, grass, road) and 'things' (countable object instances like cars, people) in one map.",
+        searchPrompt: "panoptic segmentation stuff vs things unified scene understanding",
+        emoji: "🗺️",
+        reactionCount: "5.0k",
+        commentCount: 365,
+      },
+      {
+        id: "vis-seg-3",
+        text: "Mask2Former treats panoptic, instance, and semantic segmentation with a single masked-attention transformer architecture, achieving unified SOTA performance.",
+        searchPrompt: "Mask2Former masked attention transformer universal image segmentation",
+        emoji: "🪄",
+        reactionCount: "5.3k",
+        commentCount: 390,
+      },
+    ],
+  },
+
+  "vision-vit-patch-attention": {
+    id: "vision-vit-patch-attention",
+    title: "7. Patch Projection & ViT Self-Attention",
+    badge: "Global Image Attention",
+    tagline: "Linear projection of 16x16 pixel patches into sequence tokens with multi-head self-attention",
+    takeaways: [
+      {
+        id: "vis-attn-1",
+        text: "An image of size 224x224x3 divided into 16x16 patches yields 196 discrete tokens, which are flattened into vectors of size 768 and prepended with a [CLS] token.",
+        searchPrompt: "ViT patch tokenization CLS token sequence length dimension projection",
+        emoji: "🧩",
+        reactionCount: "5.7k",
+        commentCount: 425,
+      },
+      {
+        id: "vis-attn-2",
+        text: "Multi-Head Self-Attention (MHSA) computes pairwise affinity matrices across all 196 patches, dynamically routing visual information without spatial distance limits.",
+        searchPrompt: "multi head self attention MHSA vision transformer attention maps",
+        emoji: "🧠",
+        reactionCount: "5.5k",
+        commentCount: 405,
+      },
+      {
+        id: "vis-attn-3",
+        text: "Attention rollout and Grad-CAM visualize which image patches the transformer focuses on when arriving at classification decisions.",
+        searchPrompt: "attention rollout Grad-CAM ViT interpretability saliency map",
+        emoji: "🔍",
+        reactionCount: "5.1k",
+        commentCount: 370,
+      },
+    ],
+  },
+
+  "vision-multimodal-clip-vlm": {
+    id: "vision-multimodal-clip-vlm",
+    title: "8. CLIP & Vision-Language Alignment",
+    badge: "Cross-Modal Embeddings",
+    tagline: "Contrastive learning matching image representations with textual descriptions in a shared latent space",
+    takeaways: [
+      {
+        id: "vis-clip-1",
+        text: "CLIP trains dual encoders (vision + text) with infoNCE symmetric contrastive loss to maximize cosine similarity of N true (image, text) pairs in a batch.",
+        searchPrompt: "CLIP contrastive language image pre-training InfoNCE loss Radford et al",
+        emoji: "🤝",
+        reactionCount: "6.3k",
+        commentCount: 490,
+      },
+      {
+        id: "vis-clip-2",
+        text: "Zero-shot classification queries the image embedding against prompt embeddings like 'a photo of a {label}', classifying without fine-tuning weights.",
+        searchPrompt: "zero-shot image classification CLIP prompt engineering",
+        emoji: "🎯",
+        reactionCount: "5.9k",
+        commentCount: 440,
+      },
+      {
+        id: "vis-clip-3",
+        text: "Vision-Language Models (LLaVA, Qwen-VL) feed ViT patch tokens through a projection projector into an LLM decoder, answering open-ended visual questions.",
+        searchPrompt: "LLaVA visual instruction tuning vision language foundation models",
+        emoji: "💬",
+        reactionCount: "6.6k",
+        commentCount: 520,
+      },
+    ],
+  },
+
+  "vision-tensorrt-onnx-export": {
+    id: "vision-tensorrt-onnx-export",
+    title: "9. ONNX & TensorRT Inference",
+    badge: "Hardware-Accelerated Serving",
+    tagline: "Exporting computational graphs, FP16/INT8 post-training quantization, and CUDA kernel fusion",
+    takeaways: [
+      {
+        id: "vis-trt-1",
+        text: "torch.onnx.export serializes PyTorch models into a platform-agnostic Open Neural Network Exchange computational graph with dynamic batch dimensions.",
+        searchPrompt: "torch onnx export dynamic axes dynamic batch size vision models",
+        emoji: "📦",
+        reactionCount: "5.2k",
+        commentCount: 385,
+      },
+      {
+        id: "vis-trt-2",
+        text: "NVIDIA TensorRT optimizes graphs by fusing layers (Conv + BatchNorm + ReLU into a single kernel) and selecting optimal CUDA kernel algorithms for target GPUs.",
+        searchPrompt: "NVIDIA TensorRT layer fusion kernel auto-tuning GPU inference acceleration",
+        emoji: "🏎️",
+        reactionCount: "5.8k",
+        commentCount: 435,
+      },
+      {
+        id: "vis-trt-3",
+        text: "Post-training quantization (PTQ) calibrates model activations on representative validation images, shrinking weights to INT8 with minimal accuracy degradation.",
+        searchPrompt: "INT8 post training quantization calibration KL divergence TensorRT",
+        emoji: "📉",
+        reactionCount: "5.4k",
+        commentCount: 405,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -10614,6 +11247,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Deep Learning"
       : node.category === "nlpllms"
       ? "NLP & LLMs"
+      : node.category === "vision"
+      ? "Computer Vision"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"
