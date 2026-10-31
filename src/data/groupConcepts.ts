@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2057,7 +2057,85 @@ export const IOT_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+// Blockchain & Cryptography: 9-Stage Web3 & Blockchain Transaction Lifecycle
+export const BLOCKCHAIN_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-blockchain-tx-pipeline",
+    pillarId: "blockchain-pipeline-pillar",
+    title: "9-Stage Web3 Transaction Lifecycle",
+    category: "blockchain",
+    badge: "9 Sequential Stages",
+    color: "#d97706",
+    isPipeline: true,
+    items: [
+      {
+        id: "bc-tx-signing-nonce",
+        stepNumber: 1,
+        label: "1. Transaction Signing & Nonce",
+        badge: "🔑 secp256k1 ECDSA & EIP-155 Replay Protection",
+        searchQuery: "Ethereum transaction signing ECDSA secp256k1 private key account nonce EIP-155",
+      },
+      {
+        id: "bc-mempool-gossip",
+        stepNumber: 2,
+        label: "2. Mempool Broadcast & P2P Gossip",
+        badge: "📡 devp2p GossipSub & Gas Priority Bidding",
+        searchQuery: "Ethereum devp2p mempool transaction gossip broadcast gas tip priority EIP-1559",
+      },
+      {
+        id: "bc-block-builder-assembly",
+        stepNumber: 3,
+        label: "3. Validator / Builder Block Assembly",
+        badge: "🏗️ MEV-Boost & Flashbots Bundle Ordering",
+        searchQuery: "Proposer Builder Separation PBS MEV-Boost block assembly Flashbots bundle ordering",
+      },
+      {
+        id: "bc-evm-execution-gas",
+        stepNumber: 4,
+        label: "4. EVM Execution & Gas Metering",
+        badge: "⚡ 256-bit Stack Machine & Opcode Gas Limits",
+        searchQuery: "Ethereum Virtual Machine EVM bytecode execution stack gas metering SSTORE SLOAD",
+      },
+      {
+        id: "bc-state-trie-update",
+        stepNumber: 5,
+        label: "5. State Transition & Merkle Root Update",
+        badge: "🌳 Modified Merkle Patricia Trie Root Hashes",
+        searchQuery: "Ethereum state transition modified Merkle Patricia trie storage root receipt root",
+      },
+      {
+        id: "bc-pos-attestation-consensus",
+        stepNumber: 6,
+        label: "6. Proof-of-Stake Consensus & Attestation",
+        badge: "🛡️ Gasper Beacon Chain 2/3 Supermajority Vote",
+        searchQuery: "Ethereum Proof of Stake Casper FFG LMD GHOST Gasper attestation supermajority",
+      },
+      {
+        id: "bc-block-propagation-reorg",
+        stepNumber: 7,
+        label: "7. Block Propagation & Reorg Resolution",
+        badge: "🌐 Peer-to-Peer Relay & Canonical Fork Choice",
+        searchQuery: "Ethereum block propagation fork choice rule LMD GHOST chain reorganization depth",
+      },
+      {
+        id: "bc-finality-event-emission",
+        stepNumber: 8,
+        label: "8. Finality Settlement & Event Emission",
+        badge: "📜 Irreversible Checkpoint & Bloom Filter Logs",
+        searchQuery: "Ethereum Casper finality 2 epochs settlement event emission Solidity log bloom filters",
+      },
+      {
+        id: "bc-l2-rollup-zk-proving",
+        stepNumber: 9,
+        label: "9. L2 Rollup Batching & ZK-SNARK Proving",
+        badge: "⚡ Optimistic Calldata & ZK Validity Proofs",
+        searchQuery: "Layer 2 rollups Optimistic fraud proof ZK-SNARK validity proofs EIP-4844 proto-danksharding blobspace",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2081,8 +2159,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "data") return DATA_GROUP_CARDS;
   if (category === "gamedev") return GAMEDEV_GROUP_CARDS;
   if (category === "iot") return IOT_GROUP_CARDS;
+  if (category === "blockchain") return BLOCKCHAIN_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

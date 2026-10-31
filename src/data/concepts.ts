@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -231,8 +231,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "blockchain",
+    name: "24. Blockchain & Web3",
+    title: "Blockchain, Cryptography & EVM Architecture",
+    description: "Proof-of-Work vs PoS, Merkle Patricia Tries, ECDSA Signing, EVM Bytecode, Gas, Solidity Security & L2 Rollups",
+    color: "#d97706", // Cyber Gold / Deep Amber
+    icon: "Blocks",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "24. OOP (4 Pillars)",
+    name: "25. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -241,7 +250,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "25. DSA",
+    name: "26. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -250,7 +259,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "26. Big O",
+    name: "27. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -264,7 +273,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 289,
+    count: 299,
   },
 ];
 
@@ -487,6 +496,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "embedded systems IoT microcontrollers FreeRTOS GPIO DMA I2C SPI UART MQTT telemetry",
     badge: "RTOS & Hardware Buses",
     color: "#059669",
+  },
+  {
+    id: "root-blockchain",
+    label: "Blockchain & Cryptography",
+    category: "blockchain",
+    level: 0,
+    searchQuery: "blockchain cryptography consensus smart contracts EVM proof of stake Merkle trees zero knowledge rollups",
+    badge: "Web3 & Distributed Ledger",
+    color: "#d97706",
   },
   {
     id: "root-oop",
@@ -3272,7 +3290,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 24. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 24. BLOCKCHAIN & CRYPTOGRAPHY
+  // ==========================================
+  // Pillar 1: Consensus & Cryptographic Hashing
+  {
+    id: "blockchain-consensus-crypto-pillar",
+    label: "Consensus & Cryptographic Hashing",
+    category: "blockchain",
+    parentId: "root-blockchain",
+    level: 1,
+    searchQuery: "blockchain consensus cryptography proof of work proof of stake Merkle trees SHA256 ECC digital signatures",
+    badge: "PoW/PoS & Cryptography",
+    color: "#d97706",
+  },
+  {
+    id: "blockchain-pow-pos-consensus",
+    label: "PoW vs PoS & Byzantine Fault Tolerance",
+    category: "blockchain",
+    parentId: "blockchain-consensus-crypto-pillar",
+    level: 2,
+    searchQuery: "Nakamoto consensus proof of work difficulty target Casper proof of stake slashing validator sets PBFT Byzantine fault tolerance",
+    badge: "PoW, PoS & BFT Slashing",
+    color: "#f59e0b",
+  },
+  {
+    id: "blockchain-merkle-patricia-trees",
+    label: "Merkle Trees & Patricia State Tries",
+    category: "blockchain",
+    parentId: "blockchain-consensus-crypto-pillar",
+    level: 2,
+    searchQuery: "Merkle root cryptographic hash tree SPV light clients Ethereum modified Merkle Patricia trie state storage receipt root",
+    badge: "Merkle Proofs & Patricia Tries",
+    color: "#b45309",
+  },
+  {
+    id: "blockchain-ecc-digital-signatures",
+    label: "Elliptic Curve & Digital Signatures",
+    category: "blockchain",
+    parentId: "blockchain-consensus-crypto-pillar",
+    level: 2,
+    searchQuery: "ECDSA secp256k1 public private key cryptography Keccak256 SHA-256 nonces transaction signing replay protection EIP-155",
+    badge: "secp256k1 & ECDSA Signing",
+    color: "#fbbf24",
+  },
+
+  // Pillar 2: 9-Stage Web3 & Blockchain Transaction Pipeline (Group Card)
+  {
+    id: "blockchain-pipeline-pillar",
+    label: "9-Stage Web3 Transaction Lifecycle",
+    category: "blockchain",
+    parentId: "root-blockchain",
+    level: 1,
+    searchQuery: "Web3 transaction lifecycle wallet signing mempool p2p gossip validator EVM execution state trie PoS attestation finality L2 rollups",
+    badge: "9 Sequential Stages",
+    color: "#78350f",
+  },
+
+  // Pillar 3: Smart Contracts & EVM Architecture
+  {
+    id: "blockchain-smart-contracts-evm-pillar",
+    label: "Smart Contracts & EVM Architecture",
+    category: "blockchain",
+    parentId: "root-blockchain",
+    level: 1,
+    searchQuery: "smart contracts Ethereum Virtual Machine EVM bytecode gas opcodes Solidity security reentrancy attacks L2 rollups ZK-STARKs",
+    badge: "EVM, Solidity & L2 Rollups",
+    color: "#92400e",
+  },
+  {
+    id: "blockchain-evm-gas-bytecode",
+    label: "EVM Stack Machine, Opcodes & Gas",
+    category: "blockchain",
+    parentId: "blockchain-smart-contracts-evm-pillar",
+    level: 2,
+    searchQuery: "Ethereum Virtual Machine EVM 256 bit stack memory storage SSTORE SLOAD opcode gas schedule EIP-1559 base fee priority tip",
+    badge: "Stack, Storage & Gas Math",
+    color: "#d97706",
+  },
+  {
+    id: "blockchain-solidity-security-reentrancy",
+    label: "Solidity Patterns, Reentrancy & Exploits",
+    category: "blockchain",
+    parentId: "blockchain-smart-contracts-evm-pillar",
+    level: 2,
+    searchQuery: "smart contract security reentrancy checks effects interactions pattern integer overflow flash loan attacks upgradeable proxies access control",
+    badge: "Reentrancy & Security Audits",
+    color: "#f59e0b",
+  },
+  {
+    id: "blockchain-l2-rollups-zk-starks",
+    label: "Layer-2 Rollups & Zero-Knowledge (ZK)",
+    category: "blockchain",
+    parentId: "blockchain-smart-contracts-evm-pillar",
+    level: 2,
+    searchQuery: "layer 2 scaling optimistic rollups fraud proofs zero knowledge rollups zk-SNARKs zk-STARKs calldata data availability blobspace EIP-4844",
+    badge: "Optimistic & ZK-Rollups",
+    color: "#b45309",
+  },
+
+  // ==========================================
+  // 25. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

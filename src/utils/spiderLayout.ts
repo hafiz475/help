@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision" || category === "mobile" || category === "data" || category === "gamedev" || category === "iot") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision" || category === "mobile" || category === "data" || category === "gamedev" || category === "iot" || category === "blockchain") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -993,6 +993,8 @@ export function calculateGroupLayout(
         ? "Game Dev & Graphics"
         : category === "iot"
         ? "Embedded Systems & IoT"
+        : category === "blockchain"
+        ? "Blockchain & Cryptography"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1047,6 +1049,8 @@ export function calculateGroupLayout(
         ? "Game Loop & GPU Shaders"
         : category === "iot"
         ? "RTOS & Hardware Buses"
+        : category === "blockchain"
+        ? "Web3 & Distributed Ledger"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1093,6 +1097,8 @@ export function calculateGroupLayout(
         ? "#c026d3"
         : category === "iot"
         ? "#059669"
+        : category === "blockchain"
+        ? "#d97706"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -5585,6 +5591,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 4E: Blockchain & Cryptography Hub (placed along the left spine at x = -1300, y = -6750)
+    const blockchainHubX = -1300;
+    const blockchainHubY = -6750;
+    const blockchainHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-blockchain")!,
+      x: blockchainHubX,
+      y: blockchainHubY,
+      level: 1,
+      branchIndex: 4,
+    };
+    positionedNodes.push(blockchainHubNode);
+    edges.push({
+      source: iotHubNode.id,
+      target: blockchainHubNode.id,
+      category: "blockchain",
+      level: 1,
+      branchIndex: 4,
+    });
+
+    // Blockchain Node 1: Consensus & Cryptographic Hashing (Left-Up)
+    const bcConsensusRaw = allNodes.find((n) => n.id === "blockchain-consensus-crypto-pillar");
+    if (bcConsensusRaw) {
+      const bcConsensusX = blockchainHubX - 650;
+      const bcConsensusY = blockchainHubY - 180;
+      const bcConsensusNode: PositionedNode = {
+        ...bcConsensusRaw,
+        x: bcConsensusX,
+        y: bcConsensusY,
+        level: 3,
+        branchIndex: 4,
+      };
+      positionedNodes.push(bcConsensusNode);
+      edges.push({
+        source: blockchainHubNode.id,
+        target: bcConsensusNode.id,
+        category: "blockchain",
+        level: 3,
+        branchIndex: 4,
+      });
+
+      const pppRaw = allNodes.find((n) => n.id === "blockchain-pow-pos-consensus");
+      if (pppRaw) {
+        positionedNodes.push({
+          ...pppRaw,
+          x: bcConsensusX - 320,
+          y: bcConsensusY - 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: bcConsensusNode.id,
+          target: pppRaw.id,
+          category: "blockchain",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const mptRaw = allNodes.find((n) => n.id === "blockchain-merkle-patricia-trees");
+      if (mptRaw) {
+        positionedNodes.push({
+          ...mptRaw,
+          x: bcConsensusX - 320,
+          y: bcConsensusY,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: bcConsensusNode.id,
+          target: mptRaw.id,
+          category: "blockchain",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const edsRaw = allNodes.find((n) => n.id === "blockchain-ecc-digital-signatures");
+      if (edsRaw) {
+        positionedNodes.push({
+          ...edsRaw,
+          x: bcConsensusX - 320,
+          y: bcConsensusY + 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: bcConsensusNode.id,
+          target: edsRaw.id,
+          category: "blockchain",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+    }
+
+    // Blockchain Node 2: 9-Stage Web3 & Blockchain Transaction Pipeline (Group Card, Left-Center)
+    const bcCard = cardByPillar.get("blockchain-pipeline-pillar");
+    if (bcCard) {
+      const cardX = blockchainHubX - 800;
+      const cardY = blockchainHubY;
+      const posCard: PositionedGroupCard = {
+        ...bcCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 4,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: blockchainHubNode.id,
+        target: bcCard.id,
+        category: "blockchain",
+        level: 3,
+        branchIndex: 4,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 4);
+    }
+
+    // Blockchain Node 3: Smart Contracts & EVM Architecture (Left-Down)
+    const bcEvmRaw = allNodes.find((n) => n.id === "blockchain-smart-contracts-evm-pillar");
+    if (bcEvmRaw) {
+      const bcEvmX = blockchainHubX - 650;
+      const bcEvmY = blockchainHubY + 180;
+      const bcEvmNode: PositionedNode = {
+        ...bcEvmRaw,
+        x: bcEvmX,
+        y: bcEvmY,
+        level: 3,
+        branchIndex: 4,
+      };
+      positionedNodes.push(bcEvmNode);
+      edges.push({
+        source: blockchainHubNode.id,
+        target: bcEvmNode.id,
+        category: "blockchain",
+        level: 3,
+        branchIndex: 4,
+      });
+
+      const egbRaw = allNodes.find((n) => n.id === "blockchain-evm-gas-bytecode");
+      if (egbRaw) {
+        positionedNodes.push({
+          ...egbRaw,
+          x: bcEvmX - 320,
+          y: bcEvmY - 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: bcEvmNode.id,
+          target: egbRaw.id,
+          category: "blockchain",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const ssrRaw = allNodes.find((n) => n.id === "blockchain-solidity-security-reentrancy");
+      if (ssrRaw) {
+        positionedNodes.push({
+          ...ssrRaw,
+          x: bcEvmX - 320,
+          y: bcEvmY,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: bcEvmNode.id,
+          target: ssrRaw.id,
+          category: "blockchain",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const lrzRaw = allNodes.find((n) => n.id === "blockchain-l2-rollups-zk-starks");
+      if (lrzRaw) {
+        positionedNodes.push({
+          ...lrzRaw,
+          x: bcEvmX - 320,
+          y: bcEvmY + 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: bcEvmNode.id,
+          target: lrzRaw.id,
+          category: "blockchain",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+    }
+
     // Automated overlap prevention relaxation pass
     preventLayoutOverlaps(positionedNodes, positionedCards);
 
@@ -5657,6 +5856,8 @@ export function calculateGroupLayout(
     pillarIds = ["gamedev-game-loop-pillar", "gamedev-pipeline-pillar", "gamedev-gpu-shaders-pillar"];
   } else if (category === "iot") {
     pillarIds = ["iot-microcontroller-rtos-pillar", "iot-pipeline-pillar", "iot-protocols-telemetry-pillar"];
+  } else if (category === "blockchain") {
+    pillarIds = ["blockchain-consensus-crypto-pillar", "blockchain-pipeline-pillar", "blockchain-smart-contracts-evm-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -6025,6 +6226,11 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
+    const blockchainRoot = {
+      ...allNodes.find((n) => n.id === "root-blockchain")!,
+      parentId: "root-all",
+      level: 1,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -6069,13 +6275,14 @@ export function getNodesForCategory(
         n.id !== "root-data" &&
         n.id !== "root-gamedev" &&
         n.id !== "root-iot" &&
+        n.id !== "root-blockchain" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

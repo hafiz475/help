@@ -12247,6 +12247,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // 24. BLOCKCHAIN & CRYPTOGRAPHY STORIES
+  // ==========================================
+  "root-blockchain": {
+    id: "root-blockchain",
+    title: "Blockchain & Cryptography",
+    badge: "Web3 Ledger",
+    tagline: "Decentralized consensus, cryptographic state proofs, and Turing-complete EVM execution",
+    takeaways: [
+      {
+        id: "bc-root-1",
+        text: "Distributed consensus eliminates central points of failure via cryptographic economic incentives.",
+        searchPrompt: "decentralized blockchain consensus Byzantine fault tolerance Nakamoto cryptography",
+        emoji: "⛓️",
+        reactionCount: "5.7k",
+        commentCount: 420,
+      },
+      {
+        id: "bc-root-2",
+        text: "Merkle trees and elliptic curve signatures guarantee data integrity without trusted intermediaries.",
+        searchPrompt: "Merkle trees public key cryptography digital signatures blockchain verification",
+        emoji: "🔒",
+        reactionCount: "5.2k",
+        commentCount: 380,
+      },
+      {
+        id: "bc-root-3",
+        text: "Smart contracts enable unstoppable, deterministic code execution on global decentralized ledgers.",
+        searchPrompt: "smart contracts Turing complete Ethereum Virtual Machine deterministic code",
+        emoji: "⚡",
+        reactionCount: "4.9k",
+        commentCount: 355,
+      },
+    ],
+  },
+
+  "blockchain-consensus-crypto-pillar": {
+    id: "blockchain-consensus-crypto-pillar",
+    title: "Consensus & Cryptographic Hashing",
+    badge: "PoW/PoS & Cryptography",
+    tagline: "Fault-tolerant consensus algorithms and asymmetric cryptographic primitives securing Web3",
+    takeaways: [
+      {
+        id: "bc-ccp-1",
+        text: "Consensus protocols solve Byzantine Fault Tolerance across untrusted peer-to-peer networks.",
+        searchPrompt: "Byzantine Fault Tolerance consensus protocols peer to peer network distributed nodes",
+        emoji: "🛡️",
+        reactionCount: "5.1k",
+        commentCount: 370,
+      },
+      {
+        id: "bc-ccp-2",
+        text: "Cryptographic hash functions provide one-way pre-image resistance and collision resistance.",
+        searchPrompt: "cryptographic hash functions SHA256 Keccak pre image collision resistance",
+        emoji: "🔑",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+      {
+        id: "bc-ccp-3",
+        text: "Digital signatures verify transaction origin and authorize state mutations without private keys.",
+        searchPrompt: "asymmetric digital signatures elliptic curve verify transaction authorization",
+        emoji: "✍️",
+        reactionCount: "4.6k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  "blockchain-pow-pos-consensus": {
+    id: "blockchain-pow-pos-consensus",
+    title: "PoW vs PoS & Byzantine Fault Tolerance",
+    badge: "PoW, PoS & BFT Slashing",
+    tagline: "Energy-intensive proof of work vs capital-staked proof of stake and slashing penalties",
+    takeaways: [
+      {
+        id: "bc-ppp-1",
+        text: "Proof of Work uses hash computation difficulty to make history rewriting economically impossible.",
+        searchPrompt: "proof of work Nakamoto consensus difficulty target hash rate security",
+        emoji: "⛏️",
+        reactionCount: "5.4k",
+        commentCount: 395,
+      },
+      {
+        id: "bc-ppp-2",
+        text: "Proof of Stake validators deposit 32 ETH capital stake; equivocation results in harsh slashing.",
+        searchPrompt: "proof of stake Casper validator staking slashing penalties 32 ETH Ethereum",
+        emoji: "🥩",
+        reactionCount: "5.0k",
+        commentCount: 360,
+      },
+      {
+        id: "bc-ppp-3",
+        text: "Classical BFT algorithms achieve instant finality with 2/3 validator quorum agreement.",
+        searchPrompt: "Byzantine fault tolerance PBFT Tendermint instant finality quorum 2/3 majority",
+        emoji: "⚖️",
+        reactionCount: "4.7k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "blockchain-merkle-patricia-trees": {
+    id: "blockchain-merkle-patricia-trees",
+    title: "Merkle Trees & Patricia State Tries",
+    badge: "Merkle Proofs & Patricia Tries",
+    tagline: "Cryptographic tree structures enabling light clients to verify account balances and state roots",
+    takeaways: [
+      {
+        id: "bc-mpt-1",
+        text: "Merkle trees compress millions of transactions into a single 32-byte cryptographic root hash.",
+        searchPrompt: "Merkle tree cryptographic root hash binary tree leaf node verification",
+        emoji: "🌳",
+        reactionCount: "5.3k",
+        commentCount: 385,
+      },
+      {
+        id: "bc-mpt-2",
+        text: "SPV light clients verify payments with O(log n) branch proofs without downloading full blocks.",
+        searchPrompt: "simplified payment verification SPV light client Merkle branch proof logarithmic",
+        emoji: "📱",
+        reactionCount: "4.9k",
+        commentCount: 350,
+      },
+      {
+        id: "bc-mpt-3",
+        text: "Ethereum's Patricia Trie binds state, storage, and receipts into deterministic roots.",
+        searchPrompt: "Ethereum modified Merkle Patricia trie state trie storage trie receipt root",
+        emoji: "🌲",
+        reactionCount: "4.5k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "blockchain-ecc-digital-signatures": {
+    id: "blockchain-ecc-digital-signatures",
+    title: "Elliptic Curve & Digital Signatures",
+    badge: "secp256k1 & ECDSA Signing",
+    tagline: "Asymmetric cryptography, secp256k1 curve equations, and signature verification",
+    takeaways: [
+      {
+        id: "bc-eds-1",
+        text: "secp256k1 elliptic curve maps private keys to public points via trapdoor scalar multiplication.",
+        searchPrompt: "secp256k1 elliptic curve cryptography discrete logarithm problem public key derivation",
+        emoji: "🔐",
+        reactionCount: "5.2k",
+        commentCount: 375,
+      },
+      {
+        id: "bc-eds-2",
+        text: "ECDSA generates (r, s, v) signatures, permitting public key recovery without exposing keys.",
+        searchPrompt: "ECDSA signature r s v parameters ecrecover Ethereum address derivation",
+        emoji: "📝",
+        reactionCount: "4.8k",
+        commentCount: 345,
+      },
+      {
+        id: "bc-eds-3",
+        text: "Sequential account nonces prevent replay attacks and force strict in-order transaction inclusion.",
+        searchPrompt: "account nonce Ethereum replay attack protection EIP-155 transaction order",
+        emoji: "🔢",
+        reactionCount: "4.6k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "blockchain-pipeline-pillar": {
+    id: "blockchain-pipeline-pillar",
+    title: "9-Stage Web3 Transaction Lifecycle",
+    badge: "9 Sequential Stages",
+    tagline: "End-to-end journey from wallet key signing to block confirmation, finality, and L2 rollups",
+    takeaways: [
+      {
+        id: "bc-plp-1",
+        text: "Every Web3 action traverses signing, gossip, execution, attestation, and finality settlement.",
+        searchPrompt: "Web3 transaction lifecycle stages signing mempool execution attestation finality",
+        emoji: "🔄",
+        reactionCount: "5.5k",
+        commentCount: 410,
+      },
+      {
+        id: "bc-plp-2",
+        text: "Gas bidding via EIP-1559 separates base fee burns from validator priority tips dynamically.",
+        searchPrompt: "EIP-1559 gas fee market base fee burn priority tip maxFeePerGas",
+        emoji: "⛽",
+        reactionCount: "5.1k",
+        commentCount: 365,
+      },
+      {
+        id: "bc-plp-3",
+        text: "Modern execution separates block building from block proposal via MEV-Boost relays.",
+        searchPrompt: "Proposer Builder Separation PBS MEV-Boost Flashbots relay validator incentives",
+        emoji: "🏗️",
+        reactionCount: "4.7k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "blockchain-smart-contracts-evm-pillar": {
+    id: "blockchain-smart-contracts-evm-pillar",
+    title: "Smart Contracts & EVM Architecture",
+    badge: "EVM, Solidity & L2 Rollups",
+    tagline: "Turing-complete virtual machine, gas metering, secure contract design, and layer-2 scaling",
+    takeaways: [
+      {
+        id: "bc-scp-1",
+        text: "The EVM is a quasi-Turing-complete stack machine isolated from the host OS and network.",
+        searchPrompt: "Ethereum Virtual Machine EVM stack machine sandbox isolation Turing complete",
+        emoji: "💻",
+        reactionCount: "5.4k",
+        commentCount: 390,
+      },
+      {
+        id: "bc-scp-2",
+        text: "Gas meters computation and storage access, preventing denial-of-service infinite loop attacks.",
+        searchPrompt: "EVM gas metering Halting Problem prevention denial of service protection",
+        emoji: "🛑",
+        reactionCount: "5.0k",
+        commentCount: 355,
+      },
+      {
+        id: "bc-scp-3",
+        text: "Layer-2 rollups scale throughput 100x by moving execution off-chain while anchoring to L1.",
+        searchPrompt: "layer 2 rollups off chain execution Ethereum layer 1 settlement scaling",
+        emoji: "🚀",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "blockchain-evm-gas-bytecode": {
+    id: "blockchain-evm-gas-bytecode",
+    title: "EVM Stack Machine, Opcodes & Gas",
+    badge: "Stack, Storage & Gas Math",
+    tagline: "256-bit word stack, memory volatile allocations, and expensive persistent storage opcodes",
+    takeaways: [
+      {
+        id: "bc-egb-1",
+        text: "EVM operates on 256-bit words natively matching Keccak-256 and elliptic curve cryptographic sizes.",
+        searchPrompt: "EVM 256 bit word size stack memory storage word alignment opcodes",
+        emoji: "📐",
+        reactionCount: "5.1k",
+        commentCount: 365,
+      },
+      {
+        id: "bc-egb-2",
+        text: "Persistent SSTORE storage writes cost 20,000 gas, while volatile memory expansions cost linear gas.",
+        searchPrompt: "SSTORE SLOAD opcode gas schedule EVM memory expansion quadratic gas cost",
+        emoji: "💾",
+        reactionCount: "4.7k",
+        commentCount: 330,
+      },
+      {
+        id: "bc-egb-3",
+        text: "Opcodes (PUSH, DUP, SWAP, JUMP, SLOAD) compile Solidity high-level logic into bytecode.",
+        searchPrompt: "Solidity compilation to EVM bytecode disassembly opcodes stack manipulation",
+        emoji: "⚙️",
+        reactionCount: "4.4k",
+        commentCount: 305,
+      },
+    ],
+  },
+
+  "blockchain-solidity-security-reentrancy": {
+    id: "blockchain-solidity-security-reentrancy",
+    title: "Solidity Patterns, Reentrancy & Exploits",
+    badge: "Reentrancy & Security Audits",
+    tagline: "Checks-effects-interactions pattern, reentrancy guards, flash loan exploits, and audit practices",
+    takeaways: [
+      {
+        id: "bc-ssr-1",
+        text: "Reentrancy occurs when external calls hijack control flow before internal state balances update.",
+        searchPrompt: "Solidity reentrancy attack DAO hack fallback function recursive call exploit",
+        emoji: "🚨",
+        reactionCount: "5.6k",
+        commentCount: 415,
+      },
+      {
+        id: "bc-ssr-2",
+        text: "Always follow Checks-Effects-Interactions: validate input, update state, then transfer funds.",
+        searchPrompt: "Checks Effects Interactions pattern Solidity security best practices ReentrancyGuard",
+        emoji: "🛡️",
+        reactionCount: "5.3k",
+        commentCount: 380,
+      },
+      {
+        id: "bc-ssr-3",
+        text: "Flash loans allow uncollateralized millions borrowed within a single atomic transaction block.",
+        searchPrompt: "DeFi flash loans atomic transactions oracle manipulation arbitrage exploit",
+        emoji: "⚡",
+        reactionCount: "4.9k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "blockchain-l2-rollups-zk-starks": {
+    id: "blockchain-l2-rollups-zk-starks",
+    title: "Layer-2 Rollups & Zero-Knowledge (ZK)",
+    badge: "Optimistic & ZK-Rollups",
+    tagline: "Scaling Ethereum with fraud proofs, zk-SNARK validity proofs, and EIP-4844 blobspace",
+    takeaways: [
+      {
+        id: "bc-lrz-1",
+        text: "Optimistic rollups assume transactions valid, enforcing a 7-day fraud proof challenge window.",
+        searchPrompt: "Optimistic rollups fraud proofs Arbitrum Optimism dispute challenge period",
+        emoji: "🔭",
+        reactionCount: "5.4k",
+        commentCount: 385,
+      },
+      {
+        id: "bc-lrz-2",
+        text: "ZK-Rollups generate cryptographic validity proofs (zk-SNARK/STARK) verified on L1 instantly.",
+        searchPrompt: "Zero Knowledge rollups zk-SNARK zk-STARK validity proof verifier contract",
+        emoji: "✨",
+        reactionCount: "5.2k",
+        commentCount: 370,
+      },
+      {
+        id: "bc-lrz-3",
+        text: "EIP-4844 introduces blob-carrying transactions, slashing rollup data posting costs by 90%.",
+        searchPrompt: "EIP-4844 proto-danksharding blob transactions data availability rollup fees",
+        emoji: "📦",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  // 9 Sequential Stages of Web3 Transaction Pipeline
+  "bc-tx-signing-nonce": {
+    id: "bc-tx-signing-nonce",
+    title: "1. Transaction Signing & Nonce",
+    badge: "🔑 secp256k1 ECDSA & EIP-155 Replay Protection",
+    tagline: "Hardware and software wallets sign payloads with private keys and sequential anti-replay nonces",
+    takeaways: [
+      {
+        id: "bc-tsn-1",
+        text: "Client wallets sign tx hash with secp256k1 ECDSA, creating (r, s, v) signature parameters.",
+        searchPrompt: "Web3 wallet transaction signing secp256k1 ECDSA r s v signature",
+        emoji: "🔑",
+        reactionCount: "5.3k",
+        commentCount: 380,
+      },
+      {
+        id: "bc-tsn-2",
+        text: "EIP-155 incorporates chain ID into the signature hash to block cross-chain transaction replay.",
+        searchPrompt: "EIP-155 simple replay attack protection chainId signature hashing",
+        emoji: "🛡️",
+        reactionCount: "4.9k",
+        commentCount: 345,
+      },
+      {
+        id: "bc-tsn-3",
+        text: "Each account tracks a sequential nonce; nodes reject transactions with gaps or duplicate nonces.",
+        searchPrompt: "Ethereum account nonce transaction sequence replacement underpriced error",
+        emoji: "🔢",
+        reactionCount: "4.6k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "bc-mempool-gossip": {
+    id: "bc-mempool-gossip",
+    title: "2. Mempool Broadcast & P2P Gossip",
+    badge: "📡 devp2p GossipSub & Gas Priority Bidding",
+    tagline: "GossipSub broadcast across peer nodes, mempool admission filters, and priority fee rankings",
+    takeaways: [
+      {
+        id: "bc-mpg-1",
+        text: "Transactions propagate across the devp2p network via GossipSub peer-to-peer relay protocols.",
+        searchPrompt: "Ethereum devp2p GossipSub peer transaction broadcast mempool relay",
+        emoji: "📡",
+        reactionCount: "5.1k",
+        commentCount: 365,
+      },
+      {
+        id: "bc-mpg-2",
+        text: "Node mempools filter transactions by balance checks, valid nonces, and minimum base fee limits.",
+        searchPrompt: "mempool validation criteria txpool status transaction admission gas fee check",
+        emoji: "🧹",
+        reactionCount: "4.7k",
+        commentCount: 335,
+      },
+      {
+        id: "bc-mpg-3",
+        text: "EIP-1559 base fee is burned by protocol; priority tip incentivizes validator block inclusion.",
+        searchPrompt: "EIP-1559 base fee burning priority tip validator inclusion incentive",
+        emoji: "🔥",
+        reactionCount: "4.5k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "bc-block-builder-assembly": {
+    id: "bc-block-builder-assembly",
+    title: "3. Validator / Builder Block Assembly",
+    badge: "🏗️ MEV-Boost & Flashbots Bundle Ordering",
+    tagline: "Proposer-Builder Separation, MEV bundle extraction, and optimal transaction ordering",
+    takeaways: [
+      {
+        id: "bc-bba-1",
+        text: "Specialized block builders simulate mempool transactions to extract Maximal Extractable Value.",
+        searchPrompt: "block builders searchers MEV extraction bundle arbitrage liquidation frontrunning",
+        emoji: "🏗️",
+        reactionCount: "5.4k",
+        commentCount: 390,
+      },
+      {
+        id: "bc-bba-2",
+        text: "Flashbots MEV-Boost enables validators to auction block space to builders trustlessly.",
+        searchPrompt: "Flashbots MEV-Boost PBS block auction validator relay consensus client",
+        emoji: "🤝",
+        reactionCount: "5.0k",
+        commentCount: 355,
+      },
+      {
+        id: "bc-bba-3",
+        text: "Builders pack transactions up to the 30M gas limit, maximizing validator fee bids.",
+        searchPrompt: "Ethereum block gas limit 30 million gas target knapsack packing optimization",
+        emoji: "📦",
+        reactionCount: "4.6k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  "bc-evm-execution-gas": {
+    id: "bc-evm-execution-gas",
+    title: "4. EVM Execution & Gas Metering",
+    badge: "⚡ 256-bit Stack Machine & Opcode Gas Limits",
+    tagline: "Deterministic bytecode interpretation, stack operations, memory expansion, and gas depletion",
+    takeaways: [
+      {
+        id: "bc-eeg-1",
+        text: "The EVM interprets opcodes sequentially, popping and pushing 256-bit words on the stack.",
+        searchPrompt: "EVM opcode interpretation stack execution loop program counter bytecodes",
+        emoji: "⚡",
+        reactionCount: "5.2k",
+        commentCount: 375,
+      },
+      {
+        id: "bc-eeg-2",
+        text: "If execution runs out of gas, all state mutations revert while transaction gas remains consumed.",
+        searchPrompt: "out of gas error EVM state revert gas consumption transaction failure",
+        emoji: "⚠️",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+      {
+        id: "bc-eeg-3",
+        text: "Static calls permit read-only contract queries without permitting any state modifications.",
+        searchPrompt: "STATICCALL opcode view pure function reentrancy protection read only state",
+        emoji: "🔍",
+        reactionCount: "4.4k",
+        commentCount: 305,
+      },
+    ],
+  },
+
+  "bc-state-trie-update": {
+    id: "bc-state-trie-update",
+    title: "5. State Transition & Merkle Root Update",
+    badge: "🌳 Modified Merkle Patricia Trie Root Hashes",
+    tagline: "Updating account balances, contract storage slots, and computing new block Merkle roots",
+    takeaways: [
+      {
+        id: "bc-stu-1",
+        text: "State mutations modify account nonces, balances, code hashes, and storage Patricia tries.",
+        searchPrompt: "Ethereum state transition world state trie account state storage root update",
+        emoji: "🌳",
+        reactionCount: "5.3k",
+        commentCount: 380,
+      },
+      {
+        id: "bc-stu-2",
+        text: "New root hashes for state, transactions, and receipts are computed and inserted in the header.",
+        searchPrompt: "block header stateRoot transactionsRoot receiptsRoot Merkle Patricia computation",
+        emoji: "🏷️",
+        reactionCount: "4.9k",
+        commentCount: 345,
+      },
+      {
+        id: "bc-stu-3",
+        text: "Trie nodes hash their child hashes, creating a tamper-evident root proof for light clients.",
+        searchPrompt: "cryptographic tree hashing child node hashes tamper evident state proof",
+        emoji: "🔒",
+        reactionCount: "4.6k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "bc-pos-attestation-consensus": {
+    id: "bc-pos-attestation-consensus",
+    title: "6. Proof-of-Stake Consensus & Attestation",
+    badge: "🛡️ Gasper Beacon Chain 2/3 Supermajority Vote",
+    tagline: "Validator committees, LMD-GHOST fork choice, Casper FFG checkpoints, and vote aggregation",
+    takeaways: [
+      {
+        id: "bc-pac-1",
+        text: "Committees of staked validators attest to the beacon block proposed for each 12-second slot.",
+        searchPrompt: "Ethereum beacon chain validator committee slot attestation 12 seconds",
+        emoji: "🛡️",
+        reactionCount: "5.5k",
+        commentCount: 400,
+      },
+      {
+        id: "bc-pac-2",
+        text: "BLS signature aggregation compresses thousands of validator votes into a single compact proof.",
+        searchPrompt: "BLS12-381 signature aggregation committee voting beacon chain scalability",
+        emoji: "📜",
+        reactionCount: "5.1k",
+        commentCount: 360,
+      },
+      {
+        id: "bc-pac-3",
+        text: "Gasper consensus combines LMD-GHOST head voting with Casper FFG epoch boundary checkpoints.",
+        searchPrompt: "Gasper consensus protocol LMD-GHOST fork choice Casper FFG checkpoints",
+        emoji: "🏛️",
+        reactionCount: "4.7k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "bc-block-propagation-reorg": {
+    id: "bc-block-propagation-reorg",
+    title: "7. Block Propagation & Reorg Resolution",
+    badge: "🌐 Peer-to-Peer Relay & Canonical Fork Choice",
+    tagline: "Global peer-to-peer block relay, fork choice weight calculations, and reorg pruning",
+    takeaways: [
+      {
+        id: "bc-bpr-1",
+        text: "Blocks propagate globally across Ethereum nodes via snappy-compressed P2P peer connections.",
+        searchPrompt: "Ethereum block propagation latency snappy compression devp2p mesh network",
+        emoji: "🌐",
+        reactionCount: "5.0k",
+        commentCount: 355,
+      },
+      {
+        id: "bc-bpr-2",
+        text: "Nodes follow the LMD-GHOST fork choice rule, selecting the chain branch with heaviest weight.",
+        searchPrompt: "LMD-GHOST fork choice rule latest message driven heaviest subtree rule",
+        emoji: "⚖️",
+        reactionCount: "4.7k",
+        commentCount: 330,
+      },
+      {
+        id: "bc-bpr-3",
+        text: "Temporary micro-forks resolve within 1 slot, discarding uncle blocks without state corruption.",
+        searchPrompt: "chain reorganization 1 slot reorg uncle block resolution consensus stability",
+        emoji: "🔀",
+        reactionCount: "4.4k",
+        commentCount: 305,
+      },
+    ],
+  },
+
+  "bc-finality-event-emission": {
+    id: "bc-finality-event-emission",
+    title: "8. Finality Settlement & Event Emission",
+    badge: "📜 Irreversible Checkpoint & Bloom Filter Logs",
+    tagline: "Casper 2-epoch finality, irreversible state settlement, and Solidity event logs in bloom filters",
+    takeaways: [
+      {
+        id: "bc-fee-1",
+        text: "After two justified epochs (64 slots ≈ 12.8 minutes), blocks achieve irreversible finality.",
+        searchPrompt: "Casper FFG economic finality 2 epochs 64 slots 12.8 minutes Ethereum",
+        emoji: "🏁",
+        reactionCount: "5.6k",
+        commentCount: 410,
+      },
+      {
+        id: "bc-fee-2",
+        text: "Reversing a finalized block requires destroying at least 1/3 of the entire network staked ETH.",
+        searchPrompt: "economic security 1/3 slashing cost to revert finalized Casper block",
+        emoji: "💥",
+        reactionCount: "5.2k",
+        commentCount: 375,
+      },
+      {
+        id: "bc-fee-3",
+        text: "Solidity events emit receipt logs indexed by 2048-bit bloom filters for fast dApp querying.",
+        searchPrompt: "Solidity event logs receipt bloom filter 2048 bit eth_getLogs indexing",
+        emoji: "📜",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "bc-l2-rollup-zk-proving": {
+    id: "bc-l2-rollup-zk-proving",
+    title: "9. L2 Rollup Batching & ZK-SNARK Proving",
+    badge: "⚡ Optimistic Calldata & ZK Validity Proofs",
+    tagline: "Layer-2 sequencers bundle transactions, post blob data to L1, and generate zero-knowledge proofs",
+    takeaways: [
+      {
+        id: "bc-lrz-p1",
+        text: "L2 sequencers execute thousands of transactions per second off-chain with sub-second latency.",
+        searchPrompt: "layer 2 sequencer transaction execution batching sub-second latency TPS",
+        emoji: "⚡",
+        reactionCount: "5.4k",
+        commentCount: 395,
+      },
+      {
+        id: "bc-lrz-p2",
+        text: "Transaction data batches are compressed and posted to L1 Ethereum via EIP-4844 data blobs.",
+        searchPrompt: "EIP-4844 blob-carrying transactions rollup calldata cost compression KZG commitment",
+        emoji: "📦",
+        reactionCount: "5.1k",
+        commentCount: 360,
+      },
+      {
+        id: "bc-lrz-p3",
+        text: "ZK provers generate succinct STARK/SNARK mathematical proofs verifying entire batch execution.",
+        searchPrompt: "ZK rollup prover STARK SNARK proof generation verification smart contract",
+        emoji: "✨",
+        reactionCount: "4.9k",
+        commentCount: 345,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -13777,6 +14408,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Game Dev & Graphics"
       : node.category === "iot"
       ? "Embedded Systems & IoT"
+      : node.category === "blockchain"
+      ? "Blockchain & Cryptography"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"
