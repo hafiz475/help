@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -213,8 +213,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "gamedev",
+    name: "22. Game Dev",
+    title: "Game Dev & Real-Time Computer Graphics",
+    description: "Fixed Timesteps, Collision Manifolds, Rigid Body Physics, Scene Graphs, Shaders & Render Pipeline",
+    color: "#c026d3", // Neon Fuchsia / Arcade Magenta
+    icon: "Gamepad2",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "22. OOP (4 Pillars)",
+    name: "23. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -223,7 +232,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "23. DSA",
+    name: "24. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -232,7 +241,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "24. Big O",
+    name: "25. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -246,7 +255,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 269,
+    count: 279,
   },
 ];
 
@@ -451,6 +460,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "data engineering ETL Apache Spark Kafka stream batch processing Delta Lake data warehouse",
     badge: "Distributed Pipelines & Lakehouse",
     color: "#ea580c",
+  },
+  {
+    id: "root-gamedev",
+    label: "Game Dev & Graphics",
+    category: "gamedev",
+    level: 0,
+    searchQuery: "game development game loop fixed timestep physics engine collision detection GPU shaders PBR rendering",
+    badge: "Game Loop & GPU Shaders",
+    color: "#c026d3",
   },
   {
     id: "root-oop",
@@ -3038,7 +3056,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 22. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 22. GAME DEV & COMPUTER GRAPHICS
+  // ==========================================
+  // Pillar 1: Game Loop Architecture & Physics
+  {
+    id: "gamedev-game-loop-pillar",
+    label: "Game Loop & Physics Dynamics",
+    category: "gamedev",
+    parentId: "root-gamedev",
+    level: 1,
+    searchQuery: "game loop architecture fixed timestep delta time accumulator physics simulation Euler Verlet collision detection",
+    badge: "Deterministic Tick & Physics",
+    color: "#a21caf",
+  },
+  {
+    id: "gamedev-fixed-update-interpolation",
+    label: "Fixed Timestep & Render Alpha",
+    category: "gamedev",
+    parentId: "gamedev-game-loop-pillar",
+    level: 2,
+    searchQuery: "game loop fixed timestep vs variable delta time accumulator spiral of death render frame interpolation alpha blending",
+    badge: "Accumulator & Alpha Blending",
+    color: "#c026d3",
+  },
+  {
+    id: "gamedev-broadphase-narrowphase-collision",
+    label: "Collision (AABB, SAT & GJK)",
+    category: "gamedev",
+    parentId: "gamedev-game-loop-pillar",
+    level: 2,
+    searchQuery: "collision detection broadphase AABB bounding boxes narrowphase Separating Axis Theorem SAT GJK contact manifold penetration",
+    badge: "AABB Sweep & SAT Manifolds",
+    color: "#d946ef",
+  },
+  {
+    id: "gamedev-rigid-body-spatial-partitioning",
+    label: "Rigid Bodies & Spatial Trees",
+    category: "gamedev",
+    parentId: "gamedev-game-loop-pillar",
+    level: 2,
+    searchQuery: "rigid body dynamics spatial partitioning BVH bounding volume hierarchies octrees quadtrees velocity impulse constraints",
+    badge: "Octrees & Impulse Solvers",
+    color: "#e879f9",
+  },
+
+  // Pillar 2: 9-Stage Real-Time Game Rendering & Physics Pipeline (Group Card)
+  {
+    id: "gamedev-pipeline-pillar",
+    label: "9-Stage Real-Time Render Pipeline",
+    category: "gamedev",
+    parentId: "root-gamedev",
+    level: 1,
+    searchQuery: "real time game rendering pipeline input polling physics tick frustum culling vertex shader rasterization PBR swapchain",
+    badge: "9 Sequential Stages",
+    color: "#86198f",
+  },
+
+  // Pillar 3: GPU Shaders & Scene Graph
+  {
+    id: "gamedev-gpu-shaders-pillar",
+    label: "GPU Shaders & Scene Graph",
+    category: "gamedev",
+    parentId: "root-gamedev",
+    level: 1,
+    searchQuery: "GPU programmable shaders GLSL HLSL vertex fragment compute shaders scene graph transform matrices PBR rendering",
+    badge: "GLSL / HLSL & Transform Trees",
+    color: "#701a75",
+  },
+  {
+    id: "gamedev-programmable-pipeline-shaders",
+    label: "Vertex, Fragment & Compute Shaders",
+    category: "gamedev",
+    parentId: "gamedev-gpu-shaders-pillar",
+    level: 2,
+    searchQuery: "programmable graphics pipeline vertex shader rasterization fragment pixel shader compute shader uniform buffer objects",
+    badge: "Vertex, Pixel & Compute",
+    color: "#c026d3",
+  },
+  {
+    id: "gamedev-scene-graph-transform-hierarchies",
+    label: "Scene Graph & Transform Matrices",
+    category: "gamedev",
+    parentId: "gamedev-gpu-shaders-pillar",
+    level: 2,
+    searchQuery: "scene graph transform hierarchy local to world model view projection MVP matrix homogeneous coordinates quaternions",
+    badge: "MVP Matrices & Quaternions",
+    color: "#d946ef",
+  },
+  {
+    id: "gamedev-lighting-pbr-shadow-maps",
+    label: "PBR Materials & Shadow Mapping",
+    category: "gamedev",
+    parentId: "gamedev-gpu-shaders-pillar",
+    level: 2,
+    searchQuery: "physically based rendering PBR metallic roughness normal maps shadow mapping depth buffer percentage closer filtering",
+    badge: "Cook-Torrance BRDF & Shadows",
+    color: "#e879f9",
+  },
+
+  // ==========================================
+  // 23. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

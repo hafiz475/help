@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision" || category === "mobile" || category === "data") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision" || category === "mobile" || category === "data" || category === "gamedev") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -989,6 +989,8 @@ export function calculateGroupLayout(
         ? "Mobile Platform"
         : category === "data"
         ? "Data Engineering"
+        : category === "gamedev"
+        ? "Game Dev & Graphics"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1039,6 +1041,8 @@ export function calculateGroupLayout(
         ? "Native & Cross-Platform"
         : category === "data"
         ? "Distributed Pipelines & Lakehouse"
+        : category === "gamedev"
+        ? "Game Loop & GPU Shaders"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1081,6 +1085,8 @@ export function calculateGroupLayout(
         ? "#2563eb"
         : category === "data"
         ? "#ea580c"
+        : category === "gamedev"
+        ? "#c026d3"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -5187,6 +5193,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 4C: Game Dev & Graphics Hub (placed along the left spine at x = -1300, y = -5550)
+    const gameHubX = -1300;
+    const gameHubY = -5550;
+    const gameHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-gamedev")!,
+      x: gameHubX,
+      y: gameHubY,
+      level: 1,
+      branchIndex: 4,
+    };
+    positionedNodes.push(gameHubNode);
+    edges.push({
+      source: dataHubNode.id,
+      target: gameHubNode.id,
+      category: "gamedev",
+      level: 1,
+      branchIndex: 4,
+    });
+
+    // Game Node 1: Game Loop & Physics Dynamics (Left-Up)
+    const loopPillarRaw = allNodes.find((n) => n.id === "gamedev-game-loop-pillar");
+    if (loopPillarRaw) {
+      const loopX = gameHubX - 650;
+      const loopY = gameHubY - 180;
+      const loopNode: PositionedNode = {
+        ...loopPillarRaw,
+        x: loopX,
+        y: loopY,
+        level: 3,
+        branchIndex: 4,
+      };
+      positionedNodes.push(loopNode);
+      edges.push({
+        source: gameHubNode.id,
+        target: loopNode.id,
+        category: "gamedev",
+        level: 3,
+        branchIndex: 4,
+      });
+
+      const fuiRaw = allNodes.find((n) => n.id === "gamedev-fixed-update-interpolation");
+      if (fuiRaw) {
+        positionedNodes.push({
+          ...fuiRaw,
+          x: loopX - 320,
+          y: loopY - 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: loopNode.id,
+          target: fuiRaw.id,
+          category: "gamedev",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const bncRaw = allNodes.find((n) => n.id === "gamedev-broadphase-narrowphase-collision");
+      if (bncRaw) {
+        positionedNodes.push({
+          ...bncRaw,
+          x: loopX - 320,
+          y: loopY,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: loopNode.id,
+          target: bncRaw.id,
+          category: "gamedev",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const rspRaw = allNodes.find((n) => n.id === "gamedev-rigid-body-spatial-partitioning");
+      if (rspRaw) {
+        positionedNodes.push({
+          ...rspRaw,
+          x: loopX - 320,
+          y: loopY + 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: loopNode.id,
+          target: rspRaw.id,
+          category: "gamedev",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+    }
+
+    // Game Node 2: 9-Stage Real-Time Game Rendering Pipeline (Group Card, Left-Center)
+    const gameCard = cardByPillar.get("gamedev-pipeline-pillar");
+    if (gameCard) {
+      const cardX = gameHubX - 800;
+      const cardY = gameHubY;
+      const posCard: PositionedGroupCard = {
+        ...gameCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 4,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: gameHubNode.id,
+        target: gameCard.id,
+        category: "gamedev",
+        level: 3,
+        branchIndex: 4,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 4);
+    }
+
+    // Game Node 3: GPU Shaders & Scene Graph (Left-Down)
+    const shaderPillarRaw = allNodes.find((n) => n.id === "gamedev-gpu-shaders-pillar");
+    if (shaderPillarRaw) {
+      const shaderX = gameHubX - 650;
+      const shaderY = gameHubY + 180;
+      const shaderNode: PositionedNode = {
+        ...shaderPillarRaw,
+        x: shaderX,
+        y: shaderY,
+        level: 3,
+        branchIndex: 4,
+      };
+      positionedNodes.push(shaderNode);
+      edges.push({
+        source: gameHubNode.id,
+        target: shaderNode.id,
+        category: "gamedev",
+        level: 3,
+        branchIndex: 4,
+      });
+
+      const ppsRaw = allNodes.find((n) => n.id === "gamedev-programmable-pipeline-shaders");
+      if (ppsRaw) {
+        positionedNodes.push({
+          ...ppsRaw,
+          x: shaderX - 320,
+          y: shaderY - 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: shaderNode.id,
+          target: ppsRaw.id,
+          category: "gamedev",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const sgtRaw = allNodes.find((n) => n.id === "gamedev-scene-graph-transform-hierarchies");
+      if (sgtRaw) {
+        positionedNodes.push({
+          ...sgtRaw,
+          x: shaderX - 320,
+          y: shaderY,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: shaderNode.id,
+          target: sgtRaw.id,
+          category: "gamedev",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const lpsRaw = allNodes.find((n) => n.id === "gamedev-lighting-pbr-shadow-maps");
+      if (lpsRaw) {
+        positionedNodes.push({
+          ...lpsRaw,
+          x: shaderX - 320,
+          y: shaderY + 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: shaderNode.id,
+          target: lpsRaw.id,
+          category: "gamedev",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+    }
+
     // Automated overlap prevention relaxation pass
     preventLayoutOverlaps(positionedNodes, positionedCards);
 
@@ -5255,6 +5454,8 @@ export function calculateGroupLayout(
     pillarIds = ["mobile-lifecycle-memory-pillar", "mobile-pipeline-pillar", "mobile-crossplatform-ecosystem-pillar"];
   } else if (category === "data") {
     pillarIds = ["data-distributed-compute-pillar", "data-pipeline-pillar", "data-lakehouse-governance-pillar"];
+  } else if (category === "gamedev") {
+    pillarIds = ["gamedev-game-loop-pillar", "gamedev-pipeline-pillar", "gamedev-gpu-shaders-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -5613,6 +5814,11 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
+    const gameRoot = {
+      ...allNodes.find((n) => n.id === "root-gamedev")!,
+      parentId: "root-all",
+      level: 1,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -5655,13 +5861,14 @@ export function getNodesForCategory(
         n.id !== "root-vision" &&
         n.id !== "root-mobile" &&
         n.id !== "root-data" &&
+        n.id !== "root-gamedev" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

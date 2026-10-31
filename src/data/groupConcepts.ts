@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1903,7 +1903,84 @@ export const DATA_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const GAMEDEV_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-gamedev-pipeline",
+    pillarId: "gamedev-pipeline-pillar",
+    title: "9-Stage Real-Time Game Rendering & Physics Pipeline",
+    category: "gamedev",
+    badge: "🎮 Real-Time 60/120 FPS Loop",
+    color: "#c026d3",
+    isPipeline: true,
+    items: [
+      {
+        id: "gamedev-input-polling-events",
+        stepNumber: 1,
+        label: "1. Raw Input Polling & Action Buffer",
+        badge: "🕹️ Sub-Millisecond Input Sampling",
+        searchQuery: "game input polling hardware interrupts event queue action mapping deadzone input buffering",
+      },
+      {
+        id: "gamedev-fixed-timestep-accumulator",
+        stepNumber: 2,
+        label: "2. Fixed Timestep Accumulator",
+        badge: "⏱️ Deterministic Tick & Delta Clamping",
+        searchQuery: "fixed timestep delta time accumulator spiral of death clamping Glenn Fiedler Fix Your Timestep",
+      },
+      {
+        id: "gamedev-physics-collision-resolution",
+        stepNumber: 3,
+        label: "3. Physics & Impulse Resolution",
+        badge: "💥 Verlet Integration & Contact Manifolds",
+        searchQuery: "rigid body physics impulse resolution friction restitution contact manifold collision solver",
+      },
+      {
+        id: "gamedev-gameplay-ai-animation",
+        stepNumber: 4,
+        label: "4. ECS Gameplay & Skeletal Blending",
+        badge: "🤖 Behavior Trees & Inverse Kinematics",
+        searchQuery: "entity component system ECS behavior tree state machine skeletal animation blend trees forward inverse kinematics",
+      },
+      {
+        id: "gamedev-spatial-culling-frustum",
+        stepNumber: 5,
+        label: "5. Spatial Partition & Frustum Culling",
+        badge: "📐 Octree / BVH & Occlusion Query",
+        searchQuery: "view frustum culling BVH bounding volume hierarchy octree spatial hashing occlusion culling draw call batching",
+      },
+      {
+        id: "gamedev-vertex-transformation-projection",
+        stepNumber: 6,
+        label: "6. Vertex Shading & MVP Projection",
+        badge: "🧮 Model-View-Projection Homogeneous Math",
+        searchQuery: "vertex shader model view projection MVP matrix homogeneous coordinates perspective divide clip space",
+      },
+      {
+        id: "gamedev-rasterization-fragment-shading",
+        stepNumber: 7,
+        label: "7. Rasterization & PBR Material Shading",
+        badge: "🎨 Barycentric Interpolation & Cook-Torrance BRDF",
+        searchQuery: "hardware rasterization triangle barycentric coordinates fragment pixel shader PBR Cook Torrance BRDF albedo roughness metallic",
+      },
+      {
+        id: "gamedev-post-processing-tonemapping",
+        stepNumber: 8,
+        label: "8. Post-Processing & HDR Tone Mapping",
+        badge: "✨ Bloom, FXAA & ACES Filmic Curve",
+        searchQuery: "post processing render targets bloom downsample Gaussian blur ACES filmic tone mapping color grading LUT anti aliasing",
+      },
+      {
+        id: "gamedev-double-buffer-swapchain",
+        stepNumber: 9,
+        label: "9. Swapchain Presentation & V-Sync",
+        badge: "🖥️ Double / Triple Buffer Frame Flip",
+        searchQuery: "GPU swapchain double buffer triple buffering front back buffer V Sync vertical synchronization screen tearing frame pacing",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1925,8 +2002,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "vision") return VISION_GROUP_CARDS;
   if (category === "mobile") return MOBILE_GROUP_CARDS;
   if (category === "data") return DATA_GROUP_CARDS;
+  if (category === "gamedev") return GAMEDEV_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

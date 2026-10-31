@@ -949,10 +949,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-game-dev",
-            name: "Game Dev & Graphics",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "Game loop ticks, collision detection, physics engines, and GPU shaders",
+            name: "Game Dev & Graphics ★",
+            categoryId: "gamedev",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Deterministic game loops, fixed timestep accumulators, collision detection, 9-stage real-time rendering, and GPU shaders",
+            color: "#c026d3",
           },
           {
             id: "topic-embedded-iot",
