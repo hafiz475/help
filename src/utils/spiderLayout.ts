@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision" || category === "mobile" || category === "data" || category === "gamedev") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision" || category === "mobile" || category === "data" || category === "gamedev" || category === "iot") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -991,6 +991,8 @@ export function calculateGroupLayout(
         ? "Data Engineering"
         : category === "gamedev"
         ? "Game Dev & Graphics"
+        : category === "iot"
+        ? "Embedded Systems & IoT"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1043,6 +1045,8 @@ export function calculateGroupLayout(
         ? "Distributed Pipelines & Lakehouse"
         : category === "gamedev"
         ? "Game Loop & GPU Shaders"
+        : category === "iot"
+        ? "RTOS & Hardware Buses"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1087,6 +1091,8 @@ export function calculateGroupLayout(
         ? "#ea580c"
         : category === "gamedev"
         ? "#c026d3"
+        : category === "iot"
+        ? "#059669"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -5386,6 +5392,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 4D: Embedded Systems & IoT Hub (placed along the left spine at x = -1300, y = -6150)
+    const iotHubX = -1300;
+    const iotHubY = -6150;
+    const iotHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-iot")!,
+      x: iotHubX,
+      y: iotHubY,
+      level: 1,
+      branchIndex: 4,
+    };
+    positionedNodes.push(iotHubNode);
+    edges.push({
+      source: gameHubNode.id,
+      target: iotHubNode.id,
+      category: "iot",
+      level: 1,
+      branchIndex: 4,
+    });
+
+    // IoT Node 1: Microcontrollers & RTOS Kernel (Left-Up)
+    const mcuPillarRaw = allNodes.find((n) => n.id === "iot-microcontroller-rtos-pillar");
+    if (mcuPillarRaw) {
+      const mcuX = iotHubX - 650;
+      const mcuY = iotHubY - 180;
+      const mcuNode: PositionedNode = {
+        ...mcuPillarRaw,
+        x: mcuX,
+        y: mcuY,
+        level: 3,
+        branchIndex: 4,
+      };
+      positionedNodes.push(mcuNode);
+      edges.push({
+        source: iotHubNode.id,
+        target: mcuNode.id,
+        category: "iot",
+        level: 3,
+        branchIndex: 4,
+      });
+
+      const briRaw = allNodes.find((n) => n.id === "iot-baremetal-registers-interrupts");
+      if (briRaw) {
+        positionedNodes.push({
+          ...briRaw,
+          x: mcuX - 320,
+          y: mcuY - 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: mcuNode.id,
+          target: briRaw.id,
+          category: "iot",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const rpmRaw = allNodes.find((n) => n.id === "iot-rtos-preemption-mutexes");
+      if (rpmRaw) {
+        positionedNodes.push({
+          ...rpmRaw,
+          x: mcuX - 320,
+          y: mcuY,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: mcuNode.id,
+          target: rpmRaw.id,
+          category: "iot",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const lsdRaw = allNodes.find((n) => n.id === "iot-lowpower-sleep-dma");
+      if (lsdRaw) {
+        positionedNodes.push({
+          ...lsdRaw,
+          x: mcuX - 320,
+          y: mcuY + 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: mcuNode.id,
+          target: lsdRaw.id,
+          category: "iot",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+    }
+
+    // IoT Node 2: 9-Stage Embedded Firmware & IoT Pipeline (Group Card, Left-Center)
+    const iotCard = cardByPillar.get("iot-pipeline-pillar");
+    if (iotCard) {
+      const cardX = iotHubX - 800;
+      const cardY = iotHubY;
+      const posCard: PositionedGroupCard = {
+        ...iotCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 4,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: iotHubNode.id,
+        target: iotCard.id,
+        category: "iot",
+        level: 3,
+        branchIndex: 4,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 4);
+    }
+
+    // IoT Node 3: Hardware Buses & Low-Power Telemetry (Left-Down)
+    const protoPillarRaw = allNodes.find((n) => n.id === "iot-protocols-telemetry-pillar");
+    if (protoPillarRaw) {
+      const protoX = iotHubX - 650;
+      const protoY = iotHubY + 180;
+      const protoNode: PositionedNode = {
+        ...protoPillarRaw,
+        x: protoX,
+        y: protoY,
+        level: 3,
+        branchIndex: 4,
+      };
+      positionedNodes.push(protoNode);
+      edges.push({
+        source: iotHubNode.id,
+        target: protoNode.id,
+        category: "iot",
+        level: 3,
+        branchIndex: 4,
+      });
+
+      const isuRaw = allNodes.find((n) => n.id === "iot-i2c-spi-uart-buses");
+      if (isuRaw) {
+        positionedNodes.push({
+          ...isuRaw,
+          x: protoX - 320,
+          y: protoY - 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: protoNode.id,
+          target: isuRaw.id,
+          category: "iot",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const mclRaw = allNodes.find((n) => n.id === "iot-mqtt-coap-lightweight");
+      if (mclRaw) {
+        positionedNodes.push({
+          ...mclRaw,
+          x: protoX - 320,
+          y: protoY,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: protoNode.id,
+          target: mclRaw.id,
+          category: "iot",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const ofsRaw = allNodes.find((n) => n.id === "iot-ota-firmware-security");
+      if (ofsRaw) {
+        positionedNodes.push({
+          ...ofsRaw,
+          x: protoX - 320,
+          y: protoY + 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: protoNode.id,
+          target: ofsRaw.id,
+          category: "iot",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+    }
+
     // Automated overlap prevention relaxation pass
     preventLayoutOverlaps(positionedNodes, positionedCards);
 
@@ -5456,6 +5655,8 @@ export function calculateGroupLayout(
     pillarIds = ["data-distributed-compute-pillar", "data-pipeline-pillar", "data-lakehouse-governance-pillar"];
   } else if (category === "gamedev") {
     pillarIds = ["gamedev-game-loop-pillar", "gamedev-pipeline-pillar", "gamedev-gpu-shaders-pillar"];
+  } else if (category === "iot") {
+    pillarIds = ["iot-microcontroller-rtos-pillar", "iot-pipeline-pillar", "iot-protocols-telemetry-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -5819,6 +6020,11 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
+    const iotRoot = {
+      ...allNodes.find((n) => n.id === "root-iot")!,
+      parentId: "root-all",
+      level: 1,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -5862,13 +6068,14 @@ export function getNodesForCategory(
         n.id !== "root-mobile" &&
         n.id !== "root-data" &&
         n.id !== "root-gamedev" &&
+        n.id !== "root-iot" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

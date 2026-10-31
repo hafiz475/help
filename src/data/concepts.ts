@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -222,8 +222,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "iot",
+    name: "23. Embedded & IoT",
+    title: "Embedded Systems, RTOS & IoT Telemetry",
+    description: "Bare-Metal Registers, FreeRTOS Preemption, DMA Buffers, I2C/SPI/UART Buses, MQTT & Secure OTA",
+    color: "#059669", // PCB Solder-Mask Jade Green
+    icon: "Microchip",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "23. OOP (4 Pillars)",
+    name: "24. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -232,7 +241,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "24. DSA",
+    name: "25. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -241,7 +250,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "25. Big O",
+    name: "26. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -255,7 +264,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 279,
+    count: 289,
   },
 ];
 
@@ -469,6 +478,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "game development game loop fixed timestep physics engine collision detection GPU shaders PBR rendering",
     badge: "Game Loop & GPU Shaders",
     color: "#c026d3",
+  },
+  {
+    id: "root-iot",
+    label: "Embedded Systems & IoT",
+    category: "iot",
+    level: 0,
+    searchQuery: "embedded systems IoT microcontrollers FreeRTOS GPIO DMA I2C SPI UART MQTT telemetry",
+    badge: "RTOS & Hardware Buses",
+    color: "#059669",
   },
   {
     id: "root-oop",
@@ -3155,7 +3173,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 23. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 23. EMBEDDED SYSTEMS & IOT
+  // ==========================================
+  // Pillar 1: Microcontrollers & RTOS Kernel
+  {
+    id: "iot-microcontroller-rtos-pillar",
+    label: "Microcontrollers & RTOS Kernel",
+    category: "iot",
+    parentId: "root-iot",
+    level: 1,
+    searchQuery: "embedded systems ARM Cortex M bare metal registers FreeRTOS preemptive scheduling ISR interrupt priority",
+    badge: "Cortex-M & FreeRTOS",
+    color: "#047857",
+  },
+  {
+    id: "iot-baremetal-registers-interrupts",
+    label: "Bare-Metal Registers & NVIC Interrupts",
+    category: "iot",
+    parentId: "iot-microcontroller-rtos-pillar",
+    level: 2,
+    searchQuery: "bare metal C register bit manipulation memory mapped IO NVIC nested vectored interrupt controller ISR latency",
+    badge: "MMIO & Nested Vectors",
+    color: "#059669",
+  },
+  {
+    id: "iot-rtos-preemption-mutexes",
+    label: "FreeRTOS Tasks, Mutexes & Semaphores",
+    category: "iot",
+    parentId: "iot-microcontroller-rtos-pillar",
+    level: 2,
+    searchQuery: "FreeRTOS task priority context switch binary counting semaphore mutex priority inversion priority inheritance",
+    badge: "Priority Inheritance & Queues",
+    color: "#10b981",
+  },
+  {
+    id: "iot-lowpower-sleep-dma",
+    label: "Low-Power Sleep Modes & DMA Transfers",
+    category: "iot",
+    parentId: "iot-microcontroller-rtos-pillar",
+    level: 2,
+    searchQuery: "ARM Cortex M low power sleep stop standby modes tickless idle Direct Memory Access DMA zero CPU copy",
+    badge: "Tickless Idle & DMA Rings",
+    color: "#34d399",
+  },
+
+  // Pillar 2: 9-Stage Embedded Firmware & IoT Telemetry Pipeline (Group Card)
+  {
+    id: "iot-pipeline-pillar",
+    label: "9-Stage Embedded Firmware & IoT Pipeline",
+    category: "iot",
+    parentId: "root-iot",
+    level: 1,
+    searchQuery: "embedded IoT telemetry pipeline ADC sampling DMA buffer RTOS task CBOR encoding mTLS radio transmission edge gateway MQTT broker OTA",
+    badge: "9 Sequential Stages",
+    color: "#065f46",
+  },
+
+  // Pillar 3: Hardware Buses & Low-Power Telemetry
+  {
+    id: "iot-protocols-telemetry-pillar",
+    label: "Hardware Buses & Low-Power Telemetry",
+    category: "iot",
+    parentId: "root-iot",
+    level: 1,
+    searchQuery: "hardware communication protocols I2C clock stretching SPI chip select UART baud rate MQTT QoS CoAP secure boot OTA",
+    badge: "Buses, MQTT & Secure OTA",
+    color: "#064e3b",
+  },
+  {
+    id: "iot-i2c-spi-uart-buses",
+    label: "Hardware Buses (I2C, SPI & UART)",
+    category: "iot",
+    parentId: "iot-protocols-telemetry-pillar",
+    level: 2,
+    searchQuery: "I2C SDA SCL open drain pullup clock stretching SPI MOSI MISO SCLK chip select full duplex UART framing start stop parity",
+    badge: "I2C, SPI & UART / USART",
+    color: "#059669",
+  },
+  {
+    id: "iot-mqtt-coap-lightweight",
+    label: "Lightweight Telemetry (MQTT & CoAP)",
+    category: "iot",
+    parentId: "iot-protocols-telemetry-pillar",
+    level: 2,
+    searchQuery: "MQTT QoS 0 1 2 pub sub keepalive last will and testament CoAP UDP RESTful constrained environments CBOR binary format",
+    badge: "MQTT QoS & CoAP UDP",
+    color: "#10b981",
+  },
+  {
+    id: "iot-ota-firmware-security",
+    label: "Secure Boot & Over-the-Air (OTA) Updates",
+    category: "iot",
+    parentId: "iot-protocols-telemetry-pillar",
+    level: 2,
+    searchQuery: "secure boot hardware root of trust public key signature dual bank flash A B partition OTA update rollback watchdog timer",
+    badge: "Root of Trust & A/B Flash",
+    color: "#34d399",
+  },
+
+  // ==========================================
+  // 24. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

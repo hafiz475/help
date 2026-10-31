@@ -32,6 +32,7 @@ import {
   Smartphone,
   Database,
   Gamepad2,
+  Microchip,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -97,6 +98,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Database size={16} />;
       case "gamedev":
         return <Gamepad2 size={16} />;
+      case "iot":
+        return <Microchip size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

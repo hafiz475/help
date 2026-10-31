@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1980,7 +1980,84 @@ export const GAMEDEV_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const IOT_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-iot-pipeline",
+    pillarId: "iot-pipeline-pillar",
+    title: "9-Stage Embedded Firmware & IoT Telemetry Pipeline",
+    category: "iot",
+    badge: "⚡ Bare-Metal & Cloud Ingestion",
+    color: "#059669",
+    isPipeline: true,
+    items: [
+      {
+        id: "iot-analog-sensor-sampling",
+        stepNumber: 1,
+        label: "1. Sensor ADC Sampling & Conditioning",
+        badge: "📡 12-Bit SAR ADC & Low-Pass Filter",
+        searchQuery: "embedded ADC sampling low pass filter anti aliasing oversampling sensor conditioning calibration",
+      },
+      {
+        id: "iot-dma-memory-transfer",
+        stepNumber: 2,
+        label: "2. DMA Zero-CPU Buffer Transfer",
+        badge: "🔄 Circular Ring Buffers & Half-Transfer ISR",
+        searchQuery: "Direct Memory Access DMA circular buffer peripheral to memory transfer zero CPU ARM Cortex",
+      },
+      {
+        id: "iot-rtos-task-scheduling",
+        stepNumber: 3,
+        label: "3. RTOS Priority Preemption & Flags",
+        badge: "⏱️ FreeRTOS Event Groups & Priority Inversion",
+        searchQuery: "FreeRTOS task preemption event groups binary semaphore priority inheritance context switch",
+      },
+      {
+        id: "iot-packet-serialization-cbor",
+        stepNumber: 4,
+        label: "4. Binary Serialization (CBOR / Protobuf)",
+        badge: "📦 Bit-Packed Nanopb & TinyCBOR",
+        searchQuery: "CBOR concise binary object representation Nanopb lightweight serialization constrained IoT payload",
+      },
+      {
+        id: "iot-secure-boot-crypto",
+        stepNumber: 5,
+        label: "5. Hardware Crypto & mTLS Handshake",
+        badge: "🔒 ATECC608 Hardware Secure Element & TLS 1.3",
+        searchQuery: "embedded TLS mTLS hardware crypto accelerator ECDSA P-256 secure element ATECC608",
+      },
+      {
+        id: "iot-radio-transmission-mesh",
+        stepNumber: 6,
+        label: "6. Radio RF Link (BLE / LoRa / Zigbee)",
+        badge: "📶 Sub-GHz Long-Range & BLE Mesh",
+        searchQuery: "LoRaWAN long range modulation BLE mesh Zigbee IEEE 802.15.4 spread spectrum RF link",
+      },
+      {
+        id: "iot-edge-gateway-aggregation",
+        stepNumber: 7,
+        label: "7. Edge Gateway Protocol Translation",
+        badge: "🌐 Local MQTT Broker & Offline Caching",
+        searchQuery: "IoT edge gateway protocol translation Modbus to MQTT local SQLite offline buffer store and forward",
+      },
+      {
+        id: "iot-cloud-mqtt-broker",
+        stepNumber: 8,
+        label: "8. Cloud MQTT Ingestion & Time-Series",
+        badge: "☁️ EMQX / AWS IoT Core QoS 1 & TimescaleDB",
+        searchQuery: "AWS IoT Core EMQX MQTT broker QoS 1 time series database TimescaleDB telemetry ingestion",
+      },
+      {
+        id: "iot-ota-update-fleet",
+        stepNumber: 9,
+        label: "9. Dual-Bank A/B OTA & Rollback",
+        badge: "🔄 Cryptographic Verify & Watchdog Rollback",
+        searchQuery: "embedded OTA over the air update dual bank flash bootloader rollback watchdog timer delta updates",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2003,8 +2080,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "mobile") return MOBILE_GROUP_CARDS;
   if (category === "data") return DATA_GROUP_CARDS;
   if (category === "gamedev") return GAMEDEV_GROUP_CARDS;
+  if (category === "iot") return IOT_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

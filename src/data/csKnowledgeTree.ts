@@ -959,10 +959,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-embedded-iot",
-            name: "Embedded Systems & IoT",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "Microcontrollers, RTOS, GPIO pins, I2C, SPI, and low-power telemetry",
+            name: "Embedded Systems & IoT ★",
+            categoryId: "iot",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Bare-metal registers, FreeRTOS preemptive scheduling, DMA transfers, I2C/SPI buses, and 9-stage IoT telemetry",
+            color: "#059669",
           },
           {
             id: "topic-blockchain",
