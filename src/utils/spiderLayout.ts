@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision" || category === "mobile" || category === "data" || category === "gamedev" || category === "iot" || category === "blockchain") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision" || category === "mobile" || category === "data" || category === "gamedev" || category === "iot" || category === "blockchain" || category === "react") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -995,6 +995,8 @@ export function calculateGroupLayout(
         ? "Embedded Systems & IoT"
         : category === "blockchain"
         ? "Blockchain & Cryptography"
+        : category === "react"
+        ? "React Architecture & Fiber"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1051,6 +1053,8 @@ export function calculateGroupLayout(
         ? "RTOS & Hardware Buses"
         : category === "blockchain"
         ? "Web3 & Distributed Ledger"
+        : category === "react"
+        ? "Virtual DOM & Fiber Engine"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1099,6 +1103,8 @@ export function calculateGroupLayout(
         ? "#059669"
         : category === "blockchain"
         ? "#d97706"
+        : category === "react"
+        ? "#22d3ee"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -3642,6 +3648,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1K: React Framework & Architecture Hub (placed along the right spine at x = 1300, y = -6750)
+    const reactHubX = 1300;
+    const reactHubY = -6750;
+    const reactHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-react")!,
+      x: reactHubX,
+      y: reactHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(reactHubNode);
+    edges.push({
+      source: perfHubNode.id,
+      target: reactHubNode.id,
+      category: "react",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // React Node 1: Fiber Tree & Virtual DOM Reconciliation (Right-Up)
+    const rReconcilRaw = allNodes.find((n) => n.id === "react-fiber-reconciliation-pillar");
+    if (rReconcilRaw) {
+      const rReconcilX = reactHubX + 650;
+      const rReconcilY = reactHubY - 180;
+      const rReconcilNode: PositionedNode = {
+        ...rReconcilRaw,
+        x: rReconcilX,
+        y: rReconcilY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(rReconcilNode);
+      edges.push({
+        source: reactHubNode.id,
+        target: rReconcilNode.id,
+        category: "react",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const fnwRaw = allNodes.find((n) => n.id === "react-fiber-node-workloop");
+      if (fnwRaw) {
+        positionedNodes.push({
+          ...fnwRaw,
+          x: rReconcilX + 320,
+          y: rReconcilY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rReconcilNode.id,
+          target: fnwRaw.id,
+          category: "react",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const dkhRaw = allNodes.find((n) => n.id === "react-diffing-keys-heuristics");
+      if (dkhRaw) {
+        positionedNodes.push({
+          ...dkhRaw,
+          x: rReconcilX + 320,
+          y: rReconcilY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rReconcilNode.id,
+          target: dkhRaw.id,
+          category: "react",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const sebRaw = allNodes.find((n) => n.id === "react-synthetic-events-batching");
+      if (sebRaw) {
+        positionedNodes.push({
+          ...sebRaw,
+          x: rReconcilX + 320,
+          y: rReconcilY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rReconcilNode.id,
+          target: sebRaw.id,
+          category: "react",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // React Node 2: 9-Stage React Fiber Render & Commit Pipeline (Group Card, Right-Center)
+    const reactCard = cardByPillar.get("react-pipeline-pillar");
+    if (reactCard) {
+      const cardX = reactHubX + 800;
+      const cardY = reactHubY;
+      const posCard: PositionedGroupCard = {
+        ...reactCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: reactHubNode.id,
+        target: reactCard.id,
+        category: "react",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // React Node 3: Hooks Lifecycle & State Architecture (Right-Down)
+    const rHooksRaw = allNodes.find((n) => n.id === "react-hooks-state-machines-pillar");
+    if (rHooksRaw) {
+      const rHooksX = reactHubX + 650;
+      const rHooksY = reactHubY + 180;
+      const rHooksNode: PositionedNode = {
+        ...rHooksRaw,
+        x: rHooksX,
+        y: rHooksY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(rHooksNode);
+      edges.push({
+        source: reactHubNode.id,
+        target: rHooksNode.id,
+        category: "react",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const hllRaw = allNodes.find((n) => n.id === "react-hooks-linked-list");
+      if (hllRaw) {
+        positionedNodes.push({
+          ...hllRaw,
+          x: rHooksX + 320,
+          y: rHooksY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rHooksNode.id,
+          target: hllRaw.id,
+          category: "react",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const csrRaw = allNodes.find((n) => n.id === "react-context-selector-rerenders");
+      if (csrRaw) {
+        positionedNodes.push({
+          ...csrRaw,
+          x: rHooksX + 320,
+          y: rHooksY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rHooksNode.id,
+          target: csrRaw.id,
+          category: "react",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const ctsRaw = allNodes.find((n) => n.id === "react-concurrent-transitions-suspense");
+      if (ctsRaw) {
+        positionedNodes.push({
+          ...ctsRaw,
+          x: rHooksX + 320,
+          y: rHooksY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: rHooksNode.id,
+          target: ctsRaw.id,
+          category: "react",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -5858,6 +6057,8 @@ export function calculateGroupLayout(
     pillarIds = ["iot-microcontroller-rtos-pillar", "iot-pipeline-pillar", "iot-protocols-telemetry-pillar"];
   } else if (category === "blockchain") {
     pillarIds = ["blockchain-consensus-crypto-pillar", "blockchain-pipeline-pillar", "blockchain-smart-contracts-evm-pillar"];
+  } else if (category === "react") {
+    pillarIds = ["react-fiber-reconciliation-pillar", "react-pipeline-pillar", "react-hooks-state-machines-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -6231,6 +6432,11 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
+    const reactRoot = {
+      ...allNodes.find((n) => n.id === "root-react")!,
+      parentId: "root-node",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -6276,13 +6482,14 @@ export function getNodesForCategory(
         n.id !== "root-gamedev" &&
         n.id !== "root-iot" &&
         n.id !== "root-blockchain" &&
+        n.id !== "root-react" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

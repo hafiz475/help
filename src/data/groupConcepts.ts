@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2135,7 +2135,85 @@ export const BLOCKCHAIN_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+// React: 9-Stage React Fiber Render & Commit Pipeline
+export const REACT_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-react-fiber-pipeline",
+    pillarId: "react-pipeline-pillar",
+    title: "9-Stage React Fiber Render & Commit Pipeline",
+    category: "react",
+    badge: "9 Sequential Stages",
+    color: "#22d3ee",
+    isPipeline: true,
+    items: [
+      {
+        id: "react-trigger-dispatch",
+        stepNumber: 1,
+        label: "1. State Trigger & Update Dispatch",
+        badge: "⚡ setState / useReducer Action Enqueue",
+        searchQuery: "React dispatchAction update queue lane priority expiration time",
+      },
+      {
+        id: "react-scheduler-lane-priority",
+        stepNumber: 2,
+        label: "2. Scheduler & Lane Priority",
+        badge: "⏱️ Sync, InputContinuous & Default Lanes",
+        searchQuery: "React Scheduler lane priority requestUpdateLane message channel yieldToHost",
+      },
+      {
+        id: "react-render-phase-beginwork",
+        stepNumber: 3,
+        label: "3. Concurrent Render (beginWork)",
+        badge: "🌿 Depth-First Fiber Tree Traversal",
+        searchQuery: "React beginWork render phase construct workInProgress fiber tree",
+      },
+      {
+        id: "react-diffing-subtrees",
+        stepNumber: 4,
+        label: "4. VDOM Diffing & Subtree Reconcile",
+        badge: "🔍 Alternate Fiber Comparison & Placement",
+        searchQuery: "React reconcileChildren reconcileSingleElement ChildReconciler alternate",
+      },
+      {
+        id: "react-complete-work-bubbles",
+        stepNumber: 5,
+        label: "5. Complete Work & Bubble Effect Flags",
+        badge: "🏗️ completeWork & SubtreeFlags Aggregation",
+        searchQuery: "React completeWork createInstance appendAllChildren subtreeFlags",
+      },
+      {
+        id: "react-commit-before-mutation",
+        stepNumber: 6,
+        label: "6. Commit Phase: Before Mutation",
+        badge: "👁️ getSnapshotBeforeUpdate & Focus State",
+        searchQuery: "React commitBeforeMutationEffects getSnapshotBeforeUpdate flushPassiveEffects",
+      },
+      {
+        id: "react-commit-mutation-dom",
+        stepNumber: 7,
+        label: "7. Commit Phase: Host DOM Mutation",
+        badge: "🔨 Insert, Update & Unmount Host Nodes",
+        searchQuery: "React commitMutationEffects appendChild replaceChild removeChild host DOM",
+      },
+      {
+        id: "react-commit-layout-effects",
+        stepNumber: 8,
+        label: "8. Commit Phase: Layout Effects",
+        badge: "📐 useLayoutEffect Synchronous Execution",
+        searchQuery: "React commitLayoutEffects useLayoutEffect componentDidMount synchronous DOM measure",
+      },
+      {
+        id: "react-passive-effects-flush",
+        stepNumber: 9,
+        label: "9. Passive Effects Flush (useEffect)",
+        badge: "🌊 useEffect Asynchronous Post-Paint Flush",
+        searchQuery: "React flushPassiveEffects useEffect post paint asynchronous execution cleanup",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2160,8 +2238,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "gamedev") return GAMEDEV_GROUP_CARDS;
   if (category === "iot") return IOT_GROUP_CARDS;
   if (category === "blockchain") return BLOCKCHAIN_GROUP_CARDS;
+  if (category === "react") return REACT_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

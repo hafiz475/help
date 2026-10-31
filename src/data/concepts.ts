@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -240,8 +240,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "react",
+    name: "25. React & Fiber",
+    title: "React Architecture, Virtual DOM & Fiber Reconciler",
+    description: "Fiber Tree WorkLoop, Heuristic Diffing, 9-Stage Render/Commit Pipeline, Hooks Dispatcher, Context & Concurrent Transitions",
+    color: "#22d3ee", // React Electric Cyan
+    icon: "Atom",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "25. OOP (4 Pillars)",
+    name: "26. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -250,7 +259,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "26. DSA",
+    name: "27. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -259,7 +268,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "27. Big O",
+    name: "28. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -273,7 +282,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 299,
+    count: 309,
   },
 ];
 
@@ -505,6 +514,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "blockchain cryptography consensus smart contracts EVM proof of stake Merkle trees zero knowledge rollups",
     badge: "Web3 & Distributed Ledger",
     color: "#d97706",
+  },
+  {
+    id: "root-react",
+    label: "React Architecture & Fiber",
+    category: "react",
+    level: 0,
+    searchQuery: "React Virtual DOM Fiber tree reconciliation workLoop concurrent rendering hooks dispatcher",
+    badge: "Virtual DOM & Fiber Engine",
+    color: "#22d3ee",
   },
   {
     id: "root-oop",
@@ -3389,7 +3407,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 25. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 25. REACT & FIBER ARCHITECTURE
+  // ==========================================
+  // Pillar 1: Fiber Tree & Virtual DOM Reconciliation
+  {
+    id: "react-fiber-reconciliation-pillar",
+    label: "Fiber Tree & Reconciliation",
+    category: "react",
+    parentId: "root-react",
+    level: 1,
+    searchQuery: "React Fiber tree reconciliation algorithm virtual DOM beginWork completeWork diffing keys",
+    badge: "Fiber Nodes & Heuristic Diff",
+    color: "#22d3ee",
+  },
+  {
+    id: "react-fiber-node-workloop",
+    label: "Fiber Nodes & Concurrent WorkLoop",
+    category: "react",
+    parentId: "react-fiber-reconciliation-pillar",
+    level: 2,
+    searchQuery: "React Fiber node structure return sibling child workLoopConcurrent cooperative scheduling lanes time slicing",
+    badge: "Fiber Linked List & Work Units",
+    color: "#06b6d4",
+  },
+  {
+    id: "react-diffing-keys-heuristics",
+    label: "Heuristic Diffing & Keyed Reconciliation",
+    category: "react",
+    parentId: "react-fiber-reconciliation-pillar",
+    level: 2,
+    searchQuery: "React diffing algorithm O(n) key prop element type reconciliation heuristics alternate fiber",
+    badge: "O(n) Heuristic Diff & Keys",
+    color: "#0891b2",
+  },
+  {
+    id: "react-synthetic-events-batching",
+    label: "Synthetic Events & Automatic Batching",
+    category: "react",
+    parentId: "react-fiber-reconciliation-pillar",
+    level: 2,
+    searchQuery: "React synthetic event delegation root listener automatic batching React 18 createRoot flushSync",
+    badge: "Event Delegation & Batching",
+    color: "#38bdf8",
+  },
+
+  // Pillar 2: 9-Stage React Fiber Render & Commit Pipeline (Group Card)
+  {
+    id: "react-pipeline-pillar",
+    label: "9-Stage React Fiber Pipeline",
+    category: "react",
+    parentId: "root-react",
+    level: 1,
+    searchQuery: "React Fiber render commit pipeline setState scheduler lanes beginWork completeWork commitMutation layout effects",
+    badge: "9 Sequential Stages",
+    color: "#0e7490",
+  },
+
+  // Pillar 3: Hooks Lifecycle & State Architecture
+  {
+    id: "react-hooks-state-machines-pillar",
+    label: "Hooks Lifecycle & State Architecture",
+    category: "react",
+    parentId: "root-react",
+    level: 1,
+    searchQuery: "React hooks lifecycle linked list dispatcher Context API useSyncExternalStore useTransition Suspense",
+    badge: "Hooks, Context & Transitions",
+    color: "#155e75",
+  },
+  {
+    id: "react-hooks-linked-list",
+    label: "Hooks Dispatcher & Linked List Memory",
+    category: "react",
+    parentId: "react-hooks-state-machines-pillar",
+    level: 2,
+    searchQuery: "React hooks rules of hooks linked list memoizedState next pointer ReactCurrentDispatcher useState useEffect",
+    badge: "Linked List MemoizedState",
+    color: "#22d3ee",
+  },
+  {
+    id: "react-context-selector-rerenders",
+    label: "Context Propagation & Selectors",
+    category: "react",
+    parentId: "react-hooks-state-machines-pillar",
+    level: 2,
+    searchQuery: "React Context rerender propagation useSyncExternalStore selector memoization bailout React memo",
+    badge: "useSyncExternalStore & Bailouts",
+    color: "#06b6d4",
+  },
+  {
+    id: "react-concurrent-transitions-suspense",
+    label: "Transitions, Suspense & Streaming",
+    category: "react",
+    parentId: "react-hooks-state-machines-pillar",
+    level: 2,
+    searchQuery: "React 18 useTransition startTransition Suspense boundary promise throw streaming HTML selective hydration",
+    badge: "useTransition & Suspense",
+    color: "#0891b2",
+  },
+
+  // ==========================================
+  // 26. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

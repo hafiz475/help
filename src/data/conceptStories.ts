@@ -12878,6 +12878,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // 25. REACT & FIBER ARCHITECTURE STORIES
+  // ==========================================
+  "root-react": {
+    id: "root-react",
+    title: "React Architecture & Fiber",
+    badge: "Virtual DOM & Fiber Engine",
+    tagline: "Cooperative multitasking, virtual DOM reconciliation, and unidirectional data flow",
+    takeaways: [
+      {
+        id: "rc-root-1",
+        text: "Fiber transforms React from recursive call stack diffing into an interruptible work loop.",
+        searchPrompt: "React Fiber architecture virtual DOM cooperative multitasking reconciliation",
+        emoji: "⚛️",
+        reactionCount: "6.2k",
+        commentCount: 480,
+      },
+      {
+        id: "rc-root-2",
+        text: "The virtual DOM isolates component logic from expensive direct browser DOM manipulations.",
+        searchPrompt: "virtual DOM benefits React performance batching DOM manipulation",
+        emoji: "🌳",
+        reactionCount: "5.8k",
+        commentCount: 425,
+      },
+      {
+        id: "rc-root-3",
+        text: "Concurrent mode allows high-priority user typing to interrupt low-priority list rendering.",
+        searchPrompt: "React 18 concurrent mode interruptible rendering time slicing",
+        emoji: "⚡",
+        reactionCount: "5.4k",
+        commentCount: 390,
+      },
+    ],
+  },
+
+  "react-fiber-reconciliation-pillar": {
+    id: "react-fiber-reconciliation-pillar",
+    title: "Fiber Tree & Reconciliation",
+    badge: "Fiber Nodes & Heuristic Diff",
+    tagline: "Singly linked tree nodes, cooperative work scheduling, and O(n) heuristic diffing",
+    takeaways: [
+      {
+        id: "rc-frp-1",
+        text: "Fiber nodes maintain child, sibling, and return pointers, enabling depth-first resumption.",
+        searchPrompt: "React Fiber node structure singly linked list child sibling return pointers",
+        emoji: "🌿",
+        reactionCount: "5.5k",
+        commentCount: 410,
+      },
+      {
+        id: "rc-frp-2",
+        text: "Heuristic diffing relies on component type stability and unique keys to achieve O(n) speed.",
+        searchPrompt: "React diffing algorithm heuristics O(n) component type key prop",
+        emoji: "🔍",
+        reactionCount: "5.1k",
+        commentCount: 365,
+      },
+      {
+        id: "rc-frp-3",
+        text: "Synthetic events delegate dispatching to root containers for memory and browser consistency.",
+        searchPrompt: "React synthetic event system event delegation root listener cross browser",
+        emoji: "🎯",
+        reactionCount: "4.7k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "react-fiber-node-workloop": {
+    id: "react-fiber-node-workloop",
+    title: "Fiber Nodes & Concurrent WorkLoop",
+    badge: "Fiber Linked List & Work Units",
+    tagline: "workLoopConcurrent yields to host browser paint frames via MessageChannel cooperative scheduling",
+    takeaways: [
+      {
+        id: "rc-fnw-1",
+        text: "workLoopConcurrent checks shouldYield() every 5ms, pausing render work to keep UI responsive.",
+        searchPrompt: "React workLoopConcurrent shouldYield 5ms time slicing cooperative scheduling",
+        emoji: "⏱️",
+        reactionCount: "5.6k",
+        commentCount: 415,
+      },
+      {
+        id: "rc-fnw-2",
+        text: "Work-in-progress fibers duplicate current fibers (double buffering) before committing to DOM.",
+        searchPrompt: "React double buffering current workInProgress fiber tree commit swap",
+        emoji: "🔄",
+        reactionCount: "5.2k",
+        commentCount: 375,
+      },
+      {
+        id: "rc-fnw-3",
+        text: "return pointer acts as call stack frame, returning to parent when sibling fibers finish.",
+        searchPrompt: "React Fiber return pointer call stack simulation depth first traversal",
+        emoji: "🪜",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "react-diffing-keys-heuristics": {
+    id: "react-diffing-keys-heuristics",
+    title: "Heuristic Diffing & Keyed Reconciliation",
+    badge: "O(n) Heuristic Diff & Keys",
+    tagline: "Type changes destroy old subtrees; stable keys preserve instance state across list reordering",
+    takeaways: [
+      {
+        id: "rc-dkh-1",
+        text: "Changing an element's type discards the entire existing subtree and remounts from scratch.",
+        searchPrompt: "React element type change unmount remount subtree reconciliation diffing",
+        emoji: "💥",
+        reactionCount: "5.3k",
+        commentCount: 385,
+      },
+      {
+        id: "rc-dkh-2",
+        text: "Keys provide stable identity across renders, preventing costly unmounts during reordering.",
+        searchPrompt: "React key prop reconciliation list reordering DOM recycling performance",
+        emoji: "🔑",
+        reactionCount: "5.0k",
+        commentCount: 360,
+      },
+      {
+        id: "rc-dkh-3",
+        text: "Using array index as key causes state corruption when items are inserted, deleted, or sorted.",
+        searchPrompt: "why array index as key is anti pattern in React state bugs",
+        emoji: "⚠️",
+        reactionCount: "4.9k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "react-synthetic-events-batching": {
+    id: "react-synthetic-events-batching",
+    title: "Synthetic Events & Automatic Batching",
+    badge: "Event Delegation & Batching",
+    tagline: "React 18 automatic batching across async promises, timers, and native event listeners",
+    takeaways: [
+      {
+        id: "rc-seb-1",
+        text: "All JSX event handlers attach to the root container via top-level event delegation.",
+        searchPrompt: "React 17 18 event delegation root container createRoot synthetic event",
+        emoji: "🎪",
+        reactionCount: "5.1k",
+        commentCount: 365,
+      },
+      {
+        id: "rc-seb-2",
+        text: "React 18 automatically batches multiple setState calls inside promises and setTimeout callbacks.",
+        searchPrompt: "React 18 automatic batching promises setTimeout microtasks render coalescing",
+        emoji: "📦",
+        reactionCount: "5.4k",
+        commentCount: 395,
+      },
+      {
+        id: "rc-seb-3",
+        text: "flushSync forces React to flush updates synchronously when immediate DOM measuring is mandatory.",
+        searchPrompt: "React flushSync synchronous DOM measurement getBoundingClientRect",
+        emoji: "🚨",
+        reactionCount: "4.6k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  "react-pipeline-pillar": {
+    id: "react-pipeline-pillar",
+    title: "9-Stage React Fiber Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "From setState trigger through lane scheduling, concurrent render, and synchronous DOM commit",
+    takeaways: [
+      {
+        id: "rc-plp-1",
+        text: "Render phase is asynchronous and interruptible; commit phase is synchronous and uninterruptible.",
+        searchPrompt: "React render phase vs commit phase interruptible vs synchronous",
+        emoji: "🔄",
+        reactionCount: "5.8k",
+        commentCount: 430,
+      },
+      {
+        id: "rc-plp-2",
+        text: "Scheduler prioritizes user input lanes ahead of transition and background fetch updates.",
+        searchPrompt: "React Scheduler lanes priority lanes input continuous default idle lanes",
+        emoji: "⏱️",
+        reactionCount: "5.3k",
+        commentCount: 385,
+      },
+      {
+        id: "rc-plp-3",
+        text: "Layout effects run synchronously before browser paint, while passive effects flush post-paint.",
+        searchPrompt: "useLayoutEffect synchronous before paint vs useEffect post paint",
+        emoji: "📐",
+        reactionCount: "4.9k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "react-hooks-state-machines-pillar": {
+    id: "react-hooks-state-machines-pillar",
+    title: "Hooks Lifecycle & State Architecture",
+    badge: "Hooks, Context & Transitions",
+    tagline: "Linked list hook storage, context propagation, and concurrent transition primitives",
+    takeaways: [
+      {
+        id: "rc-hsp-1",
+        text: "Hooks rely on strict call order because internal state is stored in a linear linked list.",
+        searchPrompt: "rules of hooks call order linked list memoizedState React fiber",
+        emoji: "⚓",
+        reactionCount: "5.7k",
+        commentCount: 420,
+      },
+      {
+        id: "rc-hsp-2",
+        text: "Context changes re-render all consuming components unless guarded by useSyncExternalStore.",
+        searchPrompt: "React context re-render cascade useSyncExternalStore selector optimization",
+        emoji: "📡",
+        reactionCount: "5.2k",
+        commentCount: 375,
+      },
+      {
+        id: "rc-hsp-3",
+        text: "useTransition marks state updates as non-urgent, keeping the interface fluid during computations.",
+        searchPrompt: "useTransition startTransition non urgent update UI responsiveness",
+        emoji: "🚀",
+        reactionCount: "5.0k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "react-hooks-linked-list": {
+    id: "react-hooks-linked-list",
+    title: "Hooks Dispatcher & Linked List Memory",
+    badge: "Linked List MemoizedState",
+    tagline: "ReactCurrentDispatcher switches between mount and update phases along the memoizedState chain",
+    takeaways: [
+      {
+        id: "rc-hll-1",
+        text: "Calling hooks conditionally alters the linked list order, corrupting component state completely.",
+        searchPrompt: "why hooks cannot be conditional React linked list pointer mismatch",
+        emoji: "⛓️",
+        reactionCount: "5.6k",
+        commentCount: 410,
+      },
+      {
+        id: "rc-hll-2",
+        text: "ReactCurrentDispatcher swaps implementations between mount (mountState) and update (updateState).",
+        searchPrompt: "ReactCurrentDispatcher mountState updateState hooks internal implementation",
+        emoji: "🔀",
+        reactionCount: "5.1k",
+        commentCount: 365,
+      },
+      {
+        id: "rc-hll-3",
+        text: "useRef stores a mutable { current: val } container that survives re-renders without triggering them.",
+        searchPrompt: "useRef current property mutable container no rerender React",
+        emoji: "📦",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "react-context-selector-rerenders": {
+    id: "react-context-selector-rerenders",
+    title: "Context Propagation & Selectors",
+    badge: "useSyncExternalStore & Bailouts",
+    tagline: "Avoiding context re-render cascades using selectors, memoization, and external stores",
+    takeaways: [
+      {
+        id: "rc-csr-1",
+        text: "Updating context value triggers re-renders on all useContext consumers, bypassing React.memo.",
+        searchPrompt: "React context value update consumer rerender React memo bypass",
+        emoji: "💥",
+        reactionCount: "5.5k",
+        commentCount: 405,
+      },
+      {
+        id: "rc-csr-2",
+        text: "Split contexts into separate state and dispatch providers to prevent unnecessary consumer churn.",
+        searchPrompt: "split context state and dispatch provider performance pattern React",
+        emoji: "✂️",
+        reactionCount: "5.1k",
+        commentCount: 370,
+      },
+      {
+        id: "rc-csr-3",
+        text: "useSyncExternalStore enables tear-free store subscriptions with fine-grained selector comparisons.",
+        searchPrompt: "useSyncExternalStore tear free subscription fine grained selector React 18",
+        emoji: "🛡️",
+        reactionCount: "4.7k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "react-concurrent-transitions-suspense": {
+    id: "react-concurrent-transitions-suspense",
+    title: "Transitions, Suspense & Streaming",
+    badge: "useTransition & Suspense",
+    tagline: "Non-blocking state transitions, Suspense promise throwing, and progressive streaming HTML",
+    takeaways: [
+      {
+        id: "rc-cts-1",
+        text: "startTransition tells React that pending state updates can be interrupted by fresh user clicks.",
+        searchPrompt: "startTransition non-blocking update interruptible UI click priority",
+        emoji: "⚡",
+        reactionCount: "5.4k",
+        commentCount: 390,
+      },
+      {
+        id: "rc-cts-2",
+        text: "Suspense boundaries catch thrown promises, rendering fallback UI until data resolution completes.",
+        searchPrompt: "React Suspense promise throw catch fallback UI streaming rendering",
+        emoji: "⏳",
+        reactionCount: "5.0k",
+        commentCount: 355,
+      },
+      {
+        id: "rc-cts-3",
+        text: "Streaming SSR delivers HTML chunks immediately while waiting for async components to resolve.",
+        searchPrompt: "React 18 streaming SSR renderToPipeableStream selective hydration",
+        emoji: "🌊",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  // 9 Sequential Stages of React Fiber Pipeline
+  "react-trigger-dispatch": {
+    id: "react-trigger-dispatch",
+    title: "1. State Trigger & Update Dispatch",
+    badge: "⚡ setState / useReducer Action Enqueue",
+    tagline: "Action dispatch enqueues an update object onto the fiber's circular updateQueue",
+    takeaways: [
+      {
+        id: "rc-tud-1",
+        text: "Calling setState allocates an update object containing the new payload and lane priority.",
+        searchPrompt: "dispatchAction React internal setState update object enqueue lane",
+        emoji: "⚡",
+        reactionCount: "5.3k",
+        commentCount: 380,
+      },
+      {
+        id: "rc-tud-2",
+        text: "Update objects form a circular linked list on updateQueue, ensuring constant-time appending.",
+        searchPrompt: "React updateQueue circular linked list lastUpdate next pointer",
+        emoji: "🔄",
+        reactionCount: "4.9k",
+        commentCount: 345,
+      },
+      {
+        id: "rc-tud-3",
+        text: "Eager state bailout skips re-renders if Object.is determines the new state matches the old state.",
+        searchPrompt: "React eager state computation bailout Object.is comparison",
+        emoji: "⏭️",
+        reactionCount: "4.6k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "react-scheduler-lane-priority": {
+    id: "react-scheduler-lane-priority",
+    title: "2. Scheduler & Lane Priority",
+    badge: "⏱️ Sync, InputContinuous & Default Lanes",
+    tagline: "Assigning 31-bit priority masks and scheduling work loop execution via MessageChannel",
+    takeaways: [
+      {
+        id: "rc-slp-1",
+        text: "React represents 31 task priorities via bitwise lanes: Sync, InputContinuous, Default, and Idle.",
+        searchPrompt: "React 18 bitwise lanes SyncLane InputContinuousLane DefaultLane IdleLane",
+        emoji: "🚦",
+        reactionCount: "5.2k",
+        commentCount: 370,
+      },
+      {
+        id: "rc-slp-2",
+        text: "The Scheduler uses MessageChannel macros to yield control back to the browser event loop.",
+        searchPrompt: "React Scheduler MessageChannel postMessage yieldToHost macro task",
+        emoji: "⏱️",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+      {
+        id: "rc-slp-3",
+        text: "Starvation prevention bumps low-priority lanes to expired status so they run without waiting.",
+        searchPrompt: "React lane priority starvation markStarvedLanesAsExpired",
+        emoji: "🛡️",
+        reactionCount: "4.5k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "react-render-phase-beginwork": {
+    id: "react-render-phase-beginwork",
+    title: "3. Concurrent Render (beginWork)",
+    badge: "🌿 Depth-First Fiber Tree Traversal",
+    tagline: "Traversing fiber tree top-down, invoking component functions, and generating child fibers",
+    takeaways: [
+      {
+        id: "rc-rpb-1",
+        text: "beginWork executes component functions, evaluating JSX return values against current fibers.",
+        searchPrompt: "React beginWork function component execution workInProgress alternate",
+        emoji: "🌿",
+        reactionCount: "5.4k",
+        commentCount: 390,
+      },
+      {
+        id: "rc-rpb-2",
+        text: "If props, state, and context have not changed, beginWork bails out and clones existing children.",
+        searchPrompt: "React beginWork bailoutOnAlreadyFinishedWork cloneChildFibers",
+        emoji: "⏭️",
+        reactionCount: "5.0k",
+        commentCount: 355,
+      },
+      {
+        id: "rc-rpb-3",
+        text: "Render phase can pause, abort, or restart from the top if higher priority work interrupts it.",
+        searchPrompt: "React concurrent render phase interruptible workLoop abort restart",
+        emoji: "🛑",
+        reactionCount: "4.7k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "react-diffing-subtrees": {
+    id: "react-diffing-subtrees",
+    title: "4. VDOM Diffing & Subtree Reconcile",
+    badge: "🔍 Alternate Fiber Comparison & Placement",
+    tagline: "Reconciling new element arrays against alternate fibers and assigning Placement/Update flags",
+    takeaways: [
+      {
+        id: "rc-rds-1",
+        text: "ChildReconciler matches new React elements with alternate fibers to minimize DOM operations.",
+        searchPrompt: "ChildReconciler reconcileChildren Array alternate fiber diffing",
+        emoji: "🔍",
+        reactionCount: "5.3k",
+        commentCount: 380,
+      },
+      {
+        id: "rc-rds-2",
+        text: "Single element diffing matches key and type before recycling existing fiber DOM instances.",
+        searchPrompt: "reconcileSingleElement key type match reuse fiber DOM instance",
+        emoji: "♻️",
+        reactionCount: "4.9k",
+        commentCount: 345,
+      },
+      {
+        id: "rc-rds-3",
+        text: "List diffing uses a map of keys for O(n) item lookups, tagging moved nodes with Placement flags.",
+        searchPrompt: "mapRemainingChildren keyed list reconciliation Placement effect flag",
+        emoji: "📋",
+        reactionCount: "4.6k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "react-complete-work-bubbles": {
+    id: "react-complete-work-bubbles",
+    title: "5. Complete Work & Bubble Effect Flags",
+    badge: "🏗️ completeWork & SubtreeFlags Aggregation",
+    tagline: "Bottom-up traversal, host instance creation, attribute diffing, and subtree flag bubbling",
+    takeaways: [
+      {
+        id: "rc-cwb-1",
+        text: "completeWork creates host DOM instances in memory and builds initial child DOM hierarchies.",
+        searchPrompt: "React completeWork createInstance appendAllChildren in memory DOM tree",
+        emoji: "🏗️",
+        reactionCount: "5.2k",
+        commentCount: 370,
+      },
+      {
+        id: "rc-cwb-2",
+        text: "Diffs DOM properties (style, className, event handlers), storing update payloads on the fiber.",
+        searchPrompt: "diffProperties completeWork updatePayload style className DOM diff",
+        emoji: "📝",
+        reactionCount: "4.8k",
+        commentCount: 335,
+      },
+      {
+        id: "rc-cwb-3",
+        text: "Bubbles flags (Placement, Update, Deletion) upwards so the root knows which subtrees mutated.",
+        searchPrompt: "bubbleProperties subtreeFlags bitwise OR effect flags React root",
+        emoji: "🫧",
+        reactionCount: "4.5k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "react-commit-before-mutation": {
+    id: "react-commit-before-mutation",
+    title: "6. Commit Phase: Before Mutation",
+    badge: "👁️ getSnapshotBeforeUpdate & Focus State",
+    tagline: "Executing getSnapshotBeforeUpdate, scheduling passive effects, and capturing focus",
+    takeaways: [
+      {
+        id: "rc-cbm-1",
+        text: "Commit phase is synchronous and cannot be interrupted by user events or background tasks.",
+        searchPrompt: "React commit phase synchronous uninterruptible DOM mutation",
+        emoji: "🔒",
+        reactionCount: "5.5k",
+        commentCount: 400,
+      },
+      {
+        id: "rc-cbm-2",
+        text: "Calls getSnapshotBeforeUpdate to capture scroll positions before the DOM is physically altered.",
+        searchPrompt: "commitBeforeMutationEffects getSnapshotBeforeUpdate scroll position",
+        emoji: "📸",
+        reactionCount: "5.0k",
+        commentCount: 355,
+      },
+      {
+        id: "rc-cbm-3",
+        text: "Schedules flushPassiveEffects so useEffect callbacks are ready to run post-paint asynchronously.",
+        searchPrompt: "scheduleCallback NormalPriority flushPassiveEffects commitBeforeMutation",
+        emoji: "📅",
+        reactionCount: "4.7k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  "react-commit-mutation-dom": {
+    id: "react-commit-mutation-dom",
+    title: "7. Commit Phase: Host DOM Mutation",
+    badge: "🔨 Insert, Update & Unmount Host Nodes",
+    tagline: "Executing host DOM manipulations: appendChild, insertBefore, text updates, and ref detachment",
+    takeaways: [
+      {
+        id: "rc-cmd-1",
+        text: "Applies mutations to the live browser DOM using appendChild, removeChild, and insertBefore.",
+        searchPrompt: "commitMutationEffects appendChild removeChild insertBefore host DOM",
+        emoji: "🔨",
+        reactionCount: "5.6k",
+        commentCount: 415,
+      },
+      {
+        id: "rc-cmd-2",
+        text: "Fibers marked with Deletion unmount their children, detaching DOM nodes and invoking cleanups.",
+        searchPrompt: "commitDeletion commitUnmount ref detachment componentWillUnmount",
+        emoji: "🗑️",
+        reactionCount: "5.1k",
+        commentCount: 365,
+      },
+      {
+        id: "rc-cmd-3",
+        text: "Swaps workInProgress fiber tree into the current fiber tree pointer on FiberRoot (Double Buffer).",
+        searchPrompt: "root.current = finishedWork double buffering tree swap commit phase",
+        emoji: "🔄",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "react-commit-layout-effects": {
+    id: "react-commit-layout-effects",
+    title: "8. Commit Phase: Layout Effects",
+    badge: "📐 useLayoutEffect Synchronous Execution",
+    tagline: "Synchronously executing useLayoutEffect callbacks and attaching new ref objects before paint",
+    takeaways: [
+      {
+        id: "rc-cle-1",
+        text: "useLayoutEffect runs synchronously immediately after DOM mutations, blocking browser paint.",
+        searchPrompt: "commitLayoutEffects useLayoutEffect synchronous execution blocks paint",
+        emoji: "📐",
+        reactionCount: "5.4k",
+        commentCount: 390,
+      },
+      {
+        id: "rc-cle-2",
+        text: "Ideal for measuring element dimensions (getBoundingClientRect) and adjusting DOM without flicker.",
+        searchPrompt: "useLayoutEffect getBoundingClientRect prevent layout shift flicker DOM",
+        emoji: "📏",
+        reactionCount: "5.1k",
+        commentCount: 360,
+      },
+      {
+        id: "rc-cle-3",
+        text: "Attaches updated ref.current references to corresponding newly mounted DOM host nodes.",
+        searchPrompt: "commitAttachRef ref.current assignment commitLayoutEffects DOM node",
+        emoji: "📎",
+        reactionCount: "4.7k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "react-passive-effects-flush": {
+    id: "react-passive-effects-flush",
+    title: "9. Passive Effects Flush (useEffect)",
+    badge: "🌊 useEffect Asynchronous Post-Paint Flush",
+    tagline: "Asynchronous post-paint callback execution, dependency comparison, and unmount cleanups",
+    takeaways: [
+      {
+        id: "rc-pef-1",
+        text: "useEffect runs asynchronously after browser paint, preventing UI freezes during data fetches.",
+        searchPrompt: "flushPassiveEffects useEffect asynchronous after paint non blocking UI",
+        emoji: "🌊",
+        reactionCount: "5.7k",
+        commentCount: 425,
+      },
+      {
+        id: "rc-pef-2",
+        text: "Runs previous render's cleanup functions first before executing the newly scheduled effect.",
+        searchPrompt: "useEffect cleanup function execution order previous render cleanup",
+        emoji: "🧹",
+        reactionCount: "5.2k",
+        commentCount: 375,
+      },
+      {
+        id: "rc-pef-3",
+        text: "Dependency array comparison uses Object.is; empty array [] runs only on mount and unmount.",
+        searchPrompt: "useEffect dependency array comparison areHookInputsEqual Object.is",
+        emoji: "🔍",
+        reactionCount: "4.9k",
+        commentCount: 350,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -14410,6 +15041,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Embedded Systems & IoT"
       : node.category === "blockchain"
       ? "Blockchain & Cryptography"
+      : node.category === "react"
+      ? "React & Fiber Architecture"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

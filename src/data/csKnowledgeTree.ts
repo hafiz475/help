@@ -1001,10 +1001,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
         topics: [
           {
             id: "topic-react",
-            name: "React (Hooks, Redux)",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "Virtual DOM reconciliation, hooks lifecycle, context, and state machines",
+            name: "React (Fiber, VDOM & Hooks) ★",
+            categoryId: "react",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Fiber tree workLoop, heuristic diffing, 9-stage reconciliation pipeline, hooks dispatcher, and concurrent transitions",
+            color: "#22d3ee",
           },
           {
             id: "topic-nextjs",
