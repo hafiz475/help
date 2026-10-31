@@ -10360,6 +10360,639 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // DATA ENGINEERING PILLARS & CONCEPTS
+  // ==========================================
+  "root-data": {
+    id: "root-data",
+    title: "Data Engineering",
+    badge: "Distributed Pipelines & Lakehouse",
+    tagline: "Scalable ingestion, distributed Apache Spark transformation, ACID lakehouses, and declarative data orchestration at petabyte scale",
+    takeaways: [
+      {
+        id: "data-root-1",
+        text: "Data engineering builds reliable, automated data pipelines converting noisy, distributed events into clean, queryable models for business intelligence and machine learning.",
+        searchPrompt: "data engineering distributed systems architecture ETL lakehouse",
+        emoji: "🔥",
+        reactionCount: "7.1k",
+        commentCount: 530,
+      },
+      {
+        id: "data-root-2",
+        text: "Modern data infrastructure unifies batch and streaming using open table formats (Delta Lake, Apache Iceberg) on cheap object storage instead of siloed data warehouses.",
+        searchPrompt: "modern data lakehouse Delta Lake Iceberg unified batch streaming",
+        emoji: "🌊",
+        reactionCount: "6.5k",
+        commentCount: 460,
+      },
+      {
+        id: "data-root-3",
+        text: "Idempotent pipelines and Declarative Orchestration (dbt, Airflow) guarantee reproducibility, automatic backfilling, and zero duplicate writes on retries.",
+        searchPrompt: "idempotent data pipelines backfilling dbt airflow best practices",
+        emoji: "🔁",
+        reactionCount: "6.2k",
+        commentCount: 445,
+      },
+    ],
+  },
+
+  "data-distributed-compute-pillar": {
+    id: "data-distributed-compute-pillar",
+    title: "Distributed Compute & Spark",
+    badge: "In-Memory Compute & DAG",
+    tagline: "Parallel cluster computation, Catalyst query optimization, network shuffle mechanics, and real-time streaming",
+    takeaways: [
+      {
+        id: "data-comp-p1",
+        text: "Apache Spark distributes work across driver and worker executors, building a Directed Acyclic Graph (DAG) of lazy transformations evaluated only upon calling an action.",
+        searchPrompt: "Apache Spark driver executor architecture DAG lazy evaluation",
+        emoji: "⚡",
+        reactionCount: "5.8k",
+        commentCount: 410,
+      },
+      {
+        id: "data-comp-p2",
+        text: "Catalyst Optimizer analyzes AST queries to reorder filters, prune columns, and select Broadcast Hash Joins over expensive shuffle joins.",
+        searchPrompt: "Catalyst optimizer Spark logical plan physical plan optimization",
+        emoji: "🧠",
+        reactionCount: "5.3k",
+        commentCount: 375,
+      },
+      {
+        id: "data-comp-p3",
+        text: "Data skew causes 99% of workers to finish in seconds while 1 stranded task processes disproportionate keys; key salting distributes skewed records evenly.",
+        searchPrompt: "Apache Spark data skew salting broadcast join shuffle partitions",
+        emoji: "⚖️",
+        reactionCount: "5.9k",
+        commentCount: 435,
+      },
+    ],
+  },
+
+  "data-spark-rdd-dataframes": {
+    id: "data-spark-rdd-dataframes",
+    title: "Spark RDDs & Catalyst Optimizer",
+    badge: "RDDs & Catalyst Plans",
+    tagline: "From low-level immutable RDD collections to high-performance DataFrames powered by Tungsten binary memory",
+    takeaways: [
+      {
+        id: "data-spark-1",
+        text: "Resilient Distributed Datasets (RDDs) track lineage graphs for deterministic fault recovery without checkpointing raw data to disk.",
+        searchPrompt: "Spark RDD lineage graph fault tolerance deterministic recomputation",
+        emoji: "🔄",
+        reactionCount: "5.0k",
+        commentCount: 340,
+      },
+      {
+        id: "data-spark-2",
+        text: "Project Tungsten manages off-heap binary memory in compact row format, bypassing JVM garbage collection pauses and generating optimized C++ bytecode.",
+        searchPrompt: "Spark Project Tungsten off-heap memory whole-stage code generation",
+        emoji: "🏎️",
+        reactionCount: "5.4k",
+        commentCount: 390,
+      },
+      {
+        id: "data-spark-3",
+        text: "Spark DataFrames and Datasets provide type-safe declarative schemas that allow Catalyst to push down filters directly into Parquet footer metadata.",
+        searchPrompt: "Spark DataFrames schema enforcement predicate pushdown parquet",
+        emoji: "📊",
+        reactionCount: "5.1k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "data-partitioning-shuffling-skew": {
+    id: "data-partitioning-shuffling-skew",
+    title: "Partitioning, Shuffles & Skew",
+    badge: "Hash Partitioning & Salting",
+    tagline: "Wide vs narrow dependencies, network shuffle exchange, repartition vs coalesce, and key salting techniques",
+    takeaways: [
+      {
+        id: "data-part-1",
+        text: "Narrow transformations (map, filter) execute locally within partition memory, whereas wide transformations (groupBy, join) require expensive all-to-all network shuffles.",
+        searchPrompt: "Spark narrow vs wide transformations shuffle exchange network cost",
+        emoji: "🌐",
+        reactionCount: "5.2k",
+        commentCount: 370,
+      },
+      {
+        id: "data-part-2",
+        text: "Coalesce decreases partition counts without triggering a network shuffle by merging adjacent partitions, while repartition performs full shuffling to balance sizes.",
+        searchPrompt: "Spark repartition vs coalesce difference shuffle performance",
+        emoji: "🧩",
+        reactionCount: "4.8k",
+        commentCount: 325,
+      },
+      {
+        id: "data-part-3",
+        text: "Salting appends random integers (0 to N) to skewed join keys before matching and replicates the lookup table, eliminating single-task bottlenecks.",
+        searchPrompt: "Spark salting technique data skew join optimization",
+        emoji: "🧂",
+        reactionCount: "5.6k",
+        commentCount: 415,
+      },
+    ],
+  },
+
+  "data-batch-vs-streaming": {
+    id: "data-batch-vs-streaming",
+    title: "Micro-Batch & Flink Streaming",
+    badge: "Watermarks & Stream CEP",
+    tagline: "Event-time processing, tumbling vs sliding windows, watermarks handling late data, and exactly-once stateful stream computing",
+    takeaways: [
+      {
+        id: "data-stream-1",
+        text: "Event time reflects when an event actually occurred at the source, whereas processing time reflects when the cluster ingested it; watermarks track event-time lag.",
+        searchPrompt: "event time vs processing time watermarks streaming Apache Flink",
+        emoji: "⏱️",
+        reactionCount: "5.5k",
+        commentCount: 405,
+      },
+      {
+        id: "data-stream-2",
+        text: "Spark Structured Streaming treats streaming queries as incremental continuous append tables, processing micro-batches with transactional checkpoint commits.",
+        searchPrompt: "Spark Structured Streaming micro-batch incremental execution checkpointing",
+        emoji: "📦",
+        reactionCount: "4.9k",
+        commentCount: 345,
+      },
+      {
+        id: "data-stream-3",
+        text: "Apache Flink processes events individually with true sub-millisecond latency, leveraging Chandy-Lamport distributed snapshots for exactly-once guarantees.",
+        searchPrompt: "Apache Flink true streaming Chandy-Lamport distributed snapshots stateful",
+        emoji: "⚡",
+        reactionCount: "5.7k",
+        commentCount: 420,
+      },
+    ],
+  },
+
+  "data-pipeline-pillar": {
+    id: "data-pipeline-pillar",
+    title: "9-Stage Data Lakehouse Pipeline",
+    badge: "End-to-End Pipeline",
+    tagline: "Orchestrated end-to-end data pipeline from transactional CDC to dimensional analytical data warehouses",
+    takeaways: [
+      {
+        id: "data-pipe-p1",
+        text: "Modern data pipelines ingest transactional logs via CDC, buffer spikes in Kafka, clean in Bronze/Silver lakehouse tiers, and expose Kimball star marts in Gold.",
+        searchPrompt: "medallion architecture end to end data engineering pipeline CDC lakehouse",
+        emoji: "🔄",
+        reactionCount: "6.3k",
+        commentCount: 490,
+      },
+      {
+        id: "data-pipe-p2",
+        text: "Columnar formats like Apache Parquet and Delta Lake organize data by columns with dictionary encodings, shrinking storage sizes by 70-90% and speeding queries 10x.",
+        searchPrompt: "columnar storage benefits Parquet Delta Lake dictionary encoding",
+        emoji: "📦",
+        reactionCount: "5.6k",
+        commentCount: 395,
+      },
+      {
+        id: "data-pipe-p3",
+        text: "DAG orchestrators (Airflow, Dagster) manage task dependencies, SLA alerting, automatic retries, and data sensor waiting across heterogeneous cloud platforms.",
+        searchPrompt: "data pipeline orchestration DAG Airflow Dagster dependency management",
+        emoji: "⏰",
+        reactionCount: "5.4k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "data-lakehouse-governance-pillar": {
+    id: "data-lakehouse-governance-pillar",
+    title: "Modern Lakehouse & Governance",
+    badge: "ACID Storage & dbt",
+    tagline: "ACID transactions on object storage, declarative dbt models, data quality testing, and automated lineage",
+    takeaways: [
+      {
+        id: "data-lake-p1",
+        text: "Lakehouse formats (Delta Lake, Apache Iceberg) add JSON/Avro ACID transaction logs over Parquet files on S3/GCS, eliminating dirty reads and broken concurrent writes.",
+        searchPrompt: "lakehouse ACID transactions Delta Lake Iceberg transaction log",
+        emoji: "🏛️",
+        reactionCount: "6.1k",
+        commentCount: 460,
+      },
+      {
+        id: "data-lake-p2",
+        text: "dbt (data build tool) treats analytics code like software engineering with SQL version control, automated schema testing, and modular documentation.",
+        searchPrompt: "dbt data build tool analytics engineering best practices",
+        emoji: "🔨",
+        reactionCount: "5.8k",
+        commentCount: 435,
+      },
+      {
+        id: "data-lake-p3",
+        text: "Data contracts define strict API agreements between software producers and data consumers, stopping breaking upstream schema changes before ingestion.",
+        searchPrompt: "data contracts producer consumer API schema validation observability",
+        emoji: "📜",
+        reactionCount: "5.9k",
+        commentCount: 440,
+      },
+    ],
+  },
+
+  "data-delta-iceberg-acid": {
+    id: "data-delta-iceberg-acid",
+    title: "Delta Lake & Apache Iceberg ACID",
+    badge: "ACID Logs & Time Travel",
+    tagline: "Serializability, time travel audit queries, schema enforcement, compaction, and vacuum commands",
+    takeaways: [
+      {
+        id: "data-delta-1",
+        text: "Delta Lake uses an append-only JSON transaction log (_delta_log) that tracks atomic commit records, achieving serializable ACID transaction isolation.",
+        searchPrompt: "Delta Lake transaction log atomic commits serializable isolation",
+        emoji: "📝",
+        reactionCount: "5.5k",
+        commentCount: 410,
+      },
+      {
+        id: "data-delta-2",
+        text: "Time Travel allows queries using timestamp or version tags (AS OF '2026-01-01'), making audits, machine learning training reproducibility, and rollbacks effortless.",
+        searchPrompt: "Delta Lake time travel query AS OF rollback machine learning reproducibility",
+        emoji: "⏳",
+        reactionCount: "5.7k",
+        commentCount: 430,
+      },
+      {
+        id: "data-delta-3",
+        text: "OPTIMIZE with Z-Ordering colocates related column dimensions into identical Parquet files, dramatically reducing data scanned during multi-dimensional queries.",
+        searchPrompt: "Delta Lake OPTIMIZE Z-Order clustering file compaction",
+        emoji: "🗜️",
+        reactionCount: "5.2k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "data-dbt-dimensional-modeling": {
+    id: "data-dbt-dimensional-modeling",
+    title: "dbt & Star Schema Modeling",
+    badge: "Star Schema & SCD Type 2",
+    tagline: "Kimball methodology, Fact and Dimension tables, surrogate keys, Slowly Changing Dimensions, and idempotent dbt runs",
+    takeaways: [
+      {
+        id: "data-dbt-1",
+        text: "Kimball star schema separates numeric metrics (Fact tables) from descriptive contextual attributes (Dimension tables) for lightning-fast aggregation.",
+        searchPrompt: "Kimball dimensional modeling star schema fact dimension tables",
+        emoji: "⭐",
+        reactionCount: "5.6k",
+        commentCount: 420,
+      },
+      {
+        id: "data-dbt-2",
+        text: "Slowly Changing Dimension Type 2 (SCD Type 2) preserves historical accuracy by appending new rows with validity start/end timestamps and an is_current flag.",
+        searchPrompt: "Slowly Changing Dimensions SCD Type 2 history tracking dbt snapshot",
+        emoji: "🕒",
+        reactionCount: "5.3k",
+        commentCount: 385,
+      },
+      {
+        id: "data-dbt-3",
+        text: "dbt ref() macros compile modular dependency graphs automatically, allowing developers to execute incremental models with idempotent MERGE statements.",
+        searchPrompt: "dbt ref macro DAG dependency incremental model MERGE statement",
+        emoji: "🔗",
+        reactionCount: "5.4k",
+        commentCount: 395,
+      },
+    ],
+  },
+
+  "data-lineage-quality-contracts": {
+    id: "data-lineage-quality-contracts",
+    title: "Data Contracts & OpenLineage",
+    badge: "Contracts & Column Lineage",
+    tagline: "Automated assertion testing (Great Expectations), column-level lineage tracking, and proactive pipeline SLA observability",
+    takeaways: [
+      {
+        id: "data-lin-1",
+        text: "Column-level lineage traces the complete journey of data fields from source table down to executive dashboards, making schema migration impact visible.",
+        searchPrompt: "column-level lineage OpenLineage data catalog metadata graph",
+        emoji: "🗺️",
+        reactionCount: "5.2k",
+        commentCount: 375,
+      },
+      {
+        id: "data-lin-2",
+        text: "Data quality frameworks like Great Expectations and Soda run automated assertions (e.g. not_null, unique, value_between) to halt pipelines before bad data pollutes BI.",
+        searchPrompt: "Great Expectations data quality assertions automated pipeline testing",
+        emoji: "🧪",
+        reactionCount: "5.5k",
+        commentCount: 415,
+      },
+      {
+        id: "data-lin-3",
+        text: "Data observability monitors freshness, volume anomalies, schema drift, and lineage breaks in real time, alerting data engineers before end-user executives notice.",
+        searchPrompt: "data observability Monte Carlo freshness volume anomalies schema drift",
+        emoji: "🚨",
+        reactionCount: "5.0k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  // ==========================================
+  // DATA ENGINEERING 9-STAGE PIPELINE STORIES
+  // ==========================================
+  "data-source-ingestion-cdc": {
+    id: "data-source-ingestion-cdc",
+    title: "1. Ingestion & Change Data Capture",
+    badge: "Debezium, Kafka Connect & Binlog",
+    tagline: "Zero-impact streaming replication of database row mutations directly from write-ahead transaction logs",
+    takeaways: [
+      {
+        id: "data-cdc-1",
+        text: "Change Data Capture (CDC) reads binary transaction logs (MySQL binlog, PostgreSQL WAL) without issuing SELECT queries, streaming row-level INSERT/UPDATE/DELETE events.",
+        searchPrompt: "Change Data Capture CDC Debezium MySQL binlog Postgres WAL",
+        emoji: "📥",
+        reactionCount: "5.4k",
+        commentCount: 390,
+      },
+      {
+        id: "data-cdc-2",
+        text: "Kafka Connect Source connectors read streaming CDC event records and serialize them into Kafka topics with automatic cluster offset management.",
+        searchPrompt: "Kafka Connect distributed architecture source connectors offset tracking",
+        emoji: "🔌",
+        reactionCount: "4.9k",
+        commentCount: 340,
+      },
+      {
+        id: "data-cdc-3",
+        text: "Log-based CDC eliminates database connection polling, locks, and index table scans, safely extracting millions of changes per second with sub-second latency.",
+        searchPrompt: "log based CDC vs query polling database performance comparison",
+        emoji: "⚡",
+        reactionCount: "5.1k",
+        commentCount: 365,
+      },
+    ],
+  },
+
+  "data-streaming-buffer-kafka": {
+    id: "data-streaming-buffer-kafka",
+    title: "2. Streaming Buffer & Partitions",
+    badge: "Kafka Topics & Consumer Groups",
+    tagline: "Horizontally scalable distributed commit log buffering high-volume writes with consumer group partition rebalancing",
+    takeaways: [
+      {
+        id: "data-kfk-1",
+        text: "Kafka partitions order messages append-only on disk using sequential I/O, allowing single brokers to serve hundreds of thousands of writes per second.",
+        searchPrompt: "Kafka partition architecture sequential disk IO append only log",
+        emoji: "📨",
+        reactionCount: "5.7k",
+        commentCount: 425,
+      },
+      {
+        id: "data-kfk-2",
+        text: "Consumer groups scale read capacity horizontally; Kafka assigns each partition exclusively to one consumer within a group, ensuring ordered message processing.",
+        searchPrompt: "Kafka consumer group partition assignment rebalance protocol",
+        emoji: "👥",
+        reactionCount: "5.3k",
+        commentCount: 380,
+      },
+      {
+        id: "data-kfk-3",
+        text: "Log retention policies and tiered storage allow historical event replay, enabling downstream teams to build new analytics tables by re-consuming from offset zero.",
+        searchPrompt: "Kafka event replay log retention tiered storage architecture",
+        emoji: "⏪",
+        reactionCount: "5.0k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "data-schema-validation-registry": {
+    id: "data-schema-validation-registry",
+    title: "3. Schema Registry & Evolution",
+    badge: "Confluent Avro & Protobuf",
+    tagline: "Centralized contract management, binary payload compression, and schema compatibility rules (Backward, Forward, Full)",
+    takeaways: [
+      {
+        id: "data-sch-1",
+        text: "Schema Registry stores schema versions centrally; messages only carry a 5-byte schema ID header instead of embedding full JSON schema strings, saving massive network bandwidth.",
+        searchPrompt: "Confluent Schema Registry Avro wire format 5 byte payload magic byte",
+        emoji: "📜",
+        reactionCount: "5.2k",
+        commentCount: 375,
+      },
+      {
+        id: "data-sch-2",
+        text: "Compatibility rules (BACKWARD, FORWARD, FULL) reject producers attempting to publish breaking schema changes, protecting all downstream consumers from crashes.",
+        searchPrompt: "Schema Registry compatibility modes backward forward full compatibility",
+        emoji: "🛡️",
+        reactionCount: "5.5k",
+        commentCount: 410,
+      },
+      {
+        id: "data-sch-3",
+        text: "Apache Avro and Protocol Buffers enforce strong typing and default field values, enabling effortless schema evolution across distributed microservices.",
+        searchPrompt: "Apache Avro vs Protobuf data engineering schema evolution",
+        emoji: "📦",
+        reactionCount: "4.8k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "data-bronze-raw-landing": {
+    id: "data-bronze-raw-landing",
+    title: "4. Bronze Layer: Raw Landing",
+    badge: "Append-Only Immutable History",
+    tagline: "Immutable audit trail preserving raw source payloads with metadata timestamps and zero lossy transformations",
+    takeaways: [
+      {
+        id: "data-brz-1",
+        text: "The Bronze layer acts as the raw landing zone in cloud object storage (S3, GCS, ADLS), appending data verbatim without applying schema filters or dropping malformed records.",
+        searchPrompt: "Databricks medallion architecture bronze layer raw landing immutable",
+        emoji: "🥉",
+        reactionCount: "5.1k",
+        commentCount: 360,
+      },
+      {
+        id: "data-brz-2",
+        text: "Appending metadata columns (_ingested_at, _source_file, _batch_id) turns the Bronze layer into a complete historical audit trail for compliance and re-processing.",
+        searchPrompt: "bronze layer metadata columns audit trail data lineage tracking",
+        emoji: "📋",
+        reactionCount: "4.7k",
+        commentCount: 315,
+      },
+      {
+        id: "data-brz-3",
+        text: "Storing raw string or variant JSON payloads in Bronze ensures that future unexpected fields can always be extracted retrospectively without losing historical events.",
+        searchPrompt: "storing raw JSON variant type in Bronze lakehouse re-extraction",
+        emoji: "💾",
+        reactionCount: "4.9k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "data-silver-cleaning-dedup": {
+    id: "data-silver-cleaning-dedup",
+    title: "5. Silver Layer: Clean & De-duplicate",
+    badge: "PySpark Cleansing & Filtering",
+    tagline: "Schema enforcement, parsing nested structures, de-duplication with window functions, and business validation",
+    takeaways: [
+      {
+        id: "data-slv-1",
+        text: "The Silver layer cleanses Bronze data by filtering invalid records, parsing nested JSON arrays, normalizing timestamps to UTC, and casting types explicitly.",
+        searchPrompt: "Silver layer data transformation PySpark schema enforcement type casting",
+        emoji: "🥈",
+        reactionCount: "5.4k",
+        commentCount: 395,
+      },
+      {
+        id: "data-slv-2",
+        text: "Window functions (ROW_NUMBER() OVER (PARTITION BY id ORDER BY timestamp DESC)) de-duplicate events delivered multiple times by at-least-once message queues.",
+        searchPrompt: "PySpark de-duplication window function ROW_NUMBER at-least-once message",
+        emoji: "✂️",
+        reactionCount: "5.8k",
+        commentCount: 430,
+      },
+      {
+        id: "data-slv-3",
+        text: "Silver tables represent business entities (users, orders, products) as clean, enriched tables queryable across multiple analytical use cases.",
+        searchPrompt: "Silver table entity modeling 3NF normalized lakehouse architecture",
+        emoji: "🧼",
+        reactionCount: "5.0k",
+        commentCount: 355,
+      },
+    ],
+  },
+
+  "data-gold-aggregated-marts": {
+    id: "data-gold-aggregated-marts",
+    title: "6. Gold Layer: Aggregated Marts",
+    badge: "Dimensional Star Schema & KPI Marts",
+    tagline: "Pre-aggregated business metrics, daily KPI tables, customer 360 views, and dimensional star schemas",
+    takeaways: [
+      {
+        id: "data-gld-1",
+        text: "Gold tables provide business-ready dimensional models (Fact and Dimension tables) optimized for high-performance interactive BI dashboards and ML feature stores.",
+        searchPrompt: "Gold layer dimensional modeling business intelligence data mart",
+        emoji: "🥇",
+        reactionCount: "5.7k",
+        commentCount: 425,
+      },
+      {
+        id: "data-gld-2",
+        text: "Pre-aggregating daily metrics (revenue_by_region_day, churn_rates) avoids expensive ad-hoc GROUP BY operations across billions of raw rows in production BI tools.",
+        searchPrompt: "Gold table pre-aggregation data marts KPI dashboard performance",
+        emoji: "📊",
+        reactionCount: "5.3k",
+        commentCount: 380,
+      },
+      {
+        id: "data-gld-3",
+        text: "Role-based access control (RBAC) and row-level security are applied in Gold to ensure departments only see data matching their operational domain.",
+        searchPrompt: "lakehouse RBAC row level security column masking governance",
+        emoji: "🔐",
+        reactionCount: "4.8k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "data-parquet-columnar-storage": {
+    id: "data-parquet-columnar-storage",
+    title: "7. Columnar Storage (Parquet & Delta)",
+    badge: "Snappy Compression & Predicate Pushdown",
+    tagline: "Column-oriented storage, dictionary encoding, run-length compression, and file-level min/max statistics",
+    takeaways: [
+      {
+        id: "data-prq-1",
+        text: "Parquet stores data by column rather than by row; analytical queries reading only 3 columns out of 50 skip 94% of disk I/O through column projection.",
+        searchPrompt: "columnar storage Apache Parquet column projection IO reduction",
+        emoji: "📦",
+        reactionCount: "5.6k",
+        commentCount: 410,
+      },
+      {
+        id: "data-prq-2",
+        text: "Parquet file footers store min/max statistics for each column chunk; query engines skip reading entire 512MB row groups through predicate pushdown.",
+        searchPrompt: "Parquet predicate pushdown min max statistics row group skipping",
+        emoji: "🔍",
+        reactionCount: "5.2k",
+        commentCount: 370,
+      },
+      {
+        id: "data-prq-3",
+        text: "Encoding algorithms (Dictionary Encoding, Run Length Encoding, Bit Packing) combined with Snappy/ZSTD achieve extraordinary compression ratios.",
+        searchPrompt: "Parquet encoding dictionary encoding RLE Snappy ZSTD compression",
+        emoji: "🗜️",
+        reactionCount: "4.9k",
+        commentCount: 345,
+      },
+    ],
+  },
+
+  "data-orchestration-dag-airflow": {
+    id: "data-orchestration-dag-airflow",
+    title: "8. DAG Orchestration (Airflow / dbt)",
+    badge: "Task Scheduling, Retries & Backfills",
+    tagline: "Directed Acyclic Graphs (DAGs), dynamic task mapping, sensor polling, backfill execution, and SLA alerting",
+    takeaways: [
+      {
+        id: "data-dag-1",
+        text: "Apache Airflow defines pipelines as code using Python Directed Acyclic Graphs (DAGs), handling retries with exponential backoff and worker pools.",
+        searchPrompt: "Apache Airflow DAG design as code task dependencies worker pool",
+        emoji: "⏰",
+        reactionCount: "5.5k",
+        commentCount: 415,
+      },
+      {
+        id: "data-dag-2",
+        text: "Backfilling allows orchestrators to programmatically rerun historic pipeline DAG runs over specified date windows to incorporate logic changes.",
+        searchPrompt: "Airflow backfilling catchup historic pipeline execution",
+        emoji: "⏪",
+        reactionCount: "5.1k",
+        commentCount: 360,
+      },
+      {
+        id: "data-dag-3",
+        text: "Modern orchestrators (Dagster, Astronomer) feature asset-centric orchestration where tasks are defined in terms of data assets produced rather than arbitrary commands.",
+        searchPrompt: "Dagster software defined assets asset-centric orchestration vs task-centric",
+        emoji: "💎",
+        reactionCount: "5.3k",
+        commentCount: 385,
+      },
+    ],
+  },
+
+  "data-warehouse-bi-serving": {
+    id: "data-warehouse-bi-serving",
+    title: "9. Analytical Serving & Warehouses",
+    badge: "Snowflake, BigQuery & Trino Queries",
+    tagline: "Serverless SQL compute, decoupled storage and compute, materialized views, and sub-second BI serving",
+    takeaways: [
+      {
+        id: "data-wh-1",
+        text: "Modern analytical warehouses (Snowflake, BigQuery) decouple compute from storage, allowing instant auto-scaling of virtual warehouses without cluster resharding.",
+        searchPrompt: "Snowflake separated storage compute virtual warehouse auto scaling",
+        emoji: "❄️",
+        reactionCount: "5.8k",
+        commentCount: 435,
+      },
+      {
+        id: "data-wh-2",
+        text: "Distributed query engines like Trino (Presto) execute high-throughput ANSI SQL queries directly on Delta/Iceberg object storage without proprietary warehouse ingest.",
+        searchPrompt: "Trino Presto federated SQL queries lakehouse distributed execution",
+        emoji: "⚡",
+        reactionCount: "5.4k",
+        commentCount: 390,
+      },
+      {
+        id: "data-wh-3",
+        text: "Materialized views and result caches automatically accelerate repetitive executive dashboard queries with zero recurring compute charges.",
+        searchPrompt: "materialized views result caching data warehouse query optimization",
+        emoji: "📈",
+        reactionCount: "5.0k",
+        commentCount: 350,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -11884,6 +12517,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Computer Vision"
       : node.category === "mobile"
       ? "Mobile Platform"
+      : node.category === "data"
+      ? "Data Engineering"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

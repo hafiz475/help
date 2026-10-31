@@ -323,7 +323,7 @@ export function calculateSpiderLayout(
   let r2 = 560;
   let r3 = 840;
 
-  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision" || category === "mobile") {
+  if (category === "scope" || category === "closure" || category === "async" || category === "backend" || category === "realtime" || category === "queues" || category === "scaling" || category === "platform" || category === "rendering" || category === "security" || category === "state" || category === "perf" || category === "aimath" || category === "mlcore" || category === "deeplearning" || category === "nlpllms" || category === "vision" || category === "mobile" || category === "data") {
     r1 = 280;
     r2 = 540;
     r3 = 780;
@@ -987,6 +987,8 @@ export function calculateGroupLayout(
         ? "Computer Vision"
         : category === "mobile"
         ? "Mobile Platform"
+        : category === "data"
+        ? "Data Engineering"
         : category === "node"
         ? "Node.js Runtime"
         : category === "oop"
@@ -1035,6 +1037,8 @@ export function calculateGroupLayout(
         ? "Spatial Intelligence"
         : category === "mobile"
         ? "Native & Cross-Platform"
+        : category === "data"
+        ? "Distributed Pipelines & Lakehouse"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1075,6 +1079,8 @@ export function calculateGroupLayout(
         ? "#ef4444"
         : category === "mobile"
         ? "#2563eb"
+        : category === "data"
+        ? "#ea580c"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -4988,6 +4994,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 4B: Data Engineering Hub (placed along the left spine at x = -1300, y = -4950)
+    const dataHubX = -1300;
+    const dataHubY = -4950;
+    const dataHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-data")!,
+      x: dataHubX,
+      y: dataHubY,
+      level: 1,
+      branchIndex: 4,
+    };
+    positionedNodes.push(dataHubNode);
+    edges.push({
+      source: mobileHubNode.id,
+      target: dataHubNode.id,
+      category: "data",
+      level: 1,
+      branchIndex: 4,
+    });
+
+    // Data Node 1: Distributed Compute & Spark (Left-Up)
+    const sparkPillarRaw = allNodes.find((n) => n.id === "data-distributed-compute-pillar");
+    if (sparkPillarRaw) {
+      const sparkX = dataHubX - 650;
+      const sparkY = dataHubY - 180;
+      const sparkNode: PositionedNode = {
+        ...sparkPillarRaw,
+        x: sparkX,
+        y: sparkY,
+        level: 3,
+        branchIndex: 4,
+      };
+      positionedNodes.push(sparkNode);
+      edges.push({
+        source: dataHubNode.id,
+        target: sparkNode.id,
+        category: "data",
+        level: 3,
+        branchIndex: 4,
+      });
+
+      const rddRaw = allNodes.find((n) => n.id === "data-spark-rdd-dataframes");
+      if (rddRaw) {
+        positionedNodes.push({
+          ...rddRaw,
+          x: sparkX - 320,
+          y: sparkY - 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: sparkNode.id,
+          target: rddRaw.id,
+          category: "data",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const partRaw = allNodes.find((n) => n.id === "data-partitioning-shuffling-skew");
+      if (partRaw) {
+        positionedNodes.push({
+          ...partRaw,
+          x: sparkX - 320,
+          y: sparkY,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: sparkNode.id,
+          target: partRaw.id,
+          category: "data",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const streamRaw = allNodes.find((n) => n.id === "data-batch-vs-streaming");
+      if (streamRaw) {
+        positionedNodes.push({
+          ...streamRaw,
+          x: sparkX - 320,
+          y: sparkY + 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: sparkNode.id,
+          target: streamRaw.id,
+          category: "data",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+    }
+
+    // Data Node 2: 9-Stage Lakehouse & Data Pipeline (Group Card, Left-Center)
+    const dataCard = cardByPillar.get("data-pipeline-pillar");
+    if (dataCard) {
+      const cardX = dataHubX - 800;
+      const cardY = dataHubY;
+      const posCard: PositionedGroupCard = {
+        ...dataCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 4,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: dataHubNode.id,
+        target: dataCard.id,
+        category: "data",
+        level: 3,
+        branchIndex: 4,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 3, 4);
+    }
+
+    // Data Node 3: Lakehouse Storage & Governance (Left-Down)
+    const lakehouseRaw = allNodes.find((n) => n.id === "data-lakehouse-governance-pillar");
+    if (lakehouseRaw) {
+      const lakeX = dataHubX - 650;
+      const lakeY = dataHubY + 180;
+      const lakeNode: PositionedNode = {
+        ...lakehouseRaw,
+        x: lakeX,
+        y: lakeY,
+        level: 3,
+        branchIndex: 4,
+      };
+      positionedNodes.push(lakeNode);
+      edges.push({
+        source: dataHubNode.id,
+        target: lakeNode.id,
+        category: "data",
+        level: 3,
+        branchIndex: 4,
+      });
+
+      const acidRaw = allNodes.find((n) => n.id === "data-delta-iceberg-acid");
+      if (acidRaw) {
+        positionedNodes.push({
+          ...acidRaw,
+          x: lakeX - 320,
+          y: lakeY - 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: lakeNode.id,
+          target: acidRaw.id,
+          category: "data",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const dbtRaw = allNodes.find((n) => n.id === "data-dbt-dimensional-modeling");
+      if (dbtRaw) {
+        positionedNodes.push({
+          ...dbtRaw,
+          x: lakeX - 320,
+          y: lakeY,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: lakeNode.id,
+          target: dbtRaw.id,
+          category: "data",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+
+      const qualRaw = allNodes.find((n) => n.id === "data-lineage-quality-contracts");
+      if (qualRaw) {
+        positionedNodes.push({
+          ...qualRaw,
+          x: lakeX - 320,
+          y: lakeY + 35,
+          level: 4,
+          branchIndex: 4,
+        });
+        edges.push({
+          source: lakeNode.id,
+          target: qualRaw.id,
+          category: "data",
+          level: 4,
+          branchIndex: 4,
+        });
+      }
+    }
+
     // Automated overlap prevention relaxation pass
     preventLayoutOverlaps(positionedNodes, positionedCards);
 
@@ -5054,6 +5253,8 @@ export function calculateGroupLayout(
     pillarIds = ["vision-conv-foundations-pillar", "vision-pipeline-pillar", "vision-vit-multimodal-pillar"];
   } else if (category === "mobile") {
     pillarIds = ["mobile-lifecycle-memory-pillar", "mobile-pipeline-pillar", "mobile-crossplatform-ecosystem-pillar"];
+  } else if (category === "data") {
+    pillarIds = ["data-distributed-compute-pillar", "data-pipeline-pillar", "data-lakehouse-governance-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -5407,6 +5608,11 @@ export function getNodesForCategory(
       parentId: "root-all",
       level: 1,
     };
+    const dataRoot = {
+      ...allNodes.find((n) => n.id === "root-data")!,
+      parentId: "root-all",
+      level: 1,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -5448,13 +5654,14 @@ export function getNodesForCategory(
         n.id !== "root-nlpllms" &&
         n.id !== "root-vision" &&
         n.id !== "root-mobile" &&
+        n.id !== "root-data" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

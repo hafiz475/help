@@ -30,6 +30,7 @@ import {
   Bot,
   Camera,
   Smartphone,
+  Database,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -91,6 +92,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Camera size={16} />;
       case "mobile":
         return <Smartphone size={16} />;
+      case "data":
+        return <Database size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

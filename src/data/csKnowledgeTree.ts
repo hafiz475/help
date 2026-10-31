@@ -939,10 +939,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-data-pipelines",
-            name: "Data Engineering & Pipelines",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "ETL pipelines, Apache Spark, batch vs stream processing, and data lakes",
+            name: "Data Engineering & Pipelines ★",
+            categoryId: "data",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Distributed compute, Apache Spark RDD/DataFrames, 9-stage lakehouse pipelines, Delta Lake ACID, and dbt modeling",
+            color: "#ea580c",
           },
           {
             id: "topic-game-dev",

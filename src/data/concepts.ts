@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -204,8 +204,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "data",
+    name: "21. Data Engineering",
+    title: "Distributed Compute, Streaming & Modern Lakehouse",
+    description: "Apache Spark, RDDs & DataFrames, Partition Shuffling, Kafka Event Streaming, Delta Lake ACID, dbt & Data Contracts",
+    color: "#ea580c", // Vibrant Spark Ember
+    icon: "Database",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "21. OOP (4 Pillars)",
+    name: "22. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -214,7 +223,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "22. DSA",
+    name: "23. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -223,7 +232,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "23. Big O",
+    name: "24. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -237,7 +246,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 259,
+    count: 269,
   },
 ];
 
@@ -433,6 +442,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "mobile platform architecture Android iOS lifecycle memory ARC GC Hermes Flutter",
     badge: "Native & Cross-Platform",
     color: "#2563eb",
+  },
+  {
+    id: "root-data",
+    label: "Data Engineering",
+    category: "data",
+    level: 0,
+    searchQuery: "data engineering ETL Apache Spark Kafka stream batch processing Delta Lake data warehouse",
+    badge: "Distributed Pipelines & Lakehouse",
+    color: "#ea580c",
   },
   {
     id: "root-oop",
@@ -2921,7 +2939,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 21. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 21. DATA ENGINEERING & PIPELINES
+  // ==========================================
+  // Pillar 1: Distributed Compute & Apache Spark
+  {
+    id: "data-distributed-compute-pillar",
+    label: "Distributed Compute & Spark",
+    category: "data",
+    parentId: "root-data",
+    level: 1,
+    searchQuery: "data engineering distributed compute Apache Spark RDDs DataFrames Catalyst optimizer shuffling data skew streaming",
+    badge: "In-Memory Compute & DAG",
+    color: "#c2410c",
+  },
+  {
+    id: "data-spark-rdd-dataframes",
+    label: "Spark RDDs & Catalyst Optimizer",
+    category: "data",
+    parentId: "data-distributed-compute-pillar",
+    level: 2,
+    searchQuery: "Apache Spark RDD resilient distributed datasets DataFrames Catalyst optimizer Tungsten execution plans",
+    badge: "RDDs & Catalyst Plans",
+    color: "#ea580c",
+  },
+  {
+    id: "data-partitioning-shuffling-skew",
+    label: "Partitioning, Shuffles & Skew",
+    category: "data",
+    parentId: "data-distributed-compute-pillar",
+    level: 2,
+    searchQuery: "Spark partitioning hash partitioner wide transformation shuffle exchange data skew salting broadcast join",
+    badge: "Hash Partitioning & Salting",
+    color: "#f97316",
+  },
+  {
+    id: "data-batch-vs-streaming",
+    label: "Micro-Batch & Flink Streaming",
+    category: "data",
+    parentId: "data-distributed-compute-pillar",
+    level: 2,
+    searchQuery: "batch vs stream processing Spark Structured Streaming Apache Flink event time watermarks exactly once semantics",
+    badge: "Watermarks & Stream CEP",
+    color: "#fb923c",
+  },
+
+  // Pillar 2: 9-Stage Data Engineering & Lakehouse Pipeline (Group Card)
+  {
+    id: "data-pipeline-pillar",
+    label: "9-Stage Data Lakehouse Pipeline",
+    category: "data",
+    parentId: "root-data",
+    level: 1,
+    searchQuery: "data engineering pipeline CDC Kafka message broker schema registry bronze silver gold Parquet Delta Lake Airflow Snowflake",
+    badge: "9 Sequential Stages",
+    color: "#9a3412",
+  },
+
+  // Pillar 3: Modern Lakehouse & Governance
+  {
+    id: "data-lakehouse-governance-pillar",
+    label: "Modern Lakehouse & Governance",
+    category: "data",
+    parentId: "root-data",
+    level: 1,
+    searchQuery: "modern lakehouse Delta Lake Apache Iceberg ACID transactions dbt dimensional modeling data contracts OpenLineage",
+    badge: "ACID Storage & dbt",
+    color: "#7c2d12",
+  },
+  {
+    id: "data-delta-iceberg-acid",
+    label: "Delta Lake & Apache Iceberg ACID",
+    category: "data",
+    parentId: "data-lakehouse-governance-pillar",
+    level: 2,
+    searchQuery: "Delta Lake Apache Iceberg ACID transactions parquet metadata transaction log time travel schema enforcement",
+    badge: "ACID Logs & Time Travel",
+    color: "#ea580c",
+  },
+  {
+    id: "data-dbt-dimensional-modeling",
+    label: "dbt & Star Schema Modeling",
+    category: "data",
+    parentId: "data-lakehouse-governance-pillar",
+    level: 2,
+    searchQuery: "dbt data build tool dimensional modeling Kimball star schema facts dimensions SCD Type 2 idempotent models",
+    badge: "Star Schema & SCD Type 2",
+    color: "#f97316",
+  },
+  {
+    id: "data-lineage-quality-contracts",
+    label: "Data Contracts & OpenLineage",
+    category: "data",
+    parentId: "data-lakehouse-governance-pillar",
+    level: 2,
+    searchQuery: "data contracts producer consumer Great Expectations data quality OpenLineage column level lineage SLA observability",
+    badge: "Contracts & Column Lineage",
+    color: "#fb923c",
+  },
+
+  // ==========================================
+  // 22. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

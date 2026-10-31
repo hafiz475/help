@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -1823,7 +1823,87 @@ export const MOBILE_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+// ==========================================
+// DATA ENGINEERING GROUPS & 9-STAGE PIPELINE
+// ==========================================
+export const DATA_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-data-pipeline",
+    pillarId: "data-pipeline-pillar",
+    title: "Data Engineering & Lakehouse Pipeline (9 Stages)",
+    category: "data",
+    badge: "9 Sequential Stages",
+    color: "#ea580c",
+    isPipeline: true,
+    items: [
+      {
+        id: "data-source-ingestion-cdc",
+        stepNumber: 1,
+        label: "1. Ingestion & Change Data Capture",
+        badge: "📥 Debezium, Kafka Connect & Binlog",
+        searchQuery: "data ingestion Change Data Capture CDC Debezium MySQL binlog Postgres WAL Kafka Connect",
+      },
+      {
+        id: "data-streaming-buffer-kafka",
+        stepNumber: 2,
+        label: "2. Streaming Buffer & Partitions",
+        badge: "📨 Kafka Topics & Consumer Groups",
+        searchQuery: "Apache Kafka topics partitions consumer groups log retention offset management high throughput",
+      },
+      {
+        id: "data-schema-validation-registry",
+        stepNumber: 3,
+        label: "3. Schema Registry & Evolution",
+        badge: "📜 Confluent Avro & Protobuf",
+        searchQuery: "Schema Registry Confluent Avro Protobuf backward forward full compatibility schema evolution",
+      },
+      {
+        id: "data-bronze-raw-landing",
+        stepNumber: 4,
+        label: "4. Bronze Layer: Raw Landing",
+        badge: "🥉 Append-Only Immutable History",
+        searchQuery: "medallion architecture Bronze layer raw data lake append only immutable audit trail cloud storage",
+      },
+      {
+        id: "data-silver-cleaning-dedup",
+        stepNumber: 5,
+        label: "5. Silver Layer: Clean & De-duplicate",
+        badge: "🥈 PySpark Cleansing & Filtering",
+        searchQuery: "Silver layer data cleansing deduplication PySpark null handling data enrichment business domain modeling",
+      },
+      {
+        id: "data-gold-aggregated-marts",
+        stepNumber: 6,
+        label: "6. Gold Layer: Aggregated Marts",
+        badge: "🥇 Dimensional Star Schema & KPI Marts",
+        searchQuery: "Gold layer dimensional modeling aggregate business KPIs Kimball star schema reporting marts",
+      },
+      {
+        id: "data-parquet-columnar-storage",
+        stepNumber: 7,
+        label: "7. Columnar Storage (Parquet & Delta)",
+        badge: "📦 Snappy Compression & Predicate Pushdown",
+        searchQuery: "Apache Parquet columnar storage Snappy compression dictionary encoding predicate pushdown min max stats",
+      },
+      {
+        id: "data-orchestration-dag-airflow",
+        stepNumber: 8,
+        label: "8. DAG Orchestration (Airflow / dbt)",
+        badge: "⏰ Task Scheduling, Retries & Backfills",
+        searchQuery: "Apache Airflow DAG scheduling task dependencies backfills dbt transformations data pipeline orchestration",
+      },
+      {
+        id: "data-warehouse-bi-serving",
+        stepNumber: 9,
+        label: "9. Analytical Serving & Warehouses",
+        badge: "📊 Snowflake, BigQuery & Trino Queries",
+        searchQuery: "data warehouse Snowflake BigQuery Trino Presto analytical SQL query serving BI dashboards",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -1844,8 +1924,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "nlpllms") return NLPLLMS_GROUP_CARDS;
   if (category === "vision") return VISION_GROUP_CARDS;
   if (category === "mobile") return MOBILE_GROUP_CARDS;
+  if (category === "data") return DATA_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }
