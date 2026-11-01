@@ -14139,6 +14139,636 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // ANGULAR, VUE & SVELTE STORIES (19 STORIES)
+  // ==========================================
+  "root-angularvue": {
+    id: "root-angularvue",
+    title: "Angular, Vue & Svelte",
+    badge: "Reactivity & Compilers",
+    tagline: "Fine-grained signals, proxy reactivity, dependency injection, and compile-time runes",
+    takeaways: [
+      {
+        id: "av-root-1",
+        text: "Angular, Vue, and Svelte represent three paradigms: DI/Signals, Proxy reactivity, and Runes compilers.",
+        searchPrompt: "Angular vs Vue vs Svelte reactivity architecture signals proxies compiler",
+        emoji: "🔥",
+        reactionCount: "6.5k",
+        commentCount: 495,
+      },
+      {
+        id: "av-root-2",
+        text: "Modern frameworks converge on fine-grained signals to eliminate wasteful Virtual DOM tree diffing.",
+        searchPrompt: "fine-grained signals reactivity Angular Vue Svelte comparison performance",
+        emoji: "⚡",
+        reactionCount: "5.8k",
+        commentCount: 420,
+      },
+      {
+        id: "av-root-3",
+        text: "Compile-time static analysis shifts runtime reactivity overhead directly to the build step.",
+        searchPrompt: "compile time reactivity Svelte runes Vue compiler patch flags vs runtime",
+        emoji: "🏗️",
+        reactionCount: "5.1k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "angular-architecture-signals-pillar": {
+    id: "angular-architecture-signals-pillar",
+    title: "Angular & Dependency Injection",
+    badge: "DI & Zone.js to Signals",
+    tagline: "Hierarchical injector tree, Zone.js microtask patching, Angular Signals, and RxJS streams",
+    takeaways: [
+      {
+        id: "av-aas-1",
+        text: "Angular combines hierarchical dependency injection with change detection and RxJS streams.",
+        searchPrompt: "Angular architecture hierarchical dependency injection change detection RxJS signals",
+        emoji: "🅰️",
+        reactionCount: "4.8k",
+        commentCount: 360,
+      },
+      {
+        id: "av-aas-2",
+        text: "Hierarchical injectors allow components to isolate state or share singletons across subtrees.",
+        searchPrompt: "Angular injector tree hierarchical dependency injection ElementInjector root",
+        emoji: "🌳",
+        reactionCount: "4.3k",
+        commentCount: 315,
+      },
+      {
+        id: "av-aas-3",
+        text: "Signals provide fine-grained reactivity, moving Angular towards a fast, zoneless future.",
+        searchPrompt: "Angular Signals zoneless change detection computed effect graph performance",
+        emoji: "⚡",
+        reactionCount: "4.0k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "angular-hierarchical-di-tokens": {
+    id: "angular-hierarchical-di-tokens",
+    title: "Hierarchical Dependency Injection",
+    badge: "Injector Tree & Tokens",
+    tagline: "Injector tree resolution, providedIn: root singletons, InjectionToken, and factory providers",
+    takeaways: [
+      {
+        id: "av-hdi-1",
+        text: "Injector tree resolves dependencies upward from ElementInjector to RootInjector singletons.",
+        searchPrompt: "Angular hierarchical dependency injection resolution tree element injector",
+        emoji: "💉",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+      {
+        id: "av-hdi-2",
+        text: "InjectionToken enables type-safe dependency injection for non-class primitives and configs.",
+        searchPrompt: "Angular InjectionToken type safe configuration primitives interface injection",
+        emoji: "🔑",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+      {
+        id: "av-hdi-3",
+        text: "providedIn: 'root' enables automatic tree-shaking for unused singleton service providers.",
+        searchPrompt: "Angular providedIn root tree shaking bundle optimization singleton service",
+        emoji: "✂️",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+    ],
+  },
+
+  "angular-zonejs-vs-signals-cd": {
+    id: "angular-zonejs-vs-signals-cd",
+    title: "Zone.js vs Fine-Grained Signals",
+    badge: "Zone.js to Signal CD",
+    tagline: "Zone.js monkey-patching overhead vs fine-grained signal dependency graphs and zoneless rendering",
+    takeaways: [
+      {
+        id: "av-zvs-1",
+        text: "Zone.js monkey-patches browser async APIs to trigger top-to-bottom dirty change detection checks.",
+        searchPrompt: "Angular Zone.js monkey patching async tasks checkDirty change detection",
+        emoji: "🔄",
+        reactionCount: "4.7k",
+        commentCount: 345,
+      },
+      {
+        id: "av-zvs-2",
+        text: "Angular Signals establish a reactive dependency graph, triggering only dirty component subtrees.",
+        searchPrompt: "Angular signals fine grained dependency graph targeted component update",
+        emoji: "🎯",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+      {
+        id: "av-zvs-3",
+        text: "Zoneless Angular applications boast smaller bundles and near-instantaneous execution speed.",
+        searchPrompt: "zoneless Angular provideExperimentalZonelessChangeDetection benefits",
+        emoji: "🚀",
+        reactionCount: "3.9k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  "angular-rxjs-streams-declarative-ui": {
+    id: "angular-rxjs-streams-declarative-ui",
+    title: "RxJS Observables & Async Pipe",
+    badge: "RxJS & OnPush Strategy",
+    tagline: "Event streams, switchMap operators, async pipe auto-unsubscription, and OnPush change detection",
+    takeaways: [
+      {
+        id: "av-rso-1",
+        text: "RxJS observables model continuous asynchronous event streams with powerful pipe operators.",
+        searchPrompt: "Angular RxJS observables async event streams pipe operators switchMap",
+        emoji: "🌊",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+      {
+        id: "av-rso-2",
+        text: "Async pipe automatically manages subscriptions and invokes markForCheck on new stream values.",
+        searchPrompt: "Angular async pipe subscription cleanup markForCheck change detection",
+        emoji: "🚿",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+      {
+        id: "av-rso-3",
+        text: "OnPush strategy skips component checks unless input references change or observables emit.",
+        searchPrompt: "Angular ChangeDetectionStrategy OnPush input reference check performance",
+        emoji: "🛡️",
+        reactionCount: "3.8k",
+        commentCount: 265,
+      },
+    ],
+  },
+
+  "angularvue-pipeline-pillar": {
+    id: "angularvue-pipeline-pillar",
+    title: "9-Stage Reactive UI Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "Template AST compilation, proxy traps, active effect tracking, microtask batching, and DOM updates",
+    takeaways: [
+      {
+        id: "av-pl-1",
+        text: "Reactive UI pipeline transforms template markup and signal graphs into batched DOM mutations.",
+        searchPrompt: "reactive UI pipeline architecture template AST proxy effect scheduler microtask",
+        emoji: "🔄",
+        reactionCount: "5.4k",
+        commentCount: 395,
+      },
+      {
+        id: "av-pl-2",
+        text: "Dependency tracking observes accessed state getters and invalidates downstream subscribers.",
+        searchPrompt: "reactivity dependency tracking track trigger active effect getter setter",
+        emoji: "🔍",
+        reactionCount: "4.8k",
+        commentCount: 340,
+      },
+      {
+        id: "av-pl-3",
+        text: "Microtask schedulers coalesce synchronous state mutations into single paint updates.",
+        searchPrompt: "reactivity scheduler microtask queue nextTick job deduplication batching",
+        emoji: "⏱️",
+        reactionCount: "4.3k",
+        commentCount: 300,
+      },
+    ],
+  },
+
+  "vue-svelte-reactivity-compilers-pillar": {
+    id: "vue-svelte-reactivity-compilers-pillar",
+    title: "Vue Proxies & Svelte Runes",
+    badge: "Proxies & Svelte Runes",
+    tagline: "Vue 3 ES6 Proxy reactivity with compiler hints vs Svelte 5 compile-time direct DOM mutation runes",
+    takeaways: [
+      {
+        id: "av-vsr-1",
+        text: "Vue 3 uses ES6 Proxy traps with compiler hints, while Svelte 5 compiles runes directly to DOM code.",
+        searchPrompt: "Vue 3 proxy reactivity vs Svelte 5 runes compile time DOM updates architecture",
+        emoji: "⚔️",
+        reactionCount: "5.3k",
+        commentCount: 385,
+      },
+      {
+        id: "av-vsr-2",
+        text: "Vue tracks active effects in targetMap WeakMaps and skips unchanged nodes via patch flags.",
+        searchPrompt: "Vue 3 reactivity targetMap WeakMap effect tracking compiler patch flags",
+        emoji: "🗺️",
+        reactionCount: "4.7k",
+        commentCount: 335,
+      },
+      {
+        id: "av-vsr-3",
+        text: "Svelte 5 runes ($state, $derived, $effect) eliminate Virtual DOM diffing overhead completely.",
+        searchPrompt: "Svelte 5 runes state derived effect zero virtual DOM performance comparison",
+        emoji: "🪄",
+        reactionCount: "4.2k",
+        commentCount: 295,
+      },
+    ],
+  },
+
+  "vue-proxy-reactivity-system": {
+    id: "vue-proxy-reactivity-system",
+    title: "Vue 3 Reactive Proxy & Ref",
+    badge: "Proxy Traps & targetMap",
+    tagline: "ES6 Proxy get/set traps, track/trigger functions, targetMap WeakMaps, and reactive vs ref unwrapping",
+    takeaways: [
+      {
+        id: "av-vpr-1",
+        text: "reactive() wraps objects in ES6 Proxies with get and set traps for intercepting property access.",
+        searchPrompt: "Vue 3 reactive ES6 Proxy get set traps property interception deep reactivity",
+        emoji: "🛡️",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+      {
+        id: "av-vpr-2",
+        text: "track() links properties to active effects in a WeakMap targetMap dependency graph.",
+        searchPrompt: "Vue 3 track function activeEffect targetMap Dep Set dependency registration",
+        emoji: "📌",
+        reactionCount: "4.4k",
+        commentCount: 315,
+      },
+      {
+        id: "av-vpr-3",
+        text: "trigger() invalidates subscribed effects, queueing them in the microtask scheduler.",
+        searchPrompt: "Vue 3 trigger function effect invalidation scheduler queueJob microtask",
+        emoji: "📢",
+        reactionCount: "4.0k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  "vue-compiler-patch-flags-hoisting": {
+    id: "vue-compiler-patch-flags-hoisting",
+    title: "Vue Compiler Optimizations",
+    badge: "Patch Flags & Hoisting",
+    tagline: "Static VNode hoisting, patch flag bitmasks, cacheHandlers, and block tree dynamic children",
+    takeaways: [
+      {
+        id: "av-vcp-1",
+        text: "Vue compiler hoists static VNodes outside render functions to avoid recreating them on update.",
+        searchPrompt: "Vue 3 compiler static hoisting createVNode memory optimization render function",
+        emoji: "🏗️",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+      {
+        id: "av-vcp-2",
+        text: "Patch flags encode dynamic properties as bitmasks, allowing the diff engine to bypass static trees.",
+        searchPrompt: "Vue 3 patch flags bitmask TEXT CLASS PROPS dynamic children optimization",
+        emoji: "🏷️",
+        reactionCount: "4.2k",
+        commentCount: 295,
+      },
+      {
+        id: "av-vcp-3",
+        text: "cacheHandlers memoizes inline event listeners to prevent unnecessary child component rerenders.",
+        searchPrompt: "Vue 3 cacheHandlers inline function memoization prevent child rerender",
+        emoji: "💾",
+        reactionCount: "3.7k",
+        commentCount: 255,
+      },
+    ],
+  },
+
+  "svelte-runes-compile-time-reactivity": {
+    id: "svelte-runes-compile-time-reactivity",
+    title: "Svelte 5 Runes & Direct DOM",
+    badge: "Svelte 5 Runes & No-VDOM",
+    tagline: "$state, $derived, $effect runes, compile-time AST transforms, zero-VDOM direct DOM invalidation",
+    takeaways: [
+      {
+        id: "av-src-1",
+        text: "Svelte 5 introduces runes ($state, $derived, $effect) as universal reactive primitives.",
+        searchPrompt: "Svelte 5 runes state derived effect universal reactivity outside components",
+        emoji: "✨",
+        reactionCount: "5.1k",
+        commentCount: 375,
+      },
+      {
+        id: "av-src-2",
+        text: "Compiler transforms $state assignments into direct DOM invalidations without Virtual DOM trees.",
+        searchPrompt: "Svelte compiler transform state assignment direct DOM node update zero VDOM",
+        emoji: "⚡",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+      {
+        id: "av-src-3",
+        text: "Signals underpin runes under the hood, enabling seamless fine-grained reactivity everywhere.",
+        searchPrompt: "Svelte 5 signals implementation under the hood fine grained reactive graph",
+        emoji: "🔗",
+        reactionCount: "4.1k",
+        commentCount: 285,
+      },
+    ],
+  },
+
+  "angvue-template-ast-analysis": {
+    id: "angvue-template-ast-analysis",
+    title: "1. Template AST Parsing & Static Analysis",
+    badge: "📝 Template Compilers & Static Hoisting",
+    tagline: "Lexing template syntax, AST generation, static subtree identification, and patch flag annotation",
+    takeaways: [
+      {
+        id: "av-taa-1",
+        text: "Parses template syntax into an AST, identifying static elements and dynamic binding expressions.",
+        searchPrompt: "frontend template compiler parser AST static analysis dynamic bindings",
+        emoji: "📝",
+        reactionCount: "4.4k",
+        commentCount: 315,
+      },
+      {
+        id: "av-taa-2",
+        text: "Hoists unchanging DOM structures to eliminate runtime memory allocation overhead.",
+        searchPrompt: "compiler static hoisting eliminate memory allocation runtime performance",
+        emoji: "🏗️",
+        reactionCount: "3.9k",
+        commentCount: 275,
+      },
+      {
+        id: "av-taa-3",
+        text: "Attaches numeric patch flag bitmasks to dynamic nodes for optimized runtime diffing.",
+        searchPrompt: "template compiler patch flag bitmask dynamic node annotation",
+        emoji: "🏷️",
+        reactionCount: "3.6k",
+        commentCount: 245,
+      },
+    ],
+  },
+
+  "angvue-state-proxy-initialization": {
+    id: "angvue-state-proxy-initialization",
+    title: "2. Reactive State Proxy & Signal Init",
+    badge: "⚡ ES6 Proxy Traps & Signal Node Creation",
+    tagline: "Wrapping state objects in Proxies or creating Signal graph nodes with empty subscriber sets",
+    takeaways: [
+      {
+        id: "av-spi-1",
+        text: "Wraps component state in ES6 Proxies or initializes fine-grained Signal graph nodes.",
+        searchPrompt: "reactive state initialization ES6 proxy traps signal dependency nodes",
+        emoji: "⚡",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+      {
+        id: "av-spi-2",
+        text: "Sets up getter/setter traps to intercept property access and value assignments.",
+        searchPrompt: "proxy getter setter traps intercept property access reactivity system",
+        emoji: "🪤",
+        reactionCount: "4.2k",
+        commentCount: 300,
+      },
+      {
+        id: "av-spi-3",
+        text: "Builds an empty subscriber set for each reactive property ready for effect tracking.",
+        searchPrompt: "subscriber set dependency tracking reactive property Dep collection",
+        emoji: "📦",
+        reactionCount: "3.8k",
+        commentCount: 265,
+      },
+    ],
+  },
+
+  "angvue-component-di-instantiation": {
+    id: "angvue-component-di-instantiation",
+    title: "3. Component Instantiation & DI Resolution",
+    badge: "🏗️ Hierarchical Injector & Context Resolution",
+    tagline: "Constructor invocation, hierarchical injector token lookup, provider scoping, and initial props binding",
+    takeaways: [
+      {
+        id: "av-cdi-1",
+        text: "Instantiates component classes and traverses injector tree to fulfill constructor dependencies.",
+        searchPrompt: "component constructor dependency injection hierarchical injector tree",
+        emoji: "🏗️",
+        reactionCount: "4.5k",
+        commentCount: 325,
+      },
+      {
+        id: "av-cdi-2",
+        text: "Resolves singleton services, component-scoped providers, and injection tokens.",
+        searchPrompt: "resolving singleton services scoped providers injection tokens Angular Vue",
+        emoji: "🔑",
+        reactionCount: "4.0k",
+        commentCount: 285,
+      },
+      {
+        id: "av-cdi-3",
+        text: "Configures initial props and binds component scope to the current render context.",
+        searchPrompt: "component props binding render context setup instance configuration",
+        emoji: "⚙️",
+        reactionCount: "3.7k",
+        commentCount: 250,
+      },
+    ],
+  },
+
+  "angvue-active-effect-tracking": {
+    id: "angvue-active-effect-tracking",
+    title: "4. Active Effect & Dependency Tracking",
+    badge: "🔍 track() & Subscriber Listener Registration",
+    tagline: "Setting global activeEffect pointer, reading reactive getters, and registering subscribers in targetMap",
+    takeaways: [
+      {
+        id: "av-aet-1",
+        text: "During initial render, running effect is stored on a global activeEffect pointer.",
+        searchPrompt: "global activeEffect pointer reactivity dependency tracking current effect",
+        emoji: "🔍",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+      {
+        id: "av-aet-2",
+        text: "Accessing reactive properties triggers track(), registering the effect in targetMap.",
+        searchPrompt: "track function getter intercept targetMap dependency registration reactivity",
+        emoji: "📌",
+        reactionCount: "4.3k",
+        commentCount: 305,
+      },
+      {
+        id: "av-aet-3",
+        text: "Constructs bidirectional dependency links between reactive signals and UI view effects.",
+        searchPrompt: "bidirectional dependency links reactive signals UI render effects",
+        emoji: "🔗",
+        reactionCount: "3.9k",
+        commentCount: 270,
+      },
+    ],
+  },
+
+  "angvue-mutation-trigger-dispatch": {
+    id: "angvue-mutation-trigger-dispatch",
+    title: "5. State Mutation & Trigger Dispatch",
+    badge: "📢 trigger() & Subscriber Invalidation",
+    tagline: "Proxy setter intercept or signal write, notifying subscribers, and marking computed values dirty",
+    takeaways: [
+      {
+        id: "av-mtd-1",
+        text: "State mutation triggers Proxy setter or Signal.set(), initiating the update cycle.",
+        searchPrompt: "state mutation proxy setter trap Signal set update notification",
+        emoji: "📢",
+        reactionCount: "4.9k",
+        commentCount: 355,
+      },
+      {
+        id: "av-mtd-2",
+        text: "trigger() retrieves all effects subscribed to the modified key from targetMap.",
+        searchPrompt: "trigger function targetMap subscriber lookup dependency invalidation",
+        emoji: "🗺️",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+      {
+        id: "av-mtd-3",
+        text: "Marks downstream computed values and subscriber effects as dirty for re-execution.",
+        searchPrompt: "marking computed dirty reactive graph propagation subscriber effects",
+        emoji: "🏷️",
+        reactionCount: "4.0k",
+        commentCount: 275,
+      },
+    ],
+  },
+
+  "angvue-batching-scheduler-queue": {
+    id: "angvue-batching-scheduler-queue",
+    title: "6. Batching Scheduler & Microtask Flush",
+    badge: "⏱️ Job Deduplication & nextTick Flush",
+    tagline: "Queueing dirty effects into framework job queue, deduplicating updates, and flushing via microtasks",
+    takeaways: [
+      {
+        id: "av-bsq-1",
+        text: "Dirty effects are pushed to a framework scheduler queue rather than executing synchronously.",
+        searchPrompt: "reactivity scheduler queue asynchronous execution microtask batching",
+        emoji: "⏱️",
+        reactionCount: "5.0k",
+        commentCount: 365,
+      },
+      {
+        id: "av-bsq-2",
+        text: "Deduplicates redundant mutation triggers into a single pending execution unit.",
+        searchPrompt: "job deduplication multiple state mutations single render cycle",
+        emoji: "🧹",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+      {
+        id: "av-bsq-3",
+        text: "Schedules a microtask (queueMicrotask or nextTick) to flush updates before paint.",
+        searchPrompt: "nextTick queueMicrotask flush scheduler queue before browser paint",
+        emoji: "🚀",
+        reactionCount: "4.1k",
+        commentCount: 285,
+      },
+    ],
+  },
+
+  "angvue-vdom-diff-vs-direct-dom": {
+    id: "angvue-vdom-diff-vs-direct-dom",
+    title: "7. VDOM Diff vs Compile-Time Direct DOM",
+    badge: "🎯 Block Tree Patch Flags vs Svelte Invalidation",
+    tagline: "Comparing Vue block tree patch flags diffing vs Svelte compile-time direct text and attribute updates",
+    takeaways: [
+      {
+        id: "av-vdd-1",
+        text: "Vue inspects patch flag bitmasks to update only dynamic text and attributes in the VDOM.",
+        searchPrompt: "Vue block tree patch flags diffing skip static children VDOM performance",
+        emoji: "🎯",
+        reactionCount: "5.2k",
+        commentCount: 380,
+      },
+      {
+        id: "av-vdd-2",
+        text: "Svelte directly updates the specific text node or attribute without any Virtual DOM diff.",
+        searchPrompt: "Svelte compile time direct DOM node invalidation zero virtual DOM diff",
+        emoji: "🪄",
+        reactionCount: "4.7k",
+        commentCount: 335,
+      },
+      {
+        id: "av-vdd-3",
+        text: "Minimizes browser DOM mutations to guarantee consistent 60 FPS animation smoothness.",
+        searchPrompt: "minimal browser DOM mutations 60 fps jank free frame rate rendering",
+        emoji: "🏎️",
+        reactionCount: "4.2k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "angvue-lifecycle-hooks-cleanup": {
+    id: "angvue-lifecycle-hooks-cleanup",
+    title: "8. Lifecycle Hooks & Effect Cleanup",
+    badge: "🧹 onMounted & Effect Dependency Disposal",
+    tagline: "Invoking onMounted/afterRender callbacks, pruning stale dependency links, and disposing unmounted listeners",
+    takeaways: [
+      {
+        id: "av-lhc-1",
+        text: "Fires onMounted and afterRender lifecycle callbacks once DOM mutations complete.",
+        searchPrompt: "onMounted afterRender component lifecycle callback post DOM update",
+        emoji: "🌱",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+      {
+        id: "av-lhc-2",
+        text: "Cleans up obsolete effect dependencies from branches that are no longer rendered.",
+        searchPrompt: "cleanup obsolete effect dependencies conditional branches reactivity",
+        emoji: "🧹",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+      {
+        id: "av-lhc-3",
+        text: "Disposes subscriptions and event listeners on component unmount to prevent memory leaks.",
+        searchPrompt: "component unmount subscription disposal prevent memory leaks SPA",
+        emoji: "🛑",
+        reactionCount: "3.8k",
+        commentCount: 260,
+      },
+    ],
+  },
+
+  "angvue-ssr-hydration-resumption": {
+    id: "angvue-ssr-hydration-resumption",
+    title: "9. SSR Hydration & Signal Resumption",
+    badge: "🌐 DOM Event Binding & State Resumption",
+    tagline: "Attaching client event listeners to server HTML, serializing transfer state, and resuming signal graphs",
+    takeaways: [
+      {
+        id: "av-shr-1",
+        text: "Attaches event listeners to pre-rendered server HTML without rebuilding the DOM tree.",
+        searchPrompt: "SSR hydration attach event listeners server rendered HTML DOM reuse",
+        emoji: "🌐",
+        reactionCount: "4.9k",
+        commentCount: 355,
+      },
+      {
+        id: "av-shr-2",
+        text: "Angular zoneless hydration resumes signal graph state from serialized transfer caches.",
+        searchPrompt: "Angular zoneless hydration transfer cache signal graph resumption",
+        emoji: "📦",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+      {
+        id: "av-shr-3",
+        text: "Enables instant First Contentful Paint with seamless interactive client hydration.",
+        searchPrompt: "First Contentful Paint FCP interactive client hydration web vitals",
+        emoji: "⚡",
+        reactionCount: "4.0k",
+        commentCount: 275,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -15675,6 +16305,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "React & Fiber Architecture"
       : node.category === "nextjs"
       ? "Next.js & App Router"
+      : node.category === "angularvue"
+      ? "Angular, Vue & Svelte"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

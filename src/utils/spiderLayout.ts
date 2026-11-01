@@ -1057,6 +1057,8 @@ export function calculateGroupLayout(
         ? "Virtual DOM & Fiber Engine"
         : category === "nextjs"
         ? "Full-Stack RSC Runtime"
+        : category === "angularvue"
+        ? "Reactivity & Compilers"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1109,6 +1111,8 @@ export function calculateGroupLayout(
         ? "#22d3ee"
         : category === "nextjs"
         ? "#e2e8f0"
+        : category === "angularvue"
+        ? "#e11d48"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -4038,6 +4042,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1M: Angular, Vue & Svelte Framework Hub (placed along the right spine at x = 1300, y = -7950)
+    const angularvueHubX = 1300;
+    const angularvueHubY = -7950;
+    const angularvueHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-angularvue")!,
+      x: angularvueHubX,
+      y: angularvueHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(angularvueHubNode);
+    edges.push({
+      source: nextjsHubNode.id,
+      target: angularvueHubNode.id,
+      category: "angularvue",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Angular/Vue Node 1: Angular & Dependency Injection (Right-Up)
+    const angArchRaw = allNodes.find((n) => n.id === "angular-architecture-signals-pillar");
+    if (angArchRaw) {
+      const angArchX = angularvueHubX + 650;
+      const angArchY = angularvueHubY - 180;
+      const angArchNode: PositionedNode = {
+        ...angArchRaw,
+        x: angArchX,
+        y: angArchY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(angArchNode);
+      edges.push({
+        source: angularvueHubNode.id,
+        target: angArchNode.id,
+        category: "angularvue",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const ahdiRaw = allNodes.find((n) => n.id === "angular-hierarchical-di-tokens");
+      if (ahdiRaw) {
+        positionedNodes.push({
+          ...ahdiRaw,
+          x: angArchX + 320,
+          y: angArchY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: angArchNode.id,
+          target: ahdiRaw.id,
+          category: "angularvue",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const azvsRaw = allNodes.find((n) => n.id === "angular-zonejs-vs-signals-cd");
+      if (azvsRaw) {
+        positionedNodes.push({
+          ...azvsRaw,
+          x: angArchX + 320,
+          y: angArchY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: angArchNode.id,
+          target: azvsRaw.id,
+          category: "angularvue",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const arsoRaw = allNodes.find((n) => n.id === "angular-rxjs-streams-declarative-ui");
+      if (arsoRaw) {
+        positionedNodes.push({
+          ...arsoRaw,
+          x: angArchX + 320,
+          y: angArchY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: angArchNode.id,
+          target: arsoRaw.id,
+          category: "angularvue",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Angular/Vue Node 2: 9-Stage Modern Reactive UI Pipeline (Group Card, Right-Center)
+    const angvueGroupCard = cardByPillar.get("angularvue-pipeline-pillar");
+    if (angvueGroupCard) {
+      const cardX = angularvueHubX + 800;
+      const cardY = angularvueHubY;
+      const posCard: PositionedGroupCard = {
+        ...angvueGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: angularvueHubNode.id,
+        target: angvueGroupCard.id,
+        category: "angularvue",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Angular/Vue Node 3: Vue 3 Proxies & Svelte 5 Compiler Runes (Right-Down)
+    const vsCompRaw = allNodes.find((n) => n.id === "vue-svelte-reactivity-compilers-pillar");
+    if (vsCompRaw) {
+      const vsCompX = angularvueHubX + 650;
+      const vsCompY = angularvueHubY + 180;
+      const vsCompNode: PositionedNode = {
+        ...vsCompRaw,
+        x: vsCompX,
+        y: vsCompY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(vsCompNode);
+      edges.push({
+        source: angularvueHubNode.id,
+        target: vsCompNode.id,
+        category: "angularvue",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const vprRaw = allNodes.find((n) => n.id === "vue-proxy-reactivity-system");
+      if (vprRaw) {
+        positionedNodes.push({
+          ...vprRaw,
+          x: vsCompX + 320,
+          y: vsCompY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: vsCompNode.id,
+          target: vprRaw.id,
+          category: "angularvue",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const vcpRaw = allNodes.find((n) => n.id === "vue-compiler-patch-flags-hoisting");
+      if (vcpRaw) {
+        positionedNodes.push({
+          ...vcpRaw,
+          x: vsCompX + 320,
+          y: vsCompY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: vsCompNode.id,
+          target: vcpRaw.id,
+          category: "angularvue",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const srcRaw = allNodes.find((n) => n.id === "svelte-runes-compile-time-reactivity");
+      if (srcRaw) {
+        positionedNodes.push({
+          ...srcRaw,
+          x: vsCompX + 320,
+          y: vsCompY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: vsCompNode.id,
+          target: srcRaw.id,
+          category: "angularvue",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -6258,6 +6455,8 @@ export function calculateGroupLayout(
     pillarIds = ["react-fiber-reconciliation-pillar", "react-pipeline-pillar", "react-hooks-state-machines-pillar"];
   } else if (category === "nextjs") {
     pillarIds = ["nextjs-app-router-conventions-pillar", "nextjs-pipeline-pillar", "nextjs-server-actions-caching-pillar"];
+  } else if (category === "angularvue") {
+    pillarIds = ["angular-architecture-signals-pillar", "angularvue-pipeline-pillar", "vue-svelte-reactivity-compilers-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -6641,6 +6840,11 @@ export function getNodesForCategory(
       parentId: "root-react",
       level: 2,
     };
+    const angularvueRoot = {
+      ...allNodes.find((n) => n.id === "root-angularvue")!,
+      parentId: "root-nextjs",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -6688,13 +6892,14 @@ export function getNodesForCategory(
         n.id !== "root-blockchain" &&
         n.id !== "root-react" &&
         n.id !== "root-nextjs" &&
+        n.id !== "root-angularvue" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

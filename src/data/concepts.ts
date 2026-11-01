@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -258,8 +258,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "angularvue",
+    name: "27. Angular, Vue & Svelte",
+    title: "Reactive UI Architectures, Signals & Compilers",
+    description: "Angular Zones & Signals, Vue 3 Proxy Reactivity & Compiler Hints, Svelte 5 Runes & Compile-Time Direct DOM Updates",
+    color: "#e11d48", // Crimson Flame
+    icon: "Component",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "27. OOP (4 Pillars)",
+    name: "28. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -268,7 +277,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "28. DSA",
+    name: "29. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -277,7 +286,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "29. Big O",
+    name: "30. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -291,7 +300,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 319,
+    count: 329,
   },
 ];
 
@@ -541,6 +550,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Next.js App Router React Server Components RSC Flight protocol Server Actions edge middleware caching",
     badge: "Full-Stack RSC Runtime",
     color: "#e2e8f0",
+  },
+  {
+    id: "root-angularvue",
+    label: "Angular, Vue & Svelte",
+    category: "angularvue",
+    level: 0,
+    searchQuery: "Angular Vue Svelte reactivity models signals RxJS proxies compile time runes direct DOM updates",
+    badge: "Reactivity & Compilers",
+    color: "#e11d48",
   },
   {
     id: "root-oop",
@@ -3623,7 +3641,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 27. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 27. ANGULAR, VUE & SVELTE ARCHITECTURE
+  // ==========================================
+  // Pillar 1: Angular Architecture & Dependency Injection
+  {
+    id: "angular-architecture-signals-pillar",
+    label: "Angular & Dependency Injection",
+    category: "angularvue",
+    parentId: "root-angularvue",
+    level: 1,
+    searchQuery: "Angular architecture hierarchical dependency injection Zone.js signals RxJS change detection OnPush",
+    badge: "DI & Zone.js to Signals",
+    color: "#f43f5e",
+  },
+  {
+    id: "angular-hierarchical-di-tokens",
+    label: "Hierarchical Dependency Injection",
+    category: "angularvue",
+    parentId: "angular-architecture-signals-pillar",
+    level: 2,
+    searchQuery: "Angular hierarchical dependency injection Injector tree providedIn root InjectionToken useClass useFactory resolution",
+    badge: "Injector Tree & Tokens",
+    color: "#fb7185",
+  },
+  {
+    id: "angular-zonejs-vs-signals-cd",
+    label: "Zone.js vs Fine-Grained Signals",
+    category: "angularvue",
+    parentId: "angular-architecture-signals-pillar",
+    level: 2,
+    searchQuery: "Angular Zone.js microtask monkey patching vs fine-grained signals zoneless change detection computed graph",
+    badge: "Zone.js to Signal CD",
+    color: "#fda4af",
+  },
+  {
+    id: "angular-rxjs-streams-declarative-ui",
+    label: "RxJS Observables & Async Pipe",
+    category: "angularvue",
+    parentId: "angular-architecture-signals-pillar",
+    level: 2,
+    searchQuery: "Angular RxJS observables async pipe BehaviorSubject switchMap OnPush change detection unsubscribe declarative",
+    badge: "RxJS & OnPush Strategy",
+    color: "#f43f5e",
+  },
+
+  // Pillar 2: 9-Stage Reactive UI & Framework Lifecycle (Group Card)
+  {
+    id: "angularvue-pipeline-pillar",
+    label: "9-Stage Reactive UI Pipeline",
+    category: "angularvue",
+    parentId: "root-angularvue",
+    level: 1,
+    searchQuery: "Reactive UI framework pipeline template AST reactive proxies active effects microtask batching patch flags direct DOM",
+    badge: "9 Sequential Stages",
+    color: "#e11d48",
+  },
+
+  // Pillar 3: Vue 3 Proxies & Svelte 5 Compiler Runes
+  {
+    id: "vue-svelte-reactivity-compilers-pillar",
+    label: "Vue Proxies & Svelte Runes",
+    category: "angularvue",
+    parentId: "root-angularvue",
+    level: 1,
+    searchQuery: "Vue 3 Proxy reactivity system targetMap Svelte 5 runes state derived effect compile-time direct DOM mutation",
+    badge: "Proxies & Svelte Runes",
+    color: "#e11d48",
+  },
+  {
+    id: "vue-proxy-reactivity-system",
+    label: "Vue 3 Reactive Proxy & Ref",
+    category: "angularvue",
+    parentId: "vue-svelte-reactivity-compilers-pillar",
+    level: 2,
+    searchQuery: "Vue 3 reactivity system ES6 Proxy get set track trigger targetMap WeakMap reactive ref shallowRef",
+    badge: "Proxy Traps & targetMap",
+    color: "#fb7185",
+  },
+  {
+    id: "vue-compiler-patch-flags-hoisting",
+    label: "Vue Compiler Optimizations",
+    category: "angularvue",
+    parentId: "vue-svelte-reactivity-compilers-pillar",
+    level: 2,
+    searchQuery: "Vue 3 compiler optimizations static hoisting patch flags bitmask TEXT CLASS dynamic children block tree",
+    badge: "Patch Flags & Hoisting",
+    color: "#fda4af",
+  },
+  {
+    id: "svelte-runes-compile-time-reactivity",
+    label: "Svelte 5 Runes & Direct DOM",
+    category: "angularvue",
+    parentId: "vue-svelte-reactivity-compilers-pillar",
+    level: 2,
+    searchQuery: "Svelte 5 runes state derived effect compile-time reactivity zero virtual DOM direct DOM node invalidation signals",
+    badge: "Svelte 5 Runes & No-VDOM",
+    color: "#f43f5e",
+  },
+
+  // ==========================================
+  // 28. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
@@ -3682,7 +3799,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 28. DATA STRUCTURES (DSA)
+  // 29. DATA STRUCTURES (DSA)
   // ==========================================
   // Level 1 Major Pillar
   {
@@ -3762,7 +3879,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 29. BIG O TIME COMPLEXITY
+  // 30. BIG O TIME COMPLEXITY
   // ==========================================
   // Level 1 Major Pillar
   {

@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2290,7 +2290,84 @@ export const NEXTJS_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const ANGULARVUE_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-angularvue-reactive-pipeline",
+    pillarId: "angularvue-pipeline-pillar",
+    title: "9-Stage Modern Reactive UI Pipeline",
+    category: "angularvue",
+    badge: "9 Sequential Stages",
+    color: "#e11d48",
+    isPipeline: true,
+    items: [
+      {
+        id: "angvue-template-ast-analysis",
+        stepNumber: 1,
+        label: "1. Template AST Parsing & Static Analysis",
+        badge: "📝 Template Compilers & Static Hoisting",
+        searchQuery: "frontend framework template AST compiler static analysis patch flags",
+      },
+      {
+        id: "angvue-state-proxy-initialization",
+        stepNumber: 2,
+        label: "2. Reactive State Proxy & Signal Init",
+        badge: "⚡ ES6 Proxy Traps & Signal Node Creation",
+        searchQuery: "reactive state initialization ES6 proxy traps signal dependency graph",
+      },
+      {
+        id: "angvue-component-di-instantiation",
+        stepNumber: 3,
+        label: "3. Component Instantiation & DI Resolution",
+        badge: "🏗️ Hierarchical Injector & Context Resolution",
+        searchQuery: "component constructor dependency injection hierarchical injector tokens",
+      },
+      {
+        id: "angvue-active-effect-tracking",
+        stepNumber: 4,
+        label: "4. Active Effect & Dependency Tracking",
+        badge: "🔍 track() & Subscriber Listener Registration",
+        searchQuery: "reactivity track active effect subscriber registration getter intercept",
+      },
+      {
+        id: "angvue-mutation-trigger-dispatch",
+        stepNumber: 5,
+        label: "5. State Mutation & Trigger Dispatch",
+        badge: "📢 trigger() & Subscriber Invalidation",
+        searchQuery: "reactivity trigger notify subscribers setter proxy trap signal.set",
+      },
+      {
+        id: "angvue-batching-scheduler-queue",
+        stepNumber: 6,
+        label: "6. Batching Scheduler & Microtask Flush",
+        badge: "⏱️ Job Deduplication & nextTick Flush",
+        searchQuery: "reactivity scheduler microtask queue job deduplication nextTick flush",
+      },
+      {
+        id: "angvue-vdom-diff-vs-direct-dom",
+        stepNumber: 7,
+        label: "7. VDOM Diff vs Compile-Time Direct DOM",
+        badge: "🎯 Block Tree Patch Flags vs Svelte Invalidation",
+        searchQuery: "virtual DOM patch flags vs compile time direct DOM node invalidation Svelte Vue",
+      },
+      {
+        id: "angvue-lifecycle-hooks-cleanup",
+        stepNumber: 8,
+        label: "8. Lifecycle Hooks & Effect Cleanup",
+        badge: "🧹 onMounted & Effect Dependency Disposal",
+        searchQuery: "component lifecycle mounted effect cleanup unmount memory leak disposal",
+      },
+      {
+        id: "angvue-ssr-hydration-resumption",
+        stepNumber: 9,
+        label: "9. SSR Hydration & Signal Resumption",
+        badge: "🌐 DOM Event Binding & State Resumption",
+        searchQuery: "SSR hydration signal resumption zoneless event listeners client activation",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2317,8 +2394,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "blockchain") return BLOCKCHAIN_GROUP_CARDS;
   if (category === "react") return REACT_GROUP_CARDS;
   if (category === "nextjs") return NEXTJS_GROUP_CARDS;
+  if (category === "angularvue") return ANGULARVUE_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

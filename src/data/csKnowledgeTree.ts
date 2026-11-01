@@ -1021,10 +1021,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-angular-vue",
-            name: "Angular, Vue, Svelte",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "RxJS observables, reactivity proxies, and compile-time reactive assignments",
+            name: "Angular, Vue & Svelte ★",
+            categoryId: "angularvue",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Hierarchical DI, Zone.js to signals, Vue 3 proxy reactivity, compiler patch flags, Svelte 5 runes, and 9-stage reactive pipeline",
+            color: "#e11d48",
           },
           {
             id: "topic-build-tools",
