@@ -14769,6 +14769,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // BUILD TOOLS & BUNDLERS (VITE, WEBPACK, TAILWIND)
+  // ==========================================
+  "root-buildtools": {
+    id: "root-buildtools",
+    title: "Build Tools & Bundlers",
+    badge: "Build Engine",
+    tagline: "Modern asset bundling, ESM dev servers, utility CSS compilers, and production optimization engines",
+    takeaways: [
+      {
+        id: "bt-root-1",
+        text: "Build tools transform modern source code into lean, optimized bundles browsers execute instantly.",
+        searchPrompt: "modern frontend build tools bundlers compilation pipeline explained",
+        emoji: "📦",
+        reactionCount: "5.4k",
+        commentCount: 420,
+      },
+      {
+        id: "bt-root-2",
+        text: "Native ESM dev servers eliminate slow cold starts by serving unbundled files directly on demand.",
+        searchPrompt: "native ESM dev server unbundled architecture Vite esbuild",
+        emoji: "⚡",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+      {
+        id: "bt-root-3",
+        text: "Production compilers perform AST analysis, tree shaking, scope hoisting, and asset minification.",
+        searchPrompt: "production bundler tree shaking scope hoisting minification AST",
+        emoji: "🚀",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "buildtools-vite-esm-hmr-pillar": {
+    id: "buildtools-vite-esm-hmr-pillar",
+    title: "Vite, ESM & Lightning HMR",
+    badge: "Vite Architecture",
+    tagline: "No-bundle dev server architecture, esbuild pre-bundling, and sub-millisecond hot module replacement",
+    takeaways: [
+      {
+        id: "bt-veh-1",
+        text: "Vite leverages browser-native ES modules to serve source code over HTTP without upfront bundling.",
+        searchPrompt: "Vite browser native ES modules architecture dev server HTTP",
+        emoji: "⚡",
+        reactionCount: "5.6k",
+        commentCount: 440,
+      },
+      {
+        id: "bt-veh-2",
+        text: "Pre-bundles CommonJS dependencies with esbuild in Go at 10-100x the speed of JavaScript bundlers.",
+        searchPrompt: "esbuild Go dependency prebundling CommonJS to ESM conversion Vite",
+        emoji: "🏎️",
+        reactionCount: "5.1k",
+        commentCount: 395,
+      },
+      {
+        id: "bt-veh-3",
+        text: "Precise HMR boundaries swap updated modules in milliseconds independent of total application size.",
+        searchPrompt: "Vite HMR boundary sub millisecond hot module replacement performance",
+        emoji: "🔥",
+        reactionCount: "4.7k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "buildtools-vite-nobundle-native-esm": {
+    id: "buildtools-vite-nobundle-native-esm",
+    title: "No-Bundle Dev Server",
+    badge: "Native ESM",
+    tagline: "Serving source code directly over HTTP using browser-native import statements for instantaneous startup",
+    takeaways: [
+      {
+        id: "bt-vnb-1",
+        text: "Dev server starts instantaneously because it never crawls or bundles the complete dependency graph.",
+        searchPrompt: "unbundled dev server instant cold start browser native dynamic import",
+        emoji: "🚀",
+        reactionCount: "5.3k",
+        commentCount: 410,
+      },
+      {
+        id: "bt-vnb-2",
+        text: "Browsers request only the exact ES modules needed for the currently viewed route via HTTP imports.",
+        searchPrompt: "browser native ES module requests route on demand loading Vite",
+        emoji: "🌐",
+        reactionCount: "4.8k",
+        commentCount: 360,
+      },
+      {
+        id: "bt-vnb-3",
+        text: "On-the-fly transpilation compiles TypeScript and JSX on demand when requested by the browser.",
+        searchPrompt: "on the fly transpilation TypeScript JSX transform esbuild HTTP request",
+        emoji: "🪄",
+        reactionCount: "4.4k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "buildtools-esbuild-dep-prebundling": {
+    id: "buildtools-esbuild-dep-prebundling",
+    title: "esbuild Dependency Pre-Bundling",
+    badge: "Go-Powered Prebundling",
+    tagline: "Converting CommonJS/UMD dependencies to ESM and packaging multi-file modules into single cached chunks",
+    takeaways: [
+      {
+        id: "bt-edp-1",
+        text: "Pre-bundling converts CommonJS and UMD npm dependencies into clean browser-executable ES modules.",
+        searchPrompt: "npm CommonJS UMD to ESM conversion esbuild Vite prebundling",
+        emoji: "📦",
+        reactionCount: "5.1k",
+        commentCount: 390,
+      },
+      {
+        id: "bt-edp-2",
+        text: "Merges heavily split packages with hundreds of internal modules into single cached request units.",
+        searchPrompt: "esbuild merge internal module requests HTTP network waterfall reduction",
+        emoji: "⚡",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+      {
+        id: "bt-edp-3",
+        text: "Compiled in Go using parallelism and direct memory management for extreme multi-core speed.",
+        searchPrompt: "esbuild Go parallel architecture AST memory layout speed benchmark",
+        emoji: "🏎️",
+        reactionCount: "4.2k",
+        commentCount: 295,
+      },
+    ],
+  },
+
+  "buildtools-vite-hmr-boundary-propagation": {
+    id: "buildtools-vite-hmr-boundary-propagation",
+    title: "HMR Boundary & Hot State",
+    badge: "Sub-ms HMR",
+    tagline: "import.meta.hot API, module boundary invalidation, and state-preserving component hot replacement",
+    takeaways: [
+      {
+        id: "bt-hbp-1",
+        text: "Hot Module Replacement updates modified components in memory without refreshing the entire page.",
+        searchPrompt: "Hot Module Replacement in memory update retain component state DOM",
+        emoji: "🔥",
+        reactionCount: "5.5k",
+        commentCount: 430,
+      },
+      {
+        id: "bt-hbp-2",
+        text: "import.meta.hot.accept establishes boundary contracts to retain client state across code edits.",
+        searchPrompt: "import meta hot accept Vite HMR boundary self accepting module",
+        emoji: "🛡️",
+        reactionCount: "4.9k",
+        commentCount: 370,
+      },
+      {
+        id: "bt-hbp-3",
+        text: "Unaccepted module edits bubble up the dependency graph until caught by an accepting parent boundary.",
+        searchPrompt: "HMR bubble propagation unaccepted module fallback full page reload",
+        emoji: "🫧",
+        reactionCount: "4.3k",
+        commentCount: 305,
+      },
+    ],
+  },
+
+  "buildtools-pipeline-pillar": {
+    id: "buildtools-pipeline-pillar",
+    title: "9-Stage Asset Bundling Pipeline",
+    badge: "Build Pipeline",
+    tagline: "End-to-end transformation from entry resolution and AST tree shaking to code splitting and manifest generation",
+    takeaways: [
+      {
+        id: "bt-pip-1",
+        text: "The pipeline transforms raw source files into production assets across 9 sequential compiler stages.",
+        searchPrompt: "modern asset bundling pipeline 9 stages compiler architecture",
+        emoji: "🏭",
+        reactionCount: "5.7k",
+        commentCount: 450,
+      },
+      {
+        id: "bt-pip-2",
+        text: "Builds a static AST dependency graph to discover unused exports and prune dead code paths safely.",
+        searchPrompt: "AST dependency graph tree shaking dead code pruning compiler",
+        emoji: "🌳",
+        reactionCount: "5.2k",
+        commentCount: 400,
+      },
+      {
+        id: "bt-pip-3",
+        text: "Generates split vendor chunks, minimized assets, and content-hashed immutable release artifacts.",
+        searchPrompt: "code splitting vendor chunking minification content hash manifest release",
+        emoji: "💎",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "buildtools-webpack-tailwind-pillar": {
+    id: "buildtools-webpack-tailwind-pillar",
+    title: "Webpack, Tailwind & Tooling",
+    badge: "Webpack & Utility CSS",
+    tagline: "Compilation lifecycle, chunk graphs, Tailwind JIT engine, source maps, and persistent filesystem caching",
+    takeaways: [
+      {
+        id: "bt-wtp-1",
+        text: "Webpack orchestrates compilation lifecycle hooks, loaders, and plugins to generate chunk graphs.",
+        searchPrompt: "Webpack compiler lifecycle hooks Tapable loaders plugins chunk graph",
+        emoji: "⚙️",
+        reactionCount: "5.3k",
+        commentCount: 415,
+      },
+      {
+        id: "bt-wtp-2",
+        text: "Tailwind CSS JIT scans template files and generates atomic CSS classes on demand in real time.",
+        searchPrompt: "Tailwind CSS JIT compiler on demand atomic utility generation",
+        emoji: "🎨",
+        reactionCount: "4.9k",
+        commentCount: 380,
+      },
+      {
+        id: "bt-wtp-3",
+        text: "Persistent filesystem caching avoids recompiling unchanged modules across subsequent cold builds.",
+        searchPrompt: "Webpack 5 persistent filesystem cache module serialization rebuild speed",
+        emoji: "💾",
+        reactionCount: "4.5k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  "buildtools-webpack-compilation-chunks": {
+    id: "buildtools-webpack-compilation-chunks",
+    title: "Webpack Compilation & Chunk Graph",
+    badge: "Chunking & Loaders",
+    tagline: "Compiler and Compilation lifecycle hooks, loader transformation chains, and multi-entry chunk topologies",
+    takeaways: [
+      {
+        id: "bt-wcc-1",
+        text: "Webpack Compiler oversees build lifecycle while Compilation manages single dependency graph passes.",
+        searchPrompt: "Webpack Compiler vs Compilation instance module dependency graph Tapable",
+        emoji: "🏗️",
+        reactionCount: "5.0k",
+        commentCount: 375,
+      },
+      {
+        id: "bt-wcc-2",
+        text: "Loaders transform non-JS files into standard modules through right-to-left chained pipelines.",
+        searchPrompt: "Webpack loader chaining right to left pitch loader module transformation",
+        emoji: "🔄",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+      {
+        id: "bt-wcc-3",
+        text: "Chunk graphs isolate initial entry points from async dynamic import chunks for parallel loading.",
+        searchPrompt: "Webpack chunk graph entry points splitChunks async on demand loading",
+        emoji: "🧩",
+        reactionCount: "4.1k",
+        commentCount: 285,
+      },
+    ],
+  },
+
+  "buildtools-tailwind-jit-compiler-engine": {
+    id: "buildtools-tailwind-jit-compiler-engine",
+    title: "Tailwind JIT & Oxide Engine",
+    badge: "On-Demand CSS",
+    tagline: "Regex class candidate extraction, on-demand utility CSS generation, and lightning-fast Rust scanning",
+    takeaways: [
+      {
+        id: "bt-tje-1",
+        text: "JIT compiler eliminates bloated static CSS files by generating only classes used in template code.",
+        searchPrompt: "Tailwind CSS JIT compiler zero unused CSS bundle size reduction",
+        emoji: "🎯",
+        reactionCount: "5.4k",
+        commentCount: 425,
+      },
+      {
+        id: "bt-tje-2",
+        text: "Scans HTML and component files with fast regex extractors to identify dynamic utility candidates.",
+        searchPrompt: "Tailwind candidate extraction regex parser arbitrary value interpolation",
+        emoji: "🔍",
+        reactionCount: "4.8k",
+        commentCount: 365,
+      },
+      {
+        id: "bt-tje-3",
+        text: "Tailwind v4 Oxide engine uses fast Rust parsers to compile entire stylesheets in milliseconds.",
+        searchPrompt: "Tailwind CSS v4 Oxide engine Rust lightningcss compiler architecture",
+        emoji: "🦀",
+        reactionCount: "4.4k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "buildtools-source-maps-caching-strategies": {
+    id: "buildtools-source-maps-caching-strategies",
+    title: "Source Maps & Persistent Caching",
+    badge: "Debug & Cache",
+    tagline: "VLQ-encoded source mapping, memory vs filesystem caching, and CI deterministic build acceleration",
+    takeaways: [
+      {
+        id: "bt-smc-1",
+        text: "Source maps decode bundled and minified code back to original source lines using VLQ coordinates.",
+        searchPrompt: "source maps VLQ base64 coordinate mapping devtools debugging",
+        emoji: "🗺️",
+        reactionCount: "4.9k",
+        commentCount: 370,
+      },
+      {
+        id: "bt-smc-2",
+        text: "Persistent disk caching stores intermediate ASTs and artifacts to make rebuilds near-instantaneous.",
+        searchPrompt: "persistent disk caching AST serialization build cache CI optimization",
+        emoji: "💾",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+      {
+        id: "bt-smc-3",
+        text: "Deterministic build hashes ensure identical inputs yield bit-for-bit identical production output.",
+        searchPrompt: "deterministic builds reproducible builds content hashing CI CD",
+        emoji: "🔒",
+        reactionCount: "4.0k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  // 9 Stages of Modern Asset Bundling Pipeline
+  "build-entry-resolution-config": {
+    id: "build-entry-resolution-config",
+    title: "1. Entry Resolution & Config",
+    badge: "🚪 Entrypoints & Resolve Plugins",
+    tagline: "Parsing configuration files, resolving root entry points, configuring aliases, and initializing plugins",
+    takeaways: [
+      {
+        id: "bt-erc-1",
+        text: "Reads bundler config (vite.config or webpack.config) to define input entries and resolve rules.",
+        searchPrompt: "bundler configuration entry points resolve alias extensions webpack vite",
+        emoji: "🚪",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+      {
+        id: "bt-erc-2",
+        text: "Resolves path aliases, node module extensions, and browser conditions to find entry source files.",
+        searchPrompt: "enhanced resolve package exports condition exports alias module resolution",
+        emoji: "🧭",
+        reactionCount: "4.3k",
+        commentCount: 305,
+      },
+      {
+        id: "bt-erc-3",
+        text: "Initializes compiler plugins and hooks before reading the first module file from disk storage.",
+        searchPrompt: "bundler plugin initialization hooks compiler lifecycle setup",
+        emoji: "🔌",
+        reactionCount: "3.9k",
+        commentCount: 265,
+      },
+    ],
+  },
+
+  "build-module-loading-transpilation": {
+    id: "build-module-loading-transpilation",
+    title: "2. Module Loading & Transpilation",
+    badge: "🔄 Loaders & SWC/esbuild",
+    tagline: "Reading source files from disk, running loaders, and transpiling TypeScript, JSX, and Vue SFCs to standard JS",
+    takeaways: [
+      {
+        id: "bt-mlt-1",
+        text: "Reads files from filesystem and transforms non-JS syntax using high-speed SWC, Babel, or esbuild.",
+        searchPrompt: "module loading transpilation SWC Babel esbuild transform TSX JSX",
+        emoji: "🔄",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "bt-mlt-2",
+        text: "Transforms TypeScript types, JSX elements, and Vue single-file components into standard JavaScript.",
+        searchPrompt: "TypeScript JSX Vue SFC compiler transform standard ECMAScript code",
+        emoji: "🪄",
+        reactionCount: "4.5k",
+        commentCount: 325,
+      },
+      {
+        id: "bt-mlt-3",
+        text: "Generates initial source map mappings to preserve accurate debugging back to original source lines.",
+        searchPrompt: "inline source map generation loader transpiler debugging coordinates",
+        emoji: "📍",
+        reactionCount: "4.1k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  "build-ast-dependency-graph": {
+    id: "build-ast-dependency-graph",
+    title: "3. AST Parsing & Dependency Graph",
+    badge: "🌳 Abstract Syntax Tree & Graph",
+    tagline: "Parsing code into Abstract Syntax Trees, identifying import/export specifiers, and constructing DAGs",
+    takeaways: [
+      {
+        id: "bt-adg-1",
+        text: "Parses transformed code into Abstract Syntax Trees using fast parsers like OXC, Acorn, or SWC.",
+        searchPrompt: "AST parsing Abstract Syntax Tree Acorn SWC OXC JavaScript parser",
+        emoji: "🌳",
+        reactionCount: "5.1k",
+        commentCount: 390,
+      },
+      {
+        id: "bt-adg-2",
+        text: "Walks AST nodes to extract static import declarations and dynamic import() call expressions.",
+        searchPrompt: "AST traversal extract import declarations export named dynamic import expressions",
+        emoji: "🚶",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+      {
+        id: "bt-adg-3",
+        text: "Builds a Directed Acyclic Graph (DAG) connecting every module and its imported dependencies.",
+        searchPrompt: "module dependency graph DAG directed acyclic graph bundler traversal",
+        emoji: "🕸️",
+        reactionCount: "4.2k",
+        commentCount: 295,
+      },
+    ],
+  },
+
+  "build-tree-shaking-dce": {
+    id: "build-tree-shaking-dce",
+    title: "4. Tree Shaking & Dead Code Elimination",
+    badge: "🌲 Static ES Analysis & Pruning",
+    tagline: "Analyzing static ES module export usage, pruning unreferenced exports, and eliminating dead code paths",
+    takeaways: [
+      {
+        id: "bt-tsd-1",
+        text: "Relies on ES module static import/export structure to trace exactly which exports are referenced.",
+        searchPrompt: "tree shaking ES module static import export analysis usedExports",
+        emoji: "🌲",
+        reactionCount: "5.4k",
+        commentCount: 420,
+      },
+      {
+        id: "bt-tsd-2",
+        text: "Flags unreferenced exported functions and classes as unused, safely dropping them from compilation.",
+        searchPrompt: "dead code elimination prune unused exports Rollup Webpack tree shaking",
+        emoji: "✂️",
+        reactionCount: "4.9k",
+        commentCount: 370,
+      },
+      {
+        id: "bt-tsd-3",
+        text: "Eliminates dead code blocks guarded by constant false conditions such as NODE_ENV checks.",
+        searchPrompt: "dead branch elimination constant folding process env NODE_ENV production",
+        emoji: "🍂",
+        reactionCount: "4.4k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "build-scope-hoisting-concatenation": {
+    id: "build-scope-hoisting-concatenation",
+    title: "5. Scope Hoisting & Module Concatenation",
+    badge: "📦 Flatter Scope & IIFE Elimination",
+    tagline: "Merging related modules into single functional scopes, reducing closure overhead, and speeding runtime execution",
+    takeaways: [
+      {
+        id: "bt-shc-1",
+        text: "Concatenates interdependent modules into a shared closure instead of wrapping each in an IIFE.",
+        searchPrompt: "scope hoisting module concatenation Rollup Webpack IIFE wrapper removal",
+        emoji: "📦",
+        reactionCount: "5.2k",
+        commentCount: 395,
+      },
+      {
+        id: "bt-shc-2",
+        text: "Drastically reduces JavaScript execution overhead and memory consumption in client browsers.",
+        searchPrompt: "scope hoisting runtime execution speed memory closure reduction V8",
+        emoji: "⚡",
+        reactionCount: "4.7k",
+        commentCount: 345,
+      },
+      {
+        id: "bt-shc-3",
+        text: "Renames internal variable collisions with deterministic unique identifiers across merged scopes.",
+        searchPrompt: "variable name mangling collision resolution scope flattening compiler",
+        emoji: "🏷️",
+        reactionCount: "4.2k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "build-code-splitting-chunking": {
+    id: "build-code-splitting-chunking",
+    title: "6. Code Splitting & Chunking",
+    badge: "✂️ Dynamic Imports & Shared Chunks",
+    tagline: "Carving dependency graph into vendor chunks, route-level async split points, and runtime manifests",
+    takeaways: [
+      {
+        id: "bt-csc-1",
+        text: "Splits application into separate bundles based on dynamic import() boundaries and route structures.",
+        searchPrompt: "code splitting dynamic import route chunking lazy loading bundler",
+        emoji: "✂️",
+        reactionCount: "5.5k",
+        commentCount: 435,
+      },
+      {
+        id: "bt-csc-2",
+        text: "Extracts shared third-party node_modules packages into dedicated long-term cached vendor chunks.",
+        searchPrompt: "vendor chunking splitChunks node_modules cacheGroup long term caching",
+        emoji: "📦",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "bt-csc-3",
+        text: "Prevents duplicate module code across multiple chunks by isolating common shared dependencies.",
+        searchPrompt: "chunk deduplication common chunk extraction Webpack splitChunks plugin",
+        emoji: "🛡️",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "build-asset-transformation-css": {
+    id: "build-asset-transformation-css",
+    title: "7. Asset Transformation & CSS",
+    badge: "🎨 Tailwind JIT & Image Optimization",
+    tagline: "Compiling Tailwind utility CSS, running PostCSS/LightningCSS, inlining SVG data, and optimizing images",
+    takeaways: [
+      {
+        id: "bt-atc-1",
+        text: "Compiles CSS with LightningCSS or PostCSS, autoprefixing and resolving @import directives.",
+        searchPrompt: "LightningCSS PostCSS autoprefixer CSS import resolution bundle asset",
+        emoji: "🎨",
+        reactionCount: "5.1k",
+        commentCount: 385,
+      },
+      {
+        id: "bt-atc-2",
+        text: "Tailwind JIT engine scans template chunks to output minimal atomic CSS containing only used rules.",
+        searchPrompt: "Tailwind CSS JIT scan template chunks atomic stylesheet minification",
+        emoji: "✨",
+        reactionCount: "4.7k",
+        commentCount: 345,
+      },
+      {
+        id: "bt-atc-3",
+        text: "Inlines small icons as Base64 URIs and emits optimized image assets with hashed output paths.",
+        searchPrompt: "asset modules inline data url image optimization hashed static emission",
+        emoji: "🖼️",
+        reactionCount: "4.2k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "build-minification-mangling": {
+    id: "build-minification-mangling",
+    title: "8. Minification & Mangling",
+    badge: "📉 Terser/SWC Minification",
+    tagline: "Mangling variable names, stripping whitespace and comments, and folding constant expressions with Terser or SWC",
+    takeaways: [
+      {
+        id: "bt-bmm-1",
+        text: "Replaces long variable and parameter names with one- or two-character identifiers to cut file size.",
+        searchPrompt: "JavaScript minification mangling identifier shortening Terser SWC esbuild",
+        emoji: "📉",
+        reactionCount: "5.3k",
+        commentCount: 410,
+      },
+      {
+        id: "bt-bmm-2",
+        text: "Strips all comments, annotations, and whitespace formatting without modifying runtime semantics.",
+        searchPrompt: "whitespace comment stripping dead code removal byte reduction minifier",
+        emoji: "🧹",
+        reactionCount: "4.8k",
+        commentCount: 360,
+      },
+      {
+        id: "bt-bmm-3",
+        text: "Folds constant expressions and simplifies boolean logic using ultra-fast SWC or esbuild engines.",
+        searchPrompt: "constant folding boolean simplification AST minification compiler passes",
+        emoji: "⚡",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "build-content-hashing-manifest": {
+    id: "build-content-hashing-manifest",
+    title: "9. Content Hashing & Manifest",
+    badge: "🔒 Immutable Caching & SRI",
+    tagline: "Computing cryptographic content hashes, outputting immutable assets, and generating manifest.json mappings",
+    takeaways: [
+      {
+        id: "bt-chm-1",
+        text: "Computes cryptographic hashes of file contents to generate immutable output bundle filenames.",
+        searchPrompt: "contenthash chunkhash cryptographic file hash immutable cache bundler",
+        emoji: "🔒",
+        reactionCount: "5.4k",
+        commentCount: 415,
+      },
+      {
+        id: "bt-chm-2",
+        text: "Enables CDNs and browsers to cache production assets indefinitely with immutable headers.",
+        searchPrompt: "Cache-Control max-age immutable CDN browser caching contenthash",
+        emoji: "🚀",
+        reactionCount: "4.9k",
+        commentCount: 365,
+      },
+      {
+        id: "bt-chm-3",
+        text: "Generates manifest.json mapping source names to hashed bundle URLs for SSR and dynamic loading.",
+        searchPrompt: "manifest.json assets manifest SSR bundle mapping subresource integrity SRI",
+        emoji: "📋",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -16307,6 +16938,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Next.js & App Router"
       : node.category === "angularvue"
       ? "Angular, Vue & Svelte"
+      : node.category === "buildtools"
+      ? "Build Tools & Bundlers"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

@@ -1059,6 +1059,8 @@ export function calculateGroupLayout(
         ? "Full-Stack RSC Runtime"
         : category === "angularvue"
         ? "Reactivity & Compilers"
+        : category === "buildtools"
+        ? "Bundlers & CSS Engines"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1113,6 +1115,8 @@ export function calculateGroupLayout(
         ? "#e2e8f0"
         : category === "angularvue"
         ? "#e11d48"
+        : category === "buildtools"
+        ? "#9333ea"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -4235,6 +4239,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1N: Build Tools & Bundlers Hub (placed along the right spine at x = 1300, y = -8550)
+    const buildtoolsHubX = 1300;
+    const buildtoolsHubY = -8550;
+    const buildtoolsHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-buildtools")!,
+      x: buildtoolsHubX,
+      y: buildtoolsHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(buildtoolsHubNode);
+    edges.push({
+      source: angularvueHubNode.id,
+      target: buildtoolsHubNode.id,
+      category: "buildtools",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Build Tools Pillar 1: Vite, ESM & Lightning HMR (Right-Up: x = 1950, y = -8730)
+    const viteRaw = allNodes.find((n) => n.id === "buildtools-vite-esm-hmr-pillar");
+    if (viteRaw) {
+      const viteX = buildtoolsHubX + 650;
+      const viteY = buildtoolsHubY - 180;
+      const viteNode: PositionedNode = {
+        ...viteRaw,
+        x: viteX,
+        y: viteY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(viteNode);
+      edges.push({
+        source: buildtoolsHubNode.id,
+        target: viteNode.id,
+        category: "buildtools",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const vnbRaw = allNodes.find((n) => n.id === "buildtools-vite-nobundle-native-esm");
+      if (vnbRaw) {
+        positionedNodes.push({
+          ...vnbRaw,
+          x: viteX + 320,
+          y: viteY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: viteNode.id,
+          target: vnbRaw.id,
+          category: "buildtools",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const edpRaw = allNodes.find((n) => n.id === "buildtools-esbuild-dep-prebundling");
+      if (edpRaw) {
+        positionedNodes.push({
+          ...edpRaw,
+          x: viteX + 320,
+          y: viteY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: viteNode.id,
+          target: edpRaw.id,
+          category: "buildtools",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const hbpRaw = allNodes.find((n) => n.id === "buildtools-vite-hmr-boundary-propagation");
+      if (hbpRaw) {
+        positionedNodes.push({
+          ...hbpRaw,
+          x: viteX + 320,
+          y: viteY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: viteNode.id,
+          target: hbpRaw.id,
+          category: "buildtools",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Build Tools Pillar 2: 9-Stage Modern Asset Bundling Pipeline (Group Card, Right-Center: x = 2100, y = -8550)
+    const buildtoolsGroupCard = cardByPillar.get("buildtools-pipeline-pillar");
+    if (buildtoolsGroupCard) {
+      const cardX = buildtoolsHubX + 800;
+      const cardY = buildtoolsHubY;
+      const posCard: PositionedGroupCard = {
+        ...buildtoolsGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: buildtoolsHubNode.id,
+        target: buildtoolsGroupCard.id,
+        category: "buildtools",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Build Tools Pillar 3: Webpack, Tailwind & Tooling (Right-Down: x = 1950, y = -8370)
+    const wtToolRaw = allNodes.find((n) => n.id === "buildtools-webpack-tailwind-pillar");
+    if (wtToolRaw) {
+      const wtToolX = buildtoolsHubX + 650;
+      const wtToolY = buildtoolsHubY + 180;
+      const wtToolNode: PositionedNode = {
+        ...wtToolRaw,
+        x: wtToolX,
+        y: wtToolY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(wtToolNode);
+      edges.push({
+        source: buildtoolsHubNode.id,
+        target: wtToolNode.id,
+        category: "buildtools",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const wccRaw = allNodes.find((n) => n.id === "buildtools-webpack-compilation-chunks");
+      if (wccRaw) {
+        positionedNodes.push({
+          ...wccRaw,
+          x: wtToolX + 320,
+          y: wtToolY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: wtToolNode.id,
+          target: wccRaw.id,
+          category: "buildtools",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const tjeRaw = allNodes.find((n) => n.id === "buildtools-tailwind-jit-compiler-engine");
+      if (tjeRaw) {
+        positionedNodes.push({
+          ...tjeRaw,
+          x: wtToolX + 320,
+          y: wtToolY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: wtToolNode.id,
+          target: tjeRaw.id,
+          category: "buildtools",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const smcRaw = allNodes.find((n) => n.id === "buildtools-source-maps-caching-strategies");
+      if (smcRaw) {
+        positionedNodes.push({
+          ...smcRaw,
+          x: wtToolX + 320,
+          y: wtToolY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: wtToolNode.id,
+          target: smcRaw.id,
+          category: "buildtools",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -6457,6 +6654,8 @@ export function calculateGroupLayout(
     pillarIds = ["nextjs-app-router-conventions-pillar", "nextjs-pipeline-pillar", "nextjs-server-actions-caching-pillar"];
   } else if (category === "angularvue") {
     pillarIds = ["angular-architecture-signals-pillar", "angularvue-pipeline-pillar", "vue-svelte-reactivity-compilers-pillar"];
+  } else if (category === "buildtools") {
+    pillarIds = ["buildtools-vite-esm-hmr-pillar", "buildtools-pipeline-pillar", "buildtools-webpack-tailwind-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -6845,6 +7044,11 @@ export function getNodesForCategory(
       parentId: "root-nextjs",
       level: 2,
     };
+    const buildtoolsRoot = {
+      ...allNodes.find((n) => n.id === "root-buildtools")!,
+      parentId: "root-angularvue",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -6893,13 +7097,14 @@ export function getNodesForCategory(
         n.id !== "root-react" &&
         n.id !== "root-nextjs" &&
         n.id !== "root-angularvue" &&
+        n.id !== "root-buildtools" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

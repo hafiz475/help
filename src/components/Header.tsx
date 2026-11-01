@@ -37,6 +37,7 @@ import {
   Atom,
   Globe,
   Component,
+  Package,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -112,6 +113,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Globe size={16} />;
       case "angularvue":
         return <Component size={16} />;
+      case "buildtools":
+        return <Package size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

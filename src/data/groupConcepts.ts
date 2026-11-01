@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2367,7 +2367,84 @@ export const ANGULARVUE_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const BUILDTOOLS_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-buildtools-pipeline",
+    pillarId: "buildtools-pipeline-pillar",
+    title: "9-Stage Modern Asset Bundling Pipeline",
+    category: "buildtools",
+    badge: "9 Sequential Stages",
+    color: "#9333ea",
+    isPipeline: true,
+    items: [
+      {
+        id: "build-entry-resolution-config",
+        stepNumber: 1,
+        label: "1. Entry Point Resolution & CLI Config",
+        badge: "📁 Root Entry Resolution & Plugin Setup",
+        searchQuery: "bundler entry point resolution CLI options plugin configuration normalizer",
+      },
+      {
+        id: "build-module-loading-transpilation",
+        stepNumber: 2,
+        label: "2. Module Loading & Transpilation",
+        badge: "⚙️ SWC / Babel / OXC AST Parsing",
+        searchQuery: "module loading transpilation SWC Babel OXC JSX TypeScript AST parse",
+      },
+      {
+        id: "build-ast-dependency-graph",
+        stepNumber: 3,
+        label: "3. AST Traversal & Module Dependency Graph",
+        badge: "🕸️ Import/Export DAG Graph Construction",
+        searchQuery: "AST traversal module dependency graph DAG static dynamic import Webpack Rollup",
+      },
+      {
+        id: "build-tree-shaking-dce",
+        stepNumber: 4,
+        label: "4. Tree Shaking & Dead Code Elimination",
+        badge: "✂️ sideEffects: false & Unused Export Prune",
+        searchQuery: "tree shaking dead code elimination unused exports sideEffects false DCE Rollup",
+      },
+      {
+        id: "build-scope-hoisting-concatenation",
+        stepNumber: 5,
+        label: "5. Scope Hoisting & Module Inlining",
+        badge: "📦 Inlining Closures into Single Scope",
+        searchQuery: "scope hoisting module concatenation closure overhead reduction Rollup Webpack",
+      },
+      {
+        id: "build-code-splitting-chunking",
+        stepNumber: 6,
+        label: "6. Code Splitting & Chunk Partitioning",
+        badge: "🧩 SplitChunks & Dynamic Import Chunks",
+        searchQuery: "code splitting chunking dynamic import vendor chunk route boundary lazy load",
+      },
+      {
+        id: "build-asset-transformation-css",
+        stepNumber: 7,
+        label: "7. Asset Processing & CSS Extraction",
+        badge: "🎨 Tailwind JIT CSS & Asset Relocation",
+        searchQuery: "PostCSS Tailwind CSS JIT asset relocation asset emit font image hash",
+      },
+      {
+        id: "build-minification-mangling",
+        stepNumber: 8,
+        label: "8. Minification & Mangling (Terser/SWC)",
+        badge: "📉 Variable Mangling & Dead Code Stripping",
+        searchQuery: "JS minification Terser SWC esbuild mangling identifier compression sourcemaps",
+      },
+      {
+        id: "build-content-hashing-manifest",
+        stepNumber: 9,
+        label: "9. Content Hashing & Manifest Emission",
+        badge: "🔒 [contenthash] & manifest.json",
+        searchQuery: "contenthash deterministic asset manifest immutable CDN caching headers",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2395,8 +2472,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "react") return REACT_GROUP_CARDS;
   if (category === "nextjs") return NEXTJS_GROUP_CARDS;
   if (category === "angularvue") return ANGULARVUE_GROUP_CARDS;
+  if (category === "buildtools") return BUILDTOOLS_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

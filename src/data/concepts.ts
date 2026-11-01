@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -267,8 +267,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "buildtools",
+    name: "28. Build Tools & Bundlers",
+    title: "Modern Build Systems, Bundlers & CSS Engines",
+    description: "Vite Native ESM & Rollup/Esbuild, Webpack Dependency Graph & Tree Shaking, Tailwind CSS JIT Engine & Code Splitting",
+    color: "#9333ea", // Vite Violet
+    icon: "Package",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "28. OOP (4 Pillars)",
+    name: "29. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -277,7 +286,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "29. DSA",
+    name: "30. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -286,7 +295,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "30. Big O",
+    name: "31. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -300,7 +309,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 329,
+    count: 339,
   },
 ];
 
@@ -559,6 +568,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Angular Vue Svelte reactivity models signals RxJS proxies compile time runes direct DOM updates",
     badge: "Reactivity & Compilers",
     color: "#e11d48",
+  },
+  {
+    id: "root-buildtools",
+    label: "Build Tools & Bundlers",
+    category: "buildtools",
+    level: 0,
+    searchQuery: "Vite Webpack Tailwind CSS build tools bundlers native ESM esbuild Rollup JIT engine tree shaking code splitting",
+    badge: "Bundlers & CSS Engines",
+    color: "#9333ea",
   },
   {
     id: "root-oop",
@@ -3740,7 +3758,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 28. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 28. BUILD TOOLS, BUNDLERS & CSS ENGINES
+  // ==========================================
+  // Pillar 1: Vite, Native ESM & Hot Module Replacement
+  {
+    id: "buildtools-vite-esm-hmr-pillar",
+    label: "Vite & Native ESM Dev Server",
+    category: "buildtools",
+    parentId: "root-buildtools",
+    level: 1,
+    searchQuery: "Vite dev server native ES modules esbuild pre-bundling Hot Module Replacement HMR import.meta.hot",
+    badge: "Native ESM & Instant HMR",
+    color: "#a855f7",
+  },
+  {
+    id: "buildtools-vite-nobundle-native-esm",
+    label: "No-Bundle Dev Server & Native ESM",
+    category: "buildtools",
+    parentId: "buildtools-vite-esm-hmr-pillar",
+    level: 2,
+    searchQuery: "Vite no-bundle dev server browser native ES module dynamic imports on-demand 304 not modified startup speed",
+    badge: "Native ESM & 0ms Startup",
+    color: "#c084fc",
+  },
+  {
+    id: "buildtools-esbuild-dep-prebundling",
+    label: "Esbuild & Dependency Pre-bundling",
+    category: "buildtools",
+    parentId: "buildtools-vite-esm-hmr-pillar",
+    level: 2,
+    searchQuery: "esbuild Go compiler 100x faster CommonJS to ESM conversion vendor prebundling node_modules caching",
+    badge: "Esbuild & CJS-to-ESM",
+    color: "#e879f9",
+  },
+  {
+    id: "buildtools-vite-hmr-boundary-propagation",
+    label: "HMR Boundary & Hot Invalidation",
+    category: "buildtools",
+    parentId: "buildtools-vite-esm-hmr-pillar",
+    level: 2,
+    searchQuery: "Vite HMR boundary import.meta.hot.accept module graph invalidation state preservation hot update bubble",
+    badge: "import.meta.hot & Graph",
+    color: "#a855f7",
+  },
+
+  // Pillar 2: 9-Stage Modern Build & Asset Bundling Pipeline (Group Card)
+  {
+    id: "buildtools-pipeline-pillar",
+    label: "9-Stage Asset Bundling Pipeline",
+    category: "buildtools",
+    parentId: "root-buildtools",
+    level: 1,
+    searchQuery: "modern build bundling pipeline AST parser tree shaking scope hoisting code splitting minification content hashing",
+    badge: "9 Sequential Stages",
+    color: "#9333ea",
+  },
+
+  // Pillar 3: Webpack Graph & Tailwind JIT Engine
+  {
+    id: "buildtools-webpack-tailwind-pillar",
+    label: "Webpack Chunks & Tailwind JIT",
+    category: "buildtools",
+    parentId: "root-buildtools",
+    level: 1,
+    searchQuery: "Webpack compiler module graph SplitChunksPlugin tree shaking Tailwind CSS JIT engine source maps",
+    badge: "Webpack Graph & JIT CSS",
+    color: "#c084fc",
+  },
+  {
+    id: "buildtools-webpack-compilation-chunks",
+    label: "Webpack Compiler & SplitChunks",
+    category: "buildtools",
+    parentId: "buildtools-webpack-tailwind-pillar",
+    level: 2,
+    searchQuery: "Webpack tapable compilation lifecycle SplitChunksPlugin vendor chunk extraction runtime chunk deterministic chunkIds",
+    badge: "SplitChunks & Tapable",
+    color: "#e879f9",
+  },
+  {
+    id: "buildtools-tailwind-jit-compiler-engine",
+    label: "Tailwind CSS JIT Engine",
+    category: "buildtools",
+    parentId: "buildtools-webpack-tailwind-pillar",
+    level: 2,
+    searchQuery: "Tailwind CSS JIT just-in-time compiler on-demand class scanning PostCSS AST CSS injection zero bundle bloat",
+    badge: "JIT Scanner & Zero Bloat",
+    color: "#a855f7",
+  },
+  {
+    id: "buildtools-source-maps-caching-strategies",
+    label: "Source Maps & Persistent Caching",
+    category: "buildtools",
+    parentId: "buildtools-webpack-tailwind-pillar",
+    level: 2,
+    searchQuery: "source maps VLQ base64 mapping file-system persistent caching Webpack cache type filesystem deterministic builds",
+    badge: "VLQ Maps & Cache",
+    color: "#c084fc",
+  },
+
+  // ==========================================
+  // 29. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
@@ -3799,7 +3916,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 29. DATA STRUCTURES (DSA)
+  // 30. DATA STRUCTURES (DSA)
   // ==========================================
   // Level 1 Major Pillar
   {
@@ -3879,7 +3996,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 30. BIG O TIME COMPLEXITY
+  // 31. BIG O TIME COMPLEXITY
   // ==========================================
   // Level 1 Major Pillar
   {
