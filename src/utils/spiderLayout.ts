@@ -1055,6 +1055,8 @@ export function calculateGroupLayout(
         ? "Web3 & Distributed Ledger"
         : category === "react"
         ? "Virtual DOM & Fiber Engine"
+        : category === "nextjs"
+        ? "Full-Stack RSC Runtime"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1105,6 +1107,8 @@ export function calculateGroupLayout(
         ? "#d97706"
         : category === "react"
         ? "#22d3ee"
+        : category === "nextjs"
+        ? "#e2e8f0"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -3841,6 +3845,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1L: Next.js & App Router Architecture Hub (placed along the right spine at x = 1300, y = -7350)
+    const nextjsHubX = 1300;
+    const nextjsHubY = -7350;
+    const nextjsHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-nextjs")!,
+      x: nextjsHubX,
+      y: nextjsHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(nextjsHubNode);
+    edges.push({
+      source: reactHubNode.id,
+      target: nextjsHubNode.id,
+      category: "nextjs",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Next.js Node 1: App Router & File-System Conventions (Right-Up)
+    const nAppRouterRaw = allNodes.find((n) => n.id === "nextjs-app-router-conventions-pillar");
+    if (nAppRouterRaw) {
+      const nAppRouterX = nextjsHubX + 650;
+      const nAppRouterY = nextjsHubY - 180;
+      const nAppRouterNode: PositionedNode = {
+        ...nAppRouterRaw,
+        x: nAppRouterX,
+        y: nAppRouterY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(nAppRouterNode);
+      edges.push({
+        source: nextjsHubNode.id,
+        target: nAppRouterNode.id,
+        category: "nextjs",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const nlprRaw = allNodes.find((n) => n.id === "nextjs-nested-layouts-parallel-routes");
+      if (nlprRaw) {
+        positionedNodes.push({
+          ...nlprRaw,
+          x: nAppRouterX + 320,
+          y: nAppRouterY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nAppRouterNode.id,
+          target: nlprRaw.id,
+          category: "nextjs",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const nirmRaw = allNodes.find((n) => n.id === "nextjs-intercepting-routes-modals");
+      if (nirmRaw) {
+        positionedNodes.push({
+          ...nirmRaw,
+          x: nAppRouterX + 320,
+          y: nAppRouterY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nAppRouterNode.id,
+          target: nirmRaw.id,
+          category: "nextjs",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const nssbRaw = allNodes.find((n) => n.id === "nextjs-streaming-suspense-boundaries");
+      if (nssbRaw) {
+        positionedNodes.push({
+          ...nssbRaw,
+          x: nAppRouterX + 320,
+          y: nAppRouterY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nAppRouterNode.id,
+          target: nssbRaw.id,
+          category: "nextjs",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Next.js Node 2: 9-Stage Next.js RSC & Streaming Pipeline (Group Card, Right-Center)
+    const nextGroupCard = cardByPillar.get("nextjs-pipeline-pillar");
+    if (nextGroupCard) {
+      const cardX = nextjsHubX + 800;
+      const cardY = nextjsHubY;
+      const posCard: PositionedGroupCard = {
+        ...nextGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: nextjsHubNode.id,
+        target: nextGroupCard.id,
+        category: "nextjs",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Next.js Node 3: Server Actions, Caching & Data Mutation (Right-Down)
+    const nServerActionsRaw = allNodes.find((n) => n.id === "nextjs-server-actions-caching-pillar");
+    if (nServerActionsRaw) {
+      const nServerActionsX = nextjsHubX + 650;
+      const nServerActionsY = nextjsHubY + 180;
+      const nServerActionsNode: PositionedNode = {
+        ...nServerActionsRaw,
+        x: nServerActionsX,
+        y: nServerActionsY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(nServerActionsNode);
+      edges.push({
+        source: nextjsHubNode.id,
+        target: nServerActionsNode.id,
+        category: "nextjs",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const nsapRaw = allNodes.find((n) => n.id === "nextjs-server-actions-progressive-enhancement");
+      if (nsapRaw) {
+        positionedNodes.push({
+          ...nsapRaw,
+          x: nServerActionsX + 320,
+          y: nServerActionsY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nServerActionsNode.id,
+          target: nsapRaw.id,
+          category: "nextjs",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const nflcRaw = allNodes.find((n) => n.id === "nextjs-four-layer-caching-system");
+      if (nflcRaw) {
+        positionedNodes.push({
+          ...nflcRaw,
+          x: nServerActionsX + 320,
+          y: nServerActionsY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nServerActionsNode.id,
+          target: nflcRaw.id,
+          category: "nextjs",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const nourRaw = allNodes.find((n) => n.id === "nextjs-optimistic-ui-revalidate-path");
+      if (nourRaw) {
+        positionedNodes.push({
+          ...nourRaw,
+          x: nServerActionsX + 320,
+          y: nServerActionsY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nServerActionsNode.id,
+          target: nourRaw.id,
+          category: "nextjs",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -6059,6 +6256,8 @@ export function calculateGroupLayout(
     pillarIds = ["blockchain-consensus-crypto-pillar", "blockchain-pipeline-pillar", "blockchain-smart-contracts-evm-pillar"];
   } else if (category === "react") {
     pillarIds = ["react-fiber-reconciliation-pillar", "react-pipeline-pillar", "react-hooks-state-machines-pillar"];
+  } else if (category === "nextjs") {
+    pillarIds = ["nextjs-app-router-conventions-pillar", "nextjs-pipeline-pillar", "nextjs-server-actions-caching-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -6437,6 +6636,11 @@ export function getNodesForCategory(
       parentId: "root-node",
       level: 2,
     };
+    const nextjsRoot = {
+      ...allNodes.find((n) => n.id === "root-nextjs")!,
+      parentId: "root-react",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -6483,13 +6687,14 @@ export function getNodesForCategory(
         n.id !== "root-iot" &&
         n.id !== "root-blockchain" &&
         n.id !== "root-react" &&
+        n.id !== "root-nextjs" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

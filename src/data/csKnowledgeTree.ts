@@ -1011,10 +1011,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-nextjs",
-            name: "Next.js",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "App router, React Server Components (RSC), server actions, and edge rendering",
+            name: "Next.js (App Router, RSC & Actions) ★",
+            categoryId: "nextjs",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "App Router nested layouts, React Flight protocol, 9-stage RSC streaming pipeline, server actions RPC, and 4-tier caching",
+            color: "#e2e8f0",
           },
           {
             id: "topic-angular-vue",

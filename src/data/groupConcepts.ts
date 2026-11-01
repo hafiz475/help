@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2213,7 +2213,84 @@ export const REACT_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const NEXTJS_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-nextjs-rsc-pipeline",
+    pillarId: "nextjs-pipeline-pillar",
+    title: "9-Stage Next.js RSC & Streaming Pipeline",
+    category: "nextjs",
+    badge: "9 Sequential Stages",
+    color: "#e2e8f0",
+    isPipeline: true,
+    items: [
+      {
+        id: "nextjs-edge-middleware-routing",
+        stepNumber: 1,
+        label: "1. Edge Routing & Middleware Interception",
+        badge: "⚡ Geo-IP, Auth Verification & Header Rewrites",
+        searchQuery: "Next.js edge middleware matcher NextResponse rewrite redirect cookie verification",
+      },
+      {
+        id: "nextjs-route-matching-tree-resolution",
+        stepNumber: 2,
+        label: "2. Route Matching & Segment Resolution",
+        badge: "🌳 URL Segments to Nested Layout Tree Match",
+        searchQuery: "Next.js route matching dynamic segments catch all params resolution page.tsx",
+      },
+      {
+        id: "nextjs-server-component-execution",
+        stepNumber: 3,
+        label: "3. Server Component Execution & Fetch",
+        badge: "⚙️ Direct DB Queries & Async Fetch Deduplication",
+        searchQuery: "React Server Components server execution fetch cache React cache memoization direct ORM",
+      },
+      {
+        id: "nextjs-flight-protocol-serialization",
+        stepNumber: 4,
+        label: "4. React Flight Protocol Serialization",
+        badge: "📦 Virtual DOM to Flight Stream Wire Format",
+        searchQuery: "React Flight protocol wire format serialization chunks stream RSC payload JSON stream",
+      },
+      {
+        id: "nextjs-client-boundary-hole-injection",
+        stepNumber: 5,
+        label: "5. Client Component Boundary Hole Injection",
+        badge: "🧩 'use client' Module References & Props Injection",
+        searchQuery: "Next.js use client boundary client reference manifest slot serialized props",
+      },
+      {
+        id: "nextjs-progressive-html-streaming",
+        stepNumber: 6,
+        label: "6. Progressive HTML Streaming Engine",
+        badge: "🌊 HTTP 200 Chunked Transfer & Loading Shells",
+        searchQuery: "Next.js renderToReadableStream HTML streaming Transfer-Encoding chunked Suspense fallback",
+      },
+      {
+        id: "nextjs-client-flight-stream-parsing",
+        stepNumber: 7,
+        label: "7. Client Flight Stream Parsing",
+        badge: "📥 Parsing Flight Chunks into Live VDOM",
+        searchQuery: "React createFromFetch client Flight parsing progressive tree reconstruction",
+      },
+      {
+        id: "nextjs-selective-client-hydration",
+        stepNumber: 8,
+        label: "8. Selective & Progressive Hydration",
+        badge: "⚡ Hydrating Interactive Client Islands",
+        searchQuery: "Next.js selective hydration client component interactive event replay concurrent root",
+      },
+      {
+        id: "nextjs-isr-tag-cache-revalidation",
+        stepNumber: 9,
+        label: "9. Tag Revalidation & Data Cache (ISR)",
+        badge: "🔄 On-Demand Revalidation & CDN Edge Invalidation",
+        searchQuery: "Next.js ISR revalidateTag stale-while-revalidate edge CDN cache invalidation",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2239,8 +2316,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "iot") return IOT_GROUP_CARDS;
   if (category === "blockchain") return BLOCKCHAIN_GROUP_CARDS;
   if (category === "react") return REACT_GROUP_CARDS;
+  if (category === "nextjs") return NEXTJS_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

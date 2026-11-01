@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -249,8 +249,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "nextjs",
+    name: "26. Next.js & RSC",
+    title: "Next.js Architecture, App Router & Server Components",
+    description: "App Router Nested Layouts, Server Actions, 9-Stage RSC Streaming Pipeline, Route Handlers & Edge Caching",
+    color: "#e2e8f0", // Vercel Platinum White
+    icon: "Globe",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "26. OOP (4 Pillars)",
+    name: "27. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -259,7 +268,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "27. DSA",
+    name: "28. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -268,7 +277,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "28. Big O",
+    name: "29. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -282,7 +291,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 309,
+    count: 319,
   },
 ];
 
@@ -523,6 +532,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "React Virtual DOM Fiber tree reconciliation workLoop concurrent rendering hooks dispatcher",
     badge: "Virtual DOM & Fiber Engine",
     color: "#22d3ee",
+  },
+  {
+    id: "root-nextjs",
+    label: "Next.js & App Router",
+    category: "nextjs",
+    level: 0,
+    searchQuery: "Next.js App Router React Server Components RSC Flight protocol Server Actions edge middleware caching",
+    badge: "Full-Stack RSC Runtime",
+    color: "#e2e8f0",
   },
   {
     id: "root-oop",
@@ -3506,7 +3524,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 26. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 26. NEXT.JS & APP ROUTER ARCHITECTURE
+  // ==========================================
+  // Pillar 1: App Router & File-System Conventions
+  {
+    id: "nextjs-app-router-conventions-pillar",
+    label: "App Router & File System",
+    category: "nextjs",
+    parentId: "root-nextjs",
+    level: 1,
+    searchQuery: "Next.js App Router file-system routing nested layouts parallel routes intercepting routes loading error template",
+    badge: "File System & Route Tree",
+    color: "#cbd5e1",
+  },
+  {
+    id: "nextjs-nested-layouts-parallel-routes",
+    label: "Nested Layouts & Parallel Slots",
+    category: "nextjs",
+    parentId: "nextjs-app-router-conventions-pillar",
+    level: 2,
+    searchQuery: "Next.js nested layouts layout.tsx template.tsx parallel routes @slot default.tsx conditional rendering",
+    badge: "layout.tsx & @slots",
+    color: "#e2e8f0",
+  },
+  {
+    id: "nextjs-intercepting-routes-modals",
+    label: "Intercepting Routes & Handlers",
+    category: "nextjs",
+    parentId: "nextjs-app-router-conventions-pillar",
+    level: 2,
+    searchQuery: "Next.js intercepting routes (.) (..) route.ts route handlers URL shareable modals context preservation",
+    badge: "(.) Intercepts & route.ts",
+    color: "#94a3b8",
+  },
+  {
+    id: "nextjs-streaming-suspense-boundaries",
+    label: "Streaming & loading.tsx Shells",
+    category: "nextjs",
+    parentId: "nextjs-app-router-conventions-pillar",
+    level: 2,
+    searchQuery: "Next.js streaming loading.tsx React Suspense boundaries chunked transfer instant navigation UI shells",
+    badge: "loading.tsx & Suspense",
+    color: "#64748b",
+  },
+
+  // Pillar 2: 9-Stage Next.js RSC & Streaming Pipeline (Group Card)
+  {
+    id: "nextjs-pipeline-pillar",
+    label: "9-Stage Next.js RSC Pipeline",
+    category: "nextjs",
+    parentId: "root-nextjs",
+    level: 1,
+    searchQuery: "Next.js request lifecycle edge middleware RSC Flight protocol streaming HTML progressive hydration ISR data cache",
+    badge: "9 Sequential Stages",
+    color: "#f8fafc",
+  },
+
+  // Pillar 3: Server Actions, Caching & Data Mutation
+  {
+    id: "nextjs-server-actions-caching-pillar",
+    label: "Server Actions & Caching",
+    category: "nextjs",
+    parentId: "root-nextjs",
+    level: 1,
+    searchQuery: "Next.js Server Actions use server progressive enhancement 4-tier caching request memoization revalidatePath",
+    badge: "Actions, RPC & 4-Tier Cache",
+    color: "#cbd5e1",
+  },
+  {
+    id: "nextjs-server-actions-progressive-enhancement",
+    label: "Server Actions & RPC Mutations",
+    category: "nextjs",
+    parentId: "nextjs-server-actions-caching-pillar",
+    level: 2,
+    searchQuery: "Next.js Server Actions use server RPC encrypted action IDs form action progressive enhancement useActionState",
+    badge: "'use server' & POST RPC",
+    color: "#e2e8f0",
+  },
+  {
+    id: "nextjs-four-layer-caching-system",
+    label: "4-Tier Caching Architecture",
+    category: "nextjs",
+    parentId: "nextjs-server-actions-caching-pillar",
+    level: 2,
+    searchQuery: "Next.js 4-tier caching request memoization data cache full route cache router cache unstable_cache",
+    badge: "Memo, Data & Route Cache",
+    color: "#94a3b8",
+  },
+  {
+    id: "nextjs-optimistic-ui-revalidate-path",
+    label: "Optimistic UI & Revalidation",
+    category: "nextjs",
+    parentId: "nextjs-server-actions-caching-pillar",
+    level: 2,
+    searchQuery: "Next.js useOptimistic revalidatePath revalidateTag router.refresh instant client state transitions",
+    badge: "useOptimistic & Revalidation",
+    color: "#64748b",
+  },
+
+  // ==========================================
+  // 27. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
@@ -3565,7 +3682,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 5. DATA STRUCTURES (DSA)
+  // 28. DATA STRUCTURES (DSA)
   // ==========================================
   // Level 1 Major Pillar
   {
@@ -3645,7 +3762,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 6. BIG O TIME COMPLEXITY
+  // 29. BIG O TIME COMPLEXITY
   // ==========================================
   // Level 1 Major Pillar
   {

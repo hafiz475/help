@@ -13509,6 +13509,636 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // NEXT.JS & APP ROUTER STORIES (19 STORIES)
+  // ==========================================
+  "root-nextjs": {
+    id: "root-nextjs",
+    title: "Next.js & App Router",
+    badge: "Full-Stack RSC Runtime",
+    tagline: "React Server Components, nested routing, streaming HTML, and Edge server actions",
+    takeaways: [
+      {
+        id: "nx-root-1",
+        text: "Next.js combines React Server Components, file-system routing, and Edge streaming in one runtime.",
+        searchPrompt: "Next.js App Router architecture React Server Components Edge runtime streaming",
+        emoji: "🌐",
+        reactionCount: "6.8k",
+        commentCount: 512,
+      },
+      {
+        id: "nx-root-2",
+        text: "Server components keep heavy dependencies on the backend, shipping zero JS bundles to clients.",
+        searchPrompt: "React Server Components zero bundle size dependencies backend execution",
+        emoji: "📦",
+        reactionCount: "5.9k",
+        commentCount: 440,
+      },
+      {
+        id: "nx-root-3",
+        text: "Streaming HTML with React Suspense unlocks instant page transitions and progressive hydration.",
+        searchPrompt: "Next.js streaming HTML React Suspense progressive hydration web vitals",
+        emoji: "⚡",
+        reactionCount: "5.3k",
+        commentCount: 388,
+      },
+    ],
+  },
+
+  "nextjs-app-router-conventions-pillar": {
+    id: "nextjs-app-router-conventions-pillar",
+    title: "App Router & File System",
+    badge: "File System & Route Tree",
+    tagline: "Directory-based routing, nested layouts, parallel slots, and intercepting modals",
+    takeaways: [
+      {
+        id: "nx-arc-1",
+        text: "App Router uses folder hierarchy as URL paths with special files: page, layout, loading, error.",
+        searchPrompt: "Next.js App Router folder structure special files page layout loading error",
+        emoji: "📁",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+      {
+        id: "nx-arc-2",
+        text: "Nested layouts preserve sub-tree client state across transitions without re-rendering parents.",
+        searchPrompt: "Next.js nested layouts preserve state across route transitions partial rendering",
+        emoji: "🧱",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+      {
+        id: "nx-arc-3",
+        text: "Parallel routes (@slots) and intercepting routes ((.)) allow modals to have shareable URLs.",
+        searchPrompt: "Next.js parallel routes intercepting routes URL synced shareable modals",
+        emoji: "🔀",
+        reactionCount: "3.9k",
+        commentCount: 285,
+      },
+    ],
+  },
+
+  "nextjs-nested-layouts-parallel-routes": {
+    id: "nextjs-nested-layouts-parallel-routes",
+    title: "Nested Layouts & Parallel Slots",
+    badge: "layout.tsx & @slots",
+    tagline: "Persistent nested layouts, re-mounting templates, and simultaneous parallel slot rendering",
+    takeaways: [
+      {
+        id: "nx-nlpr-1",
+        text: "layout.tsx wraps child pages and persists state; template.tsx creates fresh instances on navigate.",
+        searchPrompt: "Next.js layout.tsx vs template.tsx state persistence re-mounting animation",
+        emoji: "📐",
+        reactionCount: "4.4k",
+        commentCount: 325,
+      },
+      {
+        id: "nx-nlpr-2",
+        text: "Parallel routes (@slot) render multiple pages in parallel inside the same layout view.",
+        searchPrompt: "Next.js parallel routes slot props layout dashboard conditional slots",
+        emoji: "🪟",
+        reactionCount: "3.8k",
+        commentCount: 270,
+      },
+      {
+        id: "nx-nlpr-3",
+        text: "default.tsx provides fallback content for unmatched parallel slots during hard refreshes.",
+        searchPrompt: "Next.js default.tsx parallel routes fallback unmatched slot hard navigation",
+        emoji: "🛡️",
+        reactionCount: "3.5k",
+        commentCount: 240,
+      },
+    ],
+  },
+
+  "nextjs-intercepting-routes-modals": {
+    id: "nextjs-intercepting-routes-modals",
+    title: "Intercepting Routes & Handlers",
+    badge: "(.) Intercepts & route.ts",
+    tagline: "Context-preserving URL overlays, segment interception, and raw Web standard route handlers",
+    takeaways: [
+      {
+        id: "nx-irm-1",
+        text: "Intercepting routes ((.)) show modal overlays on soft navigation while keeping full page on reload.",
+        searchPrompt: "Next.js intercepting routes dot folder modal overlay shareable URL soft navigation",
+        emoji: "🎯",
+        reactionCount: "4.6k",
+        commentCount: 345,
+      },
+      {
+        id: "nx-irm-2",
+        text: "Enables context-preserving URL modals for photo galleries, auth dialogs, and sidebar drawers.",
+        searchPrompt: "Next.js photo gallery modal feed context preservation intercepting route",
+        emoji: "🖼️",
+        reactionCount: "4.1k",
+        commentCount: 295,
+      },
+      {
+        id: "nx-irm-3",
+        text: "route.ts files handle raw HTTP GET, POST, PUT, DELETE requests with standard Web Request/Response.",
+        searchPrompt: "Next.js route.ts route handlers NextRequest NextResponse REST API endpoints",
+        emoji: "🔌",
+        reactionCount: "3.7k",
+        commentCount: 260,
+      },
+    ],
+  },
+
+  "nextjs-streaming-suspense-boundaries": {
+    id: "nextjs-streaming-suspense-boundaries",
+    title: "Streaming & loading.tsx Shells",
+    badge: "loading.tsx & Suspense",
+    tagline: "Instant navigation feedback, nested Suspense boundaries, and HTTP chunked transfer streaming",
+    takeaways: [
+      {
+        id: "nx-ssb-1",
+        text: "loading.tsx automatically wraps the page segment in a React Suspense boundary with instant fallback.",
+        searchPrompt: "Next.js loading.tsx instant loading states React Suspense skeleton UI",
+        emoji: "⏳",
+        reactionCount: "5.1k",
+        commentCount: 380,
+      },
+      {
+        id: "nx-ssb-2",
+        text: "HTTP chunked transfer streams HTML shells immediately while async backend data resolves.",
+        searchPrompt: "Next.js HTTP chunked transfer encoding HTML streaming TTFB optimization",
+        emoji: "🌊",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+      {
+        id: "nx-ssb-3",
+        text: "Users interact with ready parts of the page without waiting for slow database queries.",
+        searchPrompt: "Next.js progressive streaming user interaction non-blocking database queries",
+        emoji: "🚀",
+        reactionCount: "4.0k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "nextjs-pipeline-pillar": {
+    id: "nextjs-pipeline-pillar",
+    title: "9-Stage Next.js RSC Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "Complete edge-to-client lifecycle: Edge middleware, Flight serialization, and progressive hydration",
+    takeaways: [
+      {
+        id: "nx-pl-1",
+        text: "RSC pipeline transforms database queries into streamed Flight wire format and selective hydration.",
+        searchPrompt: "Next.js RSC pipeline architecture edge middleware Flight protocol selective hydration",
+        emoji: "🔄",
+        reactionCount: "5.5k",
+        commentCount: 410,
+      },
+      {
+        id: "nx-pl-2",
+        text: "Edge middleware rewrites and inspects headers before component execution begins.",
+        searchPrompt: "Next.js edge middleware routing rewrite authentication header inspection",
+        emoji: "🛡️",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+      {
+        id: "nx-pl-3",
+        text: "Client browsers merge streaming Flight payloads directly into the live Virtual DOM tree.",
+        searchPrompt: "React Flight client parser createFromFetch progressive DOM reconciliation",
+        emoji: "🧩",
+        reactionCount: "4.3k",
+        commentCount: 305,
+      },
+    ],
+  },
+
+  "nextjs-server-actions-caching-pillar": {
+    id: "nextjs-server-actions-caching-pillar",
+    title: "Server Actions & Caching",
+    badge: "Actions, RPC & 4-Tier Cache",
+    tagline: "Type-safe server RPC mutations, 4-tier caching architecture, and optimistic UI transitions",
+    takeaways: [
+      {
+        id: "nx-sac-1",
+        text: "Server Actions provide type-safe asynchronous RPC endpoints without manual API boilerplate.",
+        searchPrompt: "Next.js Server Actions RPC type safety mutations no API route needed",
+        emoji: "⚡",
+        reactionCount: "5.4k",
+        commentCount: 400,
+      },
+      {
+        id: "nx-sac-2",
+        text: "Four caching layers (Memo, Data Cache, Full Route, Router) optimize latency at every tier.",
+        searchPrompt: "Next.js 4 tier caching system request memoization data cache route cache router cache",
+        emoji: "🗄️",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+      {
+        id: "nx-sac-3",
+        text: "useOptimistic provides instantaneous UI updates before server confirmation roundtrips.",
+        searchPrompt: "React useOptimistic hook Server Actions instant UI update rollback on error",
+        emoji: "✨",
+        reactionCount: "4.4k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "nextjs-server-actions-progressive-enhancement": {
+    id: "nextjs-server-actions-progressive-enhancement",
+    title: "Server Actions & RPC Mutations",
+    badge: "'use server' & POST RPC",
+    tagline: "'use server' directive, encrypted action IDs, progressive enhancement forms, and useActionState",
+    takeaways: [
+      {
+        id: "nx-sap-1",
+        text: "'use server' directive exposes server-executed async functions as secure encrypted POST endpoints.",
+        searchPrompt: "Next.js use server directive secure POST action endpoint encryption CSRF",
+        emoji: "🔒",
+        reactionCount: "4.8k",
+        commentCount: 355,
+      },
+      {
+        id: "nx-sap-2",
+        text: "Works seamlessly with HTML form action attributes, supporting no-JS progressive enhancement.",
+        searchPrompt: "Next.js form action progressive enhancement work without JavaScript",
+        emoji: "📋",
+        reactionCount: "4.2k",
+        commentCount: 300,
+      },
+      {
+        id: "nx-sap-3",
+        text: "useActionState manages pending states, form action payloads, and return error objects.",
+        searchPrompt: "React useActionState hook Server Actions form state pending validation errors",
+        emoji: "⚙️",
+        reactionCount: "3.9k",
+        commentCount: 275,
+      },
+    ],
+  },
+
+  "nextjs-four-layer-caching-system": {
+    id: "nextjs-four-layer-caching-system",
+    title: "4-Tier Caching Architecture",
+    badge: "Memo, Data & Route Cache",
+    tagline: "Request memoization, persistent Data Cache, server Full Route Cache, and client Router Cache",
+    takeaways: [
+      {
+        id: "nx-flc-1",
+        text: "Request Memoization deduplicates identical fetch() calls within a single render pass.",
+        searchPrompt: "Next.js request memoization fetch deduplication single render tree pass",
+        emoji: "🧠",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+      {
+        id: "nx-flc-2",
+        text: "Data Cache persists fetch results across server requests until revalidated by tag or time.",
+        searchPrompt: "Next.js Data Cache persistent fetch next revalidate tags cross request cache",
+        emoji: "💾",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+      {
+        id: "nx-flc-3",
+        text: "Full Route Cache stores pre-rendered HTML and RSC payloads on the server for static routes.",
+        searchPrompt: "Next.js Full Route Cache static site generation build time HTML RSC payload",
+        emoji: "📦",
+        reactionCount: "3.9k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  "nextjs-optimistic-ui-revalidate-path": {
+    id: "nextjs-optimistic-ui-revalidate-path",
+    title: "Optimistic UI & Revalidation",
+    badge: "useOptimistic & Revalidation",
+    tagline: "Instant client state mutations, revalidatePath and revalidateTag cache purging, and soft refreshes",
+    takeaways: [
+      {
+        id: "nx-our-1",
+        text: "useOptimistic updates client UI immediately while server action mutation executes in flight.",
+        searchPrompt: "React useOptimistic instant client feedback optimistic updates server action",
+        emoji: "🚀",
+        reactionCount: "4.6k",
+        commentCount: 335,
+      },
+      {
+        id: "nx-our-2",
+        text: "revalidatePath and revalidateTag purge server cache entries and trigger targeted client refetches.",
+        searchPrompt: "Next.js revalidatePath revalidateTag on demand cache invalidation targeted purge",
+        emoji: "🔄",
+        reactionCount: "4.2k",
+        commentCount: 300,
+      },
+      {
+        id: "nx-our-3",
+        text: "router.refresh updates RSC payload from server without losing temporary client component state.",
+        searchPrompt: "Next.js router.refresh client navigation preserve local state refetch server data",
+        emoji: "🔁",
+        reactionCount: "3.8k",
+        commentCount: 265,
+      },
+    ],
+  },
+
+  "nextjs-edge-middleware-routing": {
+    id: "nextjs-edge-middleware-routing",
+    title: "1. Edge Routing & Middleware Interception",
+    badge: "⚡ Geo-IP, Auth Verification & Header Rewrites",
+    tagline: "Sub-millisecond Edge V8 isolate routing, cookie inspection, URL rewrites, and security headers",
+    takeaways: [
+      {
+        id: "nx-emr-1",
+        text: "Edge middleware executes before cache lookups, evaluating routing rules at CDN edge locations.",
+        searchPrompt: "Next.js middleware.ts edge execution before cache lookup matcher config",
+        emoji: "🌐",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+      {
+        id: "nx-emr-2",
+        text: "NextResponse rewrites URLs, handles redirects, sets cookies, and verifies auth JWT tokens.",
+        searchPrompt: "NextResponse rewrite redirect cookies set auth token verification middleware",
+        emoji: "🛡️",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+      {
+        id: "nx-emr-3",
+        text: "Runs on lightweight Edge runtime (V8 isolates) with near-zero cold start latency.",
+        searchPrompt: "Next.js Edge runtime V8 isolates zero cold start vs Node.js serverless functions",
+        emoji: "⚡",
+        reactionCount: "4.1k",
+        commentCount: 285,
+      },
+    ],
+  },
+
+  "nextjs-route-matching-tree-resolution": {
+    id: "nextjs-route-matching-tree-resolution",
+    title: "2. Route Matching & Segment Resolution",
+    badge: "🌳 URL Segments to Nested Layout Tree Match",
+    tagline: "Path segment parsing, dynamic params extraction, route group unwrapping, and layout hierarchy build",
+    takeaways: [
+      {
+        id: "nx-rmr-1",
+        text: "Parses incoming request pathname against file system segments, dynamic brackets, and catch-alls.",
+        searchPrompt: "Next.js route matching dynamic segments catch all brackets slug params resolution",
+        emoji: "🔍",
+        reactionCount: "4.3k",
+        commentCount: 310,
+      },
+      {
+        id: "nx-rmr-2",
+        text: "Resolves layout hierarchy from root layout down to leaf page.tsx component.",
+        searchPrompt: "Next.js layout hierarchy resolution root layout nested segments page tree",
+        emoji: "🌳",
+        reactionCount: "3.9k",
+        commentCount: 275,
+      },
+      {
+        id: "nx-rmr-3",
+        text: "Validates searchParams and dynamic params before invoking Server Components.",
+        searchPrompt: "Next.js searchParams dynamic route params validation TypeScript page props",
+        emoji: "🏷️",
+        reactionCount: "3.6k",
+        commentCount: 245,
+      },
+    ],
+  },
+
+  "nextjs-server-component-execution": {
+    id: "nextjs-server-component-execution",
+    title: "3. Server Component Execution & Fetch",
+    badge: "⚙️ Direct DB Queries & Async Fetch Deduplication",
+    tagline: "Async Server Component evaluation on Node.js/Edge, ORM database queries, and automatic request memoization",
+    takeaways: [
+      {
+        id: "nx-sce-1",
+        text: "Executes async Server Components directly on Node.js or Edge without sending source code to browser.",
+        searchPrompt: "React Server Components async execution database query backend only code security",
+        emoji: "⚙️",
+        reactionCount: "5.2k",
+        commentCount: 385,
+      },
+      {
+        id: "nx-sce-2",
+        text: "Queries databases directly via ORM/SQL without creating separate REST API endpoints.",
+        searchPrompt: "Next.js direct database queries Prisma Drizzle SQL inside Server Components",
+        emoji: "🗄️",
+        reactionCount: "4.7k",
+        commentCount: 335,
+      },
+      {
+        id: "nx-sce-3",
+        text: "React.cache memoizes duplicate promises across different components in the same render pass.",
+        searchPrompt: "React cache function request deduplication memoize database calls Server Components",
+        emoji: "🧠",
+        reactionCount: "4.2k",
+        commentCount: 295,
+      },
+    ],
+  },
+
+  "nextjs-flight-protocol-serialization": {
+    id: "nextjs-flight-protocol-serialization",
+    title: "4. React Flight Protocol Serialization",
+    badge: "📦 Virtual DOM to Flight Stream Wire Format",
+    tagline: "Encoding rendered Server Component virtual tree into React Flight stream chunks with typed slot references",
+    takeaways: [
+      {
+        id: "nx-fps-1",
+        text: "Serializes Server Component Virtual DOM into React Flight wire format stream.",
+        searchPrompt: "React Flight protocol serialization wire format stream payload chunks",
+        emoji: "📦",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+      {
+        id: "nx-fps-2",
+        text: "Flight chunks represent component elements, rendered props, and client reference IDs.",
+        searchPrompt: "React Flight format chunk format module reference client slot rendered props",
+        emoji: "📜",
+        reactionCount: "4.3k",
+        commentCount: 305,
+      },
+      {
+        id: "nx-fps-3",
+        text: "Avoids sending raw JavaScript code, transmitting only rendered JSON-like data chunks.",
+        searchPrompt: "React Flight protocol payload size comparison vs client side JavaScript bundle",
+        emoji: "📉",
+        reactionCount: "3.9k",
+        commentCount: 270,
+      },
+    ],
+  },
+
+  "nextjs-client-boundary-hole-injection": {
+    id: "nextjs-client-boundary-hole-injection",
+    title: "5. Client Component Boundary Hole Injection",
+    badge: "🧩 'use client' Module References & Props Injection",
+    tagline: "'use client' split point identification, client reference manifest slots, and serializable prop handoff",
+    takeaways: [
+      {
+        id: "nx-cbh-1",
+        text: "Files marked 'use client' become boundary holes in the server-rendered component tree.",
+        searchPrompt: "use client directive boundary split point client reference manifest Next.js",
+        emoji: "🧩",
+        reactionCount: "4.9k",
+        commentCount: 365,
+      },
+      {
+        id: "nx-cbh-2",
+        text: "Server outputs client module manifest references and serialized props into the Flight stream.",
+        searchPrompt: "Next.js client reference manifest chunk URL serialized props passing server client",
+        emoji: "🔗",
+        reactionCount: "4.4k",
+        commentCount: 315,
+      },
+      {
+        id: "nx-cbh-3",
+        text: "Allows server and client components to be freely interleaved across parent-child hierarchies.",
+        searchPrompt: "passing Server Components as children to Client Components composition pattern",
+        emoji: "🔀",
+        reactionCount: "4.0k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  "nextjs-progressive-html-streaming": {
+    id: "nextjs-progressive-html-streaming",
+    title: "6. Progressive HTML Streaming Engine",
+    badge: "🌊 HTTP 200 Chunked Transfer & Loading Shells",
+    tagline: "renderToReadableStream, chunked HTTP 200 responses, static shell delivery, and inline script flushes",
+    takeaways: [
+      {
+        id: "nx-phs-1",
+        text: "renderToReadableStream flushes initial HTML shell with Transfer-Encoding: chunked.",
+        searchPrompt: "renderToReadableStream HTTP Transfer-Encoding chunked HTML streaming Next.js",
+        emoji: "🌊",
+        reactionCount: "5.0k",
+        commentCount: 370,
+      },
+      {
+        id: "nx-phs-2",
+        text: "Suspense boundaries render fallback placeholders while deferred data promises resolve.",
+        searchPrompt: "React Suspense boundary streaming HTML fallback placeholder replacement",
+        emoji: "⏳",
+        reactionCount: "4.5k",
+        commentCount: 325,
+      },
+      {
+        id: "nx-phs-3",
+        text: "Inline script tags stream replacement HTML directly into DOM without page reloads.",
+        searchPrompt: "streaming HTML inline script tag DOM replacement $RC template swap React",
+        emoji: "📜",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "nextjs-client-flight-stream-parsing": {
+    id: "nextjs-client-flight-stream-parsing",
+    title: "7. Client Flight Stream Parsing",
+    badge: "📥 Parsing Flight Chunks into Live VDOM",
+    tagline: "Client-side createFromFetch decoding, progressive Flight chunk absorption, and live VDOM tree synthesis",
+    takeaways: [
+      {
+        id: "nx-cfp-1",
+        text: "Browser receives Flight stream chunks and deserializes them via React Flight client runtime.",
+        searchPrompt: "React Flight client createFromFetch deserialize chunk stream Virtual DOM",
+        emoji: "📥",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+      {
+        id: "nx-cfp-2",
+        text: "Reconstructs Virtual DOM tree progressively as network data arrives.",
+        searchPrompt: "progressive Virtual DOM tree reconstruction React Flight client stream",
+        emoji: "🏗️",
+        reactionCount: "4.1k",
+        commentCount: 290,
+      },
+      {
+        id: "nx-cfp-3",
+        text: "Avoids blocking client render while waiting for the entire document payload to complete.",
+        searchPrompt: "non-blocking client rendering streaming response web performance metrics",
+        emoji: "⚡",
+        reactionCount: "3.7k",
+        commentCount: 255,
+      },
+    ],
+  },
+
+  "nextjs-selective-client-hydration": {
+    id: "nextjs-selective-client-hydration",
+    title: "8. Selective & Progressive Hydration",
+    badge: "⚡ Hydrating Interactive Client Islands",
+    tagline: "Selective client island hydration, priority-based event replay, and zero-JS server component savings",
+    takeaways: [
+      {
+        id: "nx-sch-1",
+        text: "Hydrates interactive client islands independently based on user priority and viewport scroll.",
+        searchPrompt: "React selective hydration client islands viewport intersection priority",
+        emoji: "🏝️",
+        reactionCount: "5.1k",
+        commentCount: 375,
+      },
+      {
+        id: "nx-sch-2",
+        text: "User clicks on an unhydrated island trigger immediate priority hydration and event replay.",
+        searchPrompt: "React discrete event replay priority hydration user interaction click capture",
+        emoji: "👆",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+      {
+        id: "nx-sch-3",
+        text: "Non-interactive server components never ship JS bundles and require zero client hydration.",
+        searchPrompt: "zero bundle size Server Components no client hydration performance impact",
+        emoji: "✨",
+        reactionCount: "4.2k",
+        commentCount: 295,
+      },
+    ],
+  },
+
+  "nextjs-isr-tag-cache-revalidation": {
+    id: "nextjs-isr-tag-cache-revalidation",
+    title: "9. Tag Revalidation & Data Cache (ISR)",
+    badge: "🔄 On-Demand Revalidation & CDN Edge Invalidation",
+    tagline: "revalidateTag and revalidatePath triggers, stale-while-revalidate background generation, and CDN updates",
+    takeaways: [
+      {
+        id: "nx-itr-1",
+        text: "revalidateTag('products') purges tagged cache entries instantly without rebuilding entire site.",
+        searchPrompt: "Next.js revalidateTag on demand incremental static regeneration ISR cache purge",
+        emoji: "🏷️",
+        reactionCount: "5.3k",
+        commentCount: 390,
+      },
+      {
+        id: "nx-itr-2",
+        text: "Stale-while-revalidate serves cached page instantly while regenerating new version in background.",
+        searchPrompt: "stale-while-revalidate caching pattern background regeneration Next.js ISR",
+        emoji: "🔄",
+        reactionCount: "4.8k",
+        commentCount: 345,
+      },
+      {
+        id: "nx-itr-3",
+        text: "Updates are propagated to Edge CDN nodes globally with atomic zero-downtime cache swaps.",
+        searchPrompt: "Next.js edge CDN cache invalidation global purge atomic cache swap",
+        emoji: "🌍",
+        reactionCount: "4.3k",
+        commentCount: 300,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -15043,6 +15673,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Blockchain & Cryptography"
       : node.category === "react"
       ? "React & Fiber Architecture"
+      : node.category === "nextjs"
+      ? "Next.js & App Router"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"
