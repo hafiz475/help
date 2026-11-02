@@ -1048,9 +1048,12 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           {
             id: "topic-express-nestjs",
             name: "Express, NestJS",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "Minimalist Node.js routing vs modular TypeScript architecture with DI",
+            categoryId: "expressnest",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Minimalist Connect middleware chain, router trie, NestJS modular IoC containers, decorators, and 9-stage HTTP request lifecycle pipeline",
+            color: "#ea284e",
           },
           {
             id: "topic-django-fastapi",

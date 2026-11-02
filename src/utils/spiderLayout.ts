@@ -1061,6 +1061,8 @@ export function calculateGroupLayout(
         ? "Reactivity & Compilers"
         : category === "buildtools"
         ? "Bundlers & CSS Engines"
+        : category === "expressnest"
+        ? "Middleware & IoC Frameworks"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1117,6 +1119,8 @@ export function calculateGroupLayout(
         ? "#e11d48"
         : category === "buildtools"
         ? "#9333ea"
+        : category === "expressnest"
+        ? "#ea284e"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -4432,6 +4436,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1O: Express & NestJS Frameworks Hub (placed along the right spine at x = 1300, y = -9150)
+    const expressnestHubX = 1300;
+    const expressnestHubY = -9150;
+    const expressnestHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-expressnest")!,
+      x: expressnestHubX,
+      y: expressnestHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(expressnestHubNode);
+    edges.push({
+      source: buildtoolsHubNode.id,
+      target: expressnestHubNode.id,
+      category: "expressnest",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Express/Nest Pillar 1: Express Routing & Middleware (Right-Up: x = 1950, y = -9330)
+    const expArchRaw = allNodes.find((n) => n.id === "expressnest-express-architecture-pillar");
+    if (expArchRaw) {
+      const expArchX = expressnestHubX + 650;
+      const expArchY = expressnestHubY - 180;
+      const expArchNode: PositionedNode = {
+        ...expArchRaw,
+        x: expArchX,
+        y: expArchY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(expArchNode);
+      edges.push({
+        source: expressnestHubNode.id,
+        target: expArchNode.id,
+        category: "expressnest",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const monRaw = allNodes.find((n) => n.id === "expressnest-middleware-onion-next");
+      if (monRaw) {
+        positionedNodes.push({
+          ...monRaw,
+          x: expArchX + 320,
+          y: expArchY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: expArchNode.id,
+          target: monRaw.id,
+          category: "expressnest",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const rtmRaw = allNodes.find((n) => n.id === "expressnest-router-trie-regex-matching");
+      if (rtmRaw) {
+        positionedNodes.push({
+          ...rtmRaw,
+          x: expArchX + 320,
+          y: expArchY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: expArchNode.id,
+          target: rtmRaw.id,
+          category: "expressnest",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const rpdRaw = allNodes.find((n) => n.id === "expressnest-req-res-prototype-delegation");
+      if (rpdRaw) {
+        positionedNodes.push({
+          ...rpdRaw,
+          x: expArchX + 320,
+          y: expArchY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: expArchNode.id,
+          target: rpdRaw.id,
+          category: "expressnest",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Express/Nest Pillar 2: 9-Stage Modern HTTP Request Lifecycle Pipeline (Group Card, Right-Center: x = 2100, y = -9150)
+    const expressnestGroupCard = cardByPillar.get("expressnest-pipeline-pillar");
+    if (expressnestGroupCard) {
+      const cardX = expressnestHubX + 800;
+      const cardY = expressnestHubY;
+      const posCard: PositionedGroupCard = {
+        ...expressnestGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: expressnestHubNode.id,
+        target: expressnestGroupCard.id,
+        category: "expressnest",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Express/Nest Pillar 3: NestJS IoC Containers & Modular Decorators (Right-Down: x = 1950, y = -8970)
+    const nestIocRaw = allNodes.find((n) => n.id === "expressnest-nestjs-ioc-decorators-pillar");
+    if (nestIocRaw) {
+      const nestIocX = expressnestHubX + 650;
+      const nestIocY = expressnestHubY + 180;
+      const nestIocNode: PositionedNode = {
+        ...nestIocRaw,
+        x: nestIocX,
+        y: nestIocY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(nestIocNode);
+      edges.push({
+        source: expressnestHubNode.id,
+        target: nestIocNode.id,
+        category: "expressnest",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const idcRaw = allNodes.find((n) => n.id === "expressnest-ioc-dependency-injection-container");
+      if (idcRaw) {
+        positionedNodes.push({
+          ...idcRaw,
+          x: nestIocX + 320,
+          y: nestIocY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nestIocNode.id,
+          target: idcRaw.id,
+          category: "expressnest",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const mrdRaw = allNodes.find((n) => n.id === "expressnest-metadata-reflection-decorators");
+      if (mrdRaw) {
+        positionedNodes.push({
+          ...mrdRaw,
+          x: nestIocX + 320,
+          y: nestIocY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nestIocNode.id,
+          target: mrdRaw.id,
+          category: "expressnest",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const gipRaw = allNodes.find((n) => n.id === "expressnest-guards-interceptors-pipes-filters");
+      if (gipRaw) {
+        positionedNodes.push({
+          ...gipRaw,
+          x: nestIocX + 320,
+          y: nestIocY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nestIocNode.id,
+          target: gipRaw.id,
+          category: "expressnest",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -6656,6 +6853,8 @@ export function calculateGroupLayout(
     pillarIds = ["angular-architecture-signals-pillar", "angularvue-pipeline-pillar", "vue-svelte-reactivity-compilers-pillar"];
   } else if (category === "buildtools") {
     pillarIds = ["buildtools-vite-esm-hmr-pillar", "buildtools-pipeline-pillar", "buildtools-webpack-tailwind-pillar"];
+  } else if (category === "expressnest") {
+    pillarIds = ["expressnest-express-architecture-pillar", "expressnest-pipeline-pillar", "expressnest-nestjs-ioc-decorators-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -7049,6 +7248,11 @@ export function getNodesForCategory(
       parentId: "root-angularvue",
       level: 2,
     };
+    const expressnestRoot = {
+      ...allNodes.find((n) => n.id === "root-expressnest")!,
+      parentId: "root-buildtools",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -7098,13 +7302,14 @@ export function getNodesForCategory(
         n.id !== "root-nextjs" &&
         n.id !== "root-angularvue" &&
         n.id !== "root-buildtools" &&
+        n.id !== "root-expressnest" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

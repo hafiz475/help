@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2444,7 +2444,84 @@ export const BUILDTOOLS_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const EXPRESSNEST_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-expressnest-pipeline",
+    pillarId: "expressnest-pipeline-pillar",
+    title: "9-Stage Modern HTTP Request Lifecycle Pipeline",
+    category: "expressnest",
+    badge: "9 Sequential Stages",
+    color: "#ea284e",
+    isPipeline: true,
+    items: [
+      {
+        id: "http-socket-ingestion-handshake",
+        stepNumber: 1,
+        label: "1. Socket Ingestion & TLS Handshake",
+        badge: "🔌 TCP Stream & HTTP Parser",
+        searchQuery: "Node.js net.Socket TLS handshake llhttp HTTP parser IncomingMessage instantiation",
+      },
+      {
+        id: "http-global-middleware-cors",
+        stepNumber: 2,
+        label: "2. Global Middleware & Security Headers",
+        badge: "🛡️ CORS, Helmet & Compression",
+        searchQuery: "Express global middleware CORS preflight Helmet security headers compression requestId logger",
+      },
+      {
+        id: "http-body-parsing-deserialization",
+        stepNumber: 3,
+        label: "3. Body Parsing & Payload Deserialization",
+        badge: "📦 body-parser & Payload Streams",
+        searchQuery: "Express body-parser json urlencoded raw multipart payload limit deserialization",
+      },
+      {
+        id: "http-routing-controller-matching",
+        stepNumber: 4,
+        label: "4. Router Trie & Controller Matching",
+        badge: "🗺️ Layer Trie & Path Pattern Match",
+        searchQuery: "Express Router Layer trie path-to-regexp NestJS ExplorerService controller route matching",
+      },
+      {
+        id: "http-guards-authorization-evaluation",
+        stepNumber: 5,
+        label: "5. Guards & Authorization Evaluation",
+        badge: "👮 CanActivate & JWT RBAC Claims",
+        searchQuery: "NestJS CanActivate guards ExecutionContext Reflector JWT Bearer token RBAC claims authorization",
+      },
+      {
+        id: "http-interceptors-pre-execution",
+        stepNumber: 6,
+        label: "6. Interceptors (Pre-Handler Execution)",
+        badge: "⏱️ ExecutionContext & RxJS Observables",
+        searchQuery: "NestJS Interceptors CallHandler handle tap ExecutionContext timer caching pre-controller hook",
+      },
+      {
+        id: "http-pipes-validation-transformation",
+        stepNumber: 7,
+        label: "7. Pipes & Schema Validation",
+        badge: "🔍 class-validator & Type Coercion",
+        searchQuery: "NestJS ValidationPipe class-validator class-transformer Zod ParseIntPipe DTO payload validation",
+      },
+      {
+        id: "http-controller-service-execution",
+        stepNumber: 8,
+        label: "8. Controller Handler & Service DI",
+        badge: "⚡ Route Method & Injected Providers",
+        searchQuery: "NestJS Controller endpoint method handler service DI execution database queries domain logic",
+      },
+      {
+        id: "http-response-serialization-filters",
+        stepNumber: 9,
+        label: "9. Response Serialization & Exception Filters",
+        badge: "🚀 RxJS map() & ExceptionFilter Catch",
+        searchQuery: "NestJS response serialization ClassSerializerInterceptor ExceptionFilter catch res.json socket flush",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2473,8 +2550,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "nextjs") return NEXTJS_GROUP_CARDS;
   if (category === "angularvue") return ANGULARVUE_GROUP_CARDS;
   if (category === "buildtools") return BUILDTOOLS_GROUP_CARDS;
+  if (category === "expressnest") return EXPRESSNEST_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

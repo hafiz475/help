@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -276,8 +276,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "expressnest",
+    name: "29. Express & NestJS",
+    title: "Express & NestJS Architecture: Minimalist Middleware vs Enterprise DI",
+    description: "Express Connect middleware chain & router trie, NestJS modular IoC containers & decorators, 9-stage HTTP lifecycle pipeline, and guards/interceptors",
+    color: "#ea284e", // NestJS Scarlet
+    icon: "Route",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "29. OOP (4 Pillars)",
+    name: "30. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -286,7 +295,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "30. DSA",
+    name: "31. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -295,7 +304,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "31. Big O",
+    name: "32. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -309,7 +318,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 339,
+    count: 349,
   },
 ];
 
@@ -577,6 +586,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Vite Webpack Tailwind CSS build tools bundlers native ESM esbuild Rollup JIT engine tree shaking code splitting",
     badge: "Bundlers & CSS Engines",
     color: "#9333ea",
+  },
+  {
+    id: "root-expressnest",
+    label: "Express & NestJS",
+    category: "expressnest",
+    level: 0,
+    searchQuery: "Express NestJS backend architecture Connect middleware router trie IoC container dependency injection decorators guards interceptors pipes",
+    badge: "Middleware & IoC Frameworks",
+    color: "#ea284e",
   },
   {
     id: "root-oop",
@@ -3857,7 +3875,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 29. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 29. EXPRESS & NESTJS ARCHITECTURE
+  // ==========================================
+  // Pillar 1: Express Routing & Connect Middleware Engine
+  {
+    id: "expressnest-express-architecture-pillar",
+    label: "Express Routing & Middleware",
+    category: "expressnest",
+    parentId: "root-expressnest",
+    level: 1,
+    searchQuery: "Express.js routing architecture connect middleware onion next function layered router prototype delegation",
+    badge: "Connect & Router Trie",
+    color: "#f43f5e",
+  },
+  {
+    id: "expressnest-middleware-onion-next",
+    label: "Middleware Onion & next()",
+    category: "expressnest",
+    parentId: "expressnest-express-architecture-pillar",
+    level: 2,
+    searchQuery: "Express middleware next function call stack error handling middleware 4-arity signature control flow",
+    badge: "next() & Error Arity",
+    color: "#fb7185",
+  },
+  {
+    id: "expressnest-router-trie-regex-matching",
+    label: "Router Trie & Regex Matching",
+    category: "expressnest",
+    parentId: "expressnest-express-architecture-pillar",
+    level: 2,
+    searchQuery: "Express Router Layer stack path-to-regexp route dispatching param handlers sub-apps mounting",
+    badge: "Layer Stack & path-to-regexp",
+    color: "#f43f5e",
+  },
+  {
+    id: "expressnest-req-res-prototype-delegation",
+    label: "Req/Res Stream Delegation",
+    category: "expressnest",
+    parentId: "expressnest-express-architecture-pillar",
+    level: 2,
+    searchQuery: "Express request response prototype delegation http.IncomingMessage ServerResponse res.json res.send stream piping",
+    badge: "Stream Prototype Delegation",
+    color: "#e11d48",
+  },
+
+  // Pillar 2: 9-Stage Modern HTTP Request Lifecycle Pipeline (Group Card)
+  {
+    id: "expressnest-pipeline-pillar",
+    label: "9-Stage HTTP Request Lifecycle Pipeline",
+    category: "expressnest",
+    parentId: "root-expressnest",
+    level: 1,
+    searchQuery: "NestJS Express HTTP request lifecycle pipeline socket middleware guards interceptors pipes controller filters serialization",
+    badge: "9 Sequential Stages",
+    color: "#ea284e",
+  },
+
+  // Pillar 3: NestJS IoC Containers & Modular Decorators
+  {
+    id: "expressnest-nestjs-ioc-decorators-pillar",
+    label: "NestJS IoC & Decorator Engine",
+    category: "expressnest",
+    parentId: "root-expressnest",
+    level: 1,
+    searchQuery: "NestJS Inversion of Control IoC container dependency injection metadata reflection decorators providers scopes",
+    badge: "IoC Container & Decorators",
+    color: "#e0234e",
+  },
+  {
+    id: "expressnest-ioc-dependency-injection-container",
+    label: "IoC Container & Provider Scopes",
+    category: "expressnest",
+    parentId: "expressnest-nestjs-ioc-decorators-pillar",
+    level: 2,
+    searchQuery: "NestJS IoC container module scanner dependency injection tree singleton request scope transient custom providers useClass useFactory",
+    badge: "DI Container & Scopes",
+    color: "#fb7185",
+  },
+  {
+    id: "expressnest-metadata-reflection-decorators",
+    label: "Metadata Reflection & Decorators",
+    category: "expressnest",
+    parentId: "expressnest-nestjs-ioc-decorators-pillar",
+    level: 2,
+    searchQuery: "NestJS reflect-metadata TypeScript parameter property class decorators SetMetadata Reflector execution context",
+    badge: "reflect-metadata & Reflector",
+    color: "#f43f5e",
+  },
+  {
+    id: "expressnest-guards-interceptors-pipes-filters",
+    label: "Guards, Interceptors & Filters",
+    category: "expressnest",
+    parentId: "expressnest-nestjs-ioc-decorators-pillar",
+    level: 2,
+    searchQuery: "NestJS CanActivate guards NestInterceptor RxJS operators ValidationPipe class-validator ExceptionFilters",
+    badge: "Guards, Pipes & Filters",
+    color: "#e11d48",
+  },
+
+  // ==========================================
+  // 30. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
@@ -3916,7 +4033,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 30. DATA STRUCTURES (DSA)
+  // 31. DATA STRUCTURES (DSA)
   // ==========================================
   // Level 1 Major Pillar
   {
@@ -3996,7 +4113,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 31. BIG O TIME COMPLEXITY
+  // 32. BIG O TIME COMPLEXITY
   // ==========================================
   // Level 1 Major Pillar
   {

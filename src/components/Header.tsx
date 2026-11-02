@@ -38,6 +38,7 @@ import {
   Globe,
   Component,
   Package,
+  Route,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -115,6 +116,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Component size={16} />;
       case "buildtools":
         return <Package size={16} />;
+      case "expressnest":
+        return <Route size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

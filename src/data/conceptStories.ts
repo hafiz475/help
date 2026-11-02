@@ -15400,6 +15400,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // EXPRESS & NESTJS BACKEND FRAMEWORKS
+  // ==========================================
+  "root-expressnest": {
+    id: "root-expressnest",
+    title: "Express & NestJS",
+    badge: "Backend Frameworks",
+    tagline: "Minimalist Connect middleware chains, modular IoC containers, and enterprise TypeScript architectures",
+    takeaways: [
+      {
+        id: "en-root-1",
+        text: "Express offers minimalist unopinionated routing while NestJS provides structured enterprise DI.",
+        searchPrompt: "Express vs NestJS architecture comparison enterprise TypeScript backend",
+        emoji: "🏛️",
+        reactionCount: "5.7k",
+        commentCount: 460,
+      },
+      {
+        id: "en-root-2",
+        text: "Middleware onion pipelines intercept and transform HTTP requests before reaching route handlers.",
+        searchPrompt: "middleware onion pattern request pipeline Express NestJS architecture",
+        emoji: "🧅",
+        reactionCount: "5.1k",
+        commentCount: 390,
+      },
+      {
+        id: "en-root-3",
+        text: "NestJS IoC containers manage service lifetimes via TypeScript metadata reflection.",
+        searchPrompt: "NestJS IoC dependency injection container metadata reflection TypeScript",
+        emoji: "💉",
+        reactionCount: "4.6k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "expressnest-express-architecture-pillar": {
+    id: "expressnest-express-architecture-pillar",
+    title: "Express Routing & Middleware",
+    badge: "Connect & Router Trie",
+    tagline: "Connect-style middleware stacks, next() propagation, router layering, and prototype stream delegation",
+    takeaways: [
+      {
+        id: "en-eap-1",
+        text: "Express routes requests through a chain of middleware functions invoked sequentially via next().",
+        searchPrompt: "Express middleware chain execution next function Connect engine",
+        emoji: "⛓️",
+        reactionCount: "5.5k",
+        commentCount: 430,
+      },
+      {
+        id: "en-eap-2",
+        text: "Router layers compile path patterns into regular expressions to match URL parameters dynamically.",
+        searchPrompt: "Express router layer stack regex path matching route dispatching",
+        emoji: "🗺️",
+        reactionCount: "4.9k",
+        commentCount: 375,
+      },
+      {
+        id: "en-eap-3",
+        text: "Request and Response objects inherit directly from Node.js core stream prototypes with helpers.",
+        searchPrompt: "Express req res prototype delegation Node.js IncomingMessage ServerResponse",
+        emoji: "🔌",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "expressnest-middleware-onion-next": {
+    id: "expressnest-middleware-onion-next",
+    title: "Middleware Onion & next()",
+    badge: "next() & Error Arity",
+    tagline: "Middleware composition, downstream/upstream execution flow, error-handling arity, and async hazards",
+    takeaways: [
+      {
+        id: "en-mon-1",
+        text: "Calling next() passes control to the next middleware in the stack until a response is sent.",
+        searchPrompt: "Express next function execution flow control middleware stack",
+        emoji: "⏩",
+        reactionCount: "5.3k",
+        commentCount: 405,
+      },
+      {
+        id: "en-mon-2",
+        text: "Error middleware is identified uniquely by its 4-parameter signature (err, req, res, next).",
+        searchPrompt: "Express error handling middleware 4 arguments arity err req res next",
+        emoji: "⚠️",
+        reactionCount: "4.8k",
+        commentCount: 360,
+      },
+      {
+        id: "en-mon-3",
+        text: "Unhandled promise rejections in async middleware cause hanging requests without error catches.",
+        searchPrompt: "Express async middleware unhandled rejection hanging request fix next(err)",
+        emoji: "🛑",
+        reactionCount: "4.3k",
+        commentCount: 300,
+      },
+    ],
+  },
+
+  "expressnest-router-trie-regex-matching": {
+    id: "expressnest-router-trie-regex-matching",
+    title: "Router Trie & Regex Matching",
+    badge: "Layer Stack & path-to-regexp",
+    tagline: "Path-to-regexp compilation, layer matching algorithms, route parameter extraction, and sub-app mounting",
+    takeaways: [
+      {
+        id: "en-rtm-1",
+        text: "Express compiles string route definitions into executable regex patterns using path-to-regexp.",
+        searchPrompt: "Express path-to-regexp route parameter compilation regex matching",
+        emoji: "🔍",
+        reactionCount: "5.1k",
+        commentCount: 385,
+      },
+      {
+        id: "en-rtm-2",
+        text: "Layer stacks enable mounting isolated sub-routers with scoped prefixes and dedicated middleware.",
+        searchPrompt: "Express sub router mounting app.use prefix modular route hierarchy",
+        emoji: "📂",
+        reactionCount: "4.7k",
+        commentCount: 345,
+      },
+      {
+        id: "en-rtm-3",
+        text: "Extracted URL tokens populate req.params object automatically upon successful route regex matching.",
+        searchPrompt: "Express req.params URL token extraction path-to-regexp keys matching",
+        emoji: "🏷️",
+        reactionCount: "4.2k",
+        commentCount: 295,
+      },
+    ],
+  },
+
+  "expressnest-req-res-prototype-delegation": {
+    id: "expressnest-req-res-prototype-delegation",
+    title: "Req/Res Stream Delegation",
+    badge: "Stream Prototype Delegation",
+    tagline: "Node.js IncomingMessage and ServerResponse inheritance, res.json serialization, and stream backpressure",
+    takeaways: [
+      {
+        id: "en-rpd-1",
+        text: "req and res objects inherit directly from Node.js http.IncomingMessage and http.ServerResponse.",
+        searchPrompt: "Express request response prototype delegation Node.js core streams",
+        emoji: "📜",
+        reactionCount: "5.0k",
+        commentCount: 375,
+      },
+      {
+        id: "en-rpd-2",
+        text: "res.json() serializes JavaScript objects to JSON, sets Content-Type, and flushes output buffers.",
+        searchPrompt: "Express res.json serialization Content-Type header flush response",
+        emoji: "📦",
+        reactionCount: "4.6k",
+        commentCount: 335,
+      },
+      {
+        id: "en-rpd-3",
+        text: "Piping readable file streams to res handles backpressure automatically without buffering memory.",
+        searchPrompt: "Express res stream piping fs.createReadStream backpressure memory safety",
+        emoji: "🚰",
+        reactionCount: "4.1k",
+        commentCount: 285,
+      },
+    ],
+  },
+
+  "expressnest-pipeline-pillar": {
+    id: "expressnest-pipeline-pillar",
+    title: "9-Stage HTTP Request Lifecycle Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "End-to-end traversal from raw TCP socket ingestion and guards to controllers and response serialization",
+    takeaways: [
+      {
+        id: "en-plp-1",
+        text: "The pipeline traces HTTP requests across 9 stages from socket arrival to response emission.",
+        searchPrompt: "modern HTTP request lifecycle pipeline Express NestJS 9 stages",
+        emoji: "🚀",
+        reactionCount: "5.8k",
+        commentCount: 470,
+      },
+      {
+        id: "en-plp-2",
+        text: "Combines low-level socket streaming with NestJS declarative guards, pipes, and interceptors.",
+        searchPrompt: "NestJS request lifecycle guards interceptors pipes filters execution order",
+        emoji: "🧩",
+        reactionCount: "5.3k",
+        commentCount: 415,
+      },
+      {
+        id: "en-plp-3",
+        text: "Separates cross-cutting concerns: security, validation, business logic, and error handling.",
+        searchPrompt: "backend clean architecture cross cutting concerns middleware guards pipes",
+        emoji: "🛡️",
+        reactionCount: "4.7k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "expressnest-nestjs-ioc-decorators-pillar": {
+    id: "expressnest-nestjs-ioc-decorators-pillar",
+    title: "NestJS IoC & Decorator Engine",
+    badge: "IoC Container & Decorators",
+    tagline: "Dependency injection containers, provider scopes, TypeScript metadata reflection, and request pipelines",
+    takeaways: [
+      {
+        id: "en-nid-1",
+        text: "NestJS IoC container scans module graphs and auto-wires service dependencies via constructor types.",
+        searchPrompt: "NestJS IoC container dependency injection constructor injection module scanner",
+        emoji: "🏗️",
+        reactionCount: "5.6k",
+        commentCount: 440,
+      },
+      {
+        id: "en-nid-2",
+        text: "Custom decorators leverage reflect-metadata to attach route, auth, and parameter bindings cleanly.",
+        searchPrompt: "NestJS custom decorators reflect-metadata parameter method class decorators",
+        emoji: "✨",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "en-nid-3",
+        text: "Supports Singleton, Request-scoped, and Transient provider lifecycles for optimal concurrency.",
+        searchPrompt: "NestJS provider scopes Scope.DEFAULT Scope.REQUEST Scope.TRANSIENT concurrency",
+        emoji: "🔄",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "expressnest-ioc-dependency-injection-container": {
+    id: "expressnest-ioc-dependency-injection-container",
+    title: "IoC Container & Provider Scopes",
+    badge: "DI Container & Scopes",
+    tagline: "Module graph scanning, circular dependency forwardRef resolution, custom providers, and lifecycle scopes",
+    takeaways: [
+      {
+        id: "en-idc-1",
+        text: "Default singleton providers are instantiated once at boot and shared across all incoming requests.",
+        searchPrompt: "NestJS singleton provider instance boot startup memory efficiency",
+        emoji: "💎",
+        reactionCount: "5.2k",
+        commentCount: 395,
+      },
+      {
+        id: "en-idc-2",
+        text: "Request-scoped providers instantiate per incoming HTTP request, enabling tenant-isolated state.",
+        searchPrompt: "NestJS request scoped provider tenant isolation context performance overhead",
+        emoji: "👤",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+      {
+        id: "en-idc-3",
+        text: "forwardRef() utility breaks circular dependency deadlocks between mutually dependent services.",
+        searchPrompt: "NestJS forwardRef circular dependency resolution provider injection",
+        emoji: "🔄",
+        reactionCount: "4.3k",
+        commentCount: 295,
+      },
+    ],
+  },
+
+  "expressnest-metadata-reflection-decorators": {
+    id: "expressnest-metadata-reflection-decorators",
+    title: "Metadata Reflection & Decorators",
+    badge: "reflect-metadata & Reflector",
+    tagline: "TypeScript experimentalDecorators, emitDecoratorMetadata, Reflector API, and custom parameter binding",
+    takeaways: [
+      {
+        id: "en-mrd-1",
+        text: "TypeScript emitDecoratorMetadata generates design:paramtypes for automatic IoC constructor wiring.",
+        searchPrompt: "TypeScript emitDecoratorMetadata design:paramtypes reflect-metadata IoC DI",
+        emoji: "🏷️",
+        reactionCount: "5.4k",
+        commentCount: 420,
+      },
+      {
+        id: "en-mrd-2",
+        text: "SetMetadata() attaches custom roles and permissions to handlers for runtime guard inspection.",
+        searchPrompt: "NestJS SetMetadata Reflector getMetadata route authorization guard",
+        emoji: "🔒",
+        reactionCount: "4.9k",
+        commentCount: 365,
+      },
+      {
+        id: "en-mrd-3",
+        text: "createParamDecorator() extracts contextual request properties into clean controller parameters.",
+        searchPrompt: "NestJS createParamDecorator custom param decorator execution context",
+        emoji: "🎯",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "expressnest-guards-interceptors-pipes-filters": {
+    id: "expressnest-guards-interceptors-pipes-filters",
+    title: "Guards, Interceptors & Filters",
+    badge: "Guards, Pipes & Filters",
+    tagline: "Execution order, CanActivate auth evaluation, RxJS interceptor operators, and global ExceptionFilters",
+    takeaways: [
+      {
+        id: "en-gip-1",
+        text: "Guards execute before route handlers to verify authentication and role-based access control.",
+        searchPrompt: "NestJS CanActivate guard authentication authorization JWT RBAC execution order",
+        emoji: "👮",
+        reactionCount: "5.5k",
+        commentCount: 435,
+      },
+      {
+        id: "en-gip-2",
+        text: "ValidationPipe transforms and validates DTO payloads using class-validator schema decorators.",
+        searchPrompt: "NestJS ValidationPipe class-validator DTO payload validation transformation",
+        emoji: "🔍",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "en-gip-3",
+        text: "Exception filters catch unhandled application errors and format consistent JSON error responses.",
+        searchPrompt: "NestJS ExceptionFilter catch HttpException unhandled error formatting",
+        emoji: "🛡️",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  // 9 Stages of Modern HTTP Request Lifecycle Pipeline
+  "http-socket-ingestion-handshake": {
+    id: "http-socket-ingestion-handshake",
+    title: "1. Socket Ingestion & TLS Handshake",
+    badge: "🔌 TCP Stream & HTTP Parser",
+    tagline: "TCP socket connection accept, TLS decryption, llhttp protocol parsing, and IncomingMessage creation",
+    takeaways: [
+      {
+        id: "en-sih-1",
+        text: "Node.js net.Server accepts raw TCP connections and completes cryptographic TLS handshakes.",
+        searchPrompt: "Node.js net.Server TCP socket accept TLS handshake encryption socket streaming",
+        emoji: "🔌",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+      {
+        id: "en-sih-2",
+        text: "C-based llhttp parser translates incoming byte streams into headers, URL paths, and methods.",
+        searchPrompt: "Node.js llhttp HTTP parser byte stream header parsing method URL",
+        emoji: "⚙️",
+        reactionCount: "4.5k",
+        commentCount: 315,
+      },
+      {
+        id: "en-sih-3",
+        text: "Creates http.IncomingMessage and http.ServerResponse instances bound to the underlying socket.",
+        searchPrompt: "http.IncomingMessage http.ServerResponse instantiation socket binding Node.js",
+        emoji: "📦",
+        reactionCount: "4.1k",
+        commentCount: 275,
+      },
+    ],
+  },
+
+  "http-global-middleware-cors": {
+    id: "http-global-middleware-cors",
+    title: "2. Global Middleware & Security Headers",
+    badge: "🛡️ CORS, Helmet & Compression",
+    tagline: "Running top-level middleware, CORS preflight checks, Helmet CSP headers, and gzip/brotli compression",
+    takeaways: [
+      {
+        id: "en-gmc-1",
+        text: "CORS middleware inspects Origin headers and short-circuits HTTP OPTIONS preflight requests.",
+        searchPrompt: "CORS middleware Origin header HTTP OPTIONS preflight request handling Express",
+        emoji: "🌐",
+        reactionCount: "5.1k",
+        commentCount: 390,
+      },
+      {
+        id: "en-gmc-2",
+        text: "Helmet injects defensive security headers including CSP, HSTS, X-Frame-Options, and nosniff.",
+        searchPrompt: "Helmet security headers CSP HSTS X-Frame-Options X-Content-Type-Options",
+        emoji: "🛡️",
+        reactionCount: "4.7k",
+        commentCount: 345,
+      },
+      {
+        id: "en-gmc-3",
+        text: "Request correlation IDs and morgan access logs are attached to trace requests across services.",
+        searchPrompt: "request correlation ID tracing morgan logger middleware Express NestJS",
+        emoji: "📝",
+        reactionCount: "4.2k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "http-body-parsing-deserialization": {
+    id: "http-body-parsing-deserialization",
+    title: "3. Body Parsing & Payload Deserialization",
+    badge: "📦 body-parser & Payload Streams",
+    tagline: "Streaming socket chunks, enforcing byte size limits, and parsing JSON, URL-encoded, or multipart forms",
+    takeaways: [
+      {
+        id: "en-bpd-1",
+        text: "Buffers readable stream chunks into memory while enforcing strict max byte payload limits.",
+        searchPrompt: "body-parser stream buffering max payload limit 413 Payload Too Large",
+        emoji: "📏",
+        reactionCount: "5.0k",
+        commentCount: 375,
+      },
+      {
+        id: "en-bpd-2",
+        text: "Parses application/json strings into native JavaScript objects assigned directly to req.body.",
+        searchPrompt: "Express body-parser JSON deserialization req.body object assignment",
+        emoji: "📦",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+      {
+        id: "en-bpd-3",
+        text: "Multipart form upload parsers (Busboy, Multer) stream binary files directly to disk or S3.",
+        searchPrompt: "Multer Busboy multipart/form-data file streaming disk storage S3 upload",
+        emoji: "💾",
+        reactionCount: "4.1k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  "http-routing-controller-matching": {
+    id: "http-routing-controller-matching",
+    title: "4. Router Trie & Controller Matching",
+    badge: "🗺️ Layer Trie & Path Pattern Match",
+    tagline: "Traversing Express router layers, matching regex path patterns, and resolving target controller routes",
+    takeaways: [
+      {
+        id: "en-rcm-1",
+        text: "Express router matches request HTTP method and pathname against compiled layer regex patterns.",
+        searchPrompt: "Express router layer trie regex route matching method dispatching",
+        emoji: "🗺️",
+        reactionCount: "5.2k",
+        commentCount: 395,
+      },
+      {
+        id: "en-rcm-2",
+        text: "NestJS router discovers target Controller class and handler method mapped via @Get or @Post.",
+        searchPrompt: "NestJS route explorer controller method discovery @Get @Post routing metadata",
+        emoji: "🎯",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+      {
+        id: "en-rcm-3",
+        text: "Extracts dynamic route parameters into req.params dictionary for subsequent pipe validation.",
+        searchPrompt: "Express req.params route parameter extraction path-to-regexp keys dictionary",
+        emoji: "🏷️",
+        reactionCount: "4.3k",
+        commentCount: 300,
+      },
+    ],
+  },
+
+  "http-guards-authorization-evaluation": {
+    id: "http-guards-authorization-evaluation",
+    title: "5. Guards & Authorization Evaluation",
+    badge: "👮 CanActivate & JWT RBAC Claims",
+    tagline: "Invoking CanActivate guards, verifying JWT tokens, checking Reflector metadata, and enforcing RBAC",
+    takeaways: [
+      {
+        id: "en-gae-1",
+        text: "Guards evaluate canActivate() to determine whether the incoming request is permitted to proceed.",
+        searchPrompt: "NestJS CanActivate canActivate execution context authorization boolean promise",
+        emoji: "👮",
+        reactionCount: "5.5k",
+        commentCount: 430,
+      },
+      {
+        id: "en-gae-2",
+        text: "Extracts and verifies JWT Bearer tokens from Authorization headers, attaching user payloads.",
+        searchPrompt: "NestJS AuthGuard JWT Bearer token verification Passport strategy req.user",
+        emoji: "🔑",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "en-gae-3",
+        text: "Reflector reads required roles from route metadata and returns 403 Forbidden on authorization gaps.",
+        searchPrompt: "NestJS Reflector RolesGuard 403 Forbidden role based access control RBAC",
+        emoji: "🛑",
+        reactionCount: "4.5k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  "http-interceptors-pre-execution": {
+    id: "http-interceptors-pre-execution",
+    title: "6. Interceptors (Pre-Handler Execution)",
+    badge: "⏱️ ExecutionContext & RxJS Observables",
+    tagline: "Executing interceptor pre-hooks, wrapping handlers in RxJS CallHandler, and starting performance timers",
+    takeaways: [
+      {
+        id: "en-ipe-1",
+        text: "Interceptors execute before the handler and wrap downstream execution in an RxJS Observable stream.",
+        searchPrompt: "NestJS NestInterceptor intercept CallHandler handle RxJS Observable pipeline",
+        emoji: "⏱️",
+        reactionCount: "5.3k",
+        commentCount: 405,
+      },
+      {
+        id: "en-ipe-2",
+        text: "Starts high-resolution performance timers to measure endpoint latency across the application.",
+        searchPrompt: "endpoint latency measurement execution timer interceptor process.hrtime",
+        emoji: "⏳",
+        reactionCount: "4.8k",
+        commentCount: 355,
+      },
+      {
+        id: "en-ipe-3",
+        text: "Inspects cache stores to return cached responses immediately, bypassing controller execution.",
+        searchPrompt: "NestJS CacheInterceptor in-memory cache lookup short-circuit controller execution",
+        emoji: "⚡",
+        reactionCount: "4.3k",
+        commentCount: 305,
+      },
+    ],
+  },
+
+  "http-pipes-validation-transformation": {
+    id: "http-pipes-validation-transformation",
+    title: "7. Pipes & Schema Validation",
+    badge: "🔍 class-validator & Type Coercion",
+    tagline: "Transforming raw payload strings, running class-validator rules, and stripping unexpected properties",
+    takeaways: [
+      {
+        id: "en-pvt-1",
+        text: "ValidationPipe transforms raw payload objects into typed Data Transfer Object (DTO) classes.",
+        searchPrompt: "NestJS ValidationPipe plainToInstance class-transformer DTO type coercion",
+        emoji: "🔍",
+        reactionCount: "5.6k",
+        commentCount: 440,
+      },
+      {
+        id: "en-pvt-2",
+        text: "class-validator decorators enforce runtime rules, rejecting invalid fields with 400 Bad Request.",
+        searchPrompt: "class-validator decorators IsString IsInt validateOrReject 400 Bad Request",
+        emoji: "🛡️",
+        reactionCount: "5.1k",
+        commentCount: 390,
+      },
+      {
+        id: "en-pvt-3",
+        text: "whitelist option strips unknown or malicious fields to prevent unexpected property injections.",
+        searchPrompt: "NestJS ValidationPipe whitelist true forbidNonWhitelisted property injection",
+        emoji: "🧹",
+        reactionCount: "4.6k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "http-controller-service-execution": {
+    id: "http-controller-service-execution",
+    title: "8. Controller Handler & Service DI",
+    badge: "⚡ Route Method & Injected Providers",
+    tagline: "Invoking controller method, executing injected domain services, running SQL/NoSQL queries, and returning entities",
+    takeaways: [
+      {
+        id: "en-cse-1",
+        text: "Controller endpoint method executes with auto-injected services resolved by the IoC container.",
+        searchPrompt: "NestJS controller method invocation service dependency injection execution",
+        emoji: "⚡",
+        reactionCount: "5.4k",
+        commentCount: 420,
+      },
+      {
+        id: "en-cse-2",
+        text: "Services orchestrate business logic, database transactions, cache lookups, and third-party APIs.",
+        searchPrompt: "domain service layer business logic database transactions TypeORM Prisma",
+        emoji: "🏛️",
+        reactionCount: "4.9k",
+        commentCount: 370,
+      },
+      {
+        id: "en-cse-3",
+        text: "Returns domain entities or promises, passing raw result data back to the interceptor pipeline.",
+        searchPrompt: "controller return value promise resolution domain entity result interceptor",
+        emoji: "📦",
+        reactionCount: "4.4k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "http-response-serialization-filters": {
+    id: "http-response-serialization-filters",
+    title: "9. Response Serialization & Exception Filters",
+    badge: "🚀 RxJS map() & ExceptionFilter Catch",
+    tagline: "Transforming output via ClassSerializerInterceptor, handling unhandled exceptions with @Catch(), and flushing TCP response",
+    takeaways: [
+      {
+        id: "en-rsf-1",
+        text: "ClassSerializerInterceptor strips sensitive fields like passwords using @Exclude() decorators.",
+        searchPrompt: "ClassSerializerInterceptor @Exclude @Expose sensitive field stripping serialization",
+        emoji: "🔒",
+        reactionCount: "5.5k",
+        commentCount: 430,
+      },
+      {
+        id: "en-rsf-2",
+        text: "Exception filters catch unhandled exceptions, mapping errors to structured RFC-7807 JSON formats.",
+        searchPrompt: "NestJS ExceptionFilter catch unhandled error RFC-7807 problem details JSON",
+        emoji: "🚨",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "en-rsf-3",
+        text: "res.status().json() formats output headers and flushes serialized JSON bytes down the TCP socket.",
+        searchPrompt: "Express res.status res.json output headers TCP socket flush complete",
+        emoji: "🚀",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -16940,6 +17571,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Angular, Vue & Svelte"
       : node.category === "buildtools"
       ? "Build Tools & Bundlers"
+      : node.category === "expressnest"
+      ? "Express & NestJS"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"
