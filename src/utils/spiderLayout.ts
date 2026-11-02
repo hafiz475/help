@@ -1063,6 +1063,8 @@ export function calculateGroupLayout(
         ? "Bundlers & CSS Engines"
         : category === "expressnest"
         ? "Middleware & IoC Frameworks"
+        : category === "djangofastapi"
+        ? "Python MVT & Async ASGI"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1121,6 +1123,8 @@ export function calculateGroupLayout(
         ? "#9333ea"
         : category === "expressnest"
         ? "#ea284e"
+        : category === "djangofastapi"
+        ? "#05998b"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -4629,6 +4633,199 @@ export function calculateGroupLayout(
       }
     }
 
+    // Sub-Branch 1P: Django & FastAPI Python Frameworks Hub (placed along the right spine at x = 1300, y = -9750)
+    const djangofastapiHubX = 1300;
+    const djangofastapiHubY = -9750;
+    const djangofastapiHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-djangofastapi")!,
+      x: djangofastapiHubX,
+      y: djangofastapiHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(djangofastapiHubNode);
+    edges.push({
+      source: expressnestHubNode.id,
+      target: djangofastapiHubNode.id,
+      category: "djangofastapi",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Django/FastAPI Pillar 1: Django MVT & Lazy ORM (Right-Up: x = 1950, y = -9930)
+    const djMvtRaw = allNodes.find((n) => n.id === "djangofastapi-django-orm-mvt-pillar");
+    if (djMvtRaw) {
+      const djMvtX = djangofastapiHubX + 650;
+      const djMvtY = djangofastapiHubY - 180;
+      const djMvtNode: PositionedNode = {
+        ...djMvtRaw,
+        x: djMvtX,
+        y: djMvtY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(djMvtNode);
+      edges.push({
+        source: djangofastapiHubNode.id,
+        target: djMvtNode.id,
+        category: "djangofastapi",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const oqmRaw = allNodes.find((n) => n.id === "djangofastapi-django-orm-querysets-migrations");
+      if (oqmRaw) {
+        positionedNodes.push({
+          ...oqmRaw,
+          x: djMvtX + 320,
+          y: djMvtY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: djMvtNode.id,
+          target: oqmRaw.id,
+          category: "djangofastapi",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const masRaw = allNodes.find((n) => n.id === "djangofastapi-django-middleware-auth-sessions");
+      if (masRaw) {
+        positionedNodes.push({
+          ...masRaw,
+          x: djMvtX + 320,
+          y: djMvtY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: djMvtNode.id,
+          target: masRaw.id,
+          category: "djangofastapi",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const asfRaw = allNodes.find((n) => n.id === "djangofastapi-django-admin-signals-forms");
+      if (asfRaw) {
+        positionedNodes.push({
+          ...asfRaw,
+          x: djMvtX + 320,
+          y: djMvtY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: djMvtNode.id,
+          target: asfRaw.id,
+          category: "djangofastapi",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Django/FastAPI Pillar 2: 9-Stage Modern Python ASGI/WSGI Pipeline (Group Card, Right-Center: x = 2100, y = -9750)
+    const djangofastapiGroupCard = cardByPillar.get("djangofastapi-pipeline-pillar");
+    if (djangofastapiGroupCard) {
+      const cardX = djangofastapiHubX + 800;
+      const cardY = djangofastapiHubY;
+      const posCard: PositionedGroupCard = {
+        ...djangofastapiGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: djangofastapiHubNode.id,
+        target: djangofastapiGroupCard.id,
+        category: "djangofastapi",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Django/FastAPI Pillar 3: FastAPI Async & Pydantic v2 Engine (Right-Down: x = 1950, y = -9570)
+    const faPydRaw = allNodes.find((n) => n.id === "djangofastapi-fastapi-async-pydantic-pillar");
+    if (faPydRaw) {
+      const faPydX = djangofastapiHubX + 650;
+      const faPydY = djangofastapiHubY + 180;
+      const faPydNode: PositionedNode = {
+        ...faPydRaw,
+        x: faPydX,
+        y: faPydY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(faPydNode);
+      edges.push({
+        source: djangofastapiHubNode.id,
+        target: faPydNode.id,
+        category: "djangofastapi",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const saeRaw = allNodes.find((n) => n.id === "djangofastapi-starlette-asgi-event-loop");
+      if (saeRaw) {
+        positionedNodes.push({
+          ...saeRaw,
+          x: faPydX + 320,
+          y: faPydY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: faPydNode.id,
+          target: saeRaw.id,
+          category: "djangofastapi",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const pvsRaw = allNodes.find((n) => n.id === "djangofastapi-pydantic-validation-serialization");
+      if (pvsRaw) {
+        positionedNodes.push({
+          ...pvsRaw,
+          x: faPydX + 320,
+          y: faPydY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: faPydNode.id,
+          target: pvsRaw.id,
+          category: "djangofastapi",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const disRaw = allNodes.find((n) => n.id === "djangofastapi-fastapi-dependency-injection-security");
+      if (disRaw) {
+        positionedNodes.push({
+          ...disRaw,
+          x: faPydX + 320,
+          y: faPydY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: faPydNode.id,
+          target: disRaw.id,
+          category: "djangofastapi",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -6855,6 +7052,8 @@ export function calculateGroupLayout(
     pillarIds = ["buildtools-vite-esm-hmr-pillar", "buildtools-pipeline-pillar", "buildtools-webpack-tailwind-pillar"];
   } else if (category === "expressnest") {
     pillarIds = ["expressnest-express-architecture-pillar", "expressnest-pipeline-pillar", "expressnest-nestjs-ioc-decorators-pillar"];
+  } else if (category === "djangofastapi") {
+    pillarIds = ["djangofastapi-django-orm-mvt-pillar", "djangofastapi-pipeline-pillar", "djangofastapi-fastapi-async-pydantic-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -7253,6 +7452,11 @@ export function getNodesForCategory(
       parentId: "root-buildtools",
       level: 2,
     };
+    const djangofastapiRoot = {
+      ...allNodes.find((n) => n.id === "root-djangofastapi")!,
+      parentId: "root-expressnest",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -7303,13 +7507,14 @@ export function getNodesForCategory(
         n.id !== "root-angularvue" &&
         n.id !== "root-buildtools" &&
         n.id !== "root-expressnest" &&
+        n.id !== "root-djangofastapi" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

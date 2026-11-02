@@ -1058,9 +1058,12 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           {
             id: "topic-django-fastapi",
             name: "Django, FastAPI",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "Python batteries-included ORM vs async Pydantic OpenAPI endpoints",
+            categoryId: "djangofastapi",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Django MVT architecture, lazy ORM QuerySets, migrations, FastAPI Starlette ASGI concurrency, Pydantic v2 Rust validation, and 9-stage Python request pipeline",
+            color: "#05998b",
           },
           {
             id: "topic-spring-boot",

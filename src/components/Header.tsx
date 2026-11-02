@@ -39,6 +39,7 @@ import {
   Component,
   Package,
   Route,
+  Rocket,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -118,6 +119,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Package size={16} />;
       case "expressnest":
         return <Route size={16} />;
+      case "djangofastapi":
+        return <Rocket size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

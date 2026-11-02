@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2521,7 +2521,84 @@ export const EXPRESSNEST_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const DJANGOFASTAPI_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-djangofastapi-pipeline",
+    pillarId: "djangofastapi-pipeline-pillar",
+    title: "9-Stage Python ASGI/WSGI Pipeline",
+    category: "djangofastapi",
+    badge: "9 Sequential Stages",
+    color: "#05998b",
+    isPipeline: true,
+    items: [
+      {
+        id: "pyhttp-uvicorn-asgi-handshake",
+        stepNumber: 1,
+        label: "1. Socket Ingestion & Uvicorn ASGI Scope",
+        badge: "⚡ uvloop & ASGI Scope Dict",
+        searchQuery: "Uvicorn ASGI server socket accept uvloop httptools connection scope dictionary",
+      },
+      {
+        id: "pyhttp-asgi-middleware-cors-gzip",
+        stepNumber: 2,
+        label: "2. Middleware Stack & Security Headers",
+        badge: "🛡️ CORS, GZip & Trusted Host",
+        searchQuery: "Starlette CORSMiddleware GZipMiddleware TrustedHostMiddleware Django security middleware",
+      },
+      {
+        id: "pyhttp-url-dispatcher-route-trie",
+        stepNumber: 3,
+        label: "3. URL Dispatcher & Route Path Converter",
+        badge: "🗺️ Path Converters & Trie Match",
+        searchQuery: "FastAPI Starlette routing path converters regex matching Django URLconf resolver",
+      },
+      {
+        id: "pyhttp-auth-session-token-verification",
+        stepNumber: 4,
+        label: "4. Authentication & OAuth2 / Session Scopes",
+        badge: "🔑 OAuth2PasswordBearer & JWT",
+        searchQuery: "FastAPI OAuth2PasswordBearer SecurityScopes JWT bearer verification Django session auth",
+      },
+      {
+        id: "pyhttp-depends-subdependency-resolution",
+        stepNumber: 5,
+        label: "5. Depends() Dependency Graph Resolution",
+        badge: "💉 Hierarchical Sub-Dependency DAG",
+        searchQuery: "FastAPI Depends sub-dependency graph yield contextmanager database session injection",
+      },
+      {
+        id: "pyhttp-pydantic-body-query-validation",
+        stepNumber: 6,
+        label: "6. Pydantic v2 Body & Query Validation",
+        badge: "🦀 pydantic-core Rust Type Coercion",
+        searchQuery: "Pydantic v2 pydantic-core Rust validation type coercion 422 Unprocessable Entity",
+      },
+      {
+        id: "pyhttp-endpoint-execution-orm-queries",
+        stepNumber: 7,
+        label: "7. Endpoint Execution & Async ORM Queries",
+        badge: "⚡ async def / run_in_threadpool",
+        searchQuery: "FastAPI async def vs def anyio run_in_threadpool SQLAlchemy async ORM Django QuerySet",
+      },
+      {
+        id: "pyhttp-response-model-serialization",
+        stepNumber: 8,
+        label: "8. Response Model & JSON Serialization",
+        badge: "🚀 response_model & orjson Emit",
+        searchQuery: "FastAPI response_model serialization orjson simdjson field exclusion status code",
+      },
+      {
+        id: "pyhttp-background-tasks-context-cleanup",
+        stepNumber: 9,
+        label: "9. Background Tasks & Dependency Teardown",
+        badge: "🧹 BackgroundTasks & yield Cleanup",
+        searchQuery: "FastAPI BackgroundTasks response socket flush generator dependency finally cleanup",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2551,8 +2628,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "angularvue") return ANGULARVUE_GROUP_CARDS;
   if (category === "buildtools") return BUILDTOOLS_GROUP_CARDS;
   if (category === "expressnest") return EXPRESSNEST_GROUP_CARDS;
+  if (category === "djangofastapi") return DJANGOFASTAPI_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

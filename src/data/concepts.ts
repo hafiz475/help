@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -285,8 +285,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "djangofastapi",
+    name: "30. Django & FastAPI",
+    title: "Django & FastAPI Architecture: Batteries-Included MVT vs High-Speed Async ASGI",
+    description: "Django ORM lazy evaluation & migrations, FastAPI Starlette ASGI concurrency, Pydantic v2 Rust data validation, and 9-stage Python request pipeline",
+    color: "#05998b", // FastAPI Teal & Django Forest Green
+    icon: "Rocket",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "30. OOP (4 Pillars)",
+    name: "31. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -295,7 +304,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "31. DSA",
+    name: "32. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -304,7 +313,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "32. Big O",
+    name: "33. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -318,7 +327,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 349,
+    count: 359,
   },
 ];
 
@@ -595,6 +604,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Express NestJS backend architecture Connect middleware router trie IoC container dependency injection decorators guards interceptors pipes",
     badge: "Middleware & IoC Frameworks",
     color: "#ea284e",
+  },
+  {
+    id: "root-djangofastapi",
+    label: "Django & FastAPI",
+    category: "djangofastapi",
+    level: 0,
+    searchQuery: "Django FastAPI Python backend architecture MVT ORM querysets migrations Starlette ASGI Pydantic v2 OpenAPI Depends",
+    badge: "Python MVT & ASGI",
+    color: "#05998b",
   },
   {
     id: "root-oop",
@@ -3974,7 +3992,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 30. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 30. DJANGO & FASTAPI ARCHITECTURE
+  // ==========================================
+  // Pillar 1: Django MVT Architecture, ORM & Batteries
+  {
+    id: "djangofastapi-django-orm-mvt-pillar",
+    label: "Django MVT & Lazy ORM",
+    category: "djangofastapi",
+    parentId: "root-djangofastapi",
+    level: 1,
+    searchQuery: "Django MVT model view template architecture ORM querysets migrations middleware admin batteries",
+    badge: "MVT Pattern & Lazy ORM",
+    color: "#059669",
+  },
+  {
+    id: "djangofastapi-django-orm-querysets-migrations",
+    label: "Lazy QuerySets & Migrations",
+    category: "djangofastapi",
+    parentId: "djangofastapi-django-orm-mvt-pillar",
+    level: 2,
+    searchQuery: "Django ORM lazy evaluation QuerySet select_related prefetch_related schema migrations router",
+    badge: "select_related & Migrations",
+    color: "#10b981",
+  },
+  {
+    id: "djangofastapi-django-middleware-auth-sessions",
+    label: "Middleware & Session Security",
+    category: "djangofastapi",
+    parentId: "djangofastapi-django-orm-mvt-pillar",
+    level: 2,
+    searchQuery: "Django middleware get_response session engines CSRF token verification authentication backends",
+    badge: "CSRF & Session Backends",
+    color: "#059669",
+  },
+  {
+    id: "djangofastapi-django-admin-signals-forms",
+    label: "Admin, Signals & Forms",
+    category: "djangofastapi",
+    parentId: "djangofastapi-django-orm-mvt-pillar",
+    level: 2,
+    searchQuery: "Django ModelAdmin introspection model signals post_save pre_delete Form validation clean methods",
+    badge: "ModelAdmin & Signals",
+    color: "#047857",
+  },
+
+  // Pillar 2: 9-Stage Modern Python ASGI/WSGI Pipeline (Group Card)
+  {
+    id: "djangofastapi-pipeline-pillar",
+    label: "9-Stage Python ASGI/WSGI Pipeline",
+    category: "djangofastapi",
+    parentId: "root-djangofastapi",
+    level: 1,
+    searchQuery: "Python ASGI WSGI request lifecycle Uvicorn Starlette FastAPI Django Depends Pydantic background tasks",
+    badge: "9 Sequential Stages",
+    color: "#05998b",
+  },
+
+  // Pillar 3: FastAPI Async ASGI, Pydantic & OpenAPI Engine
+  {
+    id: "djangofastapi-fastapi-async-pydantic-pillar",
+    label: "FastAPI Async & Pydantic v2",
+    category: "djangofastapi",
+    parentId: "root-djangofastapi",
+    level: 1,
+    searchQuery: "FastAPI Starlette ASGI event loop Pydantic v2 validation serialization Depends OpenAPI Swagger",
+    badge: "ASGI & Pydantic v2 Core",
+    color: "#009688",
+  },
+  {
+    id: "djangofastapi-starlette-asgi-event-loop",
+    label: "Starlette ASGI & Async Concurrency",
+    category: "djangofastapi",
+    parentId: "djangofastapi-fastapi-async-pydantic-pillar",
+    level: 2,
+    searchQuery: "Starlette ASGI connection scope async event loop anyio uvloop worker concurrency threadpool def vs async def",
+    badge: "ASGI Scope & uvloop",
+    color: "#14b8a6",
+  },
+  {
+    id: "djangofastapi-pydantic-validation-serialization",
+    label: "Pydantic v2 Rust Core Validation",
+    category: "djangofastapi",
+    parentId: "djangofastapi-fastapi-async-pydantic-pillar",
+    level: 2,
+    searchQuery: "Pydantic v2 pydantic-core Rust validation serialization BaseModel Field type coercion OpenAPI JSON schema",
+    badge: "pydantic-core & OpenAPI",
+    color: "#009688",
+  },
+  {
+    id: "djangofastapi-fastapi-dependency-injection-security",
+    label: "Depends() Sub-Graph & OAuth2",
+    category: "djangofastapi",
+    parentId: "djangofastapi-fastapi-async-pydantic-pillar",
+    level: 2,
+    searchQuery: "FastAPI Depends sub-dependency graph yield teardown SecurityScopes OAuth2PasswordBearer JWT token auth",
+    badge: "Depends() & OAuth2 Scopes",
+    color: "#0d9488",
+  },
+
+  // ==========================================
+  // 31. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
@@ -4033,7 +4150,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 31. DATA STRUCTURES (DSA)
+  // 32. DATA STRUCTURES (DSA)
   // ==========================================
   // Level 1 Major Pillar
   {
@@ -4113,7 +4230,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 32. BIG O TIME COMPLEXITY
+  // 33. BIG O TIME COMPLEXITY
   // ==========================================
   // Level 1 Major Pillar
   {

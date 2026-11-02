@@ -16031,6 +16031,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // DJANGO & FASTAPI PYTHON BACKEND FRAMEWORKS
+  // ==========================================
+  "root-djangofastapi": {
+    id: "root-djangofastapi",
+    title: "Django & FastAPI",
+    badge: "Python MVT & ASGI",
+    tagline: "Batteries-included MVT monoliths, lazy ORMs, Starlette ASGI concurrency, and Pydantic v2 schemas",
+    takeaways: [
+      {
+        id: "df-root-1",
+        text: "Django offers a batteries-included monolithic ORM while FastAPI provides high-speed async ASGI.",
+        searchPrompt: "Django vs FastAPI comparison Python web frameworks async ASGI vs sync ORM",
+        emoji: "🐍",
+        reactionCount: "5.8k",
+        commentCount: 470,
+      },
+      {
+        id: "df-root-2",
+        text: "Django QuerySets execute lazily with automatic database migrations and built-in Admin panels.",
+        searchPrompt: "Django lazy QuerySets schema migrations automatic admin panel architecture",
+        emoji: "📦",
+        reactionCount: "5.2k",
+        commentCount: 400,
+      },
+      {
+        id: "df-root-3",
+        text: "FastAPI relies on Starlette and Pydantic v2 for automatic OpenAPI documentation and validation.",
+        searchPrompt: "FastAPI Starlette Pydantic v2 automatic OpenAPI Swagger documentation",
+        emoji: "⚡",
+        reactionCount: "4.7k",
+        commentCount: 345,
+      },
+    ],
+  },
+
+  "djangofastapi-django-orm-mvt-pillar": {
+    id: "djangofastapi-django-orm-mvt-pillar",
+    title: "Django MVT & Lazy ORM",
+    badge: "MVT Pattern & Lazy ORM",
+    tagline: "Model-View-Template architecture, lazy QuerySets, schema migrations, and admin introspection",
+    takeaways: [
+      {
+        id: "df-dom-1",
+        text: "Django separates concerns into Models (data), Views (controller logic), and Templates (HTML).",
+        searchPrompt: "Django MVT architecture Model View Template pattern explained",
+        emoji: "🏛️",
+        reactionCount: "5.4k",
+        commentCount: 420,
+      },
+      {
+        id: "df-dom-2",
+        text: "Lazy QuerySets defer database evaluation until data is actually iterated, sliced, or printed.",
+        searchPrompt: "Django ORM lazy evaluation QuerySet execution database queries caching",
+        emoji: "⏳",
+        reactionCount: "4.9k",
+        commentCount: 375,
+      },
+      {
+        id: "df-dom-3",
+        text: "Django migrations generate deterministic Python migration files tracking database schema deltas.",
+        searchPrompt: "Django makemigrations migrate schema evolution dependency graph",
+        emoji: "🔄",
+        reactionCount: "4.4k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "djangofastapi-django-orm-querysets-migrations": {
+    id: "djangofastapi-django-orm-querysets-migrations",
+    title: "Lazy QuerySets & Migrations",
+    badge: "select_related & Migrations",
+    tagline: "select_related SQL joins, prefetch_related lookups, schema state graphs, and database routing",
+    takeaways: [
+      {
+        id: "df-oqm-1",
+        text: "select_related performs SQL INNER JOINs for single-valued foreign keys to eliminate N+1 queries.",
+        searchPrompt: "Django select_related SQL INNER JOIN foreign key N+1 query problem",
+        emoji: "🔗",
+        reactionCount: "5.6k",
+        commentCount: 445,
+      },
+      {
+        id: "df-oqm-2",
+        text: "prefetch_related executes separate queries and joins them in Python for multi-valued relations.",
+        searchPrompt: "Django prefetch_related separate queries in memory join many to many",
+        emoji: "⚡",
+        reactionCount: "5.1k",
+        commentCount: 390,
+      },
+      {
+        id: "df-oqm-3",
+        text: "makemigrations inspects model history graphs to produce reversible schema operation steps.",
+        searchPrompt: "Django makemigrations schema operation steps AlterField AddModel backwards",
+        emoji: "📜",
+        reactionCount: "4.5k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  "djangofastapi-django-middleware-auth-sessions": {
+    id: "djangofastapi-django-middleware-auth-sessions",
+    title: "Middleware & Session Security",
+    badge: "CSRF & Session Backends",
+    tagline: "get_response middleware chains, session storage engines, CSRF token verification, and auth backends",
+    takeaways: [
+      {
+        id: "df-mas-1",
+        text: "Django middleware wraps the HTTP handler with onion-style hooks before and after view execution.",
+        searchPrompt: "Django middleware get_response request response processing onion hooks",
+        emoji: "🧅",
+        reactionCount: "5.3k",
+        commentCount: 410,
+      },
+      {
+        id: "df-mas-2",
+        text: "CsrfViewMiddleware inspects hidden form tokens and cookies to prevent cross-site request forgeries.",
+        searchPrompt: "Django CsrfViewMiddleware CSRF token verification SameSite cookies security",
+        emoji: "🛡️",
+        reactionCount: "4.8k",
+        commentCount: 360,
+      },
+      {
+        id: "df-mas-3",
+        text: "Session middleware stores session keys in signed cookies, caching state in databases or Redis.",
+        searchPrompt: "Django session backend signed cookies database Redis cache session key",
+        emoji: "🔑",
+        reactionCount: "4.3k",
+        commentCount: 300,
+      },
+    ],
+  },
+
+  "djangofastapi-django-admin-signals-forms": {
+    id: "djangofastapi-django-admin-signals-forms",
+    title: "Admin, Signals & Forms",
+    badge: "ModelAdmin & Signals",
+    tagline: "Dynamic ModelAdmin generation, post_save/pre_delete model signals, and form validation pipelines",
+    takeaways: [
+      {
+        id: "df-asf-1",
+        text: "Django Admin inspects model metadata to generate production-ready CRUD interfaces automatically.",
+        searchPrompt: "Django ModelAdmin introspection automatic CRUD backoffice interface",
+        emoji: "📋",
+        reactionCount: "5.5k",
+        commentCount: 430,
+      },
+      {
+        id: "df-asf-2",
+        text: "Model signals (post_save, pre_delete) notify decoupled receivers when database rows mutate.",
+        searchPrompt: "Django signals post_save pre_delete receiver dispatcher decoupled event",
+        emoji: "📡",
+        reactionCount: "4.9k",
+        commentCount: 370,
+      },
+      {
+        id: "df-asf-3",
+        text: "Django Forms validate and sanitize raw input fields using clean_<field>() validation methods.",
+        searchPrompt: "Django Form validation clean_field clean is_valid ValidationError",
+        emoji: "🧹",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "djangofastapi-pipeline-pillar": {
+    id: "djangofastapi-pipeline-pillar",
+    title: "9-Stage Python ASGI/WSGI Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "End-to-end traversal from Uvicorn socket ingestion and middleware to Depends, Pydantic, and background tasks",
+    takeaways: [
+      {
+        id: "df-plp-1",
+        text: "The pipeline traces Python HTTP requests across 9 distinct stages from socket arrival to response.",
+        searchPrompt: "Python ASGI WSGI request lifecycle pipeline 9 stages Uvicorn FastAPI",
+        emoji: "🚀",
+        reactionCount: "5.9k",
+        commentCount: 480,
+      },
+      {
+        id: "df-plp-2",
+        text: "Combines Uvicorn event loops, Starlette middleware, and FastAPI Pydantic v2 validation engines.",
+        searchPrompt: "FastAPI request processing pipeline Uvicorn Starlette Pydantic v2 execution",
+        emoji: "🧩",
+        reactionCount: "5.3k",
+        commentCount: 420,
+      },
+      {
+        id: "df-plp-3",
+        text: "Supports non-blocking async coroutines alongside threadpool-isolated synchronous Django views.",
+        searchPrompt: "async def vs sync def threadpool worker offloading AnyIO ASGI server",
+        emoji: "⚡",
+        reactionCount: "4.8k",
+        commentCount: 355,
+      },
+    ],
+  },
+
+  "djangofastapi-fastapi-async-pydantic-pillar": {
+    id: "djangofastapi-fastapi-async-pydantic-pillar",
+    title: "FastAPI Async & Pydantic v2",
+    badge: "ASGI & Pydantic v2 Core",
+    tagline: "Starlette ASGI scope, async/await concurrency, Pydantic v2 Rust core, and automatic OpenAPI Swagger docs",
+    takeaways: [
+      {
+        id: "df-fap-1",
+        text: "FastAPI builds on Starlette for async ASGI performance and Pydantic for data validation.",
+        searchPrompt: "FastAPI architecture Starlette ASGI foundation Pydantic validation",
+        emoji: "🏗️",
+        reactionCount: "5.7k",
+        commentCount: 450,
+      },
+      {
+        id: "df-fap-2",
+        text: "Pydantic v2 core engine is written in Rust, boosting validation speed 5x to 50x over v1.",
+        searchPrompt: "Pydantic v2 pydantic-core Rust implementation performance benchmarks",
+        emoji: "🦀",
+        reactionCount: "5.4k",
+        commentCount: 410,
+      },
+      {
+        id: "df-fap-3",
+        text: "Automatically generates interactive Swagger UI and ReDoc documentation from Python type hints.",
+        searchPrompt: "FastAPI automatic OpenAPI schema Swagger UI ReDoc interactive docs",
+        emoji: "📖",
+        reactionCount: "4.8k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "djangofastapi-starlette-asgi-event-loop": {
+    id: "djangofastapi-starlette-asgi-event-loop",
+    title: "Starlette ASGI & Async Concurrency",
+    badge: "ASGI Scope & uvloop",
+    tagline: "ASGI connection scope dictionaries, asyncio event loop, threadpool worker offloading, and WebSocket support",
+    takeaways: [
+      {
+        id: "df-sae-1",
+        text: "ASGI interfaces receive scope, receive, and send callables to handle async HTTP and WebSockets.",
+        searchPrompt: "ASGI specification scope receive send callables asynchronous protocol",
+        emoji: "🌐",
+        reactionCount: "5.2k",
+        commentCount: 395,
+      },
+      {
+        id: "df-sae-2",
+        text: "Sync def endpoints are offloaded to an AnyIO threadpool to prevent blocking the event loop.",
+        searchPrompt: "FastAPI sync def threadpool worker AnyIO run_in_threadpool non blocking",
+        emoji: "🧵",
+        reactionCount: "4.7k",
+        commentCount: 345,
+      },
+      {
+        id: "df-sae-3",
+        text: "Uvicorn runs on uvloop and httptools, delivering Node.js- and Go-grade throughput in Python.",
+        searchPrompt: "Uvicorn uvloop httptools Python event loop performance benchmark",
+        emoji: "🏎️",
+        reactionCount: "4.3k",
+        commentCount: 300,
+      },
+    ],
+  },
+
+  "djangofastapi-pydantic-validation-serialization": {
+    id: "djangofastapi-pydantic-validation-serialization",
+    title: "Pydantic v2 Rust Core Validation",
+    badge: "pydantic-core & OpenAPI",
+    tagline: "pydantic-core Rust parser, BaseModel field annotations, runtime coercion, and JSON schema extraction",
+    takeaways: [
+      {
+        id: "df-pvs-1",
+        text: "Pydantic validates input types at runtime, automatically parsing strings to datetimes and UUIDs.",
+        searchPrompt: "Pydantic runtime type validation parsing datetime UUID type coercion",
+        emoji: "🔍",
+        reactionCount: "5.5k",
+        commentCount: 430,
+      },
+      {
+        id: "df-pvs-2",
+        text: "Generates strict JSON Schemas compliant with OpenAPI 3.1 specifications from Python type hints.",
+        searchPrompt: "Pydantic JSON schema generation OpenAPI 3.1 Python type hints BaseModel",
+        emoji: "📑",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "df-pvs-3",
+        text: "Serialization via model_dump(mode='json') produces blazing fast JSON-compatible dictionaries.",
+        searchPrompt: "Pydantic v2 model_dump mode json serialization performance",
+        emoji: "🚀",
+        reactionCount: "4.5k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  "djangofastapi-fastapi-dependency-injection-security": {
+    id: "djangofastapi-fastapi-dependency-injection-security",
+    title: "Depends() Sub-Graph & OAuth2",
+    badge: "Depends() & OAuth2 Scopes",
+    tagline: "Hierarchical sub-dependencies, yield database session cleanup, OAuth2PasswordBearer, and SecurityScopes",
+    takeaways: [
+      {
+        id: "df-dis-1",
+        text: "Depends() builds a Directed Acyclic Graph (DAG) of dependencies resolved concurrently per request.",
+        searchPrompt: "FastAPI Depends dependency injection DAG sub-dependencies resolution",
+        emoji: "💉",
+        reactionCount: "5.6k",
+        commentCount: 440,
+      },
+      {
+        id: "df-dis-2",
+        text: "Dependencies using yield execute setup before the route and guaranteed cleanup after the response.",
+        searchPrompt: "FastAPI dependency yield contextmanager database session teardown cleanup",
+        emoji: "🧹",
+        reactionCount: "5.1k",
+        commentCount: 390,
+      },
+      {
+        id: "df-dis-3",
+        text: "OAuth2PasswordBearer integrates with SecurityScopes to enforce fine-grained token permissions.",
+        searchPrompt: "FastAPI OAuth2PasswordBearer SecurityScopes JWT token scope authorization",
+        emoji: "🔒",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  // 9 Stages of Modern Python ASGI/WSGI Pipeline
+  "pyhttp-uvicorn-asgi-handshake": {
+    id: "pyhttp-uvicorn-asgi-handshake",
+    title: "1. Socket Ingestion & Uvicorn ASGI Scope",
+    badge: "⚡ uvloop & ASGI Scope Dict",
+    tagline: "TCP socket accept, HTTP protocol parsing via uvloop/httptools, and ASGI connection scope creation",
+    takeaways: [
+      {
+        id: "df-uah-1",
+        text: "Uvicorn accepts TCP connections and parses HTTP protocol streams using C-based httptools.",
+        searchPrompt: "Uvicorn TCP socket accept httptools HTTP protocol parser ASGI",
+        emoji: "🔌",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+      {
+        id: "df-uah-2",
+        text: "Creates an ASGI scope dictionary containing request method, path, headers, client IP, and query.",
+        searchPrompt: "ASGI scope dictionary type http path headers client method query_string",
+        emoji: "📖",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+      {
+        id: "df-uah-3",
+        text: "Passes scope, receive, and send callables into the Starlette/FastAPI application instance.",
+        searchPrompt: "ASGI application callable scope receive send async interface invocation",
+        emoji: "🚀",
+        reactionCount: "4.1k",
+        commentCount: 280,
+      },
+    ],
+  },
+
+  "pyhttp-asgi-middleware-cors-gzip": {
+    id: "pyhttp-asgi-middleware-cors-gzip",
+    title: "2. Middleware Stack & Security Headers",
+    badge: "🛡️ CORS, GZip & Trusted Host",
+    tagline: "Processing Starlette/Django middleware stack (CORS preflight, GZip compression, request ID, trusted host)",
+    takeaways: [
+      {
+        id: "df-mcg-1",
+        text: "CORSMiddleware checks Origin headers and short-circuits HTTP OPTIONS preflight requests.",
+        searchPrompt: "Starlette CORSMiddleware Origin headers HTTP OPTIONS preflight handling",
+        emoji: "🌐",
+        reactionCount: "5.1k",
+        commentCount: 385,
+      },
+      {
+        id: "df-mcg-2",
+        text: "TrustedHostMiddleware guards against HTTP Host header attacks by validating allowed host domains.",
+        searchPrompt: "Starlette TrustedHostMiddleware HTTP Host header attacks security",
+        emoji: "🛡️",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+      {
+        id: "df-mcg-3",
+        text: "GZipMiddleware compresses outgoing response streams on the fly when payload exceeds thresholds.",
+        searchPrompt: "Starlette GZipMiddleware compression minimum size threshold gzip encoding",
+        emoji: "🗜️",
+        reactionCount: "4.2k",
+        commentCount: 290,
+      },
+    ],
+  },
+
+  "pyhttp-url-dispatcher-route-trie": {
+    id: "pyhttp-url-dispatcher-route-trie",
+    title: "3. URL Dispatcher & Route Path Converter",
+    badge: "🗺️ Path Converters & Trie Match",
+    tagline: "URL routing resolution, path converter regex matching, and mapping endpoint function or view handler",
+    takeaways: [
+      {
+        id: "df-udr-1",
+        text: "Router traverses path converter trees to match URI paths against defined endpoint signatures.",
+        searchPrompt: "FastAPI Starlette router path converter tree matching URL dispatch",
+        emoji: "🗺️",
+        reactionCount: "5.2k",
+        commentCount: 395,
+      },
+      {
+        id: "df-udr-2",
+        text: "Path parameters ({user_id:int}) are extracted and validated against type converter constraints.",
+        searchPrompt: "Starlette path converters {user_id:int} regex extraction validation",
+        emoji: "🏷️",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+      {
+        id: "df-udr-3",
+        text: "Identifies target route handler function, HTTP method, and associated OpenAPI operation metadata.",
+        searchPrompt: "FastAPI route handler identification APIRoute endpoint operation metadata",
+        emoji: "🎯",
+        reactionCount: "4.3k",
+        commentCount: 300,
+      },
+    ],
+  },
+
+  "pyhttp-auth-session-token-verification": {
+    id: "pyhttp-auth-session-token-verification",
+    title: "4. Authentication & OAuth2 / Session Scopes",
+    badge: "🔑 OAuth2PasswordBearer & JWT",
+    tagline: "Session cookie decryption or OAuth2/JWT Bearer token verification and populating request.user context",
+    takeaways: [
+      {
+        id: "df-atv-1",
+        text: "Extracts Bearer tokens from Authorization headers or session cookies from Cookie headers.",
+        searchPrompt: "FastAPI OAuth2PasswordBearer token extraction Authorization header Bearer",
+        emoji: "🔑",
+        reactionCount: "5.4k",
+        commentCount: 420,
+      },
+      {
+        id: "df-atv-2",
+        text: "Decodes and verifies cryptographic JWT signatures, rejecting expired or invalid tokens with 401.",
+        searchPrompt: "PyJWT python-jose token verification signature expiration 401 Unauthorized",
+        emoji: "🔒",
+        reactionCount: "5.0k",
+        commentCount: 375,
+      },
+      {
+        id: "df-atv-3",
+        text: "Populates request.state.user or request.user with authenticated identity and security scopes.",
+        searchPrompt: "FastAPI request.state.user authenticated identity security scopes injection",
+        emoji: "👤",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "pyhttp-depends-subdependency-resolution": {
+    id: "pyhttp-depends-subdependency-resolution",
+    title: "5. Depends() Dependency Graph Resolution",
+    badge: "💉 Hierarchical Sub-Dependency DAG",
+    tagline: "Resolving hierarchical Depends() sub-dependency tree, yielding database sessions, and verifying route permissions",
+    takeaways: [
+      {
+        id: "df-dsr-1",
+        text: "FastAPI builds a dependency DAG, resolving shared dependencies once when use_cache=True is set.",
+        searchPrompt: "FastAPI Depends sub-dependency DAG resolution use_cache deduplication",
+        emoji: "💉",
+        reactionCount: "5.5k",
+        commentCount: 430,
+      },
+      {
+        id: "df-dsr-2",
+        text: "Injects database sessions (SQLAlchemy, Tortoise, Prisma) and API clients directly into handlers.",
+        searchPrompt: "FastAPI AsyncSession SQLAlchemy dependency injection get_db yield",
+        emoji: "🗄️",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "df-dsr-3",
+        text: "Security dependencies enforce permissions and raise HTTPException(403) on unauthorized requests.",
+        searchPrompt: "FastAPI Security Depends SecurityScopes 403 Forbidden permission enforcement",
+        emoji: "🛑",
+        reactionCount: "4.5k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  "pyhttp-pydantic-body-query-validation": {
+    id: "pyhttp-pydantic-body-query-validation",
+    title: "6. Pydantic v2 Body & Query Validation",
+    badge: "🦀 pydantic-core Rust Type Coercion",
+    tagline: "Streaming request body, executing Pydantic v2 Rust core validation, type coercion, and 422 error generation",
+    takeaways: [
+      {
+        id: "df-pbq-1",
+        text: "Consumes the request body stream and passes raw bytes into pydantic-core for Rust-powered parsing.",
+        searchPrompt: "pydantic-core Rust request body byte stream parsing validation speed",
+        emoji: "🦀",
+        reactionCount: "5.6k",
+        commentCount: 440,
+      },
+      {
+        id: "df-pbq-2",
+        text: "Coerces query parameters, form fields, and JSON payloads into strongly-typed Pydantic models.",
+        searchPrompt: "FastAPI Pydantic model type coercion Query Path Body form parsing",
+        emoji: "🔍",
+        reactionCount: "5.1k",
+        commentCount: 390,
+      },
+      {
+        id: "df-pbq-3",
+        text: "Collects schema validation failures and returns detailed 422 Unprocessable Entity error lists.",
+        searchPrompt: "FastAPI RequestValidationError 422 Unprocessable Entity error details format",
+        emoji: "⚠️",
+        reactionCount: "4.6k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "pyhttp-endpoint-execution-orm-queries": {
+    id: "pyhttp-endpoint-execution-orm-queries",
+    title: "7. Endpoint Execution & Async ORM Queries",
+    badge: "⚡ async def / run_in_threadpool",
+    tagline: "Executing async path operation or Django sync threadpool view, evaluating lazy ORM QuerySets, and running logic",
+    takeaways: [
+      {
+        id: "df-eeo-1",
+        text: "Async path operations execute on the asyncio event loop without context switching overhead.",
+        searchPrompt: "FastAPI async def coroutine execution asyncio event loop non-blocking",
+        emoji: "⚡",
+        reactionCount: "5.4k",
+        commentCount: 425,
+      },
+      {
+        id: "df-eeo-2",
+        text: "Sync views run in separate threadpool workers to avoid blocking the main async event loop thread.",
+        searchPrompt: "FastAPI def run_in_threadpool worker threadpool AnyIO async loop safety",
+        emoji: "🧵",
+        reactionCount: "4.9k",
+        commentCount: 375,
+      },
+      {
+        id: "df-eeo-3",
+        text: "Database queries execute asynchronously or evaluate lazy Django QuerySets, fetching domain data.",
+        searchPrompt: "SQLAlchemy async await session.execute Django QuerySet database fetch",
+        emoji: "🗄️",
+        reactionCount: "4.4k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "pyhttp-response-model-serialization": {
+    id: "pyhttp-response-model-serialization",
+    title: "8. Response Model & JSON Serialization",
+    badge: "🚀 response_model & orjson Emit",
+    tagline: "Validating return types with response_model, stripping excluded fields, serializing to JSON via orjson/simdjson",
+    takeaways: [
+      {
+        id: "df-rms-1",
+        text: "FastAPI validates returned dictionaries or ORM instances against response_model schemas.",
+        searchPrompt: "FastAPI response_model schema validation serialization output filtering",
+        emoji: "📑",
+        reactionCount: "5.5k",
+        commentCount: 435,
+      },
+      {
+        id: "df-rms-2",
+        text: "Filters out response fields marked with exclude or response_model_exclude_unset to save bandwidth.",
+        searchPrompt: "FastAPI response_model_exclude_unset response_model_exclude sensitive data",
+        emoji: "✂️",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "df-rms-3",
+        text: "Serializes output payloads to JSON using ultra-fast C/Rust serializers (orjson, ujson, simdjson).",
+        searchPrompt: "orjson ORJSONResponse FastAPI ultra-fast JSON serialization Rust",
+        emoji: "🚀",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "pyhttp-background-tasks-context-cleanup": {
+    id: "pyhttp-background-tasks-context-cleanup",
+    title: "9. Background Tasks & Dependency Teardown",
+    badge: "🧹 BackgroundTasks & yield Cleanup",
+    tagline: "Flushing HTTP response chunks to client socket, triggering BackgroundTasks, and running generator dependency teardowns",
+    takeaways: [
+      {
+        id: "df-btc-1",
+        text: "Sends HTTP status code, headers, and body bytes to the ASGI server send callable for socket write.",
+        searchPrompt: "ASGI send callable http.response.start http.response.body socket write",
+        emoji: "📤",
+        reactionCount: "5.2k",
+        commentCount: 395,
+      },
+      {
+        id: "df-btc-2",
+        text: "Executes registered BackgroundTasks (emails, analytics, webhooks) after response stream finishes.",
+        searchPrompt: "FastAPI BackgroundTasks execution post response socket finish async task",
+        emoji: "📬",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+      {
+        id: "df-btc-3",
+        text: "Runs finally blocks in yield dependencies to close DB connections and release resources safely.",
+        searchPrompt: "FastAPI dependency finally block cleanup yield session.close resource release",
+        emoji: "🧹",
+        reactionCount: "4.3k",
+        commentCount: 300,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -17573,6 +18204,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Build Tools & Bundlers"
       : node.category === "expressnest"
       ? "Express & NestJS"
+      : node.category === "djangofastapi"
+      ? "Django & FastAPI"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"
