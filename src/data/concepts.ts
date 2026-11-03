@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -294,8 +294,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "springboot",
+    name: "31. Spring Boot",
+    title: "Spring Boot Enterprise Architecture: IoC, Auto-Configuration & Spring Data",
+    description: "ApplicationContext IoC & bean lifecycle, conditional auto-configuration, 9-stage Spring MVC pipeline, Spring Data JPA & Actuator",
+    color: "#6db33f", // Spring Green
+    icon: "Leaf",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "31. OOP (4 Pillars)",
+    name: "32. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -304,7 +313,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "32. DSA",
+    name: "33. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -313,7 +322,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "33. Big O",
+    name: "34. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -327,7 +336,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 359,
+    count: 369,
   },
 ];
 
@@ -613,6 +622,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Django FastAPI Python backend architecture MVT ORM querysets migrations Starlette ASGI Pydantic v2 OpenAPI Depends",
     badge: "Python MVT & ASGI",
     color: "#05998b",
+  },
+  {
+    id: "root-springboot",
+    label: "Spring Boot & Java Enterprise",
+    category: "springboot",
+    level: 0,
+    searchQuery: "Spring Boot Java enterprise architecture ApplicationContext IoC auto-configuration Spring MVC WebFlux Spring Data JPA Actuator",
+    badge: "IoC & Auto-Configuration",
+    color: "#6db33f",
   },
   {
     id: "root-oop",
@@ -4091,7 +4109,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 31. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 31. SPRING BOOT & JAVA ENTERPRISE
+  // ==========================================
+  // Pillar 1: Spring IoC Container, Bean Lifecycle & Auto-Configuration
+  {
+    id: "springboot-ioc-autoconfigure-pillar",
+    label: "IoC & Auto-Configuration",
+    category: "springboot",
+    parentId: "root-springboot",
+    level: 1,
+    searchQuery: "Spring Boot IoC ApplicationContext bean lifecycle auto-configuration conditional annotations AOP proxies transactional",
+    badge: "IoC & Auto-Configuration",
+    color: "#6db33f",
+  },
+  {
+    id: "springboot-bean-lifecycle-scopes",
+    label: "Bean Lifecycle & Scopes",
+    category: "springboot",
+    parentId: "springboot-ioc-autoconfigure-pillar",
+    level: 2,
+    searchQuery: "Spring Bean lifecycle BeanPostProcessor @PostConstruct InitializingBean singleton prototype request session scopes proxyMode",
+    badge: "Bean Lifecycle & Scopes",
+    color: "#4ade80",
+  },
+  {
+    id: "springboot-conditional-annotations-profiles",
+    label: "Conditional Engine & Profiles",
+    category: "springboot",
+    parentId: "springboot-ioc-autoconfigure-pillar",
+    level: 2,
+    searchQuery: "Spring Boot auto-configuration @ConditionalOnClass @ConditionalOnProperty @ConditionalOnMissingBean Spring profiles spring.factories imports",
+    badge: "Conditionals & Profiles",
+    color: "#22c55e",
+  },
+  {
+    id: "springboot-aop-proxies-transactions",
+    label: "AOP Proxies & @Transactional",
+    category: "springboot",
+    parentId: "springboot-ioc-autoconfigure-pillar",
+    level: 2,
+    searchQuery: "Spring AOP dynamic proxies CGLIB JDK Dynamic Proxy AspectJ @Transactional propagation isolation rollback PlatformTransactionManager",
+    badge: "CGLIB & @Transactional",
+    color: "#16a34a",
+  },
+
+  // Pillar 2: 9-Stage Spring MVC Request Lifecycle Pipeline (Group Card)
+  {
+    id: "springboot-pipeline-pillar",
+    label: "9-Stage Spring MVC Pipeline",
+    category: "springboot",
+    parentId: "root-springboot",
+    level: 1,
+    searchQuery: "Spring MVC request lifecycle DispatcherServlet HandlerMapping HandlerAdapter Interceptors ArgumentResolvers MessageConverters View",
+    badge: "9 Sequential Stages",
+    color: "#6db33f",
+  },
+
+  // Pillar 3: Spring Data JPA, Actuator & Security
+  {
+    id: "springboot-data-actuator-security-pillar",
+    label: "Spring Data, Actuator & Security",
+    category: "springboot",
+    parentId: "root-springboot",
+    level: 1,
+    searchQuery: "Spring Data JPA Hibernate L1 L2 cache repositories SecurityFilterChain JWT Actuator Micrometer Prometheus metrics",
+    badge: "Data, Security & Metrics",
+    color: "#15803d",
+  },
+  {
+    id: "springboot-data-jpa-repositories",
+    label: "Spring Data JPA & Hibernate Cache",
+    category: "springboot",
+    parentId: "springboot-data-actuator-security-pillar",
+    level: 2,
+    searchQuery: "Spring Data JPA JpaRepository method query derivation Criteria API Specification Hibernate first level second level cache N+1 query problem",
+    badge: "JpaRepository & Caching",
+    color: "#16a34a",
+  },
+  {
+    id: "springboot-security-filter-chain",
+    label: "SecurityFilterChain & JWT Auth",
+    category: "springboot",
+    parentId: "springboot-data-actuator-security-pillar",
+    level: 2,
+    searchQuery: "Spring Security SecurityFilterChain DelegatingFilterProxy AuthenticationManager ProviderManager OncePerRequestFilter JWT @PreAuthorize",
+    badge: "SecurityFilterChain & JWT",
+    color: "#15803d",
+  },
+  {
+    id: "springboot-actuator-micrometer-metrics",
+    label: "Actuator & Micrometer Metrics",
+    category: "springboot",
+    parentId: "springboot-data-actuator-security-pillar",
+    level: 2,
+    searchQuery: "Spring Boot Actuator production readiness health checks info endpoint Micrometer meter registry Prometheus scraping liveness readiness probes",
+    badge: "Actuator & Micrometer",
+    color: "#166534",
+  },
+
+  // ==========================================
+  // 32. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
@@ -4150,7 +4267,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 32. DATA STRUCTURES (DSA)
+  // 33. DATA STRUCTURES (DSA)
   // ==========================================
   // Level 1 Major Pillar
   {
@@ -4230,7 +4347,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 33. BIG O TIME COMPLEXITY
+  // 34. BIG O TIME COMPLEXITY
   // ==========================================
   // Level 1 Major Pillar
   {

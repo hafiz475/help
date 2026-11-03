@@ -16662,6 +16662,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // SPRING BOOT STORIES & TAKEAWAYS
+  // ==========================================
+  "springboot-ioc-autoconfigure-pillar": {
+    id: "springboot-ioc-autoconfigure-pillar",
+    title: "Spring IoC & Auto-Configuration",
+    badge: "IoC & Auto-Configuration",
+    tagline: "Inversion of control container, bean dependency injection, and opinionated auto-configuration",
+    takeaways: [
+      {
+        id: "sb-ioc-1",
+        text: "ApplicationContext manages bean lifecycles and injects dependencies via reflection or CGLIB.",
+        searchPrompt: "Spring ApplicationContext Inversion of Control dependency injection container",
+        emoji: "🏛️",
+        reactionCount: "5.8k",
+        commentCount: 450,
+      },
+      {
+        id: "sb-ioc-2",
+        text: "@SpringBootApplication aggregates @Configuration, @EnableAutoConfiguration, and @ComponentScan.",
+        searchPrompt: "SpringBootApplication EnableAutoConfiguration ComponentScan configuration",
+        emoji: "📦",
+        reactionCount: "5.3k",
+        commentCount: 395,
+      },
+      {
+        id: "sb-ioc-3",
+        text: "Auto-configuration registers starter beans conditionally without manual XML or Java wiring.",
+        searchPrompt: "Spring Boot auto-configuration spring.factories AutoConfiguration imports",
+        emoji: "⚡",
+        reactionCount: "4.9k",
+        commentCount: 355,
+      },
+    ],
+  },
+
+  "springboot-bean-lifecycle-scopes": {
+    id: "springboot-bean-lifecycle-scopes",
+    title: "Bean Lifecycle & Scopes",
+    badge: "Bean Lifecycle & Scopes",
+    tagline: "Instantiation, BeanPostProcessor hooks, lifecycle callbacks, and singleton/prototype scopes",
+    takeaways: [
+      {
+        id: "sb-bls-1",
+        text: "Beans transition through instantiation, dependency population, and BeanPostProcessor callbacks.",
+        searchPrompt: "Spring bean lifecycle BeanPostProcessor initialization instantiation callbacks",
+        emoji: "🔄",
+        reactionCount: "5.4k",
+        commentCount: 415,
+      },
+      {
+        id: "sb-bls-2",
+        text: "@PostConstruct and InitializingBean run after properties are set to execute custom warm-up.",
+        searchPrompt: "PostConstruct InitializingBean afterPropertiesSet Spring bean initialization",
+        emoji: "⏳",
+        reactionCount: "4.8k",
+        commentCount: 360,
+      },
+      {
+        id: "sb-bls-3",
+        text: "Default singleton scope shares one instance per container; prototype creates a new bean on get.",
+        searchPrompt: "Spring bean scopes singleton prototype request session application proxyMode",
+        emoji: "🎯",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "springboot-conditional-annotations-profiles": {
+    id: "springboot-conditional-annotations-profiles",
+    title: "Conditional Engine & Profiles",
+    badge: "Conditionals & Profiles",
+    tagline: "Conditional bean registration via classpath checks, properties, and active runtime profiles",
+    takeaways: [
+      {
+        id: "sb-cap-1",
+        text: "@ConditionalOnClass registers beans only when specific library classes exist on the classpath.",
+        searchPrompt: "ConditionalOnClass ConditionalOnMissingBean Spring Boot auto-configuration",
+        emoji: "🔍",
+        reactionCount: "5.1k",
+        commentCount: 385,
+      },
+      {
+        id: "sb-cap-2",
+        text: "@ConditionalOnProperty toggles beans dynamically based on application.properties configuration.",
+        searchPrompt: "ConditionalOnProperty Spring Boot property evaluation configuration",
+        emoji: "⚙️",
+        reactionCount: "4.7k",
+        commentCount: 345,
+      },
+      {
+        id: "sb-cap-3",
+        text: "@Profile isolates beans and configurations for dev, staging, or production environments.",
+        searchPrompt: "Spring Profile active profiles application dev prod staging configuration",
+        emoji: "🏷️",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "springboot-aop-proxies-transactions": {
+    id: "springboot-aop-proxies-transactions",
+    title: "AOP Proxies & @Transactional",
+    badge: "CGLIB & @Transactional",
+    tagline: "Aspect-oriented programming, dynamic runtime proxies, and declarative ACID transaction boundaries",
+    takeaways: [
+      {
+        id: "sb-apt-1",
+        text: "Spring AOP uses CGLIB subclasses or JDK dynamic proxies to intercept annotated method calls.",
+        searchPrompt: "Spring AOP CGLIB proxy JDK dynamic proxy aspect method interception",
+        emoji: "🎭",
+        reactionCount: "5.6k",
+        commentCount: 440,
+      },
+      {
+        id: "sb-apt-2",
+        text: "@Transactional wraps method execution in ACID boundaries with rollback on runtime exceptions.",
+        searchPrompt: "Transactional propagation isolation rollback PlatformTransactionManager",
+        emoji: "🛡️",
+        reactionCount: "5.2k",
+        commentCount: 405,
+      },
+      {
+        id: "sb-apt-3",
+        text: "Self-invocation within the same class bypasses the AOP proxy, skipping transactional advice.",
+        searchPrompt: "Spring AOP self-invocation bypass transactional proxy aspect pitfalls",
+        emoji: "⚠️",
+        reactionCount: "4.8k",
+        commentCount: 365,
+      },
+    ],
+  },
+
+  "springboot-pipeline-pillar": {
+    id: "springboot-pipeline-pillar",
+    title: "9-Stage Spring MVC Request Lifecycle Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "End-to-end request dispatching from servlet filters through controller execution to JSON response",
+    takeaways: [
+      {
+        id: "sb-spp-1",
+        text: "Incoming HTTP requests pass through servlet filters before reaching DispatcherServlet.",
+        searchPrompt: "Spring MVC request lifecycle servlet filter chain DispatcherServlet flow",
+        emoji: "🌊",
+        reactionCount: "5.7k",
+        commentCount: 450,
+      },
+      {
+        id: "sb-spp-2",
+        text: "DispatcherServlet routes requests via HandlerMapping, Interceptors, and HandlerAdapters.",
+        searchPrompt: "DispatcherServlet HandlerMapping HandlerAdapter HandlerInterceptor flow",
+        emoji: "🗺️",
+        reactionCount: "5.2k",
+        commentCount: 395,
+      },
+      {
+        id: "sb-spp-3",
+        text: "HttpMessageConverters serialize controller return values directly into client response bodies.",
+        searchPrompt: "HttpMessageConverter MappingJackson2HttpMessageConverter ResponseBody serialization",
+        emoji: "📦",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "springboot-data-actuator-security-pillar": {
+    id: "springboot-data-actuator-security-pillar",
+    title: "Spring Data, Actuator & Security",
+    badge: "Data, Security & Metrics",
+    tagline: "Enterprise persistence with JPA repositories, security filter chains, and production telemetry",
+    takeaways: [
+      {
+        id: "sb-das-1",
+        text: "Spring Data JPA generates repository implementations and database queries from method names.",
+        searchPrompt: "Spring Data JPA JpaRepository query derivation method naming convention",
+        emoji: "💾",
+        reactionCount: "5.5k",
+        commentCount: 425,
+      },
+      {
+        id: "sb-das-2",
+        text: "SecurityFilterChain authenticates requests and enforces role-based access control via JWT.",
+        searchPrompt: "Spring Security SecurityFilterChain JWT authentication authorization filter",
+        emoji: "🔐",
+        reactionCount: "5.1k",
+        commentCount: 380,
+      },
+      {
+        id: "sb-das-3",
+        text: "Spring Actuator exposes health, metrics, and environment endpoints for production monitoring.",
+        searchPrompt: "Spring Boot Actuator health endpoint metrics prometheus production monitoring",
+        emoji: "📊",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "springboot-data-jpa-repositories": {
+    id: "springboot-data-jpa-repositories",
+    title: "Spring Data JPA & Hibernate Cache",
+    badge: "JpaRepository & Caching",
+    tagline: "Repository abstraction, query derivation, Hibernate first/second level caching, and N+1 prevention",
+    takeaways: [
+      {
+        id: "sb-jpc-1",
+        text: "JpaRepository provides CRUD, pagination, and derived query parsing without boilerplate code.",
+        searchPrompt: "Spring Data JpaRepository CRUD pagination Specification derived queries",
+        emoji: "🗄️",
+        reactionCount: "5.4k",
+        commentCount: 410,
+      },
+      {
+        id: "sb-jpc-2",
+        text: "Hibernate L1 cache tracks entity state within transaction; L2 cache shares entities cluster-wide.",
+        searchPrompt: "Hibernate first level cache second level cache persistence context entity manager",
+        emoji: "⚡",
+        reactionCount: "5.0k",
+        commentCount: 375,
+      },
+      {
+        id: "sb-jpc-3",
+        text: "JOIN FETCH and @EntityGraph eliminate the N+1 select problem by eagerly loading associations.",
+        searchPrompt: "Hibernate N+1 select problem join fetch EntityGraph eager loading solution",
+        emoji: "🚀",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "springboot-security-filter-chain": {
+    id: "springboot-security-filter-chain",
+    title: "SecurityFilterChain & JWT Auth",
+    badge: "SecurityFilterChain & JWT",
+    tagline: "Servlet filter chaining, AuthenticationManager resolution, and method-level authorization",
+    takeaways: [
+      {
+        id: "sb-sfc-1",
+        text: "DelegatingFilterProxy bridges servlet filters to Spring-managed SecurityFilterChain beans.",
+        searchPrompt: "DelegatingFilterProxy SecurityFilterChain Spring Security filter architecture",
+        emoji: "🌉",
+        reactionCount: "5.3k",
+        commentCount: 395,
+      },
+      {
+        id: "sb-sfc-2",
+        text: "OncePerRequestFilter extracts and validates JWT bearer tokens, populating SecurityContext.",
+        searchPrompt: "OncePerRequestFilter JWT token extraction SecurityContextHolder authentication",
+        emoji: "🔑",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+      {
+        id: "sb-sfc-3",
+        text: "@PreAuthorize evaluates SpEL expressions to enforce method-level role and authority checks.",
+        searchPrompt: "PreAuthorize SpEL expression method security hasRole hasAuthority Spring",
+        emoji: "🛡️",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "springboot-actuator-micrometer-metrics": {
+    id: "springboot-actuator-micrometer-metrics",
+    title: "Actuator & Micrometer Metrics",
+    badge: "Actuator & Micrometer",
+    tagline: "Production observability, Kubernetes liveness/readiness probes, and Prometheus metric export",
+    takeaways: [
+      {
+        id: "sb-amm-1",
+        text: "Actuator exposes /actuator/health with liveness and readiness probes for Kubernetes pods.",
+        searchPrompt: "Spring Boot Actuator health liveness readiness probes Kubernetes integration",
+        emoji: "🩺",
+        reactionCount: "5.2k",
+        commentCount: 385,
+      },
+      {
+        id: "sb-amm-2",
+        text: "Micrometer instruments dimensional metrics like request latency, memory pools, and thread pools.",
+        searchPrompt: "Micrometer meter registry timers counters gauges dimensional metrics",
+        emoji: "📈",
+        reactionCount: "4.7k",
+        commentCount: 345,
+      },
+      {
+        id: "sb-amm-3",
+        text: "/actuator/prometheus formats JVM and application metrics for automated Prometheus scraping.",
+        searchPrompt: "Spring Boot actuator prometheus endpoint scraping JVM metrics Grafana",
+        emoji: "📡",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "root-springboot": {
+    id: "root-springboot",
+    title: "Spring Boot & Java Enterprise",
+    badge: "IoC & Auto-Configuration",
+    tagline: "Enterprise Java framework with inversion of control, auto-configuration, and robust microservices",
+    takeaways: [
+      {
+        id: "sb-rsb-1",
+        text: "Spring Boot eliminates boilerplate XML configuration with opinionated starters and defaults.",
+        searchPrompt: "Spring Boot opinionated configuration starters dependency management",
+        emoji: "🍃",
+        reactionCount: "6.0k",
+        commentCount: 480,
+      },
+      {
+        id: "sb-rsb-2",
+        text: "Embedded Tomcat, Jetty, or Undertow run applications as self-contained executable JAR files.",
+        searchPrompt: "Spring Boot embedded web server Tomcat executable fat JAR packaging",
+        emoji: "☕",
+        reactionCount: "5.5k",
+        commentCount: 420,
+      },
+      {
+        id: "sb-rsb-3",
+        text: "Combines Spring MVC, Data JPA, Security, and Actuator for production-grade microservices.",
+        searchPrompt: "Spring Boot microservice architecture full stack ecosystem enterprise",
+        emoji: "🚀",
+        reactionCount: "5.0k",
+        commentCount: 370,
+      },
+    ],
+  },
+
+  // 9-Stage Spring MVC Request Lifecycle Pipeline Stages
+  "spring-servlet-filter-chain": {
+    id: "spring-servlet-filter-chain",
+    title: "1. Tomcat Connector & Security Filter Chain",
+    badge: "🛡️ DelegatingFilterProxy & JWT",
+    tagline: "Tomcat NIO socket ingestion, DelegatingFilterProxy delegation, and SecurityFilterChain verification",
+    takeaways: [
+      {
+        id: "sb-p1-1",
+        text: "Embedded Tomcat NIO endpoint accepts client TCP connections and wraps requests into ServletRequest.",
+        searchPrompt: "Tomcat NIO endpoint TCP socket accept ServletRequest HttpServletRequest",
+        emoji: "🔌",
+        reactionCount: "5.5k",
+        commentCount: 425,
+      },
+      {
+        id: "sb-p1-2",
+        text: "DelegatingFilterProxy forwards the HTTP request to the Spring SecurityFilterChain bean collection.",
+        searchPrompt: "DelegatingFilterProxy SecurityFilterChain servlet filter Spring container bridge",
+        emoji: "🌉",
+        reactionCount: "5.1k",
+        commentCount: 380,
+      },
+      {
+        id: "sb-p1-3",
+        text: "Security filters authenticate JWT tokens and reject unauthorized callers before servlet dispatch.",
+        searchPrompt: "SecurityFilterChain OncePerRequestFilter JWT authentication rejection 401",
+        emoji: "🛡️",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "spring-dispatcher-servlet-entry": {
+    id: "spring-dispatcher-servlet-entry",
+    title: "2. DispatcherServlet Entry & WebContext",
+    badge: "🏛️ doDispatch() & RequestAttributes",
+    tagline: "Front controller entry, doDispatch() orchestration, and WebApplicationContext request binding",
+    takeaways: [
+      {
+        id: "sb-p2-1",
+        text: "DispatcherServlet acts as the Front Controller, routing all incoming requests via doDispatch().",
+        searchPrompt: "DispatcherServlet doDispatch Front Controller pattern Spring MVC",
+        emoji: "🏛️",
+        reactionCount: "5.6k",
+        commentCount: 435,
+      },
+      {
+        id: "sb-p2-2",
+        text: "Binds the current WebApplicationContext, LocaleResolver, and ThemeResolver to thread-local state.",
+        searchPrompt: "DispatcherServlet WebApplicationContext RequestContextHolder thread-local binding",
+        emoji: "🧵",
+        reactionCount: "5.0k",
+        commentCount: 370,
+      },
+      {
+        id: "sb-p2-3",
+        text: "Wraps the raw request in a multipart resolver when processing multipart file upload payloads.",
+        searchPrompt: "StandardServletMultipartResolver multipart request wrapping DispatcherServlet",
+        emoji: "📎",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "spring-handler-mapping-resolution": {
+    id: "spring-handler-mapping-resolution",
+    title: "3. HandlerMapping & ExecutionChain Match",
+    badge: "🗺️ RequestMappingHandlerMapping",
+    tagline: "Matching request URL patterns, HTTP methods, and produces/consumes headers against controller mappings",
+    takeaways: [
+      {
+        id: "sb-p3-1",
+        text: "RequestMappingHandlerMapping matches request path and HTTP verb to the target controller method.",
+        searchPrompt: "RequestMappingHandlerMapping URL matching HTTP verb RequestMappingInfo",
+        emoji: "🗺️",
+        reactionCount: "5.4k",
+        commentCount: 410,
+      },
+      {
+        id: "sb-p3-2",
+        text: "Resolves route patterns with PathPatternParser for efficient URL matching and variable extraction.",
+        searchPrompt: "PathPatternParser Spring MVC route pattern URL matching PathVariable",
+        emoji: "🎯",
+        reactionCount: "4.9k",
+        commentCount: 355,
+      },
+      {
+        id: "sb-p3-3",
+        text: "Builds a HandlerExecutionChain containing the matched handler method and registered interceptors.",
+        searchPrompt: "HandlerExecutionChain HandlerMethod interceptor list DispatcherServlet",
+        emoji: "🔗",
+        reactionCount: "4.6k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  "spring-handler-interceptor-pre": {
+    id: "spring-handler-interceptor-pre",
+    title: "4. HandlerInterceptor.preHandle Pipeline",
+    badge: "🔍 Pre-Execution Guards & Logging",
+    tagline: "Executing preHandle callbacks across interceptor chain for authentication, logging, and metrics",
+    takeaways: [
+      {
+        id: "sb-p4-1",
+        text: "Iterates through registered HandlerInterceptor instances, invoking preHandle() sequentially.",
+        searchPrompt: "HandlerInterceptor preHandle interceptor chain execution Spring MVC",
+        emoji: "🔍",
+        reactionCount: "5.2k",
+        commentCount: 390,
+      },
+      {
+        id: "sb-p4-2",
+        text: "Returning false from preHandle() halts the pipeline immediately without invoking the controller.",
+        searchPrompt: "HandlerInterceptor preHandle return false short circuit pipeline",
+        emoji: "🛑",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+      {
+        id: "sb-p4-3",
+        text: "Commonly used for distributed tracing headers, rate limiting, and request correlation IDs.",
+        searchPrompt: "HandlerInterceptor correlation ID tracing rate limiting preHandle",
+        emoji: "⏱️",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "spring-handler-adapter-selection": {
+    id: "spring-handler-adapter-selection",
+    title: "5. HandlerAdapter Selection & Delegation",
+    badge: "⚙️ RequestMappingHandlerAdapter",
+    tagline: "Selecting compatible HandlerAdapter to decouple DispatcherServlet from diverse handler signatures",
+    takeaways: [
+      {
+        id: "sb-p5-1",
+        text: "DispatcherServlet queries available HandlerAdapters to find one that supports the matched handler.",
+        searchPrompt: "DispatcherServlet getHandlerAdapter HandlerAdapter supports pattern",
+        emoji: "⚙️",
+        reactionCount: "5.1k",
+        commentCount: 380,
+      },
+      {
+        id: "sb-p5-2",
+        text: "RequestMappingHandlerAdapter adapts @RequestMapping and @RestController methods for execution.",
+        searchPrompt: "RequestMappingHandlerAdapter controller method invocation adapter",
+        emoji: "🔌",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+      {
+        id: "sb-p5-3",
+        text: "Decouples the core servlet dispatcher from specific controller programming models and annotations.",
+        searchPrompt: "HandlerAdapter pattern decoupling DispatcherServlet Spring MVC",
+        emoji: "🧩",
+        reactionCount: "4.3k",
+        commentCount: 300,
+      },
+    ],
+  },
+
+  "spring-argument-resolver-databinder": {
+    id: "spring-argument-resolver-databinder",
+    title: "6. Argument Resolvers & WebDataBinder",
+    badge: "🔬 @RequestBody, @PathVariable & Validation",
+    tagline: "Resolving method parameters, deserializing JSON bodies, binding path variables, and executing validation",
+    takeaways: [
+      {
+        id: "sb-p6-1",
+        text: "HandlerMethodArgumentResolvers bind path variables, query parameters, and headers to method args.",
+        searchPrompt: "HandlerMethodArgumentResolver PathVariable RequestParam RequestHeader",
+        emoji: "🔬",
+        reactionCount: "5.5k",
+        commentCount: 420,
+      },
+      {
+        id: "sb-p6-2",
+        text: "RequestResponseBodyMethodProcessor deserializes JSON @RequestBody using HttpMessageConverters.",
+        searchPrompt: "RequestResponseBodyMethodProcessor RequestBody HttpMessageConverter",
+        emoji: "📦",
+        reactionCount: "5.0k",
+        commentCount: 375,
+      },
+      {
+        id: "sb-p6-3",
+        text: "WebDataBinder performs JSR-380 validation, throwing MethodArgumentNotValidException if invalid.",
+        searchPrompt: "WebDataBinder Valid Validated MethodArgumentNotValidException JSR 380",
+        emoji: "✅",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "spring-controller-method-execution": {
+    id: "spring-controller-method-execution",
+    title: "7. Controller Method & Transaction Boundary",
+    badge: "⚡ @RestController & @Transactional",
+    tagline: "Invoking the target controller method via reflection within transactional database boundaries",
+    takeaways: [
+      {
+        id: "sb-p7-1",
+        text: "HandlerMethod uses Java reflection to invoke the target controller method with resolved arguments.",
+        searchPrompt: "InvocableHandlerMethod invokeForRequest reflection controller method execution",
+        emoji: "⚡",
+        reactionCount: "5.6k",
+        commentCount: 430,
+      },
+      {
+        id: "sb-p7-2",
+        text: "Invocations cross transactional boundaries where @Transactional starts or joins a DB transaction.",
+        searchPrompt: "Transactional boundary invocation JpaTransactionManager Hibernate session",
+        emoji: "🛡️",
+        reactionCount: "5.1k",
+        commentCount: 385,
+      },
+      {
+        id: "sb-p7-3",
+        text: "Services execute domain logic, invoke JPA repositories, and return domain entities or DTOs.",
+        searchPrompt: "Spring service layer domain logic repository query return DTO entity",
+        emoji: "💼",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "spring-return-value-handler": {
+    id: "spring-return-value-handler",
+    title: "8. Return Value Handler & Message Converters",
+    badge: "📦 HttpMessageConverter Jackson JSON",
+    tagline: "Processing return values, serializing objects via Jackson, and writing HTTP response body",
+    takeaways: [
+      {
+        id: "sb-p8-1",
+        text: "HandlerMethodReturnValueHandler processes returned objects from @ResponseBody or ResponseEntity.",
+        searchPrompt: "HandlerMethodReturnValueHandler ResponseBody ResponseEntity handling",
+        emoji: "📤",
+        reactionCount: "5.3k",
+        commentCount: 400,
+      },
+      {
+        id: "sb-p8-2",
+        text: "MappingJackson2HttpMessageConverter serializes Java DTOs to JSON bytes matching client headers.",
+        searchPrompt: "MappingJackson2HttpMessageConverter Jackson ObjectMapper JSON serialization",
+        emoji: "📦",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+      {
+        id: "sb-p8-3",
+        text: "Sets Content-Type, Content-Length, and HTTP status codes before writing to ServletOutputStream.",
+        searchPrompt: "HttpServletResponse setContentType setStatus ServletOutputStream write",
+        emoji: "📝",
+        reactionCount: "4.5k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "spring-response-interceptor-completion": {
+    id: "spring-response-interceptor-completion",
+    title: "9. postHandle, afterCompletion & Socket Flush",
+    badge: "🚀 Interceptor Cleanup & HTTP Flush",
+    tagline: "Executing postHandle, completing afterCompletion callbacks, closing sessions, and flushing socket",
+    takeaways: [
+      {
+        id: "sb-p9-1",
+        text: "Invokes interceptor postHandle() in reverse order for view modifications before response render.",
+        searchPrompt: "HandlerInterceptor postHandle reverse execution order ModelAndView",
+        emoji: "🔄",
+        reactionCount: "5.1k",
+        commentCount: 380,
+      },
+      {
+        id: "sb-p9-2",
+        text: "Executes afterCompletion() even on errors to clean up thread locals, open files, and DB sessions.",
+        searchPrompt: "HandlerInterceptor afterCompletion cleanup thread-local DB session release",
+        emoji: "🧹",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+      {
+        id: "sb-p9-3",
+        text: "Tomcat flushes buffered response bytes over the network socket and closes the keep-alive stream.",
+        searchPrompt: "Tomcat NIO socket flush HTTP response commit keep-alive connection",
+        emoji: "🚀",
+        reactionCount: "4.3k",
+        commentCount: 295,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -18206,6 +18837,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Express & NestJS"
       : node.category === "djangofastapi"
       ? "Django & FastAPI"
+      : node.category === "springboot"
+      ? "Spring Boot"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

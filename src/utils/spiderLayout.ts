@@ -1065,6 +1065,8 @@ export function calculateGroupLayout(
         ? "Middleware & IoC Frameworks"
         : category === "djangofastapi"
         ? "Python MVT & Async ASGI"
+        : category === "springboot"
+        ? "IoC & Auto-Configuration"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1125,6 +1127,8 @@ export function calculateGroupLayout(
         ? "#ea284e"
         : category === "djangofastapi"
         ? "#05998b"
+        : category === "springboot"
+        ? "#6db33f"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -4826,6 +4830,202 @@ export function calculateGroupLayout(
       }
     }
 
+    // ========================================================
+    // SUB-BRANCH 1Q: Spring Boot Hub & Microservice Engine (y = -10350)
+    // Connects from djangofastapiHubNode -> springbootHubNode
+    // ========================================================
+    const springbootHubX = 1300;
+    const springbootHubY = -10350;
+    const springbootHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-springboot")!,
+      x: springbootHubX,
+      y: springbootHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(springbootHubNode);
+    edges.push({
+      source: djangofastapiHubNode.id,
+      target: springbootHubNode.id,
+      category: "springboot",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Spring Boot Pillar 1: Spring IoC Container, Bean Lifecycle & Auto-Configuration (Right-Up: x = 1950, y = -10530)
+    const sbIocRaw = allNodes.find((n) => n.id === "springboot-ioc-autoconfigure-pillar");
+    if (sbIocRaw) {
+      const sbIocX = springbootHubX + 650;
+      const sbIocY = springbootHubY - 180;
+      const sbIocNode: PositionedNode = {
+        ...sbIocRaw,
+        x: sbIocX,
+        y: sbIocY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(sbIocNode);
+      edges.push({
+        source: springbootHubNode.id,
+        target: sbIocNode.id,
+        category: "springboot",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const blsRaw = allNodes.find((n) => n.id === "springboot-bean-lifecycle-scopes");
+      if (blsRaw) {
+        positionedNodes.push({
+          ...blsRaw,
+          x: sbIocX + 320,
+          y: sbIocY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sbIocNode.id,
+          target: blsRaw.id,
+          category: "springboot",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const capRaw = allNodes.find((n) => n.id === "springboot-conditional-annotations-profiles");
+      if (capRaw) {
+        positionedNodes.push({
+          ...capRaw,
+          x: sbIocX + 320,
+          y: sbIocY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sbIocNode.id,
+          target: capRaw.id,
+          category: "springboot",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const aptRaw = allNodes.find((n) => n.id === "springboot-aop-proxies-transactions");
+      if (aptRaw) {
+        positionedNodes.push({
+          ...aptRaw,
+          x: sbIocX + 320,
+          y: sbIocY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sbIocNode.id,
+          target: aptRaw.id,
+          category: "springboot",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Spring Boot Pillar 2: 9-Stage Spring MVC Request Lifecycle Pipeline (Group Card, Middle-Right: x = 2100, y = -10350)
+    const springbootGroupCard = cardByPillar.get("springboot-pipeline-pillar");
+    if (springbootGroupCard) {
+      const cardX = springbootHubX + 800;
+      const cardY = springbootHubY;
+      const posCard: PositionedGroupCard = {
+        ...springbootGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: springbootHubNode.id,
+        target: springbootGroupCard.id,
+        category: "springboot",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Spring Boot Pillar 3: Spring Data JPA, Actuator & Security (Right-Down: x = 1950, y = -10170)
+    const sbDataRaw = allNodes.find((n) => n.id === "springboot-data-actuator-security-pillar");
+    if (sbDataRaw) {
+      const sbDataX = springbootHubX + 650;
+      const sbDataY = springbootHubY + 180;
+      const sbDataNode: PositionedNode = {
+        ...sbDataRaw,
+        x: sbDataX,
+        y: sbDataY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(sbDataNode);
+      edges.push({
+        source: springbootHubNode.id,
+        target: sbDataNode.id,
+        category: "springboot",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const jpcRaw = allNodes.find((n) => n.id === "springboot-data-jpa-repositories");
+      if (jpcRaw) {
+        positionedNodes.push({
+          ...jpcRaw,
+          x: sbDataX + 320,
+          y: sbDataY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sbDataNode.id,
+          target: jpcRaw.id,
+          category: "springboot",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const sfcRaw = allNodes.find((n) => n.id === "springboot-security-filter-chain");
+      if (sfcRaw) {
+        positionedNodes.push({
+          ...sfcRaw,
+          x: sbDataX + 320,
+          y: sbDataY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sbDataNode.id,
+          target: sfcRaw.id,
+          category: "springboot",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const ammRaw = allNodes.find((n) => n.id === "springboot-actuator-micrometer-metrics");
+      if (ammRaw) {
+        positionedNodes.push({
+          ...ammRaw,
+          x: sbDataX + 320,
+          y: sbDataY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sbDataNode.id,
+          target: ammRaw.id,
+          category: "springboot",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -7054,6 +7254,8 @@ export function calculateGroupLayout(
     pillarIds = ["expressnest-express-architecture-pillar", "expressnest-pipeline-pillar", "expressnest-nestjs-ioc-decorators-pillar"];
   } else if (category === "djangofastapi") {
     pillarIds = ["djangofastapi-django-orm-mvt-pillar", "djangofastapi-pipeline-pillar", "djangofastapi-fastapi-async-pydantic-pillar"];
+  } else if (category === "springboot") {
+    pillarIds = ["springboot-ioc-autoconfigure-pillar", "springboot-pipeline-pillar", "springboot-data-actuator-security-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -7457,6 +7659,11 @@ export function getNodesForCategory(
       parentId: "root-expressnest",
       level: 2,
     };
+    const springbootRoot = {
+      ...allNodes.find((n) => n.id === "root-springboot")!,
+      parentId: "root-djangofastapi",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -7508,13 +7715,14 @@ export function getNodesForCategory(
         n.id !== "root-buildtools" &&
         n.id !== "root-expressnest" &&
         n.id !== "root-djangofastapi" &&
+        n.id !== "root-springboot" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

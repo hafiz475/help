@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2598,7 +2598,84 @@ export const DJANGOFASTAPI_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const SPRINGBOOT_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-springboot-pipeline",
+    pillarId: "springboot-pipeline-pillar",
+    title: "9-Stage Spring MVC Request Lifecycle Pipeline",
+    category: "springboot",
+    badge: "9 Sequential Stages",
+    color: "#6db33f",
+    isPipeline: true,
+    items: [
+      {
+        id: "spring-servlet-filter-chain",
+        stepNumber: 1,
+        label: "1. Tomcat Connector & Security Filter Chain",
+        badge: "🛡️ DelegatingFilterProxy & JWT",
+        searchQuery: "Tomcat NIO endpoint DelegatingFilterProxy SecurityFilterChain OncePerRequestFilter JWT authentication",
+      },
+      {
+        id: "spring-dispatcher-servlet-entry",
+        stepNumber: 2,
+        label: "2. DispatcherServlet Entry & WebContext",
+        badge: "🏛️ doDispatch() & RequestAttributes",
+        searchQuery: "DispatcherServlet doDispatch WebApplicationContext LocaleResolver ThemeResolver FlashMap",
+      },
+      {
+        id: "spring-handler-mapping-resolution",
+        stepNumber: 3,
+        label: "3. HandlerMapping & ExecutionChain Match",
+        badge: "🗺️ RequestMappingHandlerMapping",
+        searchQuery: "RequestMappingHandlerMapping HandlerExecutionChain endpoint URL matching patterns produces consumes",
+      },
+      {
+        id: "spring-handler-interceptor-pre",
+        stepNumber: 4,
+        label: "4. HandlerInterceptor.preHandle Pipeline",
+        badge: "🔍 Pre-Execution Guards & Logging",
+        searchQuery: "HandlerInterceptor preHandle AsyncHandlerInterceptor logging tracing rate limiting short circuit",
+      },
+      {
+        id: "spring-handler-adapter-selection",
+        stepNumber: 5,
+        label: "5. HandlerAdapter Selection & Delegation",
+        badge: "⚙️ RequestMappingHandlerAdapter",
+        searchQuery: "HandlerAdapter RequestMappingHandlerAdapter supports handle invokeHandlerMethod reflective invocation",
+      },
+      {
+        id: "spring-argument-resolver-databinder",
+        stepNumber: 6,
+        label: "6. Argument Resolvers & WebDataBinder",
+        badge: "🔬 @RequestBody, @PathVariable & Validation",
+        searchQuery: "HandlerMethodArgumentResolver WebDataBinder @Valid @Validated MethodArgumentNotValidException type conversion",
+      },
+      {
+        id: "spring-controller-method-execution",
+        stepNumber: 7,
+        label: "7. Controller Method & Transaction Boundary",
+        badge: "⚡ @RestController & @Transactional",
+        searchQuery: "Spring RestController business service invocation PlatformTransactionManager JpaTransactionManager Hibernate session",
+      },
+      {
+        id: "spring-return-value-handler",
+        stepNumber: 8,
+        label: "8. Return Value Handler & Message Converters",
+        badge: "📦 HttpMessageConverter Jackson JSON",
+        searchQuery: "HandlerMethodReturnValueHandler RequestResponseBodyMethodProcessor MappingJackson2HttpMessageConverter JSON serialization",
+      },
+      {
+        id: "spring-response-interceptor-completion",
+        stepNumber: 9,
+        label: "9. postHandle, afterCompletion & Socket Flush",
+        badge: "🚀 Interceptor Cleanup & HTTP Flush",
+        searchQuery: "HandlerInterceptor postHandle afterCompletion ResponseStatusExceptionResolver async cleanup socket flush",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2629,8 +2706,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "buildtools") return BUILDTOOLS_GROUP_CARDS;
   if (category === "expressnest") return EXPRESSNEST_GROUP_CARDS;
   if (category === "djangofastapi") return DJANGOFASTAPI_GROUP_CARDS;
+  if (category === "springboot") return SPRINGBOOT_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

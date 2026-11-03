@@ -40,6 +40,7 @@ import {
   Package,
   Route,
   Rocket,
+  Leaf,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -121,6 +122,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Route size={16} />;
       case "djangofastapi":
         return <Rocket size={16} />;
+      case "springboot":
+        return <Leaf size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":
