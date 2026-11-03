@@ -17293,6 +17293,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // DOCKER & KUBERNETES STORIES & TAKEAWAYS
+  // ==========================================
+  "dockerk8s-containers-images-pillar": {
+    id: "dockerk8s-containers-images-pillar",
+    title: "Containers & OCI Images",
+    badge: "OCI & Linux Isolation",
+    tagline: "Operating-system virtualization, OCI specifications, and layered root filesystems",
+    takeaways: [
+      {
+        id: "dk-cip-1",
+        text: "Containers share host kernel isolation primitives without hardware hypervisor overhead.",
+        searchPrompt: "Docker container virtualization vs virtual machines kernel sharing namespaces",
+        emoji: "📦",
+        reactionCount: "6.2k",
+        commentCount: 490,
+      },
+      {
+        id: "dk-cip-2",
+        text: "OCI image format standardizes content-addressable layer tarballs and manifest JSON specs.",
+        searchPrompt: "Open Container Initiative OCI image specification manifest config layers",
+        emoji: "📜",
+        reactionCount: "5.5k",
+        commentCount: 410,
+      },
+      {
+        id: "dk-cip-3",
+        text: "OverlayFS merges immutable read-only image layers with an ephemeral read-write upper dir.",
+        searchPrompt: "OverlayFS overlay2 storage driver upperdir lowerdir copy on write Docker",
+        emoji: "⚡",
+        reactionCount: "5.1k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "dockerk8s-linux-cgroups-namespaces": {
+    id: "dockerk8s-linux-cgroups-namespaces",
+    title: "Linux Namespaces & Cgroups v2",
+    badge: "Namespaces & Cgroups v2",
+    tagline: "Process isolation boundaries, unified hierarchy limits, and CPU throttling controls",
+    takeaways: [
+      {
+        id: "dk-lcn-1",
+        text: "Linux namespaces (PID, NET, MNT, UTS, IPC, USER) restrict process visibility of host resources.",
+        searchPrompt: "Linux namespaces PID network mount user IPC UTS container isolation",
+        emoji: "🛡️",
+        reactionCount: "5.8k",
+        commentCount: 450,
+      },
+      {
+        id: "dk-lcn-2",
+        text: "Cgroups v2 enforces unified hierarchy constraints on memory limits and CFS CPU quotas.",
+        searchPrompt: "cgroups v2 unified hierarchy control groups memory limits CFS CPU bandwidth",
+        emoji: "⚖️",
+        reactionCount: "5.3k",
+        commentCount: 395,
+      },
+      {
+        id: "dk-lcn-3",
+        text: "OOM killer terminates container processes when memory usage exceeds cgroup hard thresholds.",
+        searchPrompt: "Linux OOM killer container memory limit exit code 137 cgroups enforcement",
+        emoji: "🚨",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "dockerk8s-dockerfile-multistage-builds": {
+    id: "dockerk8s-dockerfile-multistage-builds",
+    title: "Multi-Stage Builds & OCI Layers",
+    badge: "BuildKit & Layer Cache",
+    tagline: "Minimal production images, BuildKit parallel evaluation, and distroless security",
+    takeaways: [
+      {
+        id: "dk-dmb-1",
+        text: "Multi-stage builds separate build tools from runtime, shrinking production attack surfaces.",
+        searchPrompt: "Dockerfile multi-stage builds minimal image size security attack surface",
+        emoji: "✂️",
+        reactionCount: "5.7k",
+        commentCount: 440,
+      },
+      {
+        id: "dk-dmb-2",
+        text: "BuildKit caches unchanged layers by hashing Dockerfile instructions and source file digests.",
+        searchPrompt: "Docker BuildKit cache mounts cache invalidation layer ordering optimization",
+        emoji: "⚡",
+        reactionCount: "5.2k",
+        commentCount: 385,
+      },
+      {
+        id: "dk-dmb-3",
+        text: "Distroless and rootless containers remove package managers and shells to thwart CVE exploits.",
+        searchPrompt: "distroless container images Google rootless Docker non-root user security",
+        emoji: "🔒",
+        reactionCount: "4.8k",
+        commentCount: 345,
+      },
+    ],
+  },
+
+  "dockerk8s-docker-networking-compose": {
+    id: "dockerk8s-docker-networking-compose",
+    title: "Container Networks & Compose",
+    badge: "Bridge, Overlay & Compose",
+    tagline: "Bridge virtual switches, multi-host overlay networks, and declarative service topology",
+    takeaways: [
+      {
+        id: "dk-dnc-1",
+        text: "Docker bridge networks assign private veth pairs to containers, forwarding via iptables NAT.",
+        searchPrompt: "Docker bridge network veth pair docker0 bridge iptables NAT port mapping",
+        emoji: "🌉",
+        reactionCount: "5.4k",
+        commentCount: 410,
+      },
+      {
+        id: "dk-dnc-2",
+        text: "Overlay networks encapsulate VXLAN packets to route traffic across multi-host swarm nodes.",
+        searchPrompt: "Docker overlay network VXLAN encapsulation multi-host networking packet flow",
+        emoji: "🌐",
+        reactionCount: "4.9k",
+        commentCount: 365,
+      },
+      {
+        id: "dk-dnc-3",
+        text: "Docker Compose coordinates multi-container services, networks, and persistent volumes in YAML.",
+        searchPrompt: "docker compose multi-container orchestration environment variables volumes",
+        emoji: "🎼",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "dockerk8s-pipeline-pillar": {
+    id: "dockerk8s-pipeline-pillar",
+    title: "9-Stage Pod Lifecycle & Scheduling Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "From Dockerfile compilation to admission webhooks, scheduling filters, CRI sync, and traffic routing",
+    takeaways: [
+      {
+        id: "dk-spp-1",
+        text: "Images compile into cryptographic OCI tarballs before pushing to container registries.",
+        searchPrompt: "OCI image format tarball layers cryptographic digest registry distribution",
+        emoji: "📦",
+        reactionCount: "5.9k",
+        commentCount: 470,
+      },
+      {
+        id: "dk-spp-2",
+        text: "API server validates manifests, etcd stores state, and kube-scheduler binds pods to nodes.",
+        searchPrompt: "Kubernetes pod creation flow kube-apiserver etcd kube-scheduler binding",
+        emoji: "🏛️",
+        reactionCount: "5.5k",
+        commentCount: 425,
+      },
+      {
+        id: "dk-spp-3",
+        text: "Kubelet invokes containerd CRI and CNI plugins to instantiate sandboxed pod network namespaces.",
+        searchPrompt: "Kubelet CRI containerd CNI network namespace pod sandbox initialization",
+        emoji: "⚡",
+        reactionCount: "5.1k",
+        commentCount: 380,
+      },
+    ],
+  },
+
+  "dockerk8s-cluster-orchestration-networking-pillar": {
+    id: "dockerk8s-cluster-orchestration-networking-pillar",
+    title: "Control Plane, Services & Mesh",
+    badge: "Control Plane & Ingress",
+    tagline: "Declarative cluster desired state, controller reconciliation loops, and eBPF networking",
+    takeaways: [
+      {
+        id: "dk-con-1",
+        text: "Control plane continuously reconciles observed cluster state toward declared YAML target state.",
+        searchPrompt: "Kubernetes control loop reconciliation desired state vs current state",
+        emoji: "🔄",
+        reactionCount: "5.8k",
+        commentCount: 460,
+      },
+      {
+        id: "dk-con-2",
+        text: "Kube-proxy or Cilium eBPF translates Service Virtual IPs into pod endpoints via kernel tables.",
+        searchPrompt: "kube-proxy iptables IPVS Cilium eBPF ClusterIP service packet routing",
+        emoji: "📡",
+        reactionCount: "5.4k",
+        commentCount: 415,
+      },
+      {
+        id: "dk-con-3",
+        text: "Ingress controllers terminate TLS and route external HTTP requests to internal ClusterIP services.",
+        searchPrompt: "Kubernetes Ingress Controller NGINX Envoy TLS termination path routing",
+        emoji: "🚦",
+        reactionCount: "4.9k",
+        commentCount: 370,
+      },
+    ],
+  },
+
+  "dockerk8s-control-plane-controllers": {
+    id: "dockerk8s-control-plane-controllers",
+    title: "Control Plane & Reconciliation",
+    badge: "Controllers & CRDs",
+    tagline: "Kube-controller-manager loops, ReplicaSets, StatefulSets, and Custom Resource Definitions",
+    takeaways: [
+      {
+        id: "dk-cpc-1",
+        text: "Kube-controller-manager runs control loops (Deployment, ReplicaSet, Node) via watch queues.",
+        searchPrompt: "kube-controller-manager informers workqueue event handlers reconciliation",
+        emoji: "🧠",
+        reactionCount: "5.6k",
+        commentCount: 435,
+      },
+      {
+        id: "dk-cpc-2",
+        text: "Deployments manage rolling zero-downtime updates by scaling ReplicaSets progressively.",
+        searchPrompt: "Kubernetes Deployment rolling update maxSurge maxUnavailable ReplicaSet",
+        emoji: "🚀",
+        reactionCount: "5.2k",
+        commentCount: 390,
+      },
+      {
+        id: "dk-cpc-3",
+        text: "Custom Resource Definitions (CRDs) extend the Kubernetes API with domain-specific operators.",
+        searchPrompt: "Kubernetes Custom Resource Definitions CRDs Operator pattern controller-runtime",
+        emoji: "🧩",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "dockerk8s-services-ingress-cni": {
+    id: "dockerk8s-services-ingress-cni",
+    title: "Services, CoreDNS & CNI Network",
+    badge: "Services, Ingress & CNI",
+    tagline: "Stable Service virtual IPs, cluster DNS discovery, and Container Network Interface implementations",
+    takeaways: [
+      {
+        id: "dk-sic-1",
+        text: "Services provide stable virtual IPs and load balance traffic across changing pod replica IPs.",
+        searchPrompt: "Kubernetes Service ClusterIP NodePort LoadBalancer endpoint discovery",
+        emoji: "🌐",
+        reactionCount: "5.5k",
+        commentCount: 420,
+      },
+      {
+        id: "dk-sic-2",
+        text: "CoreDNS resolves in-cluster service hostnames (my-svc.my-namespace.svc.cluster.local).",
+        searchPrompt: "CoreDNS Kubernetes service discovery DNS resolution fully qualified domain name",
+        emoji: "🔍",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "dk-sic-3",
+        text: "CNI plugins like Calico and Cilium manage pod IP allocation, routing, and network policies.",
+        searchPrompt: "Container Network Interface CNI Calico BGP Cilium eBPF NetworkPolicy",
+        emoji: "🛡️",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "dockerk8s-storage-security-helm": {
+    id: "dockerk8s-storage-security-helm",
+    title: "CSI Storage, RBAC & Helm Charts",
+    badge: "CSI Storage & Helm RBAC",
+    tagline: "Container Storage Interface plugins, Role-Based Access Control, and Helm chart package management",
+    takeaways: [
+      {
+        id: "dk-ssh-1",
+        text: "Container Storage Interface (CSI) decouples cloud block/file storage from core Kubernetes code.",
+        searchPrompt: "Container Storage Interface CSI PersistentVolume StorageClass volume plugin",
+        emoji: "💾",
+        reactionCount: "5.3k",
+        commentCount: 400,
+      },
+      {
+        id: "dk-ssh-2",
+        text: "Role-Based Access Control (RBAC) restricts API verbs (get, list, create) on cluster resources.",
+        searchPrompt: "Kubernetes RBAC Role ClusterRole RoleBinding ServiceAccount authorization",
+        emoji: "🔐",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+      {
+        id: "dk-ssh-3",
+        text: "Helm templates and packages Kubernetes manifests into versioned, parameterized deployment releases.",
+        searchPrompt: "Helm package manager values.yaml templates Chart.yaml release rollback",
+        emoji: "⚓",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "root-dockerk8s": {
+    id: "root-dockerk8s",
+    title: "Docker & Kubernetes",
+    badge: "Containers & Orchestration",
+    tagline: "Container virtualization and cloud-native container orchestration for scalable distributed systems",
+    takeaways: [
+      {
+        id: "dk-rdk-1",
+        text: "Docker packages applications with dependencies into portable, reproducible container images.",
+        searchPrompt: "Docker containerization benefits portability reproducibility isolation",
+        emoji: "🐳",
+        reactionCount: "6.5k",
+        commentCount: 520,
+      },
+      {
+        id: "dk-rdk-2",
+        text: "Kubernetes orchestrates automated deployment, horizontal scaling, and self-healing of pod fleets.",
+        searchPrompt: "Kubernetes container orchestration self-healing autoscaling microservices",
+        emoji: "☸️",
+        reactionCount: "6.0k",
+        commentCount: 470,
+      },
+      {
+        id: "dk-rdk-3",
+        text: "Forms the cloud-native foundation for modern microservice architectures across public clouds.",
+        searchPrompt: "Cloud Native Computing Foundation CNCF Kubernetes Docker ecosystem",
+        emoji: "☁️",
+        reactionCount: "5.4k",
+        commentCount: 410,
+      },
+    ],
+  },
+
+  // 9-Stage Pod Lifecycle & Scheduling Pipeline Stages
+  "k8s-dockerfile-build-layer-caching": {
+    id: "k8s-dockerfile-build-layer-caching",
+    title: "1. BuildKit Compilation & OCI Layer Caching",
+    badge: "📦 BuildKit DAG & SHA256 Diff",
+    tagline: "Parsing Dockerfile syntax, constructing build execution graph, and matching layer cache digests",
+    takeaways: [
+      {
+        id: "dk-p1-1",
+        text: "BuildKit parses Dockerfile instructions into an execution graph of independent parallel stages.",
+        searchPrompt: "Docker BuildKit LLB low-level builder DAG parallel execution stages",
+        emoji: "🔨",
+        reactionCount: "5.6k",
+        commentCount: 430,
+      },
+      {
+        id: "dk-p1-2",
+        text: "Hashes layer commands and file contents to reuse cached filesystem snapshots without rebuilds.",
+        searchPrompt: "Docker layer caching cache-from buildx inline cache hash invalidation",
+        emoji: "⚡",
+        reactionCount: "5.1k",
+        commentCount: 385,
+      },
+      {
+        id: "dk-p1-3",
+        text: "Exports final multi-stage artifacts as standard OCI image layers with immutable SHA256 digests.",
+        searchPrompt: "OCI image manifest config blob layer tarball SHA256 content addressable",
+        emoji: "📜",
+        reactionCount: "4.7k",
+        commentCount: 345,
+      },
+    ],
+  },
+
+  "k8s-oci-image-registry-push": {
+    id: "k8s-oci-image-registry-push",
+    title: "2. Registry Push, Digest Signing & Notary",
+    badge: "🔐 OCI Distribution & Cosign Sig",
+    tagline: "Uploading layer blobs to OCI distribution registry, generating multi-arch manifests, and signing",
+    takeaways: [
+      {
+        id: "dk-p2-1",
+        text: "Pushes missing filesystem layer blobs to container registries (GHCR, ECR, Docker Hub).",
+        searchPrompt: "OCI distribution spec registry push blob upload manifest put",
+        emoji: "📤",
+        reactionCount: "5.4k",
+        commentCount: 415,
+      },
+      {
+        id: "dk-p2-2",
+        text: "Generates multi-architecture manifest lists supporting amd64, arm64, and riscv targets.",
+        searchPrompt: "Docker manifest list multi-arch images docker buildx create manifest",
+        emoji: "🌍",
+        reactionCount: "5.0k",
+        commentCount: 375,
+      },
+      {
+        id: "dk-p2-3",
+        text: "Cosign cryptographic signatures verify image provenance and reject unverified registry digests.",
+        searchPrompt: "Cosign Sigstore keyless signing SLSA provenance admission policy",
+        emoji: "🔏",
+        reactionCount: "4.6k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "k8s-kubectl-manifest-submission": {
+    id: "k8s-kubectl-manifest-submission",
+    title: "3. Kubectl Apply & API Server Admission",
+    badge: "🏛️ Mutating & Validating Webhooks",
+    tagline: "Kubectl client serialization, OpenAPI validation, authentication, and admission controller webhooks",
+    takeaways: [
+      {
+        id: "dk-p3-1",
+        text: "kubectl serializes YAML manifests into JSON and posts to kube-apiserver over TLS.",
+        searchPrompt: "kubectl apply three-way merge patch kube-apiserver REST API TLS",
+        emoji: "📑",
+        reactionCount: "5.5k",
+        commentCount: 420,
+      },
+      {
+        id: "dk-p3-2",
+        text: "Authentication verifies client certificates/tokens; RBAC validates verbs against target objects.",
+        searchPrompt: "kube-apiserver authentication bearer tokens certificates RBAC authorization",
+        emoji: "🔑",
+        reactionCount: "5.1k",
+        commentCount: 380,
+      },
+      {
+        id: "dk-p3-3",
+        text: "Mutating and Validating Webhooks inject sidecars and enforce enterprise security constraints.",
+        searchPrompt: "Kubernetes Admission Controllers MutatingWebhook ValidatingWebhook OPA Gatekeeper",
+        emoji: "🛡️",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "k8s-etcd-storage-watch-triggers": {
+    id: "k8s-etcd-storage-watch-triggers",
+    title: "4. Raft Consensus, etcd Storage & Watch Stream",
+    badge: "💾 Raft Consensus & Watch Events",
+    tagline: "Committing object state via Raft consensus into etcd key-value store and streaming watch events",
+    takeaways: [
+      {
+        id: "dk-p4-1",
+        text: "API server writes validated pod manifest to etcd key /registry/pods/{namespace}/{name}.",
+        searchPrompt: "etcd storage layout Kubernetes keys /registry/pods consistency MVCC",
+        emoji: "🗄️",
+        reactionCount: "5.3k",
+        commentCount: 395,
+      },
+      {
+        id: "dk-p4-2",
+        text: "etcd uses Raft distributed consensus to replicate log entries across cluster quorum nodes.",
+        searchPrompt: "etcd Raft consensus leader election quorum log replication cluster fault tolerance",
+        emoji: "🗳️",
+        reactionCount: "4.9k",
+        commentCount: 360,
+      },
+      {
+        id: "dk-p4-3",
+        text: "Emits gRPC watch stream notifications to controllers and scheduler listening for unassigned pods.",
+        searchPrompt: "etcd gRPC watch API informers resourceVersion change feed Kubernetes",
+        emoji: "🔔",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+    ],
+  },
+
+  "k8s-kube-scheduler-filter-score": {
+    id: "k8s-kube-scheduler-filter-score",
+    title: "5. Kube-Scheduler Filtering & Scoring Nodes",
+    badge: "🧠 Node Affinity, Taints & Score",
+    tagline: "Filtering incompatible nodes, scoring best candidate nodes, and binding pod to chosen worker",
+    takeaways: [
+      {
+        id: "dk-p5-1",
+        text: "Kube-scheduler identifies pods with empty spec.nodeName and runs filtering predicates.",
+        searchPrompt: "kube-scheduler filtering phase NodeResourcesFit PodFitsHostPorts nodeName",
+        emoji: "🔍",
+        reactionCount: "5.6k",
+        commentCount: 435,
+      },
+      {
+        id: "dk-p5-2",
+        text: "Evaluates node resource capacity, taints/tolerations, topology spread, and pod anti-affinity.",
+        searchPrompt: "node affinity taints tolerations topologySpreadConstraints podAntiAffinity",
+        emoji: "🎯",
+        reactionCount: "5.2k",
+        commentCount: 390,
+      },
+      {
+        id: "dk-p5-3",
+        text: "Scores surviving candidate nodes and submits a binding object to assign the pod to the best node.",
+        searchPrompt: "kube-scheduler scoring plugins NodeResourcesBalancedAllocation pod binding",
+        emoji: "📊",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "k8s-kubelet-cri-cni-initialization": {
+    id: "k8s-kubelet-cri-cni-initialization",
+    title: "6. Kubelet Sync, containerd CRI & CNI Network",
+    badge: "⚡ containerd CRI & CNI veth Pair",
+    tagline: "Worker kubelet reconciliation, containerd container runtime RPCs, and CNI network namespace setup",
+    takeaways: [
+      {
+        id: "dk-p6-1",
+        text: "Worker node kubelet watches API server and detects newly bound pods assigned to its local node.",
+        searchPrompt: "kubelet syncLoop podWorker syncPod status manager node assignment",
+        emoji: "👀",
+        reactionCount: "5.4k",
+        commentCount: 410,
+      },
+      {
+        id: "dk-p6-2",
+        text: "Invokes containerd CRI over gRPC to pull image layers and create the pause container sandbox.",
+        searchPrompt: "Container Runtime Interface CRI containerd RunPodSandbox pause container",
+        emoji: "📦",
+        reactionCount: "5.0k",
+        commentCount: 370,
+      },
+      {
+        id: "dk-p6-3",
+        text: "CNI plugin allocates pod IP, creates veth pair, and attaches network interface to pod namespace.",
+        searchPrompt: "CNI plugin AddNetwork pod IPAM veth pair network namespace routing",
+        emoji: "🔌",
+        reactionCount: "4.6k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "k8s-init-containers-volume-mount": {
+    id: "k8s-init-containers-volume-mount",
+    title: "7. Init Containers, Secrets & CSI Storage Mount",
+    badge: "📂 ConfigMaps, Secrets & CSI Mount",
+    tagline: "Executing init containers sequentially, projecting ConfigMaps/Secrets, and mounting CSI volumes",
+    takeaways: [
+      {
+        id: "dk-p7-1",
+        text: "Runs init containers sequentially to completion before starting application workload containers.",
+        searchPrompt: "Kubernetes initContainers sequential execution database migration seed",
+        emoji: "⏳",
+        reactionCount: "5.2k",
+        commentCount: 395,
+      },
+      {
+        id: "dk-p7-2",
+        text: "CSI node driver formats and mounts persistent block volumes into the container target directory.",
+        searchPrompt: "CSI NodePublishVolume NodeStageVolume mount persistent volume claim target path",
+        emoji: "💾",
+        reactionCount: "4.8k",
+        commentCount: 355,
+      },
+      {
+        id: "dk-p7-3",
+        text: "Injects ConfigMaps, Secrets, and downward API metadata as atomic in-memory tmpfs files.",
+        searchPrompt: "ConfigMap Secret projected volume tmpfs downward API container files",
+        emoji: "🔐",
+        reactionCount: "4.4k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "k8s-pod-probes-readiness-serving": {
+    id: "k8s-pod-probes-readiness-serving",
+    title: "8. Startup/Readiness Probes & EndpointSlice",
+    badge: "🟢 HTTP Probes & EndpointSlice Ingress",
+    tagline: "Executing startup and readiness probes, publishing healthy pods to EndpointSlices, and routing traffic",
+    takeaways: [
+      {
+        id: "dk-p8-1",
+        text: "Kubelet polls startup and readiness HTTP/TCP/exec probes at configured periodSeconds intervals.",
+        searchPrompt: "startupProbe livenessProbe readinessProbe periodSeconds failureThreshold kubelet",
+        emoji: "🩺",
+        reactionCount: "5.5k",
+        commentCount: 425,
+      },
+      {
+        id: "dk-p8-2",
+        text: "EndpointSlice controller adds pod IP to Service endpoints only after readiness probe succeeds.",
+        searchPrompt: "EndpointSlice controller pod IP addition Service routing readiness condition",
+        emoji: "🟢",
+        reactionCount: "5.1k",
+        commentCount: 380,
+      },
+      {
+        id: "dk-p8-3",
+        text: "Ingress controllers and kube-proxy immediately route client HTTP traffic to the new pod replica.",
+        searchPrompt: "Ingress traffic routing kube-proxy iptables active endpoints healthy pod",
+        emoji: "🚀",
+        reactionCount: "4.7k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "k8s-autoscaler-hpa-drain-lifecycle": {
+    id: "k8s-autoscaler-hpa-drain-lifecycle",
+    title: "9. HPA Scaling, PreStop Hook & Graceful Drain",
+    badge: "🧹 HPA/KEDA, SIGTERM & Graceful Stop",
+    tagline: "Monitoring CPU/custom metrics, scaling pod replicas, executing preStop hooks, and draining connections",
+    takeaways: [
+      {
+        id: "dk-p9-1",
+        text: "HPA or KEDA scales pod replicas dynamically based on CPU, memory, or Prometheus event metrics.",
+        searchPrompt: "HorizontalPodAutoscaler HPA metrics-server KEDA custom Prometheus metrics",
+        emoji: "📈",
+        reactionCount: "5.4k",
+        commentCount: 410,
+      },
+      {
+        id: "dk-p9-2",
+        text: "On scale-down, pod enters Terminating state and EndpointSlice controller unregisters its IP.",
+        searchPrompt: "Kubernetes pod termination lifecycle unregister EndpointSlice connection draining",
+        emoji: "🛑",
+        reactionCount: "4.9k",
+        commentCount: 365,
+      },
+      {
+        id: "dk-p9-3",
+        text: "Executes preStop hook, sends SIGTERM, waits terminationGracePeriodSeconds, then sends SIGKILL.",
+        searchPrompt: "preStop lifecycle hook SIGTERM terminationGracePeriodSeconds SIGKILL graceful shutdown",
+        emoji: "🧹",
+        reactionCount: "4.5k",
+        commentCount: 320,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -18839,6 +19470,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Django & FastAPI"
       : node.category === "springboot"
       ? "Spring Boot"
+      : node.category === "dockerk8s"
+      ? "Docker & Kubernetes"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

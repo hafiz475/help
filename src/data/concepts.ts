@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -303,8 +303,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "dockerk8s",
+    name: "32. Docker & Kubernetes",
+    title: "Docker & Kubernetes Architecture: Containers, Pod Scheduling & Cloud-Native Mesh",
+    description: "Linux cgroups & namespaces, multi-stage OCI image builds, 9-stage pod scheduling pipeline, K8s control plane, Services & CNI",
+    color: "#2496ed", // Docker & K8s Electric Blue
+    icon: "Container",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "32. OOP (4 Pillars)",
+    name: "33. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -313,7 +322,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "33. DSA",
+    name: "34. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -322,7 +331,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "34. Big O",
+    name: "35. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -336,7 +345,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 369,
+    count: 379,
   },
 ];
 
@@ -631,6 +640,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Spring Boot Java enterprise architecture ApplicationContext IoC auto-configuration Spring MVC WebFlux Spring Data JPA Actuator",
     badge: "IoC & Auto-Configuration",
     color: "#6db33f",
+  },
+  {
+    id: "root-dockerk8s",
+    label: "Docker & Kubernetes",
+    category: "dockerk8s",
+    level: 0,
+    searchQuery: "Docker Kubernetes containerization OCI images pods kubelet scheduler control plane etcd CNI ingress",
+    badge: "Containers & Orchestration",
+    color: "#2496ed",
   },
   {
     id: "root-oop",
@@ -4208,7 +4226,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 32. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 32. DOCKER & KUBERNETES
+  // ==========================================
+  // Pillar 1: Container Engine, OCI Images & Namespaces
+  {
+    id: "dockerk8s-containers-images-pillar",
+    label: "Containers & OCI Images",
+    category: "dockerk8s",
+    parentId: "root-dockerk8s",
+    level: 1,
+    searchQuery: "Docker container engine OCI image format Linux cgroups namespaces UnionFS overlay2 multi-stage build compose",
+    badge: "OCI & Linux Isolation",
+    color: "#2496ed",
+  },
+  {
+    id: "dockerk8s-linux-cgroups-namespaces",
+    label: "Linux Namespaces & Cgroups v2",
+    category: "dockerk8s",
+    parentId: "dockerk8s-containers-images-pillar",
+    level: 2,
+    searchQuery: "Linux kernel namespaces PID NET MNT UTS IPC USER cgroups v2 resource limits memory CPU throttling",
+    badge: "Namespaces & Cgroups v2",
+    color: "#38bdf8",
+  },
+  {
+    id: "dockerk8s-dockerfile-multistage-builds",
+    label: "Multi-Stage Builds & OCI Layers",
+    category: "dockerk8s",
+    parentId: "dockerk8s-containers-images-pillar",
+    level: 2,
+    searchQuery: "Dockerfile multi-stage builds BuildKit layer caching distroless minimal base image layer squashing rootless",
+    badge: "BuildKit & Layer Cache",
+    color: "#0284c7",
+  },
+  {
+    id: "dockerk8s-docker-networking-compose",
+    label: "Container Networks & Compose",
+    category: "dockerk8s",
+    parentId: "dockerk8s-containers-images-pillar",
+    level: 2,
+    searchQuery: "Docker networking bridge host overlay macvlan docker compose multi-container service orchestration DNS discovery",
+    badge: "Bridge, Overlay & Compose",
+    color: "#0369a1",
+  },
+
+  // Pillar 2: 9-Stage Container Lifecycle & Pod Scheduling Pipeline (Group Card)
+  {
+    id: "dockerk8s-pipeline-pillar",
+    label: "9-Stage Pod Scheduling Pipeline",
+    category: "dockerk8s",
+    parentId: "root-dockerk8s",
+    level: 1,
+    searchQuery: "Kubernetes pod lifecycle scheduling pipeline kubectl api-server etcd kube-scheduler kubelet CRI CNI init-containers probes",
+    badge: "9 Sequential Stages",
+    color: "#2496ed",
+  },
+
+  // Pillar 3: K8s Control Plane, Services & Cloud Networking
+  {
+    id: "dockerk8s-cluster-orchestration-networking-pillar",
+    label: "Control Plane, Services & Mesh",
+    category: "dockerk8s",
+    parentId: "root-dockerk8s",
+    level: 1,
+    searchQuery: "Kubernetes control plane kube-controller-manager reconciliation loop Services ClusterIP Ingress CoreDNS CNI CSI storage",
+    badge: "Control Plane & Ingress",
+    color: "#1d4ed8",
+  },
+  {
+    id: "dockerk8s-control-plane-controllers",
+    label: "Control Plane & Reconciliation",
+    category: "dockerk8s",
+    parentId: "dockerk8s-cluster-orchestration-networking-pillar",
+    level: 2,
+    searchQuery: "Kubernetes control plane API server etcd kube-controller-manager Deployment ReplicaSet StatefulSet DaemonSet reconciliation loop CRDs",
+    badge: "Controllers & CRDs",
+    color: "#2563eb",
+  },
+  {
+    id: "dockerk8s-services-ingress-cni",
+    label: "Services, CoreDNS & CNI Network",
+    category: "dockerk8s",
+    parentId: "dockerk8s-cluster-orchestration-networking-pillar",
+    level: 2,
+    searchQuery: "Kubernetes Services ClusterIP NodePort LoadBalancer CoreDNS Ingress Controller CNI Calico Cilium eBPF packet routing",
+    badge: "Services, Ingress & CNI",
+    color: "#1d4ed8",
+  },
+  {
+    id: "dockerk8s-storage-security-helm",
+    label: "CSI Storage, RBAC & Helm Charts",
+    category: "dockerk8s",
+    parentId: "dockerk8s-cluster-orchestration-networking-pillar",
+    level: 2,
+    searchQuery: "Kubernetes PersistentVolume PersistentVolumeClaim StorageClass CSI driver RBAC RoleBinding ServiceAccount Helm chart packaging",
+    badge: "CSI Storage & Helm RBAC",
+    color: "#1e40af",
+  },
+
+  // ==========================================
+  // 33. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
@@ -4267,7 +4384,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 33. DATA STRUCTURES (DSA)
+  // 34. DATA STRUCTURES (DSA)
   // ==========================================
   // Level 1 Major Pillar
   {
@@ -4347,7 +4464,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 34. BIG O TIME COMPLEXITY
+  // 35. BIG O TIME COMPLEXITY
   // ==========================================
   // Level 1 Major Pillar
   {

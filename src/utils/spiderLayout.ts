@@ -1067,6 +1067,8 @@ export function calculateGroupLayout(
         ? "Python MVT & Async ASGI"
         : category === "springboot"
         ? "IoC & Auto-Configuration"
+        : category === "dockerk8s"
+        ? "Containers & Orchestration"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1129,6 +1131,8 @@ export function calculateGroupLayout(
         ? "#05998b"
         : category === "springboot"
         ? "#6db33f"
+        : category === "dockerk8s"
+        ? "#2496ed"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -5026,6 +5030,202 @@ export function calculateGroupLayout(
       }
     }
 
+    // ========================================================
+    // SUB-BRANCH 1R: Docker & Kubernetes Hub (y = -10950)
+    // Connects from springbootHubNode -> dockerk8sHubNode
+    // ========================================================
+    const dockerk8sHubX = 1300;
+    const dockerk8sHubY = -10950;
+    const dockerk8sHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-dockerk8s")!,
+      x: dockerk8sHubX,
+      y: dockerk8sHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(dockerk8sHubNode);
+    edges.push({
+      source: springbootHubNode.id,
+      target: dockerk8sHubNode.id,
+      category: "dockerk8s",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Docker & K8s Pillar 1: Containers & OCI Images (Right-Up: x = 1950, y = -11130)
+    const dkCipRaw = allNodes.find((n) => n.id === "dockerk8s-containers-images-pillar");
+    if (dkCipRaw) {
+      const dkCipX = dockerk8sHubX + 650;
+      const dkCipY = dockerk8sHubY - 180;
+      const dkCipNode: PositionedNode = {
+        ...dkCipRaw,
+        x: dkCipX,
+        y: dkCipY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(dkCipNode);
+      edges.push({
+        source: dockerk8sHubNode.id,
+        target: dkCipNode.id,
+        category: "dockerk8s",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const lcnRaw = allNodes.find((n) => n.id === "dockerk8s-linux-cgroups-namespaces");
+      if (lcnRaw) {
+        positionedNodes.push({
+          ...lcnRaw,
+          x: dkCipX + 320,
+          y: dkCipY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dkCipNode.id,
+          target: lcnRaw.id,
+          category: "dockerk8s",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const dmbRaw = allNodes.find((n) => n.id === "dockerk8s-dockerfile-multistage-builds");
+      if (dmbRaw) {
+        positionedNodes.push({
+          ...dmbRaw,
+          x: dkCipX + 320,
+          y: dkCipY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dkCipNode.id,
+          target: dmbRaw.id,
+          category: "dockerk8s",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const dncRaw = allNodes.find((n) => n.id === "dockerk8s-docker-networking-compose");
+      if (dncRaw) {
+        positionedNodes.push({
+          ...dncRaw,
+          x: dkCipX + 320,
+          y: dkCipY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dkCipNode.id,
+          target: dncRaw.id,
+          category: "dockerk8s",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Docker & K8s Pillar 2: 9-Stage Pod Lifecycle & Scheduling Pipeline (Group Card, Middle-Right: x = 2100, y = -10950)
+    const dockerk8sGroupCard = cardByPillar.get("dockerk8s-pipeline-pillar");
+    if (dockerk8sGroupCard) {
+      const cardX = dockerk8sHubX + 800;
+      const cardY = dockerk8sHubY;
+      const posCard: PositionedGroupCard = {
+        ...dockerk8sGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: dockerk8sHubNode.id,
+        target: dockerk8sGroupCard.id,
+        category: "dockerk8s",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // Docker & K8s Pillar 3: Control Plane, Services & Mesh (Right-Down: x = 1950, y = -10770)
+    const dkConRaw = allNodes.find((n) => n.id === "dockerk8s-cluster-orchestration-networking-pillar");
+    if (dkConRaw) {
+      const dkConX = dockerk8sHubX + 650;
+      const dkConY = dockerk8sHubY + 180;
+      const dkConNode: PositionedNode = {
+        ...dkConRaw,
+        x: dkConX,
+        y: dkConY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(dkConNode);
+      edges.push({
+        source: dockerk8sHubNode.id,
+        target: dkConNode.id,
+        category: "dockerk8s",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const cpcRaw = allNodes.find((n) => n.id === "dockerk8s-control-plane-controllers");
+      if (cpcRaw) {
+        positionedNodes.push({
+          ...cpcRaw,
+          x: dkConX + 320,
+          y: dkConY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dkConNode.id,
+          target: cpcRaw.id,
+          category: "dockerk8s",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const sicRaw = allNodes.find((n) => n.id === "dockerk8s-services-ingress-cni");
+      if (sicRaw) {
+        positionedNodes.push({
+          ...sicRaw,
+          x: dkConX + 320,
+          y: dkConY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dkConNode.id,
+          target: sicRaw.id,
+          category: "dockerk8s",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const sshRaw = allNodes.find((n) => n.id === "dockerk8s-storage-security-helm");
+      if (sshRaw) {
+        positionedNodes.push({
+          ...sshRaw,
+          x: dkConX + 320,
+          y: dkConY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dkConNode.id,
+          target: sshRaw.id,
+          category: "dockerk8s",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -7256,6 +7456,8 @@ export function calculateGroupLayout(
     pillarIds = ["djangofastapi-django-orm-mvt-pillar", "djangofastapi-pipeline-pillar", "djangofastapi-fastapi-async-pydantic-pillar"];
   } else if (category === "springboot") {
     pillarIds = ["springboot-ioc-autoconfigure-pillar", "springboot-pipeline-pillar", "springboot-data-actuator-security-pillar"];
+  } else if (category === "dockerk8s") {
+    pillarIds = ["dockerk8s-containers-images-pillar", "dockerk8s-pipeline-pillar", "dockerk8s-cluster-orchestration-networking-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -7664,6 +7866,11 @@ export function getNodesForCategory(
       parentId: "root-djangofastapi",
       level: 2,
     };
+    const dockerk8sRoot = {
+      ...allNodes.find((n) => n.id === "root-dockerk8s")!,
+      parentId: "root-springboot",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -7716,13 +7923,14 @@ export function getNodesForCategory(
         n.id !== "root-expressnest" &&
         n.id !== "root-djangofastapi" &&
         n.id !== "root-springboot" &&
+        n.id !== "root-dockerk8s" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

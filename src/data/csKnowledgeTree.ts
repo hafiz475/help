@@ -1084,9 +1084,12 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           {
             id: "topic-docker-k8s",
             name: "Docker, Kubernetes",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "Linux containers, image layers, pod orchestration, and service meshes",
+            categoryId: "dockerk8s",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Linux cgroups & namespaces, multi-stage OCI image builds, 9-stage pod scheduling pipeline, K8s control plane, Services & CNI",
+            color: "#2496ed",
           },
           {
             id: "topic-kafka-rabbitmq",
