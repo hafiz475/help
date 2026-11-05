@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2752,7 +2752,84 @@ export const DOCKERK8S_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const SQL_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-sql-exec",
+    pillarId: "sql-pipeline-pillar",
+    title: "SQL Query Execution & ACID Pipeline",
+    category: "sql",
+    badge: "9 Sequential Stages",
+    color: "#336791",
+    isPipeline: true,
+    items: [
+      {
+        id: "sql-parser-tokenization",
+        stepNumber: 1,
+        label: "1. SQL Lexical Parser & AST Generation",
+        badge: "🔤 Lexer, Grammar & Parse Tree",
+        searchQuery: "SQL parser lexical analyzer tokens AST abstract syntax tree grammar validation",
+      },
+      {
+        id: "sql-semantic-catalog-validation",
+        stepNumber: 2,
+        label: "2. Semantic Analyzer & System Catalog",
+        badge: "📋 Schema, Types & Column Resolver",
+        searchQuery: "SQL semantic analysis system catalog information_schema type checking table resolution permissions",
+      },
+      {
+        id: "sql-query-rewriter-view-expansion",
+        stepNumber: 3,
+        label: "3. Query Rewriter & View Expansion",
+        badge: "🔄 View Inlining & Constant Folding",
+        searchQuery: "SQL query rewrite engine view expansion predicate pushdown constant folding subquery flattening",
+      },
+      {
+        id: "sql-cost-based-optimizer",
+        stepNumber: 4,
+        label: "4. Cost-Based Optimizer (CBO) & Plan Tree",
+        badge: "🧠 Table Stats, Histograms & Cost",
+        searchQuery: "Cost Based Optimizer CBO database execution plan selectivity estimation table statistics EXPLAIN",
+      },
+      {
+        id: "sql-join-algorithm-selection",
+        stepNumber: 5,
+        label: "5. Join Selection (Nested, Hash, Merge)",
+        badge: "⚡ Nested Loop, Hash & Sort-Merge",
+        searchQuery: "SQL physical join selection nested loop hash join grace hash sort merge join algorithms",
+      },
+      {
+        id: "sql-b-tree-page-traversal",
+        stepNumber: 6,
+        label: "6. B+ Tree Page Traversal & Index Scan",
+        badge: "🌲 Root to Leaf, TID & Index Only",
+        searchQuery: "B+ Tree index search leaf node binary search row TID pointer index scan covering index",
+      },
+      {
+        id: "sql-buffer-pool-lru-paging",
+        stepNumber: 7,
+        label: "7. Buffer Pool Manager & Disk I/O",
+        badge: "💾 8KB/16KB Frames, LRU & Pinning",
+        searchQuery: "Database buffer pool manager page cache dirty pages LRU eviction page pinning double buffering",
+      },
+      {
+        id: "sql-wal-journal-fsync",
+        stepNumber: 8,
+        label: "8. Write-Ahead Log (WAL) & fsync Flush",
+        badge: "📝 Append-Only LSN & Durability fsync",
+        searchQuery: "Write Ahead Log WAL redo log Log Sequence Number LSN fsync ACID durability crash recovery",
+      },
+      {
+        id: "sql-mvcc-isolation-commit",
+        stepNumber: 9,
+        label: "9. MVCC Snapshots, Row Locks & Commit",
+        badge: "🔒 MVCC xmin/xmax, 2PL & Commit",
+        searchQuery: "MVCC snapshot isolation row level locks 2-Phase Locking 2PL transaction commit release locks",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2785,8 +2862,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "djangofastapi") return DJANGOFASTAPI_GROUP_CARDS;
   if (category === "springboot") return SPRINGBOOT_GROUP_CARDS;
   if (category === "dockerk8s") return DOCKERK8S_GROUP_CARDS;
+  if (category === "sql") return SQL_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

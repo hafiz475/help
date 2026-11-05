@@ -1069,6 +1069,8 @@ export function calculateGroupLayout(
         ? "IoC & Auto-Configuration"
         : category === "dockerk8s"
         ? "Containers & Orchestration"
+        : category === "sql"
+        ? "Relational Engines & Storage"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1133,6 +1135,8 @@ export function calculateGroupLayout(
         ? "#6db33f"
         : category === "dockerk8s"
         ? "#2496ed"
+        : category === "sql"
+        ? "#336791"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -5226,6 +5230,202 @@ export function calculateGroupLayout(
       }
     }
 
+    // ========================================================
+    // SUB-BRANCH 1S: SQL & Databases Hub (y = -11750)
+    // Connects from dockerk8sHubNode -> sqlHubNode
+    // ========================================================
+    const sqlHubX = 1300;
+    const sqlHubY = -11750;
+    const sqlHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-sql")!,
+      x: sqlHubX,
+      y: sqlHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(sqlHubNode);
+    edges.push({
+      source: dockerk8sHubNode.id,
+      target: sqlHubNode.id,
+      category: "sql",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // SQL Pillar 1: Relational Models & B+ Trees (Right-Up: x = 1950, y = -11930)
+    const sqlRipRaw = allNodes.find((n) => n.id === "sql-relational-indexing-pillar");
+    if (sqlRipRaw) {
+      const sqlRipX = sqlHubX + 650;
+      const sqlRipY = sqlHubY - 180;
+      const sqlRipNode: PositionedNode = {
+        ...sqlRipRaw,
+        x: sqlRipX,
+        y: sqlRipY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(sqlRipNode);
+      edges.push({
+        source: sqlHubNode.id,
+        target: sqlRipNode.id,
+        category: "sql",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const snkRaw = allNodes.find((n) => n.id === "sql-normalization-keys");
+      if (snkRaw) {
+        positionedNodes.push({
+          ...snkRaw,
+          x: sqlRipX + 320,
+          y: sqlRipY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sqlRipNode.id,
+          target: snkRaw.id,
+          category: "sql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const sbiRaw = allNodes.find((n) => n.id === "sql-b-tree-indexing");
+      if (sbiRaw) {
+        positionedNodes.push({
+          ...sbiRaw,
+          x: sqlRipX + 320,
+          y: sqlRipY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sqlRipNode.id,
+          target: sbiRaw.id,
+          category: "sql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const sciRaw = allNodes.find((n) => n.id === "sql-clustered-composite-indexes");
+      if (sciRaw) {
+        positionedNodes.push({
+          ...sciRaw,
+          x: sqlRipX + 320,
+          y: sqlRipY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sqlRipNode.id,
+          target: sciRaw.id,
+          category: "sql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // SQL Pillar 2: 9-Stage SQL Query Execution & ACID Pipeline (Group Card, Right-Center: x = 2100, y = -11750)
+    const sqlGroupCard = cardByPillar.get("sql-pipeline-pillar");
+    if (sqlGroupCard) {
+      const cardX = sqlHubX + 800;
+      const cardY = sqlHubY;
+      const posCard: PositionedGroupCard = {
+        ...sqlGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: sqlHubNode.id,
+        target: sqlGroupCard.id,
+        category: "sql",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // SQL Pillar 3: Query Engine, Joins & ACID Transactions (Right-Down: x = 1950, y = -11570)
+    const sqlEtpRaw = allNodes.find((n) => n.id === "sql-engine-transactions-pillar");
+    if (sqlEtpRaw) {
+      const sqlEtpX = sqlHubX + 650;
+      const sqlEtpY = sqlHubY + 180;
+      const sqlEtpNode: PositionedNode = {
+        ...sqlEtpRaw,
+        x: sqlEtpX,
+        y: sqlEtpY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(sqlEtpNode);
+      edges.push({
+        source: sqlHubNode.id,
+        target: sqlEtpNode.id,
+        category: "sql",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const sjaRaw = allNodes.find((n) => n.id === "sql-join-algorithms-strategies");
+      if (sjaRaw) {
+        positionedNodes.push({
+          ...sjaRaw,
+          x: sqlEtpX + 320,
+          y: sqlEtpY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sqlEtpNode.id,
+          target: sjaRaw.id,
+          category: "sql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const saiRaw = allNodes.find((n) => n.id === "sql-acid-isolation-levels");
+      if (saiRaw) {
+        positionedNodes.push({
+          ...saiRaw,
+          x: sqlEtpX + 320,
+          y: sqlEtpY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sqlEtpNode.id,
+          target: saiRaw.id,
+          category: "sql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const smwRaw = allNodes.find((n) => n.id === "sql-mvcc-wal-replication");
+      if (smwRaw) {
+        positionedNodes.push({
+          ...smwRaw,
+          x: sqlEtpX + 320,
+          y: sqlEtpY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: sqlEtpNode.id,
+          target: smwRaw.id,
+          category: "sql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -7458,6 +7658,8 @@ export function calculateGroupLayout(
     pillarIds = ["springboot-ioc-autoconfigure-pillar", "springboot-pipeline-pillar", "springboot-data-actuator-security-pillar"];
   } else if (category === "dockerk8s") {
     pillarIds = ["dockerk8s-containers-images-pillar", "dockerk8s-pipeline-pillar", "dockerk8s-cluster-orchestration-networking-pillar"];
+  } else if (category === "sql") {
+    pillarIds = ["sql-relational-indexing-pillar", "sql-pipeline-pillar", "sql-engine-transactions-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -7871,6 +8073,11 @@ export function getNodesForCategory(
       parentId: "root-springboot",
       level: 2,
     };
+    const sqlRoot = {
+      ...allNodes.find((n) => n.id === "root-sql")!,
+      parentId: "root-dockerk8s",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -7924,13 +8131,14 @@ export function getNodesForCategory(
         n.id !== "root-djangofastapi" &&
         n.id !== "root-springboot" &&
         n.id !== "root-dockerk8s" &&
+        n.id !== "root-sql" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

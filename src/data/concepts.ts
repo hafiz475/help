@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -312,8 +312,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "sql",
+    name: "33. SQL & Databases",
+    title: "SQL, Indexing & Relational Database Architecture: B+ Trees, Query Optimizer & ACID Transactions",
+    description: "Relational schema design, B+ Tree indexing, 9-stage SQL query execution pipeline, join algorithms, WAL journal & MVCC concurrency",
+    color: "#336791", // PostgreSQL Blue
+    icon: "Table",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "33. OOP (4 Pillars)",
+    name: "34. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -322,7 +331,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "34. DSA",
+    name: "35. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -331,7 +340,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "35. Big O",
+    name: "36. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -345,7 +354,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 379,
+    count: 389,
   },
 ];
 
@@ -649,6 +658,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Docker Kubernetes containerization OCI images pods kubelet scheduler control plane etcd CNI ingress",
     badge: "Containers & Orchestration",
     color: "#2496ed",
+  },
+  {
+    id: "root-sql",
+    label: "SQL & Databases",
+    category: "sql",
+    level: 0,
+    searchQuery: "SQL relational databases indexing B-Trees joins ACID normalization query planner MVCC WAL PostgreSQL MySQL",
+    badge: "Relational Engines & Storage",
+    color: "#336791",
   },
   {
     id: "root-oop",
@@ -4325,7 +4343,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 33. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 33. SQL & DATABASES
+  // ==========================================
+  // Pillar 1: Relational Schema & B+ Tree Indexing
+  {
+    id: "sql-relational-indexing-pillar",
+    label: "Relational Models & B+ Trees",
+    category: "sql",
+    parentId: "root-sql",
+    level: 1,
+    searchQuery: "relational database schema design normalization 1NF 2NF 3NF BCNF B-Tree indexing clustered secondary composite indexes",
+    badge: "Schema & B+ Trees",
+    color: "#0284c7",
+  },
+  {
+    id: "sql-normalization-keys",
+    label: "Normalization & Schema Integrity",
+    category: "sql",
+    parentId: "sql-relational-indexing-pillar",
+    level: 2,
+    searchQuery: "database normalization 1NF 2NF 3NF BCNF primary key foreign key composite key candidate key check constraints referential integrity",
+    badge: "1NF to BCNF & Foreign Keys",
+    color: "#38bdf8",
+  },
+  {
+    id: "sql-b-tree-indexing",
+    label: "B+ Tree & Index Architecture",
+    category: "sql",
+    parentId: "sql-relational-indexing-pillar",
+    level: 2,
+    searchQuery: "B+ Tree database index leaf node linked list branching factor fanout index depth binary search page split root node internal node",
+    badge: "B+ Tree Fanout & Page Splits",
+    color: "#0284c7",
+  },
+  {
+    id: "sql-clustered-composite-indexes",
+    label: "Clustered & Covering Indexes",
+    category: "sql",
+    parentId: "sql-relational-indexing-pillar",
+    level: 2,
+    searchQuery: "clustered index vs non-clustered index composite index left prefix rule covering index partial index expression index bloom filters",
+    badge: "Clustered, Covering & Prefix",
+    color: "#0369a1",
+  },
+
+  // Pillar 2: 9-Stage SQL Query Execution & ACID Pipeline (Group Card)
+  {
+    id: "sql-pipeline-pillar",
+    label: "9-Stage SQL Execution Pipeline",
+    category: "sql",
+    parentId: "root-sql",
+    level: 1,
+    searchQuery: "SQL query lifecycle execution pipeline parsing semantic analysis rewrite cost based optimizer join selection B-Tree scan buffer pool WAL MVCC commit",
+    badge: "9 Sequential Stages",
+    color: "#336791",
+  },
+
+  // Pillar 3: Query Engine, Joins & ACID Transactions
+  {
+    id: "sql-engine-transactions-pillar",
+    label: "Optimizer, Joins & ACID",
+    category: "sql",
+    parentId: "root-sql",
+    level: 1,
+    searchQuery: "SQL query engine cost based optimizer join algorithms nested loop hash join merge join ACID transactions isolation levels MVCC WAL replication",
+    badge: "Joins, ACID & Concurrency",
+    color: "#336791",
+  },
+  {
+    id: "sql-join-algorithms-strategies",
+    label: "Join Algorithms & Execution Plans",
+    category: "sql",
+    parentId: "sql-engine-transactions-pillar",
+    level: 2,
+    searchQuery: "SQL join algorithms nested loop join block nested loop hash join grace hash join merge join sort merge explain analyze execution plan",
+    badge: "Nested Loop, Hash & Merge Join",
+    color: "#38bdf8",
+  },
+  {
+    id: "sql-acid-isolation-levels",
+    label: "ACID Guarantees & Isolation Levels",
+    category: "sql",
+    parentId: "sql-engine-transactions-pillar",
+    level: 2,
+    searchQuery: "ACID properties atomicity consistency isolation durability dirty reads non-repeatable reads phantom reads snapshot isolation serializable 2PL",
+    badge: "Read Committed to Serializable",
+    color: "#0284c7",
+  },
+  {
+    id: "sql-mvcc-wal-replication",
+    label: "MVCC, WAL Journal & Replication",
+    category: "sql",
+    parentId: "sql-engine-transactions-pillar",
+    level: 2,
+    searchQuery: "MVCC multi version concurrency control PostgreSQL vacuum MySQL undo log redo log WAL write ahead log checkpointing streaming replication",
+    badge: "MVCC Snapshots & WAL Journal",
+    color: "#0369a1",
+  },
+
+  // ==========================================
+  // 34. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

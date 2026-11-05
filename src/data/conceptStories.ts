@@ -17924,6 +17924,637 @@ export const HANDCRAFTED_TAKEAWAYS: Record<string, ConceptTakeaways> = {
     ],
   },
 
+  // ==========================================
+  // SQL & DATABASES STORIES & TAKEAWAYS
+  // ==========================================
+  "root-sql": {
+    id: "root-sql",
+    title: "SQL & Relational Databases",
+    badge: "Relational Engines & Storage",
+    tagline: "Relational algebra, B+ Tree indexing, query planning, and ACID transaction concurrency",
+    takeaways: [
+      {
+        id: "sql-root-1",
+        text: "Relational engines structure data into tables with ACID transactions and mathematical set logic.",
+        searchPrompt: "relational database management system RDBMS architecture tables SQL relational algebra",
+        emoji: "🗄️",
+        reactionCount: "6.8k",
+        commentCount: 540,
+      },
+      {
+        id: "sql-root-2",
+        text: "B+ Tree indexes enable O(log n) lookups without reading entire tables sequentially from disk.",
+        searchPrompt: "how database indexes work B+ Tree indexing sequential scan vs index scan",
+        emoji: "⚡",
+        reactionCount: "6.1k",
+        commentCount: 480,
+      },
+      {
+        id: "sql-root-3",
+        text: "Write-Ahead Logging and MVCC deliver crash recovery durability and non-blocking concurrent reads.",
+        searchPrompt: "ACID transactions Write-Ahead Logging WAL MVCC concurrency PostgreSQL MySQL",
+        emoji: "🔒",
+        reactionCount: "5.5k",
+        commentCount: 420,
+      },
+    ],
+  },
+
+  "sql-relational-indexing-pillar": {
+    id: "sql-relational-indexing-pillar",
+    title: "Relational Models & B+ Trees",
+    badge: "Schema & B+ Trees",
+    tagline: "Schema normalization, constraint integrity, and balanced multi-way search tree indexing",
+    takeaways: [
+      {
+        id: "sql-rip-1",
+        text: "Schema normalization eliminates redundant data anomalies while enforcing foreign key integrity.",
+        searchPrompt: "database normalization 1NF 2NF 3NF BCNF redundancy update anomalies integrity",
+        emoji: "📐",
+        reactionCount: "5.7k",
+        commentCount: 430,
+      },
+      {
+        id: "sql-rip-2",
+        text: "B+ Tree balanced hierarchies keep depth small (3-4 levels) to minimize disk page fetch I/O.",
+        searchPrompt: "B+ Tree depth branching factor fanout database index disk page I/O performance",
+        emoji: "🌲",
+        reactionCount: "5.2k",
+        commentCount: 390,
+      },
+      {
+        id: "sql-rip-3",
+        text: "Clustered index dictates physical row storage while secondary indexes point to clustered keys.",
+        searchPrompt: "clustered index vs non-clustered secondary index physical ordering leaf node pointers",
+        emoji: "🎯",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "sql-normalization-keys": {
+    id: "sql-normalization-keys",
+    title: "Normalization & Schema Integrity",
+    badge: "1NF to BCNF & Foreign Keys",
+    tagline: "Normal forms, primary/foreign keys, candidate keys, and referential integrity constraints",
+    takeaways: [
+      {
+        id: "sql-nk-1",
+        text: "1NF eliminates repeating groups, 2NF removes partial dependencies, and 3NF removes transitive ones.",
+        searchPrompt: "database normal forms 1NF 2NF 3NF functional dependencies candidate key decomposition",
+        emoji: "🧹",
+        reactionCount: "5.1k",
+        commentCount: 380,
+      },
+      {
+        id: "sql-nk-2",
+        text: "BCNF strictly ensures that every functional determinant is a candidate key in the relation.",
+        searchPrompt: "Boyce Codd Normal Form BCNF determinant superkey database design rules",
+        emoji: "🔑",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+      {
+        id: "sql-nk-3",
+        text: "Foreign key constraints enforce referential integrity and cascade rules across relational tables.",
+        searchPrompt: "foreign key referential integrity ON DELETE CASCADE ON UPDATE RESTRICT foreign key constraints",
+        emoji: "🔗",
+        reactionCount: "4.2k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "sql-b-tree-indexing": {
+    id: "sql-b-tree-indexing",
+    title: "B+ Tree & Index Architecture",
+    badge: "B+ Tree Fanout & Page Splits",
+    tagline: "High fanout balanced trees, leaf node linked lists, root-to-leaf searches, and page splits",
+    takeaways: [
+      {
+        id: "sql-bti-1",
+        text: "B+ Trees store actual data or row pointers only in leaf nodes linked by bidirectional pointers.",
+        searchPrompt: "B+ Tree index internal nodes vs leaf nodes linked list range scan order by",
+        emoji: "🌲",
+        reactionCount: "5.6k",
+        commentCount: 440,
+      },
+      {
+        id: "sql-bti-2",
+        text: "High fanout branching factors (100+) index millions of rows in just 3 to 4 disk page lookups.",
+        searchPrompt: "B+ Tree fanout calculation branching factor 8KB page size index depth",
+        emoji: "⚡",
+        reactionCount: "5.1k",
+        commentCount: 395,
+      },
+      {
+        id: "sql-bti-3",
+        text: "When a node page exceeds 8KB or 16KB capacity, the engine triggers a 50/50 page split operation.",
+        searchPrompt: "B+ Tree page split insertion internal node balance SQLite InnoDB Postgres page split",
+        emoji: "✂️",
+        reactionCount: "4.7k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "sql-clustered-composite-indexes": {
+    id: "sql-clustered-composite-indexes",
+    title: "Clustered & Covering Indexes",
+    badge: "Clustered, Covering & Prefix",
+    tagline: "Clustered primary storage, composite column ordering, index-only scans, and partial indexes",
+    takeaways: [
+      {
+        id: "sql-cci-1",
+        text: "A table has at most one clustered index because rows can only be physically sorted once on disk.",
+        searchPrompt: "why only one clustered index per table physical storage row arrangement primary key",
+        emoji: "📚",
+        reactionCount: "5.3k",
+        commentCount: 410,
+      },
+      {
+        id: "sql-cci-2",
+        text: "Composite indexes follow the leftmost prefix rule: queries must filter the leading index column.",
+        searchPrompt: "composite index leftmost prefix rule column order indexing multi-column query",
+        emoji: "🧭",
+        reactionCount: "4.9k",
+        commentCount: 375,
+      },
+      {
+        id: "sql-cci-3",
+        text: "Covering indexes fulfill queries directly from leaf index pages without touching heap data pages.",
+        searchPrompt: "covering index index only scan INCLUDE clause PostgreSQL MySQL performance",
+        emoji: "🛡️",
+        reactionCount: "4.5k",
+        commentCount: 330,
+      },
+    ],
+  },
+
+  "sql-pipeline-pillar": {
+    id: "sql-pipeline-pillar",
+    title: "9-Stage SQL Execution Pipeline",
+    badge: "9 Sequential Stages",
+    tagline: "End-to-end lifecycle: parser, semantic catalog, rewrite, cost optimization, join scan, and commit",
+    takeaways: [
+      {
+        id: "sql-pip-1",
+        text: "SQL queries undergo 9 sequential stages: parse, semantic check, rewrite, optimize, and execute.",
+        searchPrompt: "SQL query processing stages lifecycle parsing optimization execution engine",
+        emoji: "⚙️",
+        reactionCount: "6.0k",
+        commentCount: 470,
+      },
+      {
+        id: "sql-pip-2",
+        text: "Cost-based optimizers estimate row cardinality and disk I/O cost using table statistic histograms.",
+        searchPrompt: "cost based optimizer CBO statistics histogram cardinality estimation EXPLAIN plan",
+        emoji: "🧠",
+        reactionCount: "5.4k",
+        commentCount: 415,
+      },
+      {
+        id: "sql-pip-3",
+        text: "MVCC isolation and WAL logging guarantee ACID durability and isolation during execution.",
+        searchPrompt: "ACID guarantees during query execution Write-Ahead Log MVCC snapshot isolation",
+        emoji: "🔒",
+        reactionCount: "4.9k",
+        commentCount: 370,
+      },
+    ],
+  },
+
+  // 9 Stages of SQL Execution Pipeline
+  "sql-parser-tokenization": {
+    id: "sql-parser-tokenization",
+    title: "1. SQL Lexical Parser & AST Generation",
+    badge: "🔤 Lexer, Grammar & Parse Tree",
+    tagline: "Lexical tokenization, grammar rule verification, and Abstract Syntax Tree creation",
+    takeaways: [
+      {
+        id: "sql-p1-1",
+        text: "Lexical analyzer transforms raw SQL text into a stream of tokens like SELECT, FROM, and WHERE.",
+        searchPrompt: "SQL lexical analysis scanner tokenizer keywords identifiers operators literals",
+        emoji: "🔤",
+        reactionCount: "5.2k",
+        commentCount: 390,
+      },
+      {
+        id: "sql-p1-2",
+        text: "Parser verifies grammar syntax against SQL standards and builds an Abstract Syntax Tree (AST).",
+        searchPrompt: "SQL parser grammar Bison Flex recursive descent abstract syntax tree AST",
+        emoji: "🌲",
+        reactionCount: "4.8k",
+        commentCount: 350,
+      },
+      {
+        id: "sql-p1-3",
+        text: "Syntax errors trigger immediate query rejection before consuming CPU query optimization resources.",
+        searchPrompt: "SQL syntax error early termination parser error code fast rejection",
+        emoji: "🚫",
+        reactionCount: "4.4k",
+        commentCount: 310,
+      },
+    ],
+  },
+
+  "sql-semantic-catalog-validation": {
+    id: "sql-semantic-catalog-validation",
+    title: "2. Semantic Analyzer & System Catalog",
+    badge: "📋 Schema, Types & Column Resolver",
+    tagline: "Catalog lookups, schema verification, data type coercion, and access control privilege checks",
+    takeaways: [
+      {
+        id: "sql-p2-1",
+        text: "Validates table and column names against the system catalog (information_schema / pg_catalog).",
+        searchPrompt: "SQL semantic analysis system catalog pg_catalog information_schema table validation",
+        emoji: "📋",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "sql-p2-2",
+        text: "Checks column data types, resolves ambiguous column aliases, and ensures user SELECT permissions.",
+        searchPrompt: "type checking column resolution table alias resolution user privileges GRANT check",
+        emoji: "🔐",
+        reactionCount: "4.6k",
+        commentCount: 345,
+      },
+      {
+        id: "sql-p2-3",
+        text: "Replaces table synonyms and alias tokens with fully qualified relational schema identifiers.",
+        searchPrompt: "database query normalization fully qualified table identifier schema resolution",
+        emoji: "🏷️",
+        reactionCount: "4.2k",
+        commentCount: 305,
+      },
+    ],
+  },
+
+  "sql-query-rewriter-view-expansion": {
+    id: "sql-query-rewriter-view-expansion",
+    title: "3. Query Rewriter & View Expansion",
+    badge: "🔄 View Inlining & Constant Folding",
+    tagline: "Rule engine transformations, view inlining, constant folding, and subquery flattening",
+    takeaways: [
+      {
+        id: "sql-p3-1",
+        text: "Expands view references by inlining view SQL definitions directly into the parent query AST.",
+        searchPrompt: "SQL query rewrite view expansion view inlining query modification rule system",
+        emoji: "🔄",
+        reactionCount: "5.1k",
+        commentCount: 385,
+      },
+      {
+        id: "sql-p3-2",
+        text: "Performs constant folding (e.g. 1 + 2 evaluates to 3) before plan generation begins.",
+        searchPrompt: "SQL constant folding compile time expression evaluation query simplifier",
+        emoji: "🧮",
+        reactionCount: "4.7k",
+        commentCount: 350,
+      },
+      {
+        id: "sql-p3-3",
+        text: "Flattens nested subqueries into relational joins and pushes filter predicates downward.",
+        searchPrompt: "subquery unnesting predicate pushdown SQL optimizer algebraic rewrite rules",
+        emoji: "⚡",
+        reactionCount: "4.3k",
+        commentCount: 315,
+      },
+    ],
+  },
+
+  "sql-cost-based-optimizer": {
+    id: "sql-cost-based-optimizer",
+    title: "4. Cost-Based Optimizer (CBO) & Plan Tree",
+    badge: "🧠 Table Stats, Histograms & Cost",
+    tagline: "Cost modeling, statistical histograms, selectivity estimation, and physical plan exploration",
+    takeaways: [
+      {
+        id: "sql-p4-1",
+        text: "Evaluates combinatorial execution plans to choose the plan with the lowest estimated CPU/IO cost.",
+        searchPrompt: "Cost Based Optimizer CBO dynamic programming genetic query optimization cost model",
+        emoji: "🧠",
+        reactionCount: "5.8k",
+        commentCount: 450,
+      },
+      {
+        id: "sql-p4-2",
+        text: "Reads column histograms, null fraction stats, and distinct value counts from pg_statistic.",
+        searchPrompt: "ANALYZE command database statistics histograms pg_stats n_distinct selectivity",
+        emoji: "📊",
+        reactionCount: "5.2k",
+        commentCount: 395,
+      },
+      {
+        id: "sql-p4-3",
+        text: "Chooses between Sequential Table Scan and Index Scan based on filter predicate selectivity.",
+        searchPrompt: "sequential scan vs index scan tipping point optimizer selectivity threshold",
+        emoji: "⚖️",
+        reactionCount: "4.8k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "sql-join-algorithm-selection": {
+    id: "sql-join-algorithm-selection",
+    title: "5. Join Selection (Nested, Hash, Merge)",
+    badge: "⚡ Nested Loop, Hash & Sort-Merge",
+    tagline: "Join ordering, Nested Loop, Hash Join with in-memory hashing, and Sort-Merge Join strategies",
+    takeaways: [
+      {
+        id: "sql-p5-1",
+        text: "Nested Loop Join excels for small outer tables with an indexed inner table lookup.",
+        searchPrompt: "nested loop join indexed inner scan outer relation small dataset join",
+        emoji: "🔄",
+        reactionCount: "5.5k",
+        commentCount: 420,
+      },
+      {
+        id: "sql-p5-2",
+        text: "Hash Join builds an in-memory hash table on the smaller table, probing it with the larger table.",
+        searchPrompt: "hash join build phase probe phase in memory hash table Grace hash join spill",
+        emoji: "⚡",
+        reactionCount: "5.1k",
+        commentCount: 385,
+      },
+      {
+        id: "sql-p5-3",
+        text: "Sort-Merge Join sorts both inputs on join keys and merges them linearly in O(n + m) time.",
+        searchPrompt: "sort merge join pre-sorted inputs clustered index merge join large table joins",
+        emoji: "🤝",
+        reactionCount: "4.7k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "sql-b-tree-page-traversal": {
+    id: "sql-b-tree-page-traversal",
+    title: "6. B+ Tree Page Traversal & Index Scan",
+    badge: "🌲 Root to Leaf, TID & Index Only",
+    tagline: "Binary search on internal node pages, leaf tuple IDs (TID), and index-only scan shortcuts",
+    takeaways: [
+      {
+        id: "sql-p6-1",
+        text: "Traverses B+ Tree internal pages using binary search to pinpoint matching leaf index pages.",
+        searchPrompt: "B+ Tree traversal root page internal page binary search leaf page row pointer",
+        emoji: "🌲",
+        reactionCount: "5.4k",
+        commentCount: 410,
+      },
+      {
+        id: "sql-p6-2",
+        text: "Extracts row Tuple IDs (TIDs: page number + item offset) to locate physical heap data pages.",
+        searchPrompt: "Tuple ID TID ctid PostgreSQL rowid Oracle heap page pointer offset",
+        emoji: "📍",
+        reactionCount: "4.9k",
+        commentCount: 370,
+      },
+      {
+        id: "sql-p6-3",
+        text: "Index-Only Scans skip table heap fetches completely when all projected columns reside in index.",
+        searchPrompt: "index only scan visibility map covering index heap fetch avoidance performance",
+        emoji: "🚀",
+        reactionCount: "4.5k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "sql-buffer-pool-lru-paging": {
+    id: "sql-buffer-pool-lru-paging",
+    title: "7. Buffer Pool Manager & Disk I/O",
+    badge: "💾 8KB/16KB Frames, LRU & Pinning",
+    tagline: "Page buffer management, clock sweep / LRU replacement, dirty page flushing, and page pinning",
+    takeaways: [
+      {
+        id: "sql-p7-1",
+        text: "Buffer pool manages 8KB/16KB memory frames to avoid expensive physical disk reads on hot data.",
+        searchPrompt: "database buffer pool shared_buffers InnoDB buffer pool page cache frames",
+        emoji: "💾",
+        reactionCount: "5.3k",
+        commentCount: 405,
+      },
+      {
+        id: "sql-p7-2",
+        text: "Pins active pages in RAM during query execution to prevent concurrent replacement eviction.",
+        searchPrompt: "buffer pool page pinning unpinning clock sweep 2Q LRU eviction policy",
+        emoji: "📌",
+        reactionCount: "4.8k",
+        commentCount: 360,
+      },
+      {
+        id: "sql-p7-3",
+        text: "Marks modified pages as dirty in memory and writes them to disk asynchronously via checkpoints.",
+        searchPrompt: "dirty pages buffer pool background writer checkpointer flush dirty buffers",
+        emoji: "🌊",
+        reactionCount: "4.4k",
+        commentCount: 325,
+      },
+    ],
+  },
+
+  "sql-wal-journal-fsync": {
+    id: "sql-wal-journal-fsync",
+    title: "8. Write-Ahead Log (WAL) & fsync Flush",
+    badge: "📝 Append-Only LSN & Durability fsync",
+    tagline: "Sequential logging, Log Sequence Numbers (LSN), synchronous fsync, and ARIES crash recovery",
+    takeaways: [
+      {
+        id: "sql-p8-1",
+        text: "Before updating table pages on disk, changes are appended sequentially to the Write-Ahead Log.",
+        searchPrompt: "Write-Ahead Logging WAL principle redo log durability database crash recovery",
+        emoji: "📝",
+        reactionCount: "5.7k",
+        commentCount: 440,
+      },
+      {
+        id: "sql-p8-2",
+        text: "Calls fsync on the WAL journal during transaction commit to guarantee ACID crash durability.",
+        searchPrompt: "WAL fsync synchronous_commit transaction durability disk sync power failure safety",
+        emoji: "🛡️",
+        reactionCount: "5.2k",
+        commentCount: 390,
+      },
+      {
+        id: "sql-p8-3",
+        text: "Log Sequence Numbers (LSN) guarantee recovery redo and undo replay after system power loss.",
+        searchPrompt: "Log Sequence Number LSN ARIES recovery algorithm database redo undo phases",
+        emoji: "🔢",
+        reactionCount: "4.7k",
+        commentCount: 350,
+      },
+    ],
+  },
+
+  "sql-mvcc-isolation-commit": {
+    id: "sql-mvcc-isolation-commit",
+    title: "9. MVCC Snapshots, Row Locks & Commit",
+    badge: "🔒 MVCC xmin/xmax, 2PL & Commit",
+    tagline: "Multi-version concurrency, transaction snapshot isolation, two-phase row locks, and commit logs",
+    takeaways: [
+      {
+        id: "sql-p9-1",
+        text: "Multi-Version Concurrency Control (MVCC) lets readers read older snapshots without locking writers.",
+        searchPrompt: "MVCC Multi Version Concurrency Control readers do not block writers snapshot isolation",
+        emoji: "📸",
+        reactionCount: "5.9k",
+        commentCount: 460,
+      },
+      {
+        id: "sql-p9-2",
+        text: "Isolation levels (Read Committed, Repeatable Read, Serializable) prevent non-repeatable reads.",
+        searchPrompt: "ANSI SQL isolation levels dirty read non-repeatable read phantom read serialization anomaly",
+        emoji: "🔒",
+        reactionCount: "5.3k",
+        commentCount: 405,
+      },
+      {
+        id: "sql-p9-3",
+        text: "Commit marks transaction committed in commit log (CLOG), releases row locks, and notifies client.",
+        searchPrompt: "two-phase locking 2PL transaction commit CLOG release row locks notify client",
+        emoji: "✅",
+        reactionCount: "4.8k",
+        commentCount: 360,
+      },
+    ],
+  },
+
+  "sql-engine-transactions-pillar": {
+    id: "sql-engine-transactions-pillar",
+    title: "Optimizer, Joins & ACID",
+    badge: "Joins, ACID & Concurrency",
+    tagline: "Cost evaluation, join algorithms, transaction isolation, crash durability, and logical replication",
+    takeaways: [
+      {
+        id: "sql-etp-1",
+        text: "Cost-based execution engines convert declarative relational calculus into optimal physical plans.",
+        searchPrompt: "relational engine declarative SQL execution physical query plan optimizer",
+        emoji: "⚙️",
+        reactionCount: "5.5k",
+        commentCount: 425,
+      },
+      {
+        id: "sql-etp-2",
+        text: "ACID guarantees ensure transactions are atomic, consistent, isolated, and durable across crashes.",
+        searchPrompt: "ACID transactions atomicity consistency isolation durability relational database",
+        emoji: "🛡️",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "sql-etp-3",
+        text: "MVCC versioning and two-phase locking (2PL) deliver high throughput concurrent transactions.",
+        searchPrompt: "MVCC concurrency control two phase locking 2PL row level lock deadlock detection",
+        emoji: "🚀",
+        reactionCount: "4.6k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "sql-join-algorithms-strategies": {
+    id: "sql-join-algorithms-strategies",
+    title: "Join Algorithms & Execution Plans",
+    badge: "Nested Loop, Hash & Merge Join",
+    tagline: "Physical join algorithms, EXPLAIN ANALYZE introspection, and work_mem memory spills",
+    takeaways: [
+      {
+        id: "sql-jas-1",
+        text: "EXPLAIN ANALYZE reveals actual execution runtimes, row estimates, and join algorithm decisions.",
+        searchPrompt: "EXPLAIN ANALYZE PostgreSQL execution plan buffer hit row count actual time",
+        emoji: "🔍",
+        reactionCount: "5.6k",
+        commentCount: 435,
+      },
+      {
+        id: "sql-jas-2",
+        text: "Grace Hash Joins partition spills to disk when build hash tables exceed work_mem memory limits.",
+        searchPrompt: "Hash join memory spill work_mem Grace hash join batching disk partition",
+        emoji: "💾",
+        reactionCount: "5.0k",
+        commentCount: 380,
+      },
+      {
+        id: "sql-jas-3",
+        text: "Merge joins excel when inputs are already pre-sorted by clustered index or prior B+ Tree scan.",
+        searchPrompt: "sort merge join presorted input index scan performance optimization",
+        emoji: "⚡",
+        reactionCount: "4.5k",
+        commentCount: 340,
+      },
+    ],
+  },
+
+  "sql-acid-isolation-levels": {
+    id: "sql-acid-isolation-levels",
+    title: "ACID Guarantees & Isolation Levels",
+    badge: "Read Committed to Serializable",
+    tagline: "Transaction atomicity, anomaly anomalies, isolation levels, and serializable snapshot isolation",
+    takeaways: [
+      {
+        id: "sql-ail-1",
+        text: "Atomicity guarantees all operations in a transaction succeed or all roll back via WAL undo logs.",
+        searchPrompt: "transaction atomicity commit rollback savepoint undo log recovery",
+        emoji: "🎯",
+        reactionCount: "5.4k",
+        commentCount: 415,
+      },
+      {
+        id: "sql-ail-2",
+        text: "Dirty reads are prevented at Read Committed; non-repeatable reads prevented at Repeatable Read.",
+        searchPrompt: "read committed repeatable read dirty read non-repeatable read phantom read anomalies",
+        emoji: "🔒",
+        reactionCount: "4.9k",
+        commentCount: 375,
+      },
+      {
+        id: "sql-ail-3",
+        text: "Serializable isolation prevents phantom reads and write skew using Serializable Snapshot (SSI).",
+        searchPrompt: "serializable snapshot isolation SSI write skew anomaly predicate locks",
+        emoji: "🛡️",
+        reactionCount: "4.5k",
+        commentCount: 335,
+      },
+    ],
+  },
+
+  "sql-mvcc-wal-replication": {
+    id: "sql-mvcc-wal-replication",
+    title: "MVCC, WAL Journal & Replication",
+    badge: "MVCC Snapshots & WAL Journal",
+    tagline: "Dead tuple cleanup, VACUUM, physical streaming replication, and logical change data capture",
+    takeaways: [
+      {
+        id: "sql-mwr-1",
+        text: "PostgreSQL VACUUM and MySQL purge threads clean up obsolete dead row versions created by MVCC.",
+        searchPrompt: "PostgreSQL VACUUM autovacuum bloat dead tuples MySQL purge thread undo space",
+        emoji: "🧹",
+        reactionCount: "5.3k",
+        commentCount: 410,
+      },
+      {
+        id: "sql-mwr-2",
+        text: "WAL logs stream to standby replicas over network sockets for physical streaming replication.",
+        searchPrompt: "PostgreSQL streaming replication standby replica WAL sender WAL receiver failover",
+        emoji: "📡",
+        reactionCount: "4.8k",
+        commentCount: 365,
+      },
+      {
+        id: "sql-mwr-3",
+        text: "Logical replication decodes WAL streams into SQL row events for zero-downtime database sync.",
+        searchPrompt: "logical replication CDC change data capture Debezium WAL decoding pgoutput",
+        emoji: "🔄",
+        reactionCount: "4.4k",
+        commentCount: 330,
+      },
+    ],
+  },
+
   "root-node": {
     id: "root-node",
     title: "Node.js Runtime",
@@ -19472,6 +20103,8 @@ export function getConceptTakeaways(node: SpiderNode, allNodes: SpiderNode[]): C
       ? "Spring Boot"
       : node.category === "dockerk8s"
       ? "Docker & Kubernetes"
+      : node.category === "sql"
+      ? "SQL & Databases"
       : node.category === "oop"
       ? "OOP (4 Pillars)"
       : node.category === "dsa"

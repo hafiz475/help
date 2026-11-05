@@ -649,10 +649,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
         topics: [
           {
             id: "topic-sql-indexing",
-            name: "SQL (Joins, Indexing, Normalization)",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "B-Tree indexes, query execution plans, foreign keys, and normal forms",
+            name: "SQL & Databases ★",
+            categoryId: "sql",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Relational schema design, B+ Tree indexing, 9-stage SQL query execution pipeline, join algorithms, WAL journal & MVCC concurrency",
+            color: "#336791",
           },
           {
             id: "topic-acid-transactions",
