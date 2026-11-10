@@ -1075,6 +1075,8 @@ export function calculateGroupLayout(
         ? "Streaming & Message Brokers"
         : category === "pytorchtf"
         ? "AI Frameworks & Compute"
+        : category === "nosql"
+        ? "Distributed & Document Stores"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1145,6 +1147,8 @@ export function calculateGroupLayout(
         ? "#f05023"
         : category === "pytorchtf"
         ? "#ee4c2c"
+        : category === "nosql"
+        ? "#13aa52"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -5826,6 +5830,202 @@ export function calculateGroupLayout(
       }
     }
 
+    // ========================================================
+    // SUB-BRANCH 1V: NoSQL & Distributed DBs Hub (y = -14150)
+    // Connects from ptfHubNode -> nosqlHubNode
+    // ========================================================
+    const nosqlHubX = 1300;
+    const nosqlHubY = -14150;
+    const nosqlHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-nosql")!,
+      x: nosqlHubX,
+      y: nosqlHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(nosqlHubNode);
+    edges.push({
+      source: ptfHubNode.id,
+      target: nosqlHubNode.id,
+      category: "nosql",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // NoSQL Pillar 1: Document & Key-Value Stores (Right-Up: x = 1950, y = -14330)
+    const nosqlDkpRaw = allNodes.find((n) => n.id === "nosql-document-keyvalue-pillar");
+    if (nosqlDkpRaw) {
+      const nosqlDkpX = nosqlHubX + 650;
+      const nosqlDkpY = nosqlHubY - 180;
+      const nosqlDkpNode: PositionedNode = {
+        ...nosqlDkpRaw,
+        x: nosqlDkpX,
+        y: nosqlDkpY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(nosqlDkpNode);
+      edges.push({
+        source: nosqlHubNode.id,
+        target: nosqlDkpNode.id,
+        category: "nosql",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const bdeRaw = allNodes.find((n) => n.id === "nosql-bson-document-embedding");
+      if (bdeRaw) {
+        positionedNodes.push({
+          ...bdeRaw,
+          x: nosqlDkpX + 320,
+          y: nosqlDkpY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nosqlDkpNode.id,
+          target: bdeRaw.id,
+          category: "nosql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const dstRaw = allNodes.find((n) => n.id === "nosql-dynamodb-single-table");
+      if (dstRaw) {
+        positionedNodes.push({
+          ...dstRaw,
+          x: nosqlDkpX + 320,
+          y: nosqlDkpY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nosqlDkpNode.id,
+          target: dstRaw.id,
+          category: "nosql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const gtnRaw = allNodes.find((n) => n.id === "nosql-graph-traversal-neo4j");
+      if (gtnRaw) {
+        positionedNodes.push({
+          ...gtnRaw,
+          x: nosqlDkpX + 320,
+          y: nosqlDkpY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nosqlDkpNode.id,
+          target: gtnRaw.id,
+          category: "nosql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // NoSQL Pillar 2: 9-Stage Distributed Query Pipeline (Group Card, Right-Center: x = 2100, y = -14150)
+    const nosqlGroupCard = cardByPillar.get("nosql-pipeline-pillar");
+    if (nosqlGroupCard) {
+      const cardX = nosqlHubX + 800;
+      const cardY = nosqlHubY;
+      const posCard: PositionedGroupCard = {
+        ...nosqlGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: nosqlHubNode.id,
+        target: nosqlGroupCard.id,
+        category: "nosql",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // NoSQL Pillar 3: CAP Theorem, Sharding & Rebalancing (Right-Down: x = 1950, y = -13970)
+    const nosqlDapRaw = allNodes.find((n) => n.id === "nosql-distributed-architecture-pillar");
+    if (nosqlDapRaw) {
+      const nosqlDapX = nosqlHubX + 650;
+      const nosqlDapY = nosqlHubY + 180;
+      const nosqlDapNode: PositionedNode = {
+        ...nosqlDapRaw,
+        x: nosqlDapX,
+        y: nosqlDapY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(nosqlDapNode);
+      edges.push({
+        source: nosqlHubNode.id,
+        target: nosqlDapNode.id,
+        category: "nosql",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const cptRaw = allNodes.find((n) => n.id === "nosql-cap-pacelc-tradeoffs");
+      if (cptRaw) {
+        positionedNodes.push({
+          ...cptRaw,
+          x: nosqlDapX + 320,
+          y: nosqlDapY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nosqlDapNode.id,
+          target: cptRaw.id,
+          category: "nosql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const ltsRaw = allNodes.find((n) => n.id === "nosql-lsm-trees-sstable");
+      if (ltsRaw) {
+        positionedNodes.push({
+          ...ltsRaw,
+          x: nosqlDapX + 320,
+          y: nosqlDapY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nosqlDapNode.id,
+          target: ltsRaw.id,
+          category: "nosql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const scbRaw = allNodes.find((n) => n.id === "nosql-sharding-chunk-balancer");
+      if (scbRaw) {
+        positionedNodes.push({
+          ...scbRaw,
+          x: nosqlDapX + 320,
+          y: nosqlDapY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: nosqlDapNode.id,
+          target: scbRaw.id,
+          category: "nosql",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -8064,6 +8264,8 @@ export function calculateGroupLayout(
     pillarIds = ["kafkarabbitmq-kafka-architecture-pillar", "kafkarabbitmq-pipeline-pillar", "kafkarabbitmq-rabbitmq-amqp-pillar"];
   } else if (category === "pytorchtf") {
     pillarIds = ["pytorchtf-autograd-tensors-pillar", "pytorchtf-pipeline-pillar", "pytorchtf-tensorflow-sklearn-pillar"];
+  } else if (category === "nosql") {
+    pillarIds = ["nosql-document-keyvalue-pillar", "nosql-pipeline-pillar", "nosql-distributed-architecture-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -8492,6 +8694,11 @@ export function getNodesForCategory(
       parentId: "root-kafkarabbitmq",
       level: 2,
     };
+    const nosqlRoot = {
+      ...allNodes.find((n) => n.id === "root-nosql")!,
+      parentId: "root-pytorchtf",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -8548,13 +8755,14 @@ export function getNodesForCategory(
         n.id !== "root-sql" &&
         n.id !== "root-kafkarabbitmq" &&
         n.id !== "root-pytorchtf" &&
+        n.id !== "root-nosql" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, kafkarabbitmqRoot, pytorchtfRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, kafkarabbitmqRoot, pytorchtfRoot, nosqlRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

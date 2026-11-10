@@ -666,10 +666,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-nosql",
-            name: "NoSQL (Document, Key-Value, Graph)",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "Flexible JSON documents, Redis key-values, and graph relationship traversals",
+            name: "NoSQL (Document, Key-Value, Graph) ★",
+            categoryId: "nosql",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Flexible JSON document stores (MongoDB), wide-column & key-value stores (Cassandra, DynamoDB), graph traversals (Neo4j), CAP theorem trade-offs, and 9-stage distributed query pipeline",
+            color: "#13aa52",
           },
           {
             id: "topic-caching-redis",

@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2983,7 +2983,84 @@ export const PYTORCHTF_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const NOSQL_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-nosql-pipeline",
+    pillarId: "nosql-pipeline-pillar",
+    title: "NoSQL Distributed Query & Consensus Pipeline",
+    category: "nosql",
+    badge: "9 Sequential Stages",
+    color: "#13aa52",
+    isPipeline: true,
+    items: [
+      {
+        id: "nosql-client-token-routing",
+        stepNumber: 1,
+        label: "1. Partition Key Hashing & Consistent Hash Ring",
+        badge: "⭕ MD5/Murmur3 Token Ring & vnodes",
+        searchQuery: "consistent hashing ring token range vnodes Murmur3 Cassandra DynamoDB partition key hash",
+      },
+      {
+        id: "nosql-cluster-router-dispatch",
+        stepNumber: 2,
+        label: "2. Router Node (mongos) & Shard Key Dispatch",
+        badge: "🔀 mongos Router & Chunk Range Map",
+        searchQuery: "MongoDB mongos query router config server chunk ranges shard key range based vs hashed sharding",
+      },
+      {
+        id: "nosql-scatter-gather-parallel",
+        stepNumber: 3,
+        label: "3. Scatter-Gather Parallel Broadcast",
+        badge: "⚡ Targeted Shard vs Scatter-Gather",
+        searchQuery: "scatter gather query execution parallel shard query coordinator node fanout broadcast",
+      },
+      {
+        id: "nosql-storage-engine-wiredtiger",
+        stepNumber: 4,
+        label: "4. Local Storage Engine & Cache (WiredTiger / LSM)",
+        badge: "💾 WiredTiger Cache & LSM Memtable/SSTable",
+        searchQuery: "MongoDB WiredTiger storage engine cache checkpointing Cassandra LSM Tree Memtable CommitLog SSTable",
+      },
+      {
+        id: "nosql-write-replication-quorum",
+        stepNumber: 5,
+        label: "5. Quorum Replication (R + W > N)",
+        badge: "🛡️ Strong Consistency R + W > N Quorum",
+        searchQuery: "Dynamo paper quorum consistency R + W > N replica factor write quorum read quorum tunably consistent",
+      },
+      {
+        id: "nosql-raft-paxos-leader-election",
+        stepNumber: 6,
+        label: "6. Replica Set Raft / Paxos Leader Heartbeat",
+        badge: "👑 Raft Leader Election & Oplog Sync",
+        searchQuery: "MongoDB replica set election Raft Paxos consensus oplog replication heartbeat primary secondary",
+      },
+      {
+        id: "nosql-read-repair-anti-entropy",
+        stepNumber: 7,
+        label: "7. Read Repair & Merkle Anti-Entropy",
+        badge: "🧹 Background Read Repair & Merkle Trees",
+        searchQuery: "Cassandra read repair background anti-entropy Merkle tree comparison replica divergence resolution",
+      },
+      {
+        id: "nosql-aggregation-pipeline-merge",
+        stepNumber: 8,
+        label: "8. Aggregation Pipeline & Reduce Stage",
+        badge: "📊 $match, $group, $project & Cursor Stream",
+        searchQuery: "MongoDB aggregation framework pipeline stages $match $group $project memory limit cursor streaming",
+      },
+      {
+        id: "nosql-eventual-consistency-vector-clocks",
+        stepNumber: 9,
+        label: "9. Eventual Consistency & Vector Clocks / LWW",
+        badge: "🕒 Vector Clocks, CRDTs & Last-Write-Wins",
+        searchQuery: "eventual consistency vector clocks version vectors conflict resolution CRDTs Last-Write-Wins LWW",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -3019,8 +3096,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "sql") return SQL_GROUP_CARDS;
   if (category === "kafkarabbitmq") return KAFKARABBITMQ_GROUP_CARDS;
   if (category === "pytorchtf") return PYTORCHTF_GROUP_CARDS;
+  if (category === "nosql") return NOSQL_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...KAFKARABBITMQ_GROUP_CARDS, ...PYTORCHTF_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...KAFKARABBITMQ_GROUP_CARDS, ...PYTORCHTF_GROUP_CARDS, ...NOSQL_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

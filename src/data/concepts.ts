@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -339,8 +339,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "nosql",
+    name: "36. NoSQL & Distributed DBs",
+    title: "NoSQL & Distributed Database Architecture: Document, Key-Value, Graph Models, CAP Theorem & 9-Stage Distributed Query Pipeline",
+    description: "Flexible JSON document stores (MongoDB), wide-column & key-value stores (Cassandra, DynamoDB), graph traversals (Neo4j), CAP theorem trade-offs, and 9-stage distributed query pipeline",
+    color: "#13aa52", // MongoDB Emerald Green
+    icon: "HardDrive",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "36. OOP (4 Pillars)",
+    name: "37. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -349,7 +358,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "37. DSA",
+    name: "38. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -358,7 +367,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "38. Big O",
+    name: "39. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -372,7 +381,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 409,
+    count: 419,
   },
 ];
 
@@ -703,6 +712,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "PyTorch TensorFlow scikit-learn machine learning deep learning autograd tensors CUDA GPU training pipeline backprop optimizers",
     badge: "AI Frameworks & Compute",
     color: "#ee4c2c",
+  },
+  {
+    id: "root-nosql",
+    label: "NoSQL & Distributed DBs",
+    category: "nosql",
+    level: 0,
+    searchQuery: "NoSQL distributed databases MongoDB Cassandra DynamoDB Neo4j CAP theorem BASE sharding replication document key-value graph",
+    badge: "Distributed & Document Stores",
+    color: "#13aa52",
   },
   {
     id: "root-oop",
@@ -4676,7 +4694,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 36. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 36. NOSQL & DISTRIBUTED DATABASES
+  // ==========================================
+  // Pillar 1: Document & Key-Value Engines (MongoDB, DynamoDB)
+  {
+    id: "nosql-document-keyvalue-pillar",
+    label: "Document & Key-Value Stores",
+    category: "nosql",
+    parentId: "root-nosql",
+    level: 1,
+    searchQuery: "MongoDB BSON flexible document schema DynamoDB partition key sort key secondary indexes single digit millisecond lookups",
+    badge: "Documents & Key-Values",
+    color: "#13aa52",
+  },
+  {
+    id: "nosql-bson-document-embedding",
+    label: "BSON Documents & Embedding vs Referencing",
+    category: "nosql",
+    parentId: "nosql-document-keyvalue-pillar",
+    level: 2,
+    searchQuery: "MongoDB BSON document model embedded documents vs references 16MB document limit array filters atomic updates",
+    badge: "BSON & Embedding Patterns",
+    color: "#34d399",
+  },
+  {
+    id: "nosql-dynamodb-single-table",
+    label: "Partition Keys & Single-Table Design",
+    category: "nosql",
+    parentId: "nosql-document-keyvalue-pillar",
+    level: 2,
+    searchQuery: "Amazon DynamoDB single table design partition key PK sort key SK GSI global secondary index LSI sparse indexes",
+    badge: "PK/SK & Single-Table Design",
+    color: "#10b981",
+  },
+  {
+    id: "nosql-graph-traversal-neo4j",
+    label: "Graph DBs & Index-Free Adjacency",
+    category: "nosql",
+    parentId: "nosql-document-keyvalue-pillar",
+    level: 2,
+    searchQuery: "Neo4j Cypher property graph model index free adjacency pointer chasing node relationship property traversal",
+    badge: "Neo4j & Index-Free Adjacency",
+    color: "#059669",
+  },
+
+  // Pillar 2: 9-Stage Distributed Query Pipeline (Group Card)
+  {
+    id: "nosql-pipeline-pillar",
+    label: "9-Stage Distributed Query Pipeline",
+    category: "nosql",
+    parentId: "root-nosql",
+    level: 1,
+    searchQuery: "distributed database query pipeline routing key hash cluster partition scatter gather replica consensus write quorum read repair",
+    badge: "9 Sequential Stages",
+    color: "#13aa52",
+  },
+
+  // Pillar 3: Distributed Architecture & CAP Theorem Trade-offs
+  {
+    id: "nosql-distributed-architecture-pillar",
+    label: "CAP Theorem, Sharding & Rebalancing",
+    category: "nosql",
+    parentId: "root-nosql",
+    level: 1,
+    searchQuery: "CAP Theorem CP vs AP PACELC theorem horizontal sharding chunk splitting auto balancing Cassandra peer to peer",
+    badge: "CAP, PACELC & Sharding",
+    color: "#13aa52",
+  },
+  {
+    id: "nosql-cap-pacelc-tradeoffs",
+    label: "CAP Theorem & PACELC Trade-offs",
+    category: "nosql",
+    parentId: "nosql-distributed-architecture-pillar",
+    level: 2,
+    searchQuery: "CAP theorem Consistency Availability Partition tolerance PACELC Latency vs Consistency MongoDB CP Cassandra AP",
+    badge: "CP vs AP & PACELC",
+    color: "#34d399",
+  },
+  {
+    id: "nosql-lsm-trees-sstable",
+    label: "LSM-Trees, Memtables & SSTables",
+    category: "nosql",
+    parentId: "nosql-distributed-architecture-pillar",
+    level: 2,
+    searchQuery: "Log Structured Merge Tree LSM Tree Memtable CommitLog SSTable compaction Bloom filters write amplification",
+    badge: "LSM-Tree & SSTable Compaction",
+    color: "#10b981",
+  },
+  {
+    id: "nosql-sharding-chunk-balancer",
+    label: "Auto-Sharding & Chunk Migration",
+    category: "nosql",
+    parentId: "nosql-distributed-architecture-pillar",
+    level: 2,
+    searchQuery: "MongoDB auto sharding chunk migration balancer jumbo chunks shard key cardinality monotonicity",
+    badge: "Chunk Splits & Live Migration",
+    color: "#059669",
+  },
+
+  // ==========================================
+  // 37. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
