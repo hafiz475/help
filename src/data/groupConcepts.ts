@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -3137,7 +3137,84 @@ export const REDIS_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const NETWORKING_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-networking-pipeline",
+    pillarId: "networking-pipeline-pillar",
+    title: "9-Stage HTTP/3 & TLS Request Pipeline",
+    category: "networking",
+    badge: "9 Sequential Stages",
+    color: "#0284c7",
+    isPipeline: true,
+    items: [
+      {
+        id: "networking-dns-recursive-resolution",
+        stepNumber: 1,
+        label: "1. DNS Recursive Resolution & EDNS Client Subnet",
+        badge: "🌐 Root Hints, TLD, Authoritative NS & Caching",
+        searchQuery: "DNS recursive resolution root hints TLD authoritative nameserver A AAAA CNAME records EDNS client subnet TTL",
+      },
+      {
+        id: "networking-tcp-connection-establishment",
+        stepNumber: 2,
+        label: "2. TCP 3-Way Handshake & Socket Allocation",
+        badge: "🤝 SYN -> SYN-ACK -> ACK & Port Binding",
+        searchQuery: "TCP 3-way handshake SYN SYN-ACK ACK socket allocation ephemeral port MSS window scale option RTT",
+      },
+      {
+        id: "networking-tls-handshake-alpn",
+        stepNumber: 3,
+        label: "3. TLS 1.3 Key Exchange & ALPN Protocol Negotiation",
+        badge: "🔐 1-RTT ECDHE, Certificate Verify & ALPN 'h3'",
+        searchQuery: "TLS 1.3 ClientHello ECDHE key exchange X.509 certificate validation ALPN negotiation session tickets 0-RTT",
+      },
+      {
+        id: "networking-quic-udp-multiplexing",
+        stepNumber: 4,
+        label: "4. QUIC Transport & UDP Packet Multiplexing",
+        badge: "⚡ 0-RTT Connection & Head-of-Line Elimination",
+        searchQuery: "HTTP/3 QUIC protocol UDP port 443 independent stream encryption zero head-of-line blocking connection ID migration",
+      },
+      {
+        id: "networking-http-framing-hpack-qpack",
+        stepNumber: 5,
+        label: "5. HTTP Framing, QPACK Header Compression",
+        badge: "📦 HEADERS & DATA Frames & QPACK Static Table",
+        searchQuery: "HTTP binary framing HEADERS DATA frames HPACK QPACK compression static dynamic table stream multiplexing",
+      },
+      {
+        id: "networking-gateway-tls-termination-cdn",
+        stepNumber: 6,
+        label: "6. CDN Anycast Routing & Edge TLS Termination",
+        badge: "🌍 BGP Anycast, Edge Cache Hit & Reverse Proxy",
+        searchQuery: "CDN BGP Anycast routing edge PoP TLS termination reverse proxy upstream origin shield cache hit",
+      },
+      {
+        id: "networking-server-push-multiplexed-stream",
+        stepNumber: 7,
+        label: "7. Bidirectional Streaming & HTTP Flow Control",
+        badge: "🌊 Stream Priorities & WINDOW_UPDATE Credits",
+        searchQuery: "HTTP/2 HTTP/3 bidirectional streaming credit-based flow control WINDOW_UPDATE MAX_CONCURRENT_STREAMS stream weight priority",
+      },
+      {
+        id: "networking-compression-brotli-gzip",
+        stepNumber: 8,
+        label: "8. Content-Encoding & Brotli / Zstandard Compression",
+        badge: "🗜️ gzip, br (Brotli) & zstd Wire Compression",
+        searchQuery: "HTTP Content-Encoding Accept-Encoding Brotli br compression Zstandard zstd gzip Transfer-Encoding chunked",
+      },
+      {
+        id: "networking-connection-reuse-keepalive",
+        stepNumber: 9,
+        label: "9. Keep-Alive, HTTP/2 PING & Connection Coalescing",
+        badge: "🔄 Connection Pools, TCP Keep-Alive & FIN/RST Close",
+        searchQuery: "HTTP keep-alive connection reuse TCP keepalive probe HTTP/2 PING connection coalescing FIN RST 4-way teardown",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -3175,8 +3252,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "pytorchtf") return PYTORCHTF_GROUP_CARDS;
   if (category === "nosql") return NOSQL_GROUP_CARDS;
   if (category === "redis") return REDIS_GROUP_CARDS;
+  if (category === "networking") return NETWORKING_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...KAFKARABBITMQ_GROUP_CARDS, ...PYTORCHTF_GROUP_CARDS, ...NOSQL_GROUP_CARDS, ...REDIS_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...KAFKARABBITMQ_GROUP_CARDS, ...PYTORCHTF_GROUP_CARDS, ...NOSQL_GROUP_CARDS, ...REDIS_GROUP_CARDS, ...NETWORKING_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

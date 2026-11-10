@@ -1079,6 +1079,8 @@ export function calculateGroupLayout(
         ? "Distributed & Document Stores"
         : category === "redis"
         ? "In-Memory & Cache Engines"
+        : category === "networking"
+        ? "OSI, TCP/UDP, TLS & HTTP/3"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1153,6 +1155,8 @@ export function calculateGroupLayout(
         ? "#13aa52"
         : category === "redis"
         ? "#dc382d"
+        : category === "networking"
+        ? "#0284c7"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -6225,6 +6229,201 @@ export function calculateGroupLayout(
       }
     }
 
+    // SUB-BRANCH 1X: Networking & Web Protocols Hub (y = -15750)
+    // Connects from redisHubNode -> networkingHubNode
+    const networkingHubX = 1300;
+    const networkingHubY = -15750;
+    const networkingHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-networking")!,
+      x: networkingHubX,
+      y: networkingHubY,
+      level: 3,
+      branchIndex: 1,
+    };
+    positionedNodes.push(networkingHubNode);
+    edges.push({
+      source: redisHubNode.id,
+      target: networkingHubNode.id,
+      category: "networking",
+      level: 3,
+      branchIndex: 1,
+    });
+
+    // Networking Pillar 1: Transport Layer & Sockets (Right-Up: x = 1950, y = -15930)
+    const netTspRaw = allNodes.find((n) => n.id === "networking-transport-sockets-pillar");
+    if (netTspRaw) {
+      const netTspX = networkingHubX + 650;
+      const netTspY = networkingHubY - 180;
+      const netTspNode: PositionedNode = {
+        ...netTspRaw,
+        x: netTspX,
+        y: netTspY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(netTspNode);
+      edges.push({
+        source: networkingHubNode.id,
+        target: netTspNode.id,
+        category: "networking",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      // Level 4 Concepts (Children of Pillar 1)
+      const osiRaw = allNodes.find((n) => n.id === "networking-osi-tcp-ip-stack");
+      if (osiRaw) {
+        positionedNodes.push({
+          ...osiRaw,
+          x: netTspX + 320,
+          y: netTspY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: netTspNode.id,
+          target: osiRaw.id,
+          category: "networking",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const tcpRaw = allNodes.find((n) => n.id === "networking-tcp-handshake-congestion");
+      if (tcpRaw) {
+        positionedNodes.push({
+          ...tcpRaw,
+          x: netTspX + 320,
+          y: netTspY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: netTspNode.id,
+          target: tcpRaw.id,
+          category: "networking",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const udpRaw = allNodes.find((n) => n.id === "networking-udp-raw-sockets");
+      if (udpRaw) {
+        positionedNodes.push({
+          ...udpRaw,
+          x: netTspX + 320,
+          y: netTspY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: netTspNode.id,
+          target: udpRaw.id,
+          category: "networking",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Networking Pillar 2: 9-Stage Request Pipeline (Group Card, Right-Center: x = 2100, y = -15750)
+    const netGroupCard = cardByPillar.get("networking-pipeline-pillar");
+    if (netGroupCard) {
+      const cardX = networkingHubX + 800;
+      const cardY = networkingHubY;
+      const posCard: PositionedGroupCard = {
+        ...netGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: networkingHubNode.id,
+        target: netGroupCard.id,
+        category: "networking",
+        level: 3,
+        branchIndex: 1,
+      });
+    }
+
+    // Networking Pillar 3: Protocol Evolution & Application Security (Right-Down: x = 1950, y = -15570)
+    const netPspRaw = allNodes.find((n) => n.id === "networking-protocols-security-pillar");
+    if (netPspRaw) {
+      const netPspX = networkingHubX + 650;
+      const netPspY = networkingHubY + 180;
+      const netPspNode: PositionedNode = {
+        ...netPspRaw,
+        x: netPspX,
+        y: netPspY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(netPspNode);
+      edges.push({
+        source: networkingHubNode.id,
+        target: netPspNode.id,
+        category: "networking",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      // Level 4 Concepts (Children of Pillar 3)
+      const h3Raw = allNodes.find((n) => n.id === "networking-http-evolution-h1-h2-h3");
+      if (h3Raw) {
+        positionedNodes.push({
+          ...h3Raw,
+          x: netPspX + 320,
+          y: netPspY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: netPspNode.id,
+          target: h3Raw.id,
+          category: "networking",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const wssRaw = allNodes.find((n) => n.id === "networking-websockets-grpc-sse");
+      if (wssRaw) {
+        positionedNodes.push({
+          ...wssRaw,
+          x: netPspX + 320,
+          y: netPspY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: netPspNode.id,
+          target: wssRaw.id,
+          category: "networking",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const tlsRaw = allNodes.find((n) => n.id === "networking-tls-certs-pki-security");
+      if (tlsRaw) {
+        positionedNodes.push({
+          ...tlsRaw,
+          x: netPspX + 320,
+          y: netPspY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: netPspNode.id,
+          target: tlsRaw.id,
+          category: "networking",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -8467,6 +8666,8 @@ export function calculateGroupLayout(
     pillarIds = ["nosql-document-keyvalue-pillar", "nosql-pipeline-pillar", "nosql-distributed-architecture-pillar"];
   } else if (category === "redis") {
     pillarIds = ["redis-datastructures-loop-pillar", "redis-pipeline-pillar", "redis-patterns-cluster-pillar"];
+  } else if (category === "networking") {
+    pillarIds = ["networking-transport-sockets-pillar", "networking-pipeline-pillar", "networking-protocols-security-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -8905,6 +9106,11 @@ export function getNodesForCategory(
       parentId: "root-nosql",
       level: 2,
     };
+    const networkingRoot = {
+      ...allNodes.find((n) => n.id === "root-networking")!,
+      parentId: "root-redis",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -8963,13 +9169,14 @@ export function getNodesForCategory(
         n.id !== "root-pytorchtf" &&
         n.id !== "root-nosql" &&
         n.id !== "root-redis" &&
+        n.id !== "root-networking" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, kafkarabbitmqRoot, pytorchtfRoot, nosqlRoot, redisRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, kafkarabbitmqRoot, pytorchtfRoot, nosqlRoot, redisRoot, networkingRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

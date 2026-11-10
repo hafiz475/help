@@ -622,10 +622,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-http-https-tls",
-            name: "HTTP / HTTPS, TLS",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "HTTP/1.1 vs HTTP/2 multiplexing, HTTP/3 QUIC, and TLS certificate handshakes",
+            name: "HTTP / HTTPS, TLS & Web Protocols ★",
+            categoryId: "networking",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "OSI 7-layer stack, TCP 3-way handshake, UDP datagrams, TLS 1.3 ECDHE, HTTP/3 QUIC independent streams, and 9-stage request pipeline",
+            color: "#0284c7",
           },
           {
             id: "topic-rest-graphql-grpc",

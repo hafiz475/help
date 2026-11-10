@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -357,8 +357,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "networking",
+    name: "38. Networking & Web Protocols",
+    title: "Networking, Sockets & Web Protocols: OSI/TCP-IP, HTTP/1-3, QUIC, TLS 1.3 & 9-Stage Request Pipeline",
+    description: "OSI 7-layer & TCP/IP stack, 3-way handshake & congestion control, UDP datagrams, TLS 1.3 handshake, HTTP/3 QUIC streams, and 9-stage web request pipeline",
+    color: "#0284c7", // Sky / Network Blue
+    icon: "Globe",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "38. OOP (4 Pillars)",
+    name: "39. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -367,7 +376,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "39. DSA",
+    name: "40. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -376,7 +385,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "40. Big O",
+    name: "41. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -390,7 +399,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 429,
+    count: 439,
   },
 ];
 
@@ -739,6 +748,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Redis Memcached caching in-memory key-value data structures cache-aside LRU LFU eviction RDB AOF persistence sentinel cluster",
     badge: "In-Memory & Cache Engines",
     color: "#dc382d",
+  },
+  {
+    id: "root-networking",
+    label: "Networking & Web Protocols",
+    category: "networking",
+    level: 0,
+    searchQuery: "Networking Web Protocols OSI TCP IP UDP sockets HTTP1 HTTP2 HTTP3 QUIC TLS 1.3 handshake DNS ALPN WebSockets gRPC",
+    badge: "OSI, TCP/UDP, TLS & HTTP/3",
+    color: "#0284c7",
   },
   {
     id: "root-oop",
@@ -4910,7 +4928,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 38. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 38. NETWORKING & WEB PROTOCOLS
+  // ==========================================
+  // Pillar 1: Transport Layer & Sockets (TCP, UDP)
+  {
+    id: "networking-transport-sockets-pillar",
+    label: "Transport Layer & Sockets (TCP, UDP)",
+    category: "networking",
+    parentId: "root-networking",
+    level: 1,
+    searchQuery: "OSI 7 layer TCP IP stack TCP 3-way handshake UDP datagrams socket programming Berkeley sockets congestion control",
+    badge: "TCP, UDP & Socket Sinks",
+    color: "#0284c7",
+  },
+  {
+    id: "networking-osi-tcp-ip-stack",
+    label: "OSI 7-Layer & TCP/IP 4-Layer Models",
+    category: "networking",
+    parentId: "networking-transport-sockets-pillar",
+    level: 2,
+    searchQuery: "OSI model 7 layers TCP IP stack encapsulation decapsulation packet frame segment payload MTU MSS",
+    badge: "Encapsulation & Headers",
+    color: "#38bdf8",
+  },
+  {
+    id: "networking-tcp-handshake-congestion",
+    label: "TCP 3-Way Handshake & Congestion Control",
+    category: "networking",
+    parentId: "networking-transport-sockets-pillar",
+    level: 2,
+    searchQuery: "TCP 3-way handshake SYN SYN-ACK ACK sequence numbers sliding window flow control congestion control slow start Cubic BBR TIME_WAIT",
+    badge: "SYN-ACK & Cubic / BBR",
+    color: "#0ea5e9",
+  },
+  {
+    id: "networking-udp-raw-sockets",
+    label: "UDP Datagrams & Berkeley Sockets",
+    category: "networking",
+    parentId: "networking-transport-sockets-pillar",
+    level: 2,
+    searchQuery: "UDP user datagram protocol connectionless unreliable low latency Berkeley sockets AF_INET SOCK_DGRAM WebRTC VoIP DNS",
+    badge: "Connectionless Datagrams",
+    color: "#0369a1",
+  },
+
+  // Pillar 2: 9-Stage Request Pipeline (Group Card)
+  {
+    id: "networking-pipeline-pillar",
+    label: "9-Stage HTTP/3 & TLS Request Pipeline",
+    category: "networking",
+    parentId: "root-networking",
+    level: 1,
+    searchQuery: "networking request pipeline DNS resolution TCP handshake TLS 1.3 ECDHE QUIC UDP multiplexing QPACK headers CDN edge termination streaming Brotli keepalive",
+    badge: "9 Sequential Stages",
+    color: "#0284c7",
+  },
+
+  // Pillar 3: Web Protocols Evolution & Security
+  {
+    id: "networking-protocols-security-pillar",
+    label: "Protocol Evolution & Application Security",
+    category: "networking",
+    parentId: "root-networking",
+    level: 1,
+    searchQuery: "HTTP/1.1 HTTP/2 HTTP/3 QUIC head of line blocking WebSockets gRPC protobuf TLS 1.3 PKI certificates OCSP stapling",
+    badge: "HTTP/1.1 to H3 & WebSockets",
+    color: "#0284c7",
+  },
+  {
+    id: "networking-http-evolution-h1-h2-h3",
+    label: "HTTP/1.1 vs HTTP/2 vs HTTP/3 (QUIC)",
+    category: "networking",
+    parentId: "networking-protocols-security-pillar",
+    level: 2,
+    searchQuery: "HTTP evolution HTTP 1.1 keep-alive HTTP 2 binary framing multiplexing HTTP 3 QUIC UDP independent streams zero HoL",
+    badge: "TCP HoL vs QUIC UDP Streams",
+    color: "#38bdf8",
+  },
+  {
+    id: "networking-websockets-grpc-sse",
+    label: "WebSockets, Server-Sent Events & gRPC",
+    category: "networking",
+    parentId: "networking-protocols-security-pillar",
+    level: 2,
+    searchQuery: "WebSockets full-duplex protocol upgrade 101 Server-Sent Events SSE text event-stream gRPC protobuf RPC streams",
+    badge: "Full-Duplex & Protobuf RPC",
+    color: "#0ea5e9",
+  },
+  {
+    id: "networking-tls-certs-pki-security",
+    label: "TLS 1.3, PKI, OCSP & Certificate Pinning",
+    category: "networking",
+    parentId: "networking-protocols-security-pillar",
+    level: 2,
+    searchQuery: "TLS 1.3 PKI public key infrastructure X.509 certificates CA authorities Let's Encrypt ACME OCSP stapling certificate pinning HSTS",
+    badge: "X.509, CA Hierarchy & OCSP Stapling",
+    color: "#0369a1",
+  },
+
+  // ==========================================
+  // 39. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
@@ -4969,7 +5086,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 39. DATA STRUCTURES (DSA)
+  // 40. DATA STRUCTURES (DSA)
   // ==========================================
   // Level 1 Major Pillar
   {
@@ -5049,7 +5166,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 40. BIG O TIME COMPLEXITY
+  // 41. BIG O TIME COMPLEXITY
   // ==========================================
   // Level 1 Major Pillar
   {

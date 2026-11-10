@@ -142,6 +142,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <HardDrive size={16} />;
       case "redis":
         return <MemoryStick size={16} />;
+      case "networking":
+        return <Globe size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":
