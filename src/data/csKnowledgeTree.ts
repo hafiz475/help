@@ -1096,10 +1096,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-kafka-rabbitmq",
-            name: "Kafka, RabbitMQ",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "Log-based distributed streaming topics vs AMQP message broker exchanges",
+            name: "Kafka, RabbitMQ ★",
+            categoryId: "kafkarabbitmq",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Kafka distributed commit logs & topic partitions, consumer group rebalancing, RabbitMQ AMQP exchanges & routing keys, dead letter queues, and 9-stage event streaming pipeline",
+            color: "#f05023",
           },
           {
             id: "topic-pytorch-tensorflow",

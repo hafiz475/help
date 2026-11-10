@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -321,8 +321,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "kafkarabbitmq",
+    name: "34. Kafka & RabbitMQ",
+    title: "Distributed Event Streaming & Message Brokers: Kafka Partitions, Consumer Groups, RabbitMQ Exchanges & AMQP Pipeline",
+    description: "Kafka distributed commit logs & topic partitions, consumer group rebalancing, RabbitMQ AMQP exchanges & routing keys, dead letter queues, and 9-stage event streaming pipeline",
+    color: "#f05023", // Event Stream Vermilion / Rabbit Orange
+    icon: "Cable",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "34. OOP (4 Pillars)",
+    name: "35. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -331,7 +340,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "35. DSA",
+    name: "36. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -340,7 +349,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "36. Big O",
+    name: "37. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -354,7 +363,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 389,
+    count: 399,
   },
 ];
 
@@ -667,6 +676,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "SQL relational databases indexing B-Trees joins ACID normalization query planner MVCC WAL PostgreSQL MySQL",
     badge: "Relational Engines & Storage",
     color: "#336791",
+  },
+  {
+    id: "root-kafkarabbitmq",
+    label: "Kafka & RabbitMQ",
+    category: "kafkarabbitmq",
+    level: 0,
+    searchQuery: "Kafka RabbitMQ distributed event streaming message brokers partitions consumer groups AMQP exchanges routing keys ACK DLQ",
+    badge: "Streaming & Message Brokers",
+    color: "#f05023",
   },
   {
     id: "root-oop",
@@ -4442,7 +4460,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 34. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 34. KAFKA & RABBITMQ
+  // ==========================================
+  // Pillar 1: Kafka Log Architecture, Partitions & Consumer Groups
+  {
+    id: "kafkarabbitmq-kafka-architecture-pillar",
+    label: "Kafka Commit Log & Partitions",
+    category: "kafkarabbitmq",
+    parentId: "root-kafkarabbitmq",
+    level: 1,
+    searchQuery: "Apache Kafka commit log topic partitions offset indexing consumer groups rebalance protocol KRaft metadata",
+    badge: "Commit Logs & Partitions",
+    color: "#f05023",
+  },
+  {
+    id: "kafkarabbitmq-partitions-offset-log",
+    label: "Topics, Partitions & Offsets",
+    category: "kafkarabbitmq",
+    parentId: "kafkarabbitmq-kafka-architecture-pillar",
+    level: 2,
+    searchQuery: "Kafka topic partitions append only log segment files .log .index timeindex immutable sequential IO high throughput",
+    badge: "Immutable Append-Only Log",
+    color: "#fb923c",
+  },
+  {
+    id: "kafkarabbitmq-consumer-groups-rebalance",
+    label: "Consumer Groups & Rebalancing",
+    category: "kafkarabbitmq",
+    parentId: "kafkarabbitmq-kafka-architecture-pillar",
+    level: 2,
+    searchQuery: "Kafka consumer groups cooperative sticky assignor static membership partition assignment lag offset commit heartbeat",
+    badge: "Consumer Rebalance & Lag",
+    color: "#f97316",
+  },
+  {
+    id: "kafkarabbitmq-replication-kraft-consensus",
+    label: "ISR Replication & KRaft Quorum",
+    category: "kafkarabbitmq",
+    parentId: "kafkarabbitmq-kafka-architecture-pillar",
+    level: 2,
+    searchQuery: "Kafka in-sync replicas ISR leader election min.insync.replicas acks=all KRaft Raft consensus metadata quorum controller",
+    badge: "ISR Quorum & KRaft Raft",
+    color: "#ea580c",
+  },
+
+  // Pillar 2: 9-Stage Event Streaming & Messaging Pipeline (Group Card)
+  {
+    id: "kafkarabbitmq-pipeline-pillar",
+    label: "9-Stage Event Streaming Pipeline",
+    category: "kafkarabbitmq",
+    parentId: "root-kafkarabbitmq",
+    level: 1,
+    searchQuery: "Kafka RabbitMQ event pipeline producer serialize partition batch broker write fsync replication consumer poll ack DLQ",
+    badge: "9 Sequential Stages",
+    color: "#f05023",
+  },
+
+  // Pillar 3: RabbitMQ AMQP, Message Routing & Reliability
+  {
+    id: "kafkarabbitmq-rabbitmq-amqp-pillar",
+    label: "RabbitMQ Exchanges & Delivery Guarantees",
+    category: "kafkarabbitmq",
+    parentId: "root-kafkarabbitmq",
+    level: 1,
+    searchQuery: "RabbitMQ AMQP 0-9-1 exchanges direct topic fanout headers queues bindings basic.ack DLQ publisher confirms",
+    badge: "Exchanges, Queues & AMQP",
+    color: "#f05023",
+  },
+  {
+    id: "kafkarabbitmq-exchanges-routing-keys",
+    label: "AMQP Exchanges & Routing Keys",
+    category: "kafkarabbitmq",
+    parentId: "kafkarabbitmq-rabbitmq-amqp-pillar",
+    level: 2,
+    searchQuery: "RabbitMQ exchanges direct topic fanout headers binding keys pattern matching wildcard asterisk hash",
+    badge: "Direct, Topic, Fanout & Headers",
+    color: "#fb923c",
+  },
+  {
+    id: "kafkarabbitmq-qos-prefetch-backpressure",
+    label: "Channel QoS, Prefetch & Flow Control",
+    category: "kafkarabbitmq",
+    parentId: "kafkarabbitmq-rabbitmq-amqp-pillar",
+    level: 2,
+    searchQuery: "RabbitMQ channel basic.qos prefetch count credit-based flow control backpressure memory watermarks",
+    badge: "basic.qos & Flow Control",
+    color: "#f97316",
+  },
+  {
+    id: "kafkarabbitmq-dlq-publisher-confirms",
+    label: "Publisher Confirms & Dead Letter Exchanges",
+    category: "kafkarabbitmq",
+    parentId: "kafkarabbitmq-rabbitmq-amqp-pillar",
+    level: 2,
+    searchQuery: "RabbitMQ publisher confirms ACKs NACKs dead letter exchange DLX x-dead-letter-routing-key poison message TTL",
+    badge: "Publisher Confirms & DLX",
+    color: "#ea580c",
+  },
+
+  // ==========================================
+  // 35. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

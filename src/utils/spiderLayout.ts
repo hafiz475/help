@@ -1071,6 +1071,8 @@ export function calculateGroupLayout(
         ? "Containers & Orchestration"
         : category === "sql"
         ? "Relational Engines & Storage"
+        : category === "kafkarabbitmq"
+        ? "Streaming & Message Brokers"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1137,6 +1139,8 @@ export function calculateGroupLayout(
         ? "#2496ed"
         : category === "sql"
         ? "#336791"
+        : category === "kafkarabbitmq"
+        ? "#f05023"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -5426,6 +5430,202 @@ export function calculateGroupLayout(
       }
     }
 
+    // ========================================================
+    // SUB-BRANCH 1T: Kafka & RabbitMQ Hub (y = -12550)
+    // Connects from sqlHubNode -> krmHubNode
+    // ========================================================
+    const krmHubX = 1300;
+    const krmHubY = -12550;
+    const krmHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-kafkarabbitmq")!,
+      x: krmHubX,
+      y: krmHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(krmHubNode);
+    edges.push({
+      source: sqlHubNode.id,
+      target: krmHubNode.id,
+      category: "kafkarabbitmq",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // Kafka Pillar 1: Kafka Commit Log & Partitions (Right-Up: x = 1950, y = -12730)
+    const krmKlpRaw = allNodes.find((n) => n.id === "kafkarabbitmq-kafka-architecture-pillar");
+    if (krmKlpRaw) {
+      const krmKlpX = krmHubX + 650;
+      const krmKlpY = krmHubY - 180;
+      const krmKlpNode: PositionedNode = {
+        ...krmKlpRaw,
+        x: krmKlpX,
+        y: krmKlpY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(krmKlpNode);
+      edges.push({
+        source: krmHubNode.id,
+        target: krmKlpNode.id,
+        category: "kafkarabbitmq",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const polRaw = allNodes.find((n) => n.id === "kafkarabbitmq-partitions-offset-log");
+      if (polRaw) {
+        positionedNodes.push({
+          ...polRaw,
+          x: krmKlpX + 320,
+          y: krmKlpY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: krmKlpNode.id,
+          target: polRaw.id,
+          category: "kafkarabbitmq",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const cgrRaw = allNodes.find((n) => n.id === "kafkarabbitmq-consumer-groups-rebalance");
+      if (cgrRaw) {
+        positionedNodes.push({
+          ...cgrRaw,
+          x: krmKlpX + 320,
+          y: krmKlpY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: krmKlpNode.id,
+          target: cgrRaw.id,
+          category: "kafkarabbitmq",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const rkcRaw = allNodes.find((n) => n.id === "kafkarabbitmq-replication-kraft-consensus");
+      if (rkcRaw) {
+        positionedNodes.push({
+          ...rkcRaw,
+          x: krmKlpX + 320,
+          y: krmKlpY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: krmKlpNode.id,
+          target: rkcRaw.id,
+          category: "kafkarabbitmq",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Kafka Pillar 2: 9-Stage Event Streaming Pipeline (Group Card, Right-Center: x = 2100, y = -12550)
+    const krmGroupCard = cardByPillar.get("kafkarabbitmq-pipeline-pillar");
+    if (krmGroupCard) {
+      const cardX = krmHubX + 800;
+      const cardY = krmHubY;
+      const posCard: PositionedGroupCard = {
+        ...krmGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: krmHubNode.id,
+        target: krmGroupCard.id,
+        category: "kafkarabbitmq",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // RabbitMQ Pillar 3: RabbitMQ Exchanges & Delivery Guarantees (Right-Down: x = 1950, y = -12370)
+    const krmRmqRaw = allNodes.find((n) => n.id === "kafkarabbitmq-rabbitmq-amqp-pillar");
+    if (krmRmqRaw) {
+      const krmRmqX = krmHubX + 650;
+      const krmRmqY = krmHubY + 180;
+      const krmRmqNode: PositionedNode = {
+        ...krmRmqRaw,
+        x: krmRmqX,
+        y: krmRmqY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(krmRmqNode);
+      edges.push({
+        source: krmHubNode.id,
+        target: krmRmqNode.id,
+        category: "kafkarabbitmq",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const erkRaw = allNodes.find((n) => n.id === "kafkarabbitmq-exchanges-routing-keys");
+      if (erkRaw) {
+        positionedNodes.push({
+          ...erkRaw,
+          x: krmRmqX + 320,
+          y: krmRmqY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: krmRmqNode.id,
+          target: erkRaw.id,
+          category: "kafkarabbitmq",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const qpbRaw = allNodes.find((n) => n.id === "kafkarabbitmq-qos-prefetch-backpressure");
+      if (qpbRaw) {
+        positionedNodes.push({
+          ...qpbRaw,
+          x: krmRmqX + 320,
+          y: krmRmqY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: krmRmqNode.id,
+          target: qpbRaw.id,
+          category: "kafkarabbitmq",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const dpcRaw = allNodes.find((n) => n.id === "kafkarabbitmq-dlq-publisher-confirms");
+      if (dpcRaw) {
+        positionedNodes.push({
+          ...dpcRaw,
+          x: krmRmqX + 320,
+          y: krmRmqY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: krmRmqNode.id,
+          target: dpcRaw.id,
+          category: "kafkarabbitmq",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -7660,6 +7860,8 @@ export function calculateGroupLayout(
     pillarIds = ["dockerk8s-containers-images-pillar", "dockerk8s-pipeline-pillar", "dockerk8s-cluster-orchestration-networking-pillar"];
   } else if (category === "sql") {
     pillarIds = ["sql-relational-indexing-pillar", "sql-pipeline-pillar", "sql-engine-transactions-pillar"];
+  } else if (category === "kafkarabbitmq") {
+    pillarIds = ["kafkarabbitmq-kafka-architecture-pillar", "kafkarabbitmq-pipeline-pillar", "kafkarabbitmq-rabbitmq-amqp-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -8078,6 +8280,11 @@ export function getNodesForCategory(
       parentId: "root-dockerk8s",
       level: 2,
     };
+    const kafkarabbitmqRoot = {
+      ...allNodes.find((n) => n.id === "root-kafkarabbitmq")!,
+      parentId: "root-sql",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -8132,13 +8339,14 @@ export function getNodesForCategory(
         n.id !== "root-springboot" &&
         n.id !== "root-dockerk8s" &&
         n.id !== "root-sql" &&
+        n.id !== "root-kafkarabbitmq" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, kafkarabbitmqRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

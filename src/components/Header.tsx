@@ -43,6 +43,7 @@ import {
   Leaf,
   Container,
   Table,
+  Cable,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -130,6 +131,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Container size={16} />;
       case "sql":
         return <Table size={16} />;
+      case "kafkarabbitmq":
+        return <Cable size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2829,7 +2829,84 @@ export const SQL_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const KAFKARABBITMQ_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-kafkarabbitmq-pipeline",
+    pillarId: "kafkarabbitmq-pipeline-pillar",
+    title: "Kafka & RabbitMQ Event Streaming Pipeline",
+    category: "kafkarabbitmq",
+    badge: "9 Sequential Stages",
+    color: "#f05023",
+    isPipeline: true,
+    items: [
+      {
+        id: "kafkarabbitmq-producer-serialization",
+        stepNumber: 1,
+        label: "1. Producer Serialization & Schema Registry",
+        badge: "📦 Avro, Protobuf & Schema Compatibility",
+        searchQuery: "Kafka producer serialization Avro Protobuf JSON Schema Registry schema compatibility",
+      },
+      {
+        id: "kafkarabbitmq-partition-hash-routing",
+        stepNumber: 2,
+        label: "2. Key Hashing & Exchange Routing",
+        badge: "🔀 Murmur2 Hash & AMQP Direct/Topic/Fanout",
+        searchQuery: "Kafka Murmur2 partitioner key hash RabbitMQ exchange routing key direct topic fanout",
+      },
+      {
+        id: "kafkarabbitmq-producer-batch-compression",
+        stepNumber: 3,
+        label: "3. Record Accumulator & Batch Compression",
+        badge: "⚡ linger.ms, batch.size & Snappy/Zstd",
+        searchQuery: "Kafka RecordAccumulator batching linger.ms batch.size buffer.memory Snappy Zstd compression",
+      },
+      {
+        id: "kafkarabbitmq-broker-socket-network",
+        stepNumber: 4,
+        label: "4. Broker NIO Threads & Request Queue",
+        badge: "🌐 SocketChannel & num.network.threads",
+        searchQuery: "Kafka broker network processor threads RequestChannel NIO SocketChannel",
+      },
+      {
+        id: "kafkarabbitmq-zero-copy-pagecache-write",
+        stepNumber: 5,
+        label: "5. OS Page Cache & Zero-Copy sendfile",
+        badge: "🚀 Sequential Disk Writes & Linux sendfile",
+        searchQuery: "Kafka OS page cache sequential disk writes Linux sendfile zero copy direct memory access DMA",
+      },
+      {
+        id: "kafkarabbitmq-isr-ack-quorum",
+        stepNumber: 6,
+        label: "6. ISR Quorum & acks=all Commit",
+        badge: "🛡️ acks=all, High Watermark & min.insync",
+        searchQuery: "Kafka ISR in-sync replicas acks=all leader epoch high watermark min.insync.replicas commit",
+      },
+      {
+        id: "kafkarabbitmq-amqp-queue-delivery",
+        stepNumber: 7,
+        label: "7. AMQP Queue Binding, Prefetch & Push",
+        badge: "📬 basic.qos prefetch & Consumer Channel Push",
+        searchQuery: "RabbitMQ AMQP queue bindings basic.qos prefetch consumer channel push flow control",
+      },
+      {
+        id: "kafkarabbitmq-consumer-poll-commit",
+        stepNumber: 8,
+        label: "8. Consumer Poll Loop & Offset / Ack Commit",
+        badge: "📥 poll(timeout), auto.offset.reset & basic.ack",
+        searchQuery: "Kafka consumer poll max.poll.records commitSync commitAsync RabbitMQ basic.ack basic.nack",
+      },
+      {
+        id: "kafkarabbitmq-dlq-retry-idempotence",
+        stepNumber: 9,
+        label: "9. Dead Letter Queue & Exactly-Once Semantics",
+        badge: "🔁 Exponential Backoff, DLX & EoS Idempotence",
+        searchQuery: "Dead Letter Queue DLQ retry backoff poison pill Kafka transactional producer exactly once semantics",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2863,8 +2940,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "springboot") return SPRINGBOOT_GROUP_CARDS;
   if (category === "dockerk8s") return DOCKERK8S_GROUP_CARDS;
   if (category === "sql") return SQL_GROUP_CARDS;
+  if (category === "kafkarabbitmq") return KAFKARABBITMQ_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...KAFKARABBITMQ_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }
