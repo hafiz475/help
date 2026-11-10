@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -330,8 +330,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "pytorchtf",
+    name: "35. PyTorch & AI Frameworks",
+    title: "PyTorch, TensorFlow & scikit-learn: Dynamic Autograd, GPU Tensor Acceleration & 9-Stage Deep Learning Pipeline",
+    description: "Dynamic PyTorch computational graphs, backward autograd engine, CUDA GPU memory kernels, TensorFlow static graphs & XLA compilation, and 9-stage deep learning training pipeline",
+    color: "#ee4c2c", // PyTorch Flame Red
+    icon: "Flame",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "35. OOP (4 Pillars)",
+    name: "36. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -340,7 +349,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "36. DSA",
+    name: "37. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -349,7 +358,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "37. Big O",
+    name: "38. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -363,7 +372,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 399,
+    count: 409,
   },
 ];
 
@@ -685,6 +694,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Kafka RabbitMQ distributed event streaming message brokers partitions consumer groups AMQP exchanges routing keys ACK DLQ",
     badge: "Streaming & Message Brokers",
     color: "#f05023",
+  },
+  {
+    id: "root-pytorchtf",
+    label: "PyTorch & AI Frameworks",
+    category: "pytorchtf",
+    level: 0,
+    searchQuery: "PyTorch TensorFlow scikit-learn machine learning deep learning autograd tensors CUDA GPU training pipeline backprop optimizers",
+    badge: "AI Frameworks & Compute",
+    color: "#ee4c2c",
   },
   {
     id: "root-oop",
@@ -4559,7 +4577,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 35. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 35. PYTORCH & AI FRAMEWORKS
+  // ==========================================
+  // Pillar 1: PyTorch Tensors, Autograd & Dynamic Graphs
+  {
+    id: "pytorchtf-autograd-tensors-pillar",
+    label: "Dynamic Graphs & Autograd Engine",
+    category: "pytorchtf",
+    parentId: "root-pytorchtf",
+    level: 1,
+    searchQuery: "PyTorch tensors dynamic computational graph DAG torch.autograd backward pass tape-based differentiation memory management",
+    badge: "Autograd & Dynamic DAG",
+    color: "#ee4c2c",
+  },
+  {
+    id: "pytorchtf-tensor-storage-strides",
+    label: "Tensors, Storage & Strides",
+    category: "pytorchtf",
+    parentId: "pytorchtf-autograd-tensors-pillar",
+    level: 2,
+    searchQuery: "PyTorch Tensor storage offset strides contiguous memory layout view reshape transpose zero copy metadata",
+    badge: "Storage & Strides Metadata",
+    color: "#fb7185",
+  },
+  {
+    id: "pytorchtf-autograd-backward-tape",
+    label: "Reverse-Mode Autograd Tape",
+    category: "pytorchtf",
+    parentId: "pytorchtf-autograd-tensors-pillar",
+    level: 2,
+    searchQuery: "torch.autograd backward grad_fn vector Jacobian product reverse mode automatic differentiation retain_graph",
+    badge: "grad_fn & Jacobian Engine",
+    color: "#f43f5e",
+  },
+  {
+    id: "pytorchtf-cuda-memory-amp",
+    label: "CUDA Kernels & Mixed Precision AMP",
+    category: "pytorchtf",
+    parentId: "pytorchtf-autograd-tensors-pillar",
+    level: 2,
+    searchQuery: "PyTorch CUDA streams pinned memory torch.cuda.amp GradScaler autocast FP16 BF16 Tensor Cores GPU memory management",
+    badge: "CUDA Streams & AMP FP16/BF16",
+    color: "#e11d48",
+  },
+
+  // Pillar 2: 9-Stage Deep Learning Training Pipeline (Group Card)
+  {
+    id: "pytorchtf-pipeline-pillar",
+    label: "9-Stage DL Training Pipeline",
+    category: "pytorchtf",
+    parentId: "root-pytorchtf",
+    level: 1,
+    searchQuery: "deep learning training loop DataLoader forward pass loss calculation backward autograd optimizer step checkpointing evaluation",
+    badge: "9 Sequential Stages",
+    color: "#ee4c2c",
+  },
+
+  // Pillar 3: TensorFlow XLA & scikit-learn Classical ML
+  {
+    id: "pytorchtf-tensorflow-sklearn-pillar",
+    label: "TF Graphs, XLA & scikit-learn Pipelines",
+    category: "pytorchtf",
+    parentId: "root-pytorchtf",
+    level: 1,
+    searchQuery: "TensorFlow tf.function AutoGraph XLA JIT compilation scikit-learn Transformer Estimator pipeline cross validation",
+    badge: "XLA JIT & Classical ML",
+    color: "#ee4c2c",
+  },
+  {
+    id: "pytorchtf-tensorflow-graph-xla",
+    label: "tf.function, AutoGraph & XLA JIT",
+    category: "pytorchtf",
+    parentId: "pytorchtf-tensorflow-sklearn-pillar",
+    level: 2,
+    searchQuery: "TensorFlow tf.function AutoGraph static computation graph XLA Accelerated Linear Algebra JIT kernel fusion",
+    badge: "AutoGraph & XLA Kernel Fusion",
+    color: "#fb7185",
+  },
+  {
+    id: "pytorchtf-sklearn-estimators-pipelines",
+    label: "scikit-learn Estimator & Pipeline API",
+    category: "pytorchtf",
+    parentId: "pytorchtf-tensorflow-sklearn-pillar",
+    level: 2,
+    searchQuery: "scikit-learn fit transform predict Pipeline ColumnTransformer feature union data leakage prevention",
+    badge: "Fit-Transform & ColumnTransformer",
+    color: "#f43f5e",
+  },
+  {
+    id: "pytorchtf-distributed-ddp-torchrun",
+    label: "Distributed DDP, FSDP & torchrun",
+    category: "pytorchtf",
+    parentId: "pytorchtf-tensorflow-sklearn-pillar",
+    level: 2,
+    searchQuery: "torch.distributed DistributedDataParallel DDP Fully Sharded Data Parallel FSDP torchrun NCCL backend multi-GPU",
+    badge: "DDP, FSDP & Multi-GPU NCCL",
+    color: "#e11d48",
+  },
+
+  // ==========================================
+  // 36. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",

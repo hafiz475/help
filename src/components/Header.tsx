@@ -44,6 +44,7 @@ import {
   Container,
   Table,
   Cable,
+  Flame,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -133,6 +134,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Table size={16} />;
       case "kafkarabbitmq":
         return <Cable size={16} />;
+      case "pytorchtf":
+        return <Flame size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

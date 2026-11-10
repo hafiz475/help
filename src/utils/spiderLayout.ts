@@ -1073,6 +1073,8 @@ export function calculateGroupLayout(
         ? "Relational Engines & Storage"
         : category === "kafkarabbitmq"
         ? "Streaming & Message Brokers"
+        : category === "pytorchtf"
+        ? "AI Frameworks & Compute"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1141,6 +1143,8 @@ export function calculateGroupLayout(
         ? "#336791"
         : category === "kafkarabbitmq"
         ? "#f05023"
+        : category === "pytorchtf"
+        ? "#ee4c2c"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -5626,6 +5630,202 @@ export function calculateGroupLayout(
       }
     }
 
+    // ========================================================
+    // SUB-BRANCH 1U: PyTorch & AI Frameworks Hub (y = -13350)
+    // Connects from krmHubNode -> ptfHubNode
+    // ========================================================
+    const ptfHubX = 1300;
+    const ptfHubY = -13350;
+    const ptfHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-pytorchtf")!,
+      x: ptfHubX,
+      y: ptfHubY,
+      level: 2,
+      branchIndex: 1,
+    };
+    positionedNodes.push(ptfHubNode);
+    edges.push({
+      source: krmHubNode.id,
+      target: ptfHubNode.id,
+      category: "pytorchtf",
+      level: 2,
+      branchIndex: 1,
+    });
+
+    // PyTorch Pillar 1: Dynamic Graphs & Autograd Engine (Right-Up: x = 1950, y = -13530)
+    const ptfAtpRaw = allNodes.find((n) => n.id === "pytorchtf-autograd-tensors-pillar");
+    if (ptfAtpRaw) {
+      const ptfAtpX = ptfHubX + 650;
+      const ptfAtpY = ptfHubY - 180;
+      const ptfAtpNode: PositionedNode = {
+        ...ptfAtpRaw,
+        x: ptfAtpX,
+        y: ptfAtpY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(ptfAtpNode);
+      edges.push({
+        source: ptfHubNode.id,
+        target: ptfAtpNode.id,
+        category: "pytorchtf",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const tssRaw = allNodes.find((n) => n.id === "pytorchtf-tensor-storage-strides");
+      if (tssRaw) {
+        positionedNodes.push({
+          ...tssRaw,
+          x: ptfAtpX + 320,
+          y: ptfAtpY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: ptfAtpNode.id,
+          target: tssRaw.id,
+          category: "pytorchtf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const abtRaw = allNodes.find((n) => n.id === "pytorchtf-autograd-backward-tape");
+      if (abtRaw) {
+        positionedNodes.push({
+          ...abtRaw,
+          x: ptfAtpX + 320,
+          y: ptfAtpY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: ptfAtpNode.id,
+          target: abtRaw.id,
+          category: "pytorchtf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const cmaRaw = allNodes.find((n) => n.id === "pytorchtf-cuda-memory-amp");
+      if (cmaRaw) {
+        positionedNodes.push({
+          ...cmaRaw,
+          x: ptfAtpX + 320,
+          y: ptfAtpY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: ptfAtpNode.id,
+          target: cmaRaw.id,
+          category: "pytorchtf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // PyTorch Pillar 2: 9-Stage DL Training Pipeline (Group Card, Right-Center: x = 2100, y = -13350)
+    const ptfGroupCard = cardByPillar.get("pytorchtf-pipeline-pillar");
+    if (ptfGroupCard) {
+      const cardX = ptfHubX + 800;
+      const cardY = ptfHubY;
+      const posCard: PositionedGroupCard = {
+        ...ptfGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: ptfHubNode.id,
+        target: ptfGroupCard.id,
+        category: "pytorchtf",
+        level: 3,
+        branchIndex: 1,
+      });
+      layoutCardSubItems(posCard, positionedNodes, edges, 4, 1);
+    }
+
+    // PyTorch Pillar 3: TF Graphs, XLA & scikit-learn Pipelines (Right-Down: x = 1950, y = -13170)
+    const ptfTspRaw = allNodes.find((n) => n.id === "pytorchtf-tensorflow-sklearn-pillar");
+    if (ptfTspRaw) {
+      const ptfTspX = ptfHubX + 650;
+      const ptfTspY = ptfHubY + 180;
+      const ptfTspNode: PositionedNode = {
+        ...ptfTspRaw,
+        x: ptfTspX,
+        y: ptfTspY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(ptfTspNode);
+      edges.push({
+        source: ptfHubNode.id,
+        target: ptfTspNode.id,
+        category: "pytorchtf",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      const tgxRaw = allNodes.find((n) => n.id === "pytorchtf-tensorflow-graph-xla");
+      if (tgxRaw) {
+        positionedNodes.push({
+          ...tgxRaw,
+          x: ptfTspX + 320,
+          y: ptfTspY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: ptfTspNode.id,
+          target: tgxRaw.id,
+          category: "pytorchtf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const sepRaw = allNodes.find((n) => n.id === "pytorchtf-sklearn-estimators-pipelines");
+      if (sepRaw) {
+        positionedNodes.push({
+          ...sepRaw,
+          x: ptfTspX + 320,
+          y: ptfTspY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: ptfTspNode.id,
+          target: sepRaw.id,
+          category: "pytorchtf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const ddtRaw = allNodes.find((n) => n.id === "pytorchtf-distributed-ddp-torchrun");
+      if (ddtRaw) {
+        positionedNodes.push({
+          ...ddtRaw,
+          x: ptfTspX + 320,
+          y: ptfTspY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: ptfTspNode.id,
+          target: ddtRaw.id,
+          category: "pytorchtf",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -7862,6 +8062,8 @@ export function calculateGroupLayout(
     pillarIds = ["sql-relational-indexing-pillar", "sql-pipeline-pillar", "sql-engine-transactions-pillar"];
   } else if (category === "kafkarabbitmq") {
     pillarIds = ["kafkarabbitmq-kafka-architecture-pillar", "kafkarabbitmq-pipeline-pillar", "kafkarabbitmq-rabbitmq-amqp-pillar"];
+  } else if (category === "pytorchtf") {
+    pillarIds = ["pytorchtf-autograd-tensors-pillar", "pytorchtf-pipeline-pillar", "pytorchtf-tensorflow-sklearn-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -8285,6 +8487,11 @@ export function getNodesForCategory(
       parentId: "root-sql",
       level: 2,
     };
+    const pytorchtfRoot = {
+      ...allNodes.find((n) => n.id === "root-pytorchtf")!,
+      parentId: "root-kafkarabbitmq",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -8340,13 +8547,14 @@ export function getNodesForCategory(
         n.id !== "root-dockerk8s" &&
         n.id !== "root-sql" &&
         n.id !== "root-kafkarabbitmq" &&
+        n.id !== "root-pytorchtf" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, kafkarabbitmqRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, kafkarabbitmqRoot, pytorchtfRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

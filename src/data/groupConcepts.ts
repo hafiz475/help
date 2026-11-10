@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -2906,7 +2906,84 @@ export const KAFKARABBITMQ_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const PYTORCHTF_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-pytorchtf-pipeline",
+    pillarId: "pytorchtf-pipeline-pillar",
+    title: "Deep Learning Training & Optimization Pipeline",
+    category: "pytorchtf",
+    badge: "9 Sequential Stages",
+    color: "#ee4c2c",
+    isPipeline: true,
+    items: [
+      {
+        id: "pytorchtf-dataloader-prefetching",
+        stepNumber: 1,
+        label: "1. Dataset, DataLoader & Pinned Prefetching",
+        badge: "📦 num_workers, pin_memory & Prefetch",
+        searchQuery: "PyTorch DataLoader Dataset num_workers pin_memory persistent_workers multiprocessing batching",
+      },
+      {
+        id: "pytorchtf-tensor-device-transfer",
+        stepNumber: 2,
+        label: "2. Asynchronous Host-to-Device GPU Transfer",
+        badge: "🚀 non_blocking=True & CUDA Streams",
+        searchQuery: "tensor.to(device, non_blocking=True) H2D DMA transfer pinned memory CUDA asynchronous copy",
+      },
+      {
+        id: "pytorchtf-amp-autocast-forward",
+        stepNumber: 3,
+        label: "3. Mixed Precision Autocast & Forward Pass",
+        badge: "⚡ torch.cuda.amp.autocast FP16/BF16",
+        searchQuery: "torch.cuda.amp.autocast mixed precision FP16 BF16 forward pass Tensor Cores GEMM operations",
+      },
+      {
+        id: "pytorchtf-loss-computation-criterion",
+        stepNumber: 4,
+        label: "4. Objective Loss Criterion & Reduction",
+        badge: "🎯 CrossEntropyLoss, MSELoss & Reduction",
+        searchQuery: "PyTorch loss functions nn.CrossEntropyLoss log softmax NLLLoss reduction mean sum loss scaling",
+      },
+      {
+        id: "pytorchtf-loss-scaling-gradscaler",
+        stepNumber: 5,
+        label: "5. GradScaler Scaling & Underflow Guard",
+        badge: "🛡️ scaler.scale(loss) & FP16 Underflow",
+        searchQuery: "torch.cuda.amp.GradScaler loss scaling dynamic scale factor underflow prevention inf nan check",
+      },
+      {
+        id: "pytorchtf-backward-autograd-engine",
+        stepNumber: 6,
+        label: "6. Reverse DAG Traversal & Gradient Accumulation",
+        badge: "🔄 loss.backward() & grad_fn Traversal",
+        searchQuery: "PyTorch loss.backward() reverse DAG traversal vector Jacobian product gradient accumulation parameter.grad",
+      },
+      {
+        id: "pytorchtf-gradient-clipping-norm",
+        stepNumber: 7,
+        label: "7. Gradient Unscaling & Norm Clipping",
+        badge: "✂️ clip_grad_norm_ & Exploding Gradients",
+        searchQuery: "torch.nn.utils.clip_grad_norm_ gradient clipping L2 norm exploding gradient stabilization scaler.unscale_",
+      },
+      {
+        id: "pytorchtf-optimizer-step-weight-update",
+        stepNumber: 8,
+        label: "8. Optimizer Step (AdamW/SGD) & Zero Grad",
+        badge: "⚙️ AdamW, Weight Decay & zero_grad(set_to_none)",
+        searchQuery: "optimizer.step() AdamW momentum first second moment decoupled weight decay zero_grad(set_to_none=True)",
+      },
+      {
+        id: "pytorchtf-checkpoint-distributed-ddp",
+        stepNumber: 9,
+        label: "9. LR Scheduler, Checkpointing & DDP All-Reduce",
+        badge: "💾 CosineAnnealing, torch.save & Ring AllReduce",
+        searchQuery: "LRScheduler CosineAnnealingLR torch.save torch.load state_dict DistributedDataParallel DDP NCCL Ring AllReduce",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -2941,8 +3018,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "dockerk8s") return DOCKERK8S_GROUP_CARDS;
   if (category === "sql") return SQL_GROUP_CARDS;
   if (category === "kafkarabbitmq") return KAFKARABBITMQ_GROUP_CARDS;
+  if (category === "pytorchtf") return PYTORCHTF_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...KAFKARABBITMQ_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...KAFKARABBITMQ_GROUP_CARDS, ...PYTORCHTF_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }
