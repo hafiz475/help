@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -3060,7 +3060,84 @@ export const NOSQL_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const REDIS_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-redis-pipeline",
+    pillarId: "redis-pipeline-pillar",
+    title: "9-Stage Caching & Invalidation Pipeline",
+    category: "redis",
+    badge: "9 Sequential Stages",
+    color: "#dc382d",
+    isPipeline: true,
+    items: [
+      {
+        id: "redis-key-hash-routing",
+        stepNumber: 1,
+        label: "1. Key Hashing, Prefixing & Namespace HashSlot",
+        badge: "🔑 CRC16(key) % 16384 & Key Tags {user:100}",
+        searchQuery: "Redis key hashing namespace prefixing CRC16 hash slot key tags cluster routing",
+      },
+      {
+        id: "redis-cache-lookup-hit-miss",
+        stepNumber: 2,
+        label: "2. Sub-Millisecond In-Memory RAM Lookup",
+        badge: "⚡ O(1) In-Memory Dict Probe & Cache Hit",
+        searchQuery: "Redis sub-millisecond RAM lookup dict hashtable probe O(1) cache hit cache miss",
+      },
+      {
+        id: "redis-thundering-herd-mutex",
+        stepNumber: 3,
+        label: "3. Cache Stampede & Distributed Mutex (Redlock)",
+        badge: "🔒 SETNX EX Distributed Mutex & Stampede Shield",
+        searchQuery: "Redis cache stampede breakdown distributed lock SETNX PX Redlock thundering herd single flight",
+      },
+      {
+        id: "redis-database-fallback-fetch",
+        stepNumber: 4,
+        label: "4. Database Read & Object Deserialization",
+        badge: "🗄️ SQL / NoSQL Query & JSON/Protobuf Parse",
+        searchQuery: "database fallback read primary SQL NoSQL query entity deserialization protobuf JSON",
+      },
+      {
+        id: "redis-cache-write-ttl",
+        stepNumber: 5,
+        label: "5. Cache Populate with Jittered TTL",
+        badge: "⏳ SET EX, PEXPIRE & Jitter Expiration Window",
+        searchQuery: "Redis cache write SET EX PEXPIRE jittered TTL random time offset cache avalanche prevention",
+      },
+      {
+        id: "redis-write-policy-sync",
+        stepNumber: 6,
+        label: "6. Write Invalidation (Cache-Aside / Write-Through)",
+        badge: "🔄 Cache-Aside DEL vs Write-Through / Write-Behind",
+        searchQuery: "Redis caching patterns Cache-Aside key invalidation DEL Write-Through Write-Behind write-back async batching",
+      },
+      {
+        id: "redis-maxmemory-eviction-lru",
+        stepNumber: 7,
+        label: "7. Memory Threshold & LRU/LFU Eviction",
+        badge: "🗑️ maxmemory-policy: allkeys-lru / volatile-lfu",
+        searchQuery: "Redis maxmemory eviction policy allkeys-lru volatile-lru allkeys-lfu volatile-ttl noeviction random sampling",
+      },
+      {
+        id: "redis-async-aof-fsync-stream",
+        stepNumber: 8,
+        label: "8. Background AOF fsync & Replication Stream",
+        badge: "💾 appendfsync everysec & Master-Replica PSYNC2",
+        searchQuery: "Redis AOF fsync everysec replication backlog PSYNC2 master replica replication stream disk durability",
+      },
+      {
+        id: "redis-pubsub-keyspace-notification",
+        stepNumber: 9,
+        label: "9. Keyspace Notifications & In-Memory Pub/Sub",
+        badge: "📢 __keyevent@0__:expired & Pub/Sub Fanout",
+        searchQuery: "Redis keyspace notifications __keyevent@0__:expired PubSub SUBSCRIBE PUBLISH distributed cache eviction broadcast",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -3097,8 +3174,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "kafkarabbitmq") return KAFKARABBITMQ_GROUP_CARDS;
   if (category === "pytorchtf") return PYTORCHTF_GROUP_CARDS;
   if (category === "nosql") return NOSQL_GROUP_CARDS;
+  if (category === "redis") return REDIS_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...KAFKARABBITMQ_GROUP_CARDS, ...PYTORCHTF_GROUP_CARDS, ...NOSQL_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...KAFKARABBITMQ_GROUP_CARDS, ...PYTORCHTF_GROUP_CARDS, ...NOSQL_GROUP_CARDS, ...REDIS_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }

@@ -46,6 +46,7 @@ import {
   Cable,
   Flame,
   HardDrive,
+  MemoryStick,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -139,6 +140,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <Flame size={16} />;
       case "nosql":
         return <HardDrive size={16} />;
+      case "redis":
+        return <MemoryStick size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -348,8 +348,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "redis",
+    name: "37. Redis & In-Memory Storage",
+    title: "Redis, Memcached & In-Memory Architecture: Data Structures, Caching Patterns, Eviction Policies & 9-Stage Caching Pipeline",
+    description: "In-memory string, hash, list, set, sorted set structures, Cache-Aside & Write-Through patterns, LRU/LFU eviction, RDB/AOF persistence, and 9-stage caching pipeline",
+    color: "#dc382d", // Redis Crimson Red
+    icon: "MemoryStick",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "37. OOP (4 Pillars)",
+    name: "38. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -358,7 +367,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "38. DSA",
+    name: "39. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -367,7 +376,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "39. Big O",
+    name: "40. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -381,7 +390,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 419,
+    count: 429,
   },
 ];
 
@@ -721,6 +730,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "NoSQL distributed databases MongoDB Cassandra DynamoDB Neo4j CAP theorem BASE sharding replication document key-value graph",
     badge: "Distributed & Document Stores",
     color: "#13aa52",
+  },
+  {
+    id: "root-redis",
+    label: "Redis & Caching Systems",
+    category: "redis",
+    level: 0,
+    searchQuery: "Redis Memcached caching in-memory key-value data structures cache-aside LRU LFU eviction RDB AOF persistence sentinel cluster",
+    badge: "In-Memory & Cache Engines",
+    color: "#dc382d",
   },
   {
     id: "root-oop",
@@ -4793,7 +4811,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 37. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 37. REDIS & IN-MEMORY STORAGE
+  // ==========================================
+  // Pillar 1: Data Structures & Single-Threaded Core
+  {
+    id: "redis-datastructures-loop-pillar",
+    label: "Data Structures & Single-Threaded Core",
+    category: "redis",
+    parentId: "root-redis",
+    level: 1,
+    searchQuery: "Redis data structures SDS Simple Dynamic Strings Hashes Sets Sorted Sets SkipLists single-threaded I/O multiplexing epoll event loop",
+    badge: "Core Engine & SDS",
+    color: "#dc382d",
+  },
+  {
+    id: "redis-sds-hashes-skiplists",
+    label: "SDS, Hashes, Sets & SkipLists",
+    category: "redis",
+    parentId: "redis-datastructures-loop-pillar",
+    level: 2,
+    searchQuery: "Redis SDS simple dynamic strings ziplist dict hashtable intset zset skiplist O(log N) memory optimization",
+    badge: "SDS & ZSet SkipList",
+    color: "#f87171",
+  },
+  {
+    id: "redis-single-threaded-multiplexing",
+    label: "Single-Threaded I/O Multiplexing (epoll)",
+    category: "redis",
+    parentId: "redis-datastructures-loop-pillar",
+    level: 2,
+    searchQuery: "Redis single-threaded execution non-blocking I/O multiplexing epoll kqueue event loop reactor pattern pipelining",
+    badge: "Event Loop & epoll",
+    color: "#ef4444",
+  },
+  {
+    id: "redis-persistence-rdb-aof",
+    label: "Persistence: RDB Snapshots & AOF Logs",
+    category: "redis",
+    parentId: "redis-datastructures-loop-pillar",
+    level: 2,
+    searchQuery: "Redis persistence RDB snapshotting bgsave fork copy-on-write AOF append-only file fsync everysec BGREWRITEAOF hybrid persistence",
+    badge: "RDB Fork & AOF Fsync",
+    color: "#b91c1c",
+  },
+
+  // Pillar 2: 9-Stage Caching Pipeline (Group Card)
+  {
+    id: "redis-pipeline-pillar",
+    label: "9-Stage Caching Pipeline",
+    category: "redis",
+    parentId: "root-redis",
+    level: 1,
+    searchQuery: "Redis 9-stage caching pipeline key hashing sub-millisecond lookup cache stampede mutex DB fallback jittered TTL write invalidation eviction AOF fsync keyspace pubsub",
+    badge: "9 Sequential Stages",
+    color: "#dc382d",
+  },
+
+  // Pillar 3: Caching Strategies & Sentinel / Cluster
+  {
+    id: "redis-patterns-cluster-pillar",
+    label: "Caching Strategies & High Availability",
+    category: "redis",
+    parentId: "root-redis",
+    level: 1,
+    searchQuery: "Redis caching patterns Cache-Aside Read-Through Write-Through Write-Behind penetration avalanche breakdown Sentinel raft failover Cluster hash slots",
+    badge: "Patterns & Sentinel/Cluster",
+    color: "#dc382d",
+  },
+  {
+    id: "redis-caching-patterns-penetration",
+    label: "Cache Stampede, Penetration & Avalanche",
+    category: "redis",
+    parentId: "redis-patterns-cluster-pillar",
+    level: 2,
+    searchQuery: "cache penetration Bloom filter cache avalanche jittered TTL cache stampede breakdown mutex distributed lock Redlock null caching",
+    badge: "Bloom Filters & Mutex Locks",
+    color: "#f87171",
+  },
+  {
+    id: "redis-sentinel-failover-ha",
+    label: "Redis Sentinel & Automatic Failover",
+    category: "redis",
+    parentId: "redis-patterns-cluster-pillar",
+    level: 2,
+    searchQuery: "Redis Sentinel high availability master replica replication asynchronous PSYNC2 failover quorum sdown odown epoch Raft election",
+    badge: "Quorum & Failover Leader",
+    color: "#ef4444",
+  },
+  {
+    id: "redis-cluster-hash-slots",
+    label: "Redis Cluster & 16,384 Hash Slots",
+    category: "redis",
+    parentId: "redis-patterns-cluster-pillar",
+    level: 2,
+    searchQuery: "Redis Cluster 16384 hash slots CRC16 hash tags resharding MOVED ASK redirection peer-to-peer gossip protocol master failover",
+    badge: "CRC16 & Slot Migration",
+    color: "#b91c1c",
+  },
+
+  // ==========================================
+  // 38. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
@@ -4852,7 +4969,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 34. DATA STRUCTURES (DSA)
+  // 39. DATA STRUCTURES (DSA)
   // ==========================================
   // Level 1 Major Pillar
   {
@@ -4932,7 +5049,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 35. BIG O TIME COMPLEXITY
+  // 40. BIG O TIME COMPLEXITY
   // ==========================================
   // Level 1 Major Pillar
   {

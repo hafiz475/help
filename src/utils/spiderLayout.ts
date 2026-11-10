@@ -1077,6 +1077,8 @@ export function calculateGroupLayout(
         ? "AI Frameworks & Compute"
         : category === "nosql"
         ? "Distributed & Document Stores"
+        : category === "redis"
+        ? "In-Memory & Cache Engines"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1149,6 +1151,8 @@ export function calculateGroupLayout(
         ? "#ee4c2c"
         : category === "nosql"
         ? "#13aa52"
+        : category === "redis"
+        ? "#dc382d"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -6026,6 +6030,201 @@ export function calculateGroupLayout(
       }
     }
 
+    // SUB-BRANCH 1W: Redis & In-Memory Storage Hub (y = -14950)
+    // Connects from nosqlHubNode -> redisHubNode
+    const redisHubX = 1300;
+    const redisHubY = -14950;
+    const redisHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-redis")!,
+      x: redisHubX,
+      y: redisHubY,
+      level: 3,
+      branchIndex: 1,
+    };
+    positionedNodes.push(redisHubNode);
+    edges.push({
+      source: nosqlHubNode.id,
+      target: redisHubNode.id,
+      category: "redis",
+      level: 3,
+      branchIndex: 1,
+    });
+
+    // Redis Pillar 1: Data Structures & Single-Threaded Core (Right-Up: x = 1950, y = -15130)
+    const redisDlpRaw = allNodes.find((n) => n.id === "redis-datastructures-loop-pillar");
+    if (redisDlpRaw) {
+      const redisDlpX = redisHubX + 650;
+      const redisDlpY = redisHubY - 180;
+      const redisDlpNode: PositionedNode = {
+        ...redisDlpRaw,
+        x: redisDlpX,
+        y: redisDlpY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(redisDlpNode);
+      edges.push({
+        source: redisHubNode.id,
+        target: redisDlpNode.id,
+        category: "redis",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      // Level 4 Concepts (Children of Pillar 1)
+      const sdsRaw = allNodes.find((n) => n.id === "redis-sds-hashes-skiplists");
+      if (sdsRaw) {
+        positionedNodes.push({
+          ...sdsRaw,
+          x: redisDlpX + 320,
+          y: redisDlpY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: redisDlpNode.id,
+          target: sdsRaw.id,
+          category: "redis",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const stmRaw = allNodes.find((n) => n.id === "redis-single-threaded-multiplexing");
+      if (stmRaw) {
+        positionedNodes.push({
+          ...stmRaw,
+          x: redisDlpX + 320,
+          y: redisDlpY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: redisDlpNode.id,
+          target: stmRaw.id,
+          category: "redis",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const rdbRaw = allNodes.find((n) => n.id === "redis-persistence-rdb-aof");
+      if (rdbRaw) {
+        positionedNodes.push({
+          ...rdbRaw,
+          x: redisDlpX + 320,
+          y: redisDlpY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: redisDlpNode.id,
+          target: rdbRaw.id,
+          category: "redis",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Redis Pillar 2: 9-Stage Caching Pipeline (Group Card, Right-Center: x = 2100, y = -14950)
+    const redisGroupCard = cardByPillar.get("redis-pipeline-pillar");
+    if (redisGroupCard) {
+      const cardX = redisHubX + 800;
+      const cardY = redisHubY;
+      const posCard: PositionedGroupCard = {
+        ...redisGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: redisHubNode.id,
+        target: redisGroupCard.id,
+        category: "redis",
+        level: 3,
+        branchIndex: 1,
+      });
+    }
+
+    // Redis Pillar 3: Caching Strategies & High Availability (Right-Down: x = 1950, y = -14770)
+    const redisPcpRaw = allNodes.find((n) => n.id === "redis-patterns-cluster-pillar");
+    if (redisPcpRaw) {
+      const redisPcpX = redisHubX + 650;
+      const redisPcpY = redisHubY + 180;
+      const redisPcpNode: PositionedNode = {
+        ...redisPcpRaw,
+        x: redisPcpX,
+        y: redisPcpY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(redisPcpNode);
+      edges.push({
+        source: redisHubNode.id,
+        target: redisPcpNode.id,
+        category: "redis",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      // Level 4 Concepts (Children of Pillar 3)
+      const cppRaw = allNodes.find((n) => n.id === "redis-caching-patterns-penetration");
+      if (cppRaw) {
+        positionedNodes.push({
+          ...cppRaw,
+          x: redisPcpX + 320,
+          y: redisPcpY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: redisPcpNode.id,
+          target: cppRaw.id,
+          category: "redis",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const rsoRaw = allNodes.find((n) => n.id === "redis-sentinel-failover-ha");
+      if (rsoRaw) {
+        positionedNodes.push({
+          ...rsoRaw,
+          x: redisPcpX + 320,
+          y: redisPcpY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: redisPcpNode.id,
+          target: rsoRaw.id,
+          category: "redis",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const chsRaw = allNodes.find((n) => n.id === "redis-cluster-hash-slots");
+      if (chsRaw) {
+        positionedNodes.push({
+          ...chsRaw,
+          x: redisPcpX + 320,
+          y: redisPcpY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: redisPcpNode.id,
+          target: chsRaw.id,
+          category: "redis",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -8266,6 +8465,8 @@ export function calculateGroupLayout(
     pillarIds = ["pytorchtf-autograd-tensors-pillar", "pytorchtf-pipeline-pillar", "pytorchtf-tensorflow-sklearn-pillar"];
   } else if (category === "nosql") {
     pillarIds = ["nosql-document-keyvalue-pillar", "nosql-pipeline-pillar", "nosql-distributed-architecture-pillar"];
+  } else if (category === "redis") {
+    pillarIds = ["redis-datastructures-loop-pillar", "redis-pipeline-pillar", "redis-patterns-cluster-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -8699,6 +8900,11 @@ export function getNodesForCategory(
       parentId: "root-pytorchtf",
       level: 2,
     };
+    const redisRoot = {
+      ...allNodes.find((n) => n.id === "root-redis")!,
+      parentId: "root-nosql",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -8756,13 +8962,14 @@ export function getNodesForCategory(
         n.id !== "root-kafkarabbitmq" &&
         n.id !== "root-pytorchtf" &&
         n.id !== "root-nosql" &&
+        n.id !== "root-redis" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, kafkarabbitmqRoot, pytorchtfRoot, nosqlRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, kafkarabbitmqRoot, pytorchtfRoot, nosqlRoot, redisRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }
