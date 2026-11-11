@@ -1,7 +1,7 @@
 export interface SpiderNode {
   id: string;
   label: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "root" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "designpatterns" | "root" | "oop" | "dsa" | "bigo";
   parentId?: string;
   level: number; // 0 = Center root, 1 = Major Pillar, 2 = Core Concept, 3 = Detail item
   description?: string;
@@ -10,7 +10,7 @@ export interface SpiderNode {
   color?: string;
 }
 
-export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "oop" | "dsa" | "bigo";
+export type ConceptCategory = "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "designpatterns" | "oop" | "dsa" | "bigo";
 
 export interface ConceptTab {
   id: ConceptCategory;
@@ -366,8 +366,17 @@ export const CONCEPT_TABS: ConceptTab[] = [
     count: 10,
   },
   {
+    id: "designpatterns",
+    name: "39. Design Patterns & Architecture",
+    title: "Design Patterns & Architecture: Creational, Structural, Behavioral GoF Patterns, SOLID Principles & 9-Stage Refactoring Pipeline",
+    description: "Creational factories & builders, structural adapters & decorators, behavioral observers & strategies, SOLID architecture, and 9-stage refactoring pipeline",
+    color: "#8b5cf6", // Blueprint Violet
+    icon: "Shapes",
+    count: 10,
+  },
+  {
     id: "oop",
-    name: "39. OOP (4 Pillars)",
+    name: "40. OOP (4 Pillars)",
     title: "Object-Oriented Programming (4 Pillars)",
     description: "Cookie Cutter, Piggy Bank, Base Robot, Same Button & Gas Pedal",
     color: "#ec4899", // Pink
@@ -376,7 +385,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "dsa",
-    name: "40. DSA",
+    name: "41. DSA",
     title: "Data Structures & Real-World Analogies",
     description: "Parking Lots, Pancake Plates, Coffee Lines, Treasure Hunts, Family Trees & Phonebooks",
     color: "#3b82f6", // Blue
@@ -385,7 +394,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
   },
   {
     id: "bigo",
-    name: "41. Big O",
+    name: "42. Big O",
     title: "Big O Time Complexity & Asymptotics",
     description: "Instant O(1), Logarithmic O(log n), Linear O(n), Quadratic O(n²) up to Factorial O(n!)",
     color: "#f59e0b", // Amber
@@ -399,7 +408,7 @@ export const CONCEPT_TABS: ConceptTab[] = [
     description: "The complete knowledge hierarchy interconnected in one open 2D spider web",
     color: "#6366f1", // Indigo
     icon: "Compass",
-    count: 439,
+    count: 449,
   },
 ];
 
@@ -757,6 +766,15 @@ export const ALL_NODES: SpiderNode[] = [
     searchQuery: "Networking Web Protocols OSI TCP IP UDP sockets HTTP1 HTTP2 HTTP3 QUIC TLS 1.3 handshake DNS ALPN WebSockets gRPC",
     badge: "OSI, TCP/UDP, TLS & HTTP/3",
     color: "#0284c7",
+  },
+  {
+    id: "root-designpatterns",
+    label: "Design Patterns & Architecture",
+    category: "designpatterns",
+    level: 0,
+    searchQuery: "Design Patterns Gang of Four GoF SOLID principles creational structural behavioral singleton factory builder adapter decorator observer strategy dependency injection",
+    badge: "GoF Patterns & SOLID Principles",
+    color: "#8b5cf6",
   },
   {
     id: "root-oop",
@@ -5027,7 +5045,106 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 39. OBJECT-ORIENTED PROGRAMMING (OOP)
+  // 39. DESIGN PATTERNS & ARCHITECTURE
+  // ==========================================
+  // Pillar 1: Creational & Structural Patterns
+  {
+    id: "designpatterns-creational-structural-pillar",
+    label: "Creational & Structural Patterns",
+    category: "designpatterns",
+    parentId: "root-designpatterns",
+    level: 1,
+    searchQuery: "creational patterns structural patterns GoF design patterns object creation interface composition wrapper adapter decorator facade",
+    badge: "Object Creation & Composition",
+    color: "#8b5cf6",
+  },
+  {
+    id: "designpatterns-singleton-factory-builder",
+    label: "Singleton, Factory & Builder",
+    category: "designpatterns",
+    parentId: "designpatterns-creational-structural-pillar",
+    level: 2,
+    searchQuery: "Singleton pattern Factory Method Abstract Factory Builder pattern fluent API object instantiation polymorphism",
+    badge: "Controlled Instantiation",
+    color: "#a78bfa",
+  },
+  {
+    id: "designpatterns-adapter-decorator-facade",
+    label: "Adapter, Decorator & Facade",
+    category: "designpatterns",
+    parentId: "designpatterns-creational-structural-pillar",
+    level: 2,
+    searchQuery: "Adapter pattern Decorator pattern Facade pattern interface wrapper runtime dynamic behavior subsystem abstraction",
+    badge: "Interface Wrapping & Decoupling",
+    color: "#8b5cf6",
+  },
+  {
+    id: "designpatterns-proxy-composite-flyweight",
+    label: "Proxy, Composite & Flyweight",
+    category: "designpatterns",
+    parentId: "designpatterns-creational-structural-pillar",
+    level: 2,
+    searchQuery: "Proxy pattern lazy loading caching Composite pattern tree hierarchy Flyweight pattern intrinsic extrinsic state memory sharing",
+    badge: "Virtual Proxies & Memory Sharing",
+    color: "#7c3aed",
+  },
+
+  // Pillar 2: 9-Stage Refactoring Pipeline (Group Card)
+  {
+    id: "designpatterns-pipeline-pillar",
+    label: "9-Stage Pattern Refactoring Pipeline",
+    category: "designpatterns",
+    parentId: "root-designpatterns",
+    level: 1,
+    searchQuery: "design pattern refactoring pipeline code smells SOLID boundaries factory adapter strategy observer decorator command composition over inheritance",
+    badge: "9 Sequential Stages",
+    color: "#8b5cf6",
+  },
+
+  // Pillar 3: Behavioral Patterns & Modern Architectural Paradigms
+  {
+    id: "designpatterns-behavioral-architectural-pillar",
+    label: "Behavioral Patterns & Clean Architecture",
+    category: "designpatterns",
+    parentId: "root-designpatterns",
+    level: 1,
+    searchQuery: "behavioral patterns Gang of Four Observer Strategy Command State dependency injection Inversion of Control Ports and Adapters Hexagonal",
+    badge: "Behavior, Messages & Ports",
+    color: "#8b5cf6",
+  },
+  {
+    id: "designpatterns-observer-pubsub-state",
+    label: "Observer, Pub-Sub & State Pattern",
+    category: "designpatterns",
+    parentId: "designpatterns-behavioral-architectural-pillar",
+    level: 2,
+    searchQuery: "Observer pattern Subject Observer PubSub event broker State pattern finite state machine transitions decoupling",
+    badge: "Reactivity & Finite State Machines",
+    color: "#a78bfa",
+  },
+  {
+    id: "designpatterns-strategy-command-template",
+    label: "Strategy, Command & Template Method",
+    category: "designpatterns",
+    parentId: "designpatterns-behavioral-architectural-pillar",
+    level: 2,
+    searchQuery: "Strategy pattern interchangeable algorithms Command pattern undo redo invocations Template Method skeleton hook methods",
+    badge: "Interchangeable Algorithms",
+    color: "#8b5cf6",
+  },
+  {
+    id: "designpatterns-dependency-injection-ports",
+    label: "Dependency Injection & Hexagonal Ports/Adapters",
+    category: "designpatterns",
+    parentId: "designpatterns-behavioral-architectural-pillar",
+    level: 2,
+    searchQuery: "Dependency Injection IoC container Hexagonal architecture Ports and Adapters Clean architecture domain decoupling",
+    badge: "Hexagonal Architecture & IoC",
+    color: "#7c3aed",
+  },
+
+  // ==========================================
+  // 40. OBJECT-ORIENTED PROGRAMMING (OOP)
   // ==========================================
   {
     id: "oop-pillars-pillar",
@@ -5086,7 +5203,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 40. DATA STRUCTURES (DSA)
+  // 41. DATA STRUCTURES (DSA)
   // ==========================================
   // Level 1 Major Pillar
   {
@@ -5166,7 +5283,7 @@ export const ALL_NODES: SpiderNode[] = [
   },
 
   // ==========================================
-  // 41. BIG O TIME COMPLEXITY
+  // 42. BIG O TIME COMPLEXITY
   // ==========================================
   // Level 1 Major Pillar
   {

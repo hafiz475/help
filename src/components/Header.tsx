@@ -47,6 +47,7 @@ import {
   Flame,
   HardDrive,
   MemoryStick,
+  Shapes,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -144,6 +145,8 @@ export const Header: React.FC<HeaderProps> = ({
         return <MemoryStick size={16} />;
       case "networking":
         return <Globe size={16} />;
+      case "designpatterns":
+        return <Shapes size={16} />;
       case "oop":
         return <Box size={16} />;
       case "dsa":

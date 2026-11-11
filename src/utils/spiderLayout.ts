@@ -1081,6 +1081,8 @@ export function calculateGroupLayout(
         ? "In-Memory & Cache Engines"
         : category === "networking"
         ? "OSI, TCP/UDP, TLS & HTTP/3"
+        : category === "designpatterns"
+        ? "GoF Patterns & SOLID Principles"
         : category === "scope"
         ? "Lexical Boundary"
         : "Core Hub",
@@ -1157,6 +1159,8 @@ export function calculateGroupLayout(
         ? "#dc382d"
         : category === "networking"
         ? "#0284c7"
+        : category === "designpatterns"
+        ? "#8b5cf6"
         : category === "scope"
         ? "#a855f7"
         : "#3b82f6",
@@ -6424,6 +6428,201 @@ export function calculateGroupLayout(
       }
     }
 
+    // SUB-BRANCH 1Y: Design Patterns & Architecture Hub (y = -16550)
+    // Connects from networkingHubNode -> designpatternsHubNode
+    const designpatternsHubX = 1300;
+    const designpatternsHubY = -16550;
+    const designpatternsHubNode: PositionedNode = {
+      ...allNodes.find((n) => n.id === "root-designpatterns")!,
+      x: designpatternsHubX,
+      y: designpatternsHubY,
+      level: 3,
+      branchIndex: 1,
+    };
+    positionedNodes.push(designpatternsHubNode);
+    edges.push({
+      source: networkingHubNode.id,
+      target: designpatternsHubNode.id,
+      category: "designpatterns",
+      level: 3,
+      branchIndex: 1,
+    });
+
+    // Design Patterns Pillar 1: Creational & Structural Patterns (Right-Up: x = 1950, y = -16730)
+    const dpCspRaw = allNodes.find((n) => n.id === "designpatterns-creational-structural-pillar");
+    if (dpCspRaw) {
+      const dpCspX = designpatternsHubX + 650;
+      const dpCspY = designpatternsHubY - 180;
+      const dpCspNode: PositionedNode = {
+        ...dpCspRaw,
+        x: dpCspX,
+        y: dpCspY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(dpCspNode);
+      edges.push({
+        source: designpatternsHubNode.id,
+        target: dpCspNode.id,
+        category: "designpatterns",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      // Level 4 Concepts (Children of Pillar 1)
+      const sfbRaw = allNodes.find((n) => n.id === "designpatterns-singleton-factory-builder");
+      if (sfbRaw) {
+        positionedNodes.push({
+          ...sfbRaw,
+          x: dpCspX + 320,
+          y: dpCspY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dpCspNode.id,
+          target: sfbRaw.id,
+          category: "designpatterns",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const adfRaw = allNodes.find((n) => n.id === "designpatterns-adapter-decorator-facade");
+      if (adfRaw) {
+        positionedNodes.push({
+          ...adfRaw,
+          x: dpCspX + 320,
+          y: dpCspY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dpCspNode.id,
+          target: adfRaw.id,
+          category: "designpatterns",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const pcfRaw = allNodes.find((n) => n.id === "designpatterns-proxy-composite-flyweight");
+      if (pcfRaw) {
+        positionedNodes.push({
+          ...pcfRaw,
+          x: dpCspX + 320,
+          y: dpCspY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dpCspNode.id,
+          target: pcfRaw.id,
+          category: "designpatterns",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
+    // Design Patterns Pillar 2: 9-Stage Refactoring Pipeline (Group Card, Right-Center: x = 2100, y = -16550)
+    const dpGroupCard = cardByPillar.get("designpatterns-pipeline-pillar");
+    if (dpGroupCard) {
+      const cardX = designpatternsHubX + 800;
+      const cardY = designpatternsHubY;
+      const posCard: PositionedGroupCard = {
+        ...dpGroupCard,
+        x: cardX,
+        y: cardY,
+        branchIndex: 1,
+      };
+      positionedCards.push(posCard);
+      edges.push({
+        source: designpatternsHubNode.id,
+        target: dpGroupCard.id,
+        category: "designpatterns",
+        level: 3,
+        branchIndex: 1,
+      });
+    }
+
+    // Design Patterns Pillar 3: Behavioral Patterns & Clean Architecture (Right-Down: x = 1950, y = -16370)
+    const dpBapRaw = allNodes.find((n) => n.id === "designpatterns-behavioral-architectural-pillar");
+    if (dpBapRaw) {
+      const dpBapX = designpatternsHubX + 650;
+      const dpBapY = designpatternsHubY + 180;
+      const dpBapNode: PositionedNode = {
+        ...dpBapRaw,
+        x: dpBapX,
+        y: dpBapY,
+        level: 3,
+        branchIndex: 1,
+      };
+      positionedNodes.push(dpBapNode);
+      edges.push({
+        source: designpatternsHubNode.id,
+        target: dpBapNode.id,
+        category: "designpatterns",
+        level: 3,
+        branchIndex: 1,
+      });
+
+      // Level 4 Concepts (Children of Pillar 3)
+      const opsRaw = allNodes.find((n) => n.id === "designpatterns-observer-pubsub-state");
+      if (opsRaw) {
+        positionedNodes.push({
+          ...opsRaw,
+          x: dpBapX + 320,
+          y: dpBapY - 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dpBapNode.id,
+          target: opsRaw.id,
+          category: "designpatterns",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const sctRaw = allNodes.find((n) => n.id === "designpatterns-strategy-command-template");
+      if (sctRaw) {
+        positionedNodes.push({
+          ...sctRaw,
+          x: dpBapX + 320,
+          y: dpBapY,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dpBapNode.id,
+          target: sctRaw.id,
+          category: "designpatterns",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+
+      const dipRaw = allNodes.find((n) => n.id === "designpatterns-dependency-injection-ports");
+      if (dipRaw) {
+        positionedNodes.push({
+          ...dipRaw,
+          x: dpBapX + 320,
+          y: dpBapY + 35,
+          level: 4,
+          branchIndex: 1,
+        });
+        edges.push({
+          source: dpBapNode.id,
+          target: dipRaw.id,
+          category: "designpatterns",
+          level: 4,
+          branchIndex: 1,
+        });
+      }
+    }
+
     // 2. Node.js Built-in APIs (Group Card, 4 items) -> Right
     const apisCard = cardByPillar.get("node-apis-pillar");
     if (apisCard) {
@@ -8668,6 +8867,8 @@ export function calculateGroupLayout(
     pillarIds = ["redis-datastructures-loop-pillar", "redis-pipeline-pillar", "redis-patterns-cluster-pillar"];
   } else if (category === "networking") {
     pillarIds = ["networking-transport-sockets-pillar", "networking-pipeline-pillar", "networking-protocols-security-pillar"];
+  } else if (category === "designpatterns") {
+    pillarIds = ["designpatterns-creational-structural-pillar", "designpatterns-pipeline-pillar", "designpatterns-behavioral-architectural-pillar"];
   } else if (category === "oop") {
     pillarIds = ["oop-pillars-pillar"];
   } else if (category === "dsa") {
@@ -9111,6 +9312,11 @@ export function getNodesForCategory(
       parentId: "root-redis",
       level: 2,
     };
+    const designpatternsRoot = {
+      ...allNodes.find((n) => n.id === "root-designpatterns")!,
+      parentId: "root-networking",
+      level: 2,
+    };
     const oopRoot = {
       ...allNodes.find((n) => n.id === "root-oop")!,
       parentId: "root-cs-foundations",
@@ -9170,13 +9376,14 @@ export function getNodesForCategory(
         n.id !== "root-nosql" &&
         n.id !== "root-redis" &&
         n.id !== "root-networking" &&
+        n.id !== "root-designpatterns" &&
         n.id !== "root-oop" &&
         n.id !== "root-dsa" &&
         n.id !== "root-bigo"
     );
 
     return {
-      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, kafkarabbitmqRoot, pytorchtfRoot, nosqlRoot, redisRoot, networkingRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
+      nodes: [rootAll, jsCoreRoot, nodeRoot, csFoundRoot, v8Root, scopeRoot, closureRoot, asyncRoot, backendRoot, realtimeRoot, queuesRoot, scalingRoot, platformRoot, renderingRoot, securityRoot, stateRoot, perfRoot, aimathRoot, mlcoreRoot, deepRoot, nlpRoot, visionRoot, mobileRoot, dataRoot, gameRoot, iotRoot, blockchainRoot, reactRoot, nextjsRoot, angularvueRoot, buildtoolsRoot, expressnestRoot, djangofastapiRoot, springbootRoot, dockerk8sRoot, sqlRoot, kafkarabbitmqRoot, pytorchtfRoot, nosqlRoot, redisRoot, networkingRoot, designpatternsRoot, oopRoot, dsaRoot, bigoRoot, ...remaining],
       rootId: "root-all",
     };
   }

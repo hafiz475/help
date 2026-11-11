@@ -702,10 +702,13 @@ export const CS_KNOWLEDGE_TREE: CSTreeLayer[] = [
           },
           {
             id: "topic-design-patterns",
-            name: "Design Patterns",
-            isAvailable: false,
-            badge: "Roadmap",
-            description: "Singleton, Factory, Observer, Adapter, Decorator, and Strategy patterns",
+            name: "Design Patterns & Architecture ★",
+            categoryId: "designpatterns",
+            isAvailable: true,
+            isStarred: true,
+            badge: "Interactive Web",
+            description: "Creational, structural, and behavioral GoF patterns, SOLID principles, Hexagonal Ports & Adapters, and 9-stage refactoring pipeline",
+            color: "#8b5cf6",
           },
           {
             id: "topic-git",

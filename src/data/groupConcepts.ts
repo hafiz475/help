@@ -18,7 +18,7 @@ export interface GroupCardData {
   id: string;
   pillarId: string;
   title: string;
-  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "oop" | "dsa" | "bigo";
+  category: "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "designpatterns" | "oop" | "dsa" | "bigo";
   badge: string;
   color: string;
   isPipeline?: boolean;
@@ -3214,7 +3214,84 @@ export const NETWORKING_GROUP_CARDS: GroupCardData[] = [
   },
 ];
 
-export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "oop" | "dsa" | "bigo"): GroupCardData[] {
+export const DESIGNPATTERNS_GROUP_CARDS: GroupCardData[] = [
+  {
+    id: "group-designpatterns-pipeline",
+    pillarId: "designpatterns-pipeline-pillar",
+    title: "9-Stage Pattern Refactoring Pipeline",
+    category: "designpatterns",
+    badge: "9 Sequential Stages",
+    color: "#8b5cf6",
+    isPipeline: true,
+    items: [
+      {
+        id: "designpatterns-code-smell-detection",
+        stepNumber: 1,
+        label: "1. Code Smell Detection & Anti-Pattern Audit",
+        badge: "🔍 God Objects, Feature Envy & Tight Coupling",
+        searchQuery: "code smells anti-patterns God Object Feature Envy Shotgun Surgery tight coupling static analysis",
+      },
+      {
+        id: "designpatterns-solid-boundary-definition",
+        stepNumber: 2,
+        label: "2. SOLID Principles & Interface Segregation",
+        badge: "📐 SRP, OCP, LSP, ISP & Dependency Inversion",
+        searchQuery: "SOLID design principles Single Responsibility Open Closed Liskov Substitution Interface Segregation Dependency Inversion",
+      },
+      {
+        id: "designpatterns-creational-abstraction",
+        stepNumber: 3,
+        label: "3. Creational Factory & Dependency Injection",
+        badge: "🏭 Decoupling new Keyword via IoC Container",
+        searchQuery: "Factory Method Abstract Factory Inversion of Control IoC container constructor injection decoupling",
+      },
+      {
+        id: "designpatterns-structural-adapter-shim",
+        stepNumber: 4,
+        label: "4. Structural Adapter & Facade Gateway",
+        badge: "🔌 Compatibility Wrappers & Unified Subsystem API",
+        searchQuery: "Adapter pattern Facade pattern legacy wrapper translation interface unified subsystem API",
+      },
+      {
+        id: "designpatterns-behavioral-strategy-injection",
+        stepNumber: 5,
+        label: "5. Behavioral Strategy & Policy Decoupling",
+        badge: "🎯 Eliminating Switch/Case with Strategy Maps",
+        searchQuery: "Strategy pattern replacing switch case statements polymorphic algorithm families policy injection",
+      },
+      {
+        id: "designpatterns-observer-event-bus",
+        stepNumber: 6,
+        label: "6. Observer Decoupling & Reactive Event Bus",
+        badge: "📢 Subject-Observer Subscriptions & Loose Coupling",
+        searchQuery: "Observer pattern EventEmitter PubSub event-driven architecture decoupled state notifications",
+      },
+      {
+        id: "designpatterns-decorator-chain-middleware",
+        stepNumber: 7,
+        label: "7. Decorator Dynamic Extension & Middleware Chain",
+        badge: "✨ Composable Wrappers (Logging, Auth, Caching)",
+        searchQuery: "Decorator pattern dynamic extension middleware chain cross-cutting concerns Onion architecture",
+      },
+      {
+        id: "designpatterns-command-undo-redo-transaction",
+        stepNumber: 8,
+        label: "8. Command Object Encapsulation & Undo/Redo",
+        badge: "⏪ Parametrized Requests & Rollback History",
+        searchQuery: "Command pattern encapsulated operations invoker receiver execute undo redo history stack",
+      },
+      {
+        id: "designpatterns-composition-regression-testing",
+        stepNumber: 9,
+        label: "9. Composition Over Inheritance & Regression Suite",
+        badge: "✅ Mock Interfaces, Unit Tests & Contract Verification",
+        searchQuery: "Composition over inheritance behavioral contracts mock interfaces unit tests refactoring regression safety",
+      },
+    ],
+  },
+];
+
+export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "closure" | "async" | "node" | "backend" | "realtime" | "queues" | "scaling" | "platform" | "rendering" | "security" | "state" | "perf" | "aimath" | "mlcore" | "deeplearning" | "nlpllms" | "vision" | "mobile" | "data" | "gamedev" | "iot" | "blockchain" | "react" | "nextjs" | "angularvue" | "buildtools" | "expressnest" | "djangofastapi" | "springboot" | "dockerk8s" | "sql" | "kafkarabbitmq" | "pytorchtf" | "nosql" | "redis" | "networking" | "designpatterns" | "oop" | "dsa" | "bigo"): GroupCardData[] {
   if (category === "v8") return V8_GROUP_CARDS;
   if (category === "scope") return SCOPE_GROUP_CARDS;
   if (category === "closure") return CLOSURE_GROUP_CARDS;
@@ -3253,8 +3330,9 @@ export function getGroupCardsForCategory(category: "all" | "v8" | "scope" | "clo
   if (category === "nosql") return NOSQL_GROUP_CARDS;
   if (category === "redis") return REDIS_GROUP_CARDS;
   if (category === "networking") return NETWORKING_GROUP_CARDS;
+  if (category === "designpatterns") return DESIGNPATTERNS_GROUP_CARDS;
   if (category === "oop") return OOP_GROUP_CARDS;
   if (category === "dsa") return DSA_GROUP_CARDS;
   if (category === "bigo") return BIGO_GROUP_CARDS;
-  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...KAFKARABBITMQ_GROUP_CARDS, ...PYTORCHTF_GROUP_CARDS, ...NOSQL_GROUP_CARDS, ...REDIS_GROUP_CARDS, ...NETWORKING_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
+  return [...V8_GROUP_CARDS, ...SCOPE_GROUP_CARDS, ...CLOSURE_GROUP_CARDS, ...ASYNC_GROUP_CARDS, ...NODE_GROUP_CARDS, ...BACKEND_GROUP_CARDS, ...REALTIME_GROUP_CARDS, ...QUEUES_GROUP_CARDS, ...SCALING_GROUP_CARDS, ...PLATFORM_GROUP_CARDS, ...RENDERING_GROUP_CARDS, ...SECURITY_GROUP_CARDS, ...STATE_GROUP_CARDS, ...PERF_GROUP_CARDS, ...AIMATH_GROUP_CARDS, ...MLCORE_GROUP_CARDS, ...DEEPLEARNING_GROUP_CARDS, ...NLPLLMS_GROUP_CARDS, ...VISION_GROUP_CARDS, ...MOBILE_GROUP_CARDS, ...DATA_GROUP_CARDS, ...GAMEDEV_GROUP_CARDS, ...IOT_GROUP_CARDS, ...BLOCKCHAIN_GROUP_CARDS, ...REACT_GROUP_CARDS, ...NEXTJS_GROUP_CARDS, ...ANGULARVUE_GROUP_CARDS, ...BUILDTOOLS_GROUP_CARDS, ...EXPRESSNEST_GROUP_CARDS, ...DJANGOFASTAPI_GROUP_CARDS, ...SPRINGBOOT_GROUP_CARDS, ...DOCKERK8S_GROUP_CARDS, ...SQL_GROUP_CARDS, ...KAFKARABBITMQ_GROUP_CARDS, ...PYTORCHTF_GROUP_CARDS, ...NOSQL_GROUP_CARDS, ...REDIS_GROUP_CARDS, ...NETWORKING_GROUP_CARDS, ...DESIGNPATTERNS_GROUP_CARDS, ...OOP_GROUP_CARDS, ...DSA_GROUP_CARDS, ...BIGO_GROUP_CARDS];
 }
